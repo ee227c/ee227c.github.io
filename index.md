@@ -14,7 +14,7 @@ Graduate Instructor: [Max Simchowitz](https://people.eecs.berkeley.edu/~msimchow
 
 
 ## Assingments and Grading
-Assignments will be posted on [Piazza](https://piazza.com/berkeley/spring2018/ee227c/home). If you haven't already, [sign up here](piazza.com/berkeley/spring2018/ee227c). Homeworks will be assigned ~every two weeks, and 2-3 problems will be selected for grading (we will not tell you which ones in advance). Assignments should be submitted through GradeScope, details to be provided shortly. Students will be permitted two unexcused late assignments (up to a week late). Students requesting additional extensions should email Max.
+Assignments will be posted on [Piazza](https://piazza.com/berkeley/spring2018/ee227c/home). If you haven't already, [sign up here](piazza.com/berkeley/spring2018/ee227c). Homeworks will be assigned ~every two weeks, and 2-3 problems will be selected for grading (we will not tell you which ones in advance). Assignments should be submitted through [GradeScope] (https://gradescope.com/); the course is listed as EE227C, which you may join with entry code 9P5NDV. Students will be permitted two unexcused late assignments (up to a week late). Students requesting additional extensions should email Max.
 
 Grading policy: 50% homeworks, 10% scribing, 20% midterm exam, 20% final exam. 
 
