@@ -10,7 +10,7 @@ Spring 2018
 Time: TuTh 12:30PM - 1:59PM  
 Location:	Etcheverry 3106  
 Instructor: [Moritz Hardt](http://mrtz.org) (Email: hardt+ee227c@berk...edu)   
-Graduate Instructor: [Max Simchowitz](https://people.eecs.berkeley.edu/~msimchow/index.html)
+Graduate Instructor: [Max Simchowitz](https://people.eecs.berkeley.edu/~msimchow/index.html) (Email: msimchow@berk...edu)
 
 Grading policy: 50% homeworks, 10% scribing, 20% midterm exam, 20% final exam
 
@@ -27,6 +27,7 @@ Course notes will be available to participants. Participants will
 collaboratively create and maintain notes over the course of the semester
 using [Overleaf](https://www.overleaf.com/edu/berkeley).
 Berkeley students get a free pro account.
+
 
 ## Summary
 
