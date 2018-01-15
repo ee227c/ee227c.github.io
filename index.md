@@ -14,6 +14,12 @@ Graduate Instructor: [Max Simchowitz](https://people.eecs.berkeley.edu/~msimchow
 
 Grading policy: 50% homeworks, 10% scribing, 20% midterm exam, 20% final exam
 
+## Updates
+
+* *The class and its waitlist are completely full.* Please check back later in the
+semester to see if enrollment will have become availability. Visitors are
+permitted to audit only if there is enough space in the room. Please do leave
+available seats to enrolled students.
 
 ## Course notes
 
