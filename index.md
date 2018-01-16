@@ -19,7 +19,7 @@ the semester to see if enrollment will have become available. Visitors are permi
 to audit only if there is enough space in the room. Please do leave available
 seats to enrolled students.
 
-*Piazza Signup Link Fixed*
+* *Piazza Signup Link Fixed*
 
 
 ## Assingments 
