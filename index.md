@@ -45,7 +45,7 @@ repository](https://github.com/ee227c/ee227c.github.io/tree/master/notes) for
 source files.
 
 * [All lectures](notes/ee227c-notes.pdf)
-* [Lecture 1](notes/ee227c-lecture1.pdf)
+* [Lecture 1](notes/ee227c-lecture1.pdf) (Convexity)
 
 ## Topics
 
