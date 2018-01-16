@@ -7,8 +7,16 @@ PDFLATEX=/usr/bin/pdflatex
 
 if [ $# -eq 0 ]
 then
-    echo "Specify lecture number."
-    exit 1
+    echo "No lecture number specified."
+    echo "Compiling all lectures."
+    echo 'Compiling sources.'
+    $PDFLATEX main.tex > /dev/null
+    echo 'Compiling sources again.'
+    $PDFLATEX main.tex > /dev/null
+    mv main.pdf ee227c-notes.pdf
+    echo "Cleaning up."
+    rm *.aux *.log *.toc *.out
+    exit 0
 fi
 
 if [ -f "lecture$1.tex" ]
@@ -24,10 +32,10 @@ then
     cat "lecture$1.tex" >> tmp-lecture.tex
     echo '\\end{document}' >> tmp-lecture.tex
     echo 'Compiling sources.'
-    $PDFLATEX tmp-lecture.tex > tmp-lecture.tex-log
+    $PDFLATEX tmp-lecture.tex > /dev/null
     echo 'Compiling sources again.'
-    $PDFLATEX tmp-lecture.tex > tmp-lecture.tex-log
-    mv tmp-lecture.pdf lecture$1.pdf
+    $PDFLATEX tmp-lecture.tex > /dev/null
+    mv tmp-lecture.pdf ee227c-lecture$1.pdf
     echo "Created lecture$1.pdf"
     echo "Cleaning up."
     rm tmp-lecture.*

@@ -28,13 +28,6 @@ Assignments will be posted on [Piazza](https://piazza.com/berkeley/spring2018/ee
 
 Grading policy: 50% homeworks, 10% scribing, 20% midterm exam, 20% final exam. 
 
-## Course notes
-
-Course notes will be available to participants. Participants will
-collaboratively create and maintain notes over the course of the semester
-using [Overleaf](https://www.overleaf.com/edu/berkeley).
-Berkeley students get a free pro account.
-
 ## Summary
 
 This course will explore theory and algorithms for nonlinear optimization. We
@@ -42,6 +35,17 @@ will focus on problems that arise in machine learning and computational
 statistics, paying close attention to concerns about complexity, robustness, and
 implementation in these domains. Whenever possible, methods will be linked to
 particular application examples in data analysis.
+
+## Course notes
+
+Course notes will be publicly available. Participants will
+collaboratively create and maintain notes over the course of the semester
+using git. See [this
+repository](https://github.com/ee227c/ee227c.github.io/tree/master/notes) for
+source files.
+
+* [All lectures](notes/ee227c-notes.pdf)
+* [Lecture 1](notes/ee227c-lecture1.pdf)
 
 ## Topics
 
