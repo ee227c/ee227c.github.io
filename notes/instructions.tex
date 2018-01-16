@@ -1,0 +1,40 @@
+\documentclass[12pt]{article}
+
+\usepackage{macros}
+
+\begin{document}
+
+\input{title}
+\maketitle
+
+\section*{Instructions for scribes}
+
+{\bf\color{red} Please read carefully.}
+
+\begin{itemize}
+\item Each lecture will be scribed by 2--3 students. 
+\item The instructor will typically provide a skeleton of what the notes should contain. Students are expected to fill in the content based on their notes from the lecture and available resources.
+\item Students are required to produce high quality notes, verify correctness of the material, and produce illustrative figures for the content where helpful. 
+\item Figures must be print quality vector graphics included as pdf, following best practices for readability and accessibility. Code must be provided with each figure that accurately reproduces the figure.
+\item Scribes are required to use latex macros consistently throughout the notes. Look at previous notes as a guide. Also, see the list below for common macros that we will use.
+\item Scribes are required to provide references in bibtex format when referring to any external material.
+\item {\bf Please edit only the tex file you were assigned to.} If you spot errors in another tex file, please leave a comment for the author via the overleaf comment function. 
+\end{itemize}
+
+\subsection*{List of common macros}
+
+\begin{itemize}
+\item Real numbers $\R$, use \latexcommand{R}
+\item Dimension of Euclidean space, use letter $n$ where possible
+\item Real-valued functions, use letters $f, g, h$
+\item Domain $\Omega\subseteq\R^n$ of a function if not all of $\R^n$, use \latexcommand{domain}
+\item Scalars, use greek letters
+\item Vectors, use letters $u, v, w$
+\item Matrices, use capital letters $A, B, \dots$
+\item For transpose sign~$\trans$, use \latexcommand{trans}, e.g., $A^\trans$
+\item Inner products, use \latexcommand{langle} and \latexcommand{rangle}, or use transposes.
+\item For code, use the \href{https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings}{listings} package.
+\item See {\tt macros.sty} for other available macros.
+\end{itemize}
+
+\end{document}
