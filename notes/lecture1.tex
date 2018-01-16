@@ -1,7 +1,9 @@
 \section{Lecture 1: Convexity}
 \sectionlabel{convexity}
 
-This lecture provides the most important facts about convex sets and convex functions that we'll heavily make use of.
+This lecture provides the most important facts about convex sets and convex
+functions that we'll heavily make use of. These are often simple consequences of
+Taylor's theorem.
 
 \subsection{Convex sets}
 
@@ -20,7 +22,16 @@ If $C$ and $K$ are closed and at least one of them is bounded, then we can repla
 \end{theorem}
 The case we're most concerned with is when both sets are compact (i.e., closed and bounded). We highlight its proof here.
 \begin{proof}[Proof of \theoremref{separation} for compact sets.]
-In this case, the Cartesian product $C\times K$ is also compact. Therefore, the distance function $\|x-y\|$ attains its minimum over $C\times K.$ Taking $p, q$ to be two points that achieve the minimum. A separating hyperplane is given by the hyperplane perpendicular to $q-p$ that passes through the midpoint between $p$ and $q.$ That is, $a=q-p$ and $b=(\langle a, q\rangle - \langle a, p\rangle)/2.$ For the sake of contradiction, suppose there is a point~$r$ on this hyperplane contained in one of the two sets, say,~$C.$ Then the line segment from $p$ to $r$ is also contained in~$C$ by convexity. We can then find a point along the line segment that is close to $q$ than $p$ is, thus contradicting our assumption.
+In this case, the Cartesian product $C\times K$ is also compact. Therefore, the
+distance function $\|x-y\|$ attains its minimum over $C\times K.$ Taking $p, q$
+to be two points that achieve the minimum. A separating hyperplane is given by
+the hyperplane perpendicular to $q-p$ that passes through the midpoint between
+$p$ and $q.$ That is, $a=q-p$ and $b=(\langle a, q\rangle - \langle a,
+p\rangle)/2.$ For the sake of contradiction, suppose there is a point~$r$ on
+this hyperplane contained in one of the two sets, say,~$C.$ Then the line
+segment from $p$ to $r$ is also contained in~$C$ by convexity. We can then find
+a point along the line segment that is close to $q$ than $p$ is, thus
+contradicting our assumption.
 \end{proof}
 
 \subsubsection{Notable convex sets}
@@ -31,7 +42,7 @@ In particular, affine subspaces and affine halfspaces are convex.
 \item Intersections of convex sets. In fact, every convex set is equivalent to the intersection of all affine halfspaces that contain it (a consequence of the separating hyperplane theorem).
 \item The cone of positive semidefinite matrices, denotes, $S^n_+ = \{ A\in\R^{n\times n}\mid A\succeq 0\}.$ Here we write $A\succeq 0$ to indicate that $x^\trans A x\ge 0$ for all $x\in\R^n.$ The fact that $S^n_+$ is convex can be verified directly from the definition, but it also follows from what we already knew. 
 Indeed, denoting by $S_n=\{A\in\R^{n\times n}\mid A^\trans = A\}$ the set of all $n\times n$ symmetric matrices, we can write $S^n_+$ as an (infinite) intersection of halfspaces $S^n_+=\bigcap_{x\in\R^n\backslash\{0\}} \{ A\in S_n\mid x^\trans A x\ge 0\}.$
-\item See Boyd-Vanderberge for lots of other examples.
+\item See Boyd-Vandenberghe for lots of other examples.
 \end{itemize}
 
 \subsection{Convex functions}
@@ -69,13 +80,14 @@ It is helpful to relate convexity to Taylor's theorem, which we recall now. We d
 \[
 \nabla f(x) = \left( \frac{\partial f}{\partial x_i} \right)_{i=1}^n\,.
 \]
-We note the following simple fact that relates linear forms of the gradient to a one-dimensional derivative. It's a consequence of the multivariate chain rule.
+We note the following simple fact that relates linear forms of the gradient to a
+one-dimensional derivative evaluated at~$0.$ It's a consequence of the multivariate chain rule.
 \begin{fact}
 \factlabel{1d-nd-gradient}
 Assume $f\colon\domain\to\R$ is differentiable and let $x,y\in\domain.$ Then,
 \[
 \nabla f(x)^\trans y
-= \frac{\partial f(x+\gamma y)}{\partial \gamma}\,.
+= \left.\frac{\partial f(x+\gamma y)}{\partial \gamma}\right|_{\gamma=0}\,.
 \]
 \end{fact}
 Taylor's theorem implies the following statement.
@@ -117,13 +129,29 @@ f(y) \ge f(z) + \nabla f(z)^\trans (y-z)
 Adding these inequalities scaled by $\gamma$ and $(1-\gamma)$, respectively, we get $\gamma f(x)+(1-\gamma)f(y)\ge f(z),$ which establishes convexity.
 \end{proof}
 
+A direct consequence of \propositionref{first-order-lower-bound} is that
+if $\nabla f(x)=0$ vanishes at a point~$x,$ then $x$ must be a global minimizer
+of~$f.$
+
+\begin{remark}[Subgradients]
+Of course, not all convex functions are differentiable. The absolute
+value~$f(x)=|x|,$ for example, is convex but not differentiable at $0.$
+Nonetheless, for every $x,$ we can find a vector $g$ such that
+\[
+f(y) \ge f(x) + g^\trans (y-x)\,.
+\]
+Such a vector is called a \emph{subgradient} of $f$ at $x.$ The existence of
+subgradients is often sufficient for optimization.
+\end{remark}
+
 \subsubsection{Second-order characterization}
 
 We define the \emph{Hessian} matrix of $f\colon\domain\to\R$ at a point $x\in\domain$ as the matrix of second order partial derivatives:
 \[
 \nabla^2 f(x) = \left( \frac{\partial^2 f}{\partial x_i\partial x_j} \right)_{i,j\in[n]}\,.
 \]
-Schwarz's theorem implies that the Hessian at a point $x$ is symmetric provided that $f$ has continuous second partial derivatives at~$x.$
+Schwarz's theorem implies that the Hessian at a point $x$ is symmetric provided
+that $f$ has continuous second partial derivatives in an open set around~$x.$
 
 In analogy with \factref{1d-nd-gradient}, we can relate quadratic forms in the Hessian matrix to one-dimensional derivatives.
 \begin{fact}
@@ -131,21 +159,10 @@ In analogy with \factref{1d-nd-gradient}, we can relate quadratic forms in the H
 Assume that $f\colon\domain\to\R$ is twice differentiable along the line segment from $x$ to $y.$ Then,
 \[
 y^\trans \nabla^2f(x)y 
-= \frac{\partial^2f(x+\gamma y)}{\partial\gamma^2}\,.
+= \left.\frac{\partial^2f(x+\gamma y)}{\partial\gamma^2}\right|_{\gamma=0}\,.
 \]
 \end{fact}
-%The next claim extends \propositionref{first-order-taylor} with the help of \factref{1d-nd-hessian}.
-%\begin{proposition}
-%\propositionlabel{second-order-taylor}
-%Assume $f\colon\domain\to\R$ is twice continuously differentiable along the line segment between two points $x$ and $y.$ Then,
-%\[
-%f(y) = f(x) 
-%+ \nabla f(x)^\trans (y-x)
-%+ \frac{(y-x)^\trans \nabla^2 f(x)(y-x)}2
-%+ \int_0^1 (1-\gamma)\frac{\partial^3 f(x+\gamma(y-x))}{\partial\gamma^3}\rd\gamma\,.
-%\]
-%\end{proposition}
-%
+
 \begin{proposition}
 If $f$ is twice continuously differentiable on its domain~$\domain$, then $f$ is convex if and only if $\nabla^2 f(x)\succeq 0$ for all $x\in\domain.$ 
 \end{proposition}
