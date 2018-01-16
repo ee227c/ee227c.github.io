@@ -12,19 +12,21 @@ Location:	Etcheverry 3106
 Instructor: [Moritz Hardt](http://mrtz.org) (Email: hardt+ee227c@berk...edu)   
 Graduate Instructor: [Max Simchowitz](https://people.eecs.berkeley.edu/~msimchow/index.html) (Email: msimchow@berk...edu)
 
-
-## Assingments 
-Assignments will be posted on [Piazza](https://piazza.com/berkeley/spring2018/ee227c/home). If you haven't already, [sign up here](piazza.com/berkeley/spring2018/ee227c). Homeworks will be assigned ~every two weeks, and 2-3 problems will be selected for grading (we will not tell you which ones in advance). Assignments should be submitted through [GradeScope](https://gradescope.com); the course is listed as EE227C, which you may join with entry code 9P5NDV. Students will be permitted two unexcused late assignments (up to a week late). Students requesting additional extensions should email Max.
-
-## Grading
-Grading policy: 50% homeworks, 10% scribing, 20% midterm exam, 20% final exam. 
-
 ## Updates
 
 * *The class and its waitlist are completely full.* Please check back later in the
 semester to see if enrollment will have become availability. Visitors are
 permitted to audit only if there is enough space in the room. Please do leave
 available seats to enrolled students.
+
+
+## Assingments 
+
+Assignments will be posted on [Piazza](https://piazza.com/berkeley/spring2018/ee227c/home). If you haven't already, [sign up here](piazza.com/berkeley/spring2018/ee227c). Homeworks will be assigned ~every two weeks, and 2-3 problems will be selected for grading (we will not tell you which ones in advance). Assignments should be submitted through [GradeScope](https://gradescope.com); the course is listed as EE227C, which you may join with entry code 9P5NDV. Students will be permitted two unexcused late assignments (up to a week late). Students requesting additional extensions should email Max.
+
+## Grading
+
+Grading policy: 50% homeworks, 10% scribing, 20% midterm exam, 20% final exam. 
 
 ## Course notes
 
