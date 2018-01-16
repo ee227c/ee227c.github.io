@@ -14,10 +14,10 @@ Graduate Instructor: [Max Simchowitz](https://people.eecs.berkeley.edu/~msimchow
 
 ## Updates
 
-* *The class and its waitlist are completely full.* Please check back later in the
-semester to see if enrollment will have become availability. Visitors are
-permitted to audit only if there is enough space in the room. Please do leave
-available seats to enrolled students.
+* *The class and its waitlist are completely full.* Please check back later in
+the semester to see if enrollment will have become available. Visitors are permitted
+to audit only if there is enough space in the room. Please do leave available
+seats to enrolled students.
 
 
 ## Assingments 
@@ -43,7 +43,7 @@ collaboratively create and maintain notes over the course of the semester
 using git. See [this
 repository](https://github.com/ee227c/ee227c.github.io/tree/master/notes) for
 source files. Most lectures will have an accompanying Jupyter notebook
-containing plots illustrative examples.
+containing plots and illustrative examples.
 
 * [All lectures](notes/ee227c-notes.pdf)
 * [Lecture 1](notes/ee227c-lecture1.pdf) (Convexity)
