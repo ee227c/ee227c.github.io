@@ -42,7 +42,8 @@ Course notes will be publicly available. Participants will
 collaboratively create and maintain notes over the course of the semester
 using git. See [this
 repository](https://github.com/ee227c/ee227c.github.io/tree/master/notes) for
-source files.
+source files. Most lectures will have an accompanying Jupyter notebook
+containing plots illustrative examples.
 
 * [All lectures](notes/ee227c-notes.pdf)
 * [Lecture 1](notes/ee227c-lecture1.pdf) (Convexity)
@@ -51,19 +52,11 @@ source files.
 
 Convexity
 
-Ellipsoid algorithm
-
-Gradient method for smooth convex functions
-
-Gradient method for Lipschitz (non-smooth) convex functions
-
-Strongly convex problems
+Gradient methods for various classes of convex functions
 
 Stochastic optimization
 
-Momentum and acceleration: The quadratic case
-
-Acceleration: General case
+Momentum and acceleration
 
 Lower bounds for first-order optimization
 
@@ -80,6 +73,10 @@ Proximal methods
 Coordinate descent methods
 
 Primal-dual decomposition
+
+Ellipsoid algorithm
+
+Sum of squares
 
 ## Background
 
