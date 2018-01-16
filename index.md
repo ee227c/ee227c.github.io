@@ -35,7 +35,6 @@ collaboratively create and maintain notes over the course of the semester
 using [Overleaf](https://www.overleaf.com/edu/berkeley).
 Berkeley students get a free pro account.
 
-
 ## Summary
 
 This course will explore theory and algorithms for nonlinear optimization. We
