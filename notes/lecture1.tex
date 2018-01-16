@@ -153,13 +153,14 @@ We define the \emph{Hessian} matrix of $f\colon\domain\to\R$ at a point $x\in\do
 Schwarz's theorem implies that the Hessian at a point $x$ is symmetric provided
 that $f$ has continuous second partial derivatives in an open set around~$x.$
 
-In analogy with \factref{1d-nd-gradient}, we can relate quadratic forms in the Hessian matrix to one-dimensional derivatives.
+In analogy with \factref{1d-nd-gradient}, we can relate quadratic forms in the
+Hessian matrix to one-dimensional derivatives using the chain rule.
 \begin{fact}
 \factlabel{1d-nd-hessian}
 Assume that $f\colon\domain\to\R$ is twice differentiable along the line segment from $x$ to $y.$ Then,
 \[
-y^\trans \nabla^2f(x)y 
-= \left.\frac{\partial^2f(x+\gamma y)}{\partial\gamma^2}\right|_{\gamma=0}\,.
+y^\trans \nabla^2f(x+\gamma y)y 
+= \frac{\partial^2f(x+\gamma y)}{\partial\gamma^2}\,.
 \]
 \end{fact}
 
@@ -167,17 +168,24 @@ y^\trans \nabla^2f(x)y
 If $f$ is twice continuously differentiable on its domain~$\domain$, then $f$ is convex if and only if $\nabla^2 f(x)\succeq 0$ for all $x\in\domain.$ 
 \end{proposition}
 \begin{proof}
-Suppose $f$ is convex and our goal is to show that the Hessian is positive semidefinite. \propositionref{first-order-lower-bound} shows
+Suppose $f$ is convex and our goal is to show that the Hessian is positive semidefinite. 
+Let $y=x + \alpha u$ for some arbitrary vector~$u$ and scalar $\alpha.$
+\propositionref{first-order-lower-bound} shows
 \[
 f(y) - f(x) -\nabla f(x)^\trans (y-x) \ge 0
 \]
 Hence, by \propositionref{first-order-taylor},
 \begin{align*}
 0&\le  \int_0^1 (1-\gamma)\frac{\partial^2 f(x+\gamma(y-x))}{\partial\gamma^2}\rd\gamma\\
-&=  (1-\gamma)\frac{\partial^2 f(x+\gamma(y-x))}{\partial\gamma^2}\quad\text{for some $\gamma\in(0,1)$} \tag{by the mean value theorem}\\
-&= (1-\gamma)(y-x)^\trans \nabla^2 f(x)(y-x) \tag{by \factref{1d-nd-hessian}}
+&=  (1-\gamma)\frac{\partial^2 f(x+\gamma(y-x))}{\partial\gamma^2}
+\quad\text{for some $\gamma\in(0,1)$} \tag{by the mean value theorem}\\
+&= (1-\gamma)(y-x)^\trans \nabla^2 f(x+\gamma (y-x))(y-x) 
+\tag{by \factref{1d-nd-hessian}}\,.
 \end{align*}
-Thus $(y-x)^\trans \nabla^2 f(x)(y-x)\ge0$ for every $y\in\domain$ and so $\nabla^2 f(x)\succeq 0.$
+Plugging in our choice of~$y,$ this shows $0\le u^\trans \nabla^2
+f(x+\alpha\gamma u)u.$ Letting $\alpha$ tend to zero establishes that $\nabla^2
+f(x)\succeq 0.$ (Note that $\gamma$ generally depends on $\alpha$ but is always
+bounded by~$1.$)
 
 Now, suppose the Hessian is positive semidefinite everywhere in $\domain$ and our goal is to show that  the function~$f$ is convex. Again, using the mean value theorem and \propositionref{first-order-taylor}, we have
 for some $\gamma\in(0,1),$
