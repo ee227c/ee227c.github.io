@@ -57,7 +57,13 @@ f\left(\frac{x+y}2\right)\le \frac{f(x)+f(y)}2\,.
 \]
 This result sometimes simplifies the proof that a function is convex in cases where we already know that it's continuous.
 
+\begin{figure}
+\begin{center}
+\includegraphics[width=3in]{figures/lecture1-epigraph}
+\end{center}
+\end{figure}
 \begin{definition}
+
 The \emph{epigraph} of a function~$f\colon \domain\to\R$ is defined as 
 \[
 \epi(f) = \{(x, t)\mid f(x)\le t\}\,.
@@ -105,6 +111,13 @@ Apply a second order Taylor's expansion to $g(\gamma)=f(x+\gamma(y-x))$ and appl
 \end{proof}
 
 Among differentiable functions, convexity is equivalent to the property that the first-order Taylor approximation provides a global lower bound on the function.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=3in]{figures/lecture1-taylor}
+\end{center}
+\caption{Taylor approximation of $f(x)=x^2$ at $0.5.$}
+\end{figure}
 
 \begin{proposition}
 \propositionlabel{first-order-lower-bound}
@@ -187,13 +200,12 @@ f(x+\alpha\gamma u)u.$ Letting $\alpha$ tend to zero establishes that $\nabla^2
 f(x)\succeq 0.$ (Note that $\gamma$ generally depends on $\alpha$ but is always
 bounded by~$1.$)
 
-Now, suppose the Hessian is positive semidefinite everywhere in $\domain$ and our goal is to show that  the function~$f$ is convex. Again, using the mean value theorem and \propositionref{first-order-taylor}, we have
-for some $\gamma\in(0,1),$
-\begin{align*}
-f(y) &= f(x) + \nabla f(x)^\trans (y-x) + \frac{1-\gamma}2(y-x)^\trans \nabla^2 f(x)(y-x)\\
-&\ge  f(x) + \nabla f(x)^\trans (y-x)\,.
-\end{align*}
-Therefore, the function~$f$ is convex by \propositionref{first-order-lower-bound}.
+Now, suppose the Hessian is positive semidefinite everywhere in $\domain$ and
+our goal is to show that  the function~$f$ is convex.  Using the same derivation
+as above, we can see that the second-order error term in Taylor's theorem must
+be nonnegative. Hence, the first-oder approximation is
+a global lower bound and so the function~$f$ is convex by
+\propositionref{first-order-lower-bound}.
 \end{proof}
 
 \subsection{Convex optimization}
