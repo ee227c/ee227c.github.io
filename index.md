@@ -24,7 +24,7 @@ seats to enrolled students.
 
 ## Assingments 
 
-Assignments will be posted on [Piazza](https://piazza.com/berkeley/spring2018/ee227c/home). If you haven't already, [sign up here](https://piazza.com/berkeley/spring2018/ee227c). Homeworks will be assigned ~every two weeks, and 2-3 problems will be selected for grading (we will not tell you which ones in advance). Assignments should be submitted through [GradeScope](https://gradescope.com); the course is listed as EE227C, which you may join with entry code 9P5NDV. Students will be permitted two unexcused late assignments (up to a week late). Students requesting additional extensions should email Max.
+Assignments will be posted on [Piazza](https://piazza.com/berkeley/spring2018/ee227c/home). If you haven't already, [sign up here](https://piazza.com/berkeley/spring2018/ee227c). Homeworks will be assigned ~every two weeks, and 2-3 problems will be selected for grading (we will not tell you which ones in advance). Assignments should be submitted through [GradeScope](https://gradescope.com); the course is listed as EE227C, which you may join with entry code 9P5NDV. *All homeworks should be latexed.* Students will be permitted two unexcused late assignments (up to a week late). Students requesting additional extensions should email Max.
 
 ## Grading
 
