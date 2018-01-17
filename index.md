@@ -48,7 +48,7 @@ source files. Most lectures will have an accompanying Jupyter notebook
 containing plots and illustrative examples.
 
 * [All lectures](notes/ee227c-notes.pdf)
-* Lecture 1 (Convexity) [pdf](notes/ee227c-lecture1.pdf) [ipynb](notes/lecture1.ipynb)
+* Lecture 1 (Convexity) [pdf](notes/ee227c-lecture1.pdf) [ipynb](http://nbviewer.jupyter.org/urls/ee227c.github.io/notes/lecture1.ipynb)
 
 ## Topics
 
