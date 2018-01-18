@@ -19,7 +19,7 @@ the semester to see if enrollment will have become available. Visitors are permi
 to audit only if there is enough space in the room. Please do leave available
 seats to enrolled students.
 
-* *Piazza Signup Link Fixed*
+* *[Scribing Signup Sheet Added](https://docs.google.com/spreadsheets/d/1OSW_Yznt80k40Zmf6MVRvz3wT-An0XFbNkEEWNbEjNE/edit?usp=sharing)*
 
 
 ## Assingments 
@@ -46,6 +46,10 @@ using git. See [this
 repository](https://github.com/ee227c/ee227c.github.io/tree/master/notes) for
 source files. Most lectures will have an accompanying Jupyter notebook
 containing plots and illustrative examples.
+
+Please Signup for Scribing [Here](https://docs.google.com/spreadsheets/d/1OSW_Yznt80k40Zmf6MVRvz3wT-An0XFbNkEEWNbEjNE/edit?usp=sharing). All 3 scribes should collaborate to prove a *single* tex file. Moritz will have a skeleton of notes available [here](https://github.com/ee227c/ee227c.github.io/tree/master/notes), which students will fill in, following [these instructions](https://github.com/ee227c/ee227c.github.io/blob/master/notes/instructions.pdf). 
+
+We suggest that each scribe takes down notes, and then all three meet after class to consolidate. 
 
 * [All lectures](notes/ee227c-notes.pdf)
 * Lecture 1 (Convexity) [pdf](notes/ee227c-lecture1.pdf) [ipynb](http://nbviewer.jupyter.org/urls/ee227c.github.io/notes/lecture1.ipynb)
