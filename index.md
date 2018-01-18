@@ -10,7 +10,7 @@ Spring 2018
 Time: TuTh 12:30PM - 1:59PM  
 Location:	Etcheverry 3106  
 Instructor: [Moritz Hardt](http://mrtz.org) (Email: hardt+ee227c@berk...edu)   
-Graduate Instructor: [Max Simchowitz](https://people.eecs.berkeley.edu/~msimchow/index.html) (Email: msimchow@berk...edu)
+Graduate Instructor: [Max Simchowitz](https://people.eecs.berkeley.edu/~msimchow/index.html) (Email: msimchow@berk...edu).
 Office Hours: Monday 3-4pm, Soda 310
 
 ## Updates
@@ -22,6 +22,7 @@ seats to enrolled students.
 
 * *[Scribing Signup Sheet Added](https://docs.google.com/spreadsheets/d/1OSW_Yznt80k40Zmf6MVRvz3wT-An0XFbNkEEWNbEjNE/edit?usp=sharing)*
 
+* Max's Office Hours: Monday 3-4pm, Soda 310
 
 ## Assingments 
 
