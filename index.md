@@ -22,7 +22,7 @@ seats to enrolled students.
 
 * *[Scribing Signup Sheet Added](https://docs.google.com/spreadsheets/d/1OSW_Yznt80k40Zmf6MVRvz3wT-An0XFbNkEEWNbEjNE/edit?usp=sharing)*
 
-* Max's Office Hours: Monday 3-4pm, Soda 310
+* Max's Office Hours: Monday 3-4pm, Soda 310. Office Hours Begin 1/29
 
 ## Assingments 
 
