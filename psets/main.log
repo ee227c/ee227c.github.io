@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  18 JAN 2018 23:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  18 JAN 2018 23:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -952,24 +952,25 @@ File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
 ) [1
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 80.
- [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 80.
- (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 80.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 80.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 95.
+ [3] [4]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 95.
+
+(./main.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 95.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 95.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 80.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 95.
  ) 
 Here is how much of TeX's memory you used:
- 11940 strings out of 493014
- 178796 string characters out of 6133351
- 304711 words of memory out of 5000000
- 15149 multiletter control sequences out of 15000+600000
- 51140 words of font info for 174 fonts, out of 8000000 for 9000
+ 11952 strings out of 493014
+ 178906 string characters out of 6133351
+ 303720 words of memory out of 5000000
+ 15150 multiletter control sequences out of 15000+600000
+ 51299 words of font info for 176 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,11n,42p,501b,340s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,11n,42p,501b,411s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
 xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
@@ -983,10 +984,10 @@ xmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2016/texmf-dist
 /fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/
 type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/u
 rw/palatino/uplri8a.pfb>
-Output written on main.pdf (3 pages, 124684 bytes).
+Output written on main.pdf (4 pages, 126487 bytes).
 PDF statistics:
- 103 PDF objects out of 1000 (max. 8388607)
- 85 compressed objects within 1 object stream
- 31 named destinations out of 1000 (max. 500000)
+ 117 PDF objects out of 1000 (max. 8388607)
+ 98 compressed objects within 1 object stream
+ 39 named destinations out of 1000 (max. 500000)
  36865 words of extra memory for PDF output out of 42996 (max. 10000000)
 
