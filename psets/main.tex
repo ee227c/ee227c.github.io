@@ -28,11 +28,26 @@ Graduate Instructor: Max Simchowitz\\
 
 \subparagraph{iii)} Using part $i)$ and $ii)$, prove the existence of a subgradient. 
 
-\subparagraph{iv)} Let $\{g_{\alpha}\}$ be a (possibly infinite, uncountable) family of convex functions, and suppose that $g_{\alpha}(x) < \infty$ for all $x \in \cX$. Show that $g(x) := \sup_{\alpha} g_{\alpha}(x)$ is finite and convex on $\cX$. 
+\subparagraph{iv)} Let $\{g_{\alpha}\}$ be a (possibly infinite, uncountable) family of convex functions, and suppose that $g_{\alpha}(x) < \infty$ for all $x \in \cX$. Show that $g(x) := \sup_{\alpha} g_{\alpha}(x)$ is convex on $\cX$ (you may assume it's finite).
 
 \subparagraph{v)} Using what we've proven about subgradients, prove that a function $g: \cX \to \R$ is convex if and only if it can be written as the supremum of affine functions (e.g. supremum of  $g_{\alpha}(x) = \langle a_{\alpha}, x \rangle + b_{\alpha}$)
 
+\paragraph{B)} Some facts about subgradients
 
+\subparagraph{i)} Show that the subgradient is not unique, but that the set of all subgradients is convex.
+
+\subparagraph{ii)} Show that if $f$ is differentiable at $x$, $\partial f(x) = \{\nabla f(x)\}$. 
+
+\subparagraph{iii)} Show that if $g_1 \in \partial f_1(x)$ and $g_2 \in \partial f_2(x)$, then $g_1 + g_2 \in \partial(f_1 + f_2)(x)$. 
+
+
+\subparagraph{iv)} Danskin's Theorem States
+\begin{theorem*}[Danskin] Let $\Omega$ be a convex domain, and let $f(x) = \sup_{\alpha} g_{\alpha}(x)$, where $g_{\alpha}$ are convex functions and finite on $\Omega$. Suppose $f$ is also finite on $\Omega$. Then for all $x \in \Omega$, $\partial f = \Conv \{\partial g_{\alpha}(x) | \sup_{x} g_{\alpha}(x) =f(x) \}$
+\end{theorem*}
+Prove one direction of the theorem, $\partial f \subseteq \Conv \{\partial g_{\alpha}(x) | \sup_{x} g_{\alpha}(x) =f(x) \}$
+
+
+\subparagraph{v)} (Hard) Prove the other direction of Danskin's theorem. Here you may want to work in epigraph space. 
 
 \section*{Problem 2: Extensions for Gradient Descent}
 \paragraph{A)} Generalizations of SGD
