@@ -1,0 +1,80 @@
+\documentclass[12pt]{article}
+
+\usepackage{macros}
+
+\title{Problem Set 1 for EE227C (Spring 2018):\\
+ Convex Optimization and Approximation }
+\author{Instructor: Moritz Hardt\\
+{\small Email: \tt hardt+ee227c@berkeley.edu}\\ ~\\
+Graduate Instructor: Max Simchowitz\\
+{\small Email: \tt msimchow+ee227c@berkeley.edu}\\ ~\\
+}
+
+\begin{document}
+
+\maketitle
+
+
+
+
+\section*{Problem 1: Subgradients and Gradients}
+\paragraph{A)} Let $\cX$ be a closed set. Prove that that given any convex function $f: \cX \to \R$ and any $x \in \cX$, there exists a nonempty set $\partial f(x)$ such that, for all $g \in \partial f(x)$, $f(y) \ge f(x) + \langle g, y - x \rangle$. Do so following the steps:
+\subparagraph{i)} Define the \emph{Epigraph} of $f$, $\Epi(f) := \{(x,t) \in \cX \times \R: f(x) \le t\}$. Prove the $\Epi(f)$ is convex. Let $\Int(\cC)$ and $\Bd(\cC)$ denote the interior and boundary of a set $\cC$, respectively. Suppose that $(x,y) \in \Bd(\Epi(f))$. What can you say about the values of $f(x)$ and $y$?
+
+\subparagraph{ii)} Using the separating hyperplane theorem from the notes (the full version, which applies to arbitrary convex sets not just compact ones), prove the supporting hyperplane theorem.  (see Background)
+\begin{theorem*}[Separating Hyperplane] Let $\cC$ be a convex set, and let $x \in \Bd(\cC($. Then, there exists a hyperplane $\cH$ passing through $x$ such that $\cC \cap \cH \subset \Bd(\cC) $. 
+\end{theorem*}
+\emph{Hint: Consider $\Int(\cC) := \{x \in \cC | x \notin \Bd(\cC)\}$. This set is convex (you don't need to prove this). Find an appropriate other convex set to which you can apply the separating hyperplane theorem.}
+
+\subparagraph{iii)} Using part $i)$ and $ii)$, prove the existence of a subgradient. 
+
+\subparagraph{iv)} Let $\{g_{\alpha}\}$ be a (possibly infinite, uncountable) family of convex functions, and suppose that $g_{\alpha}(x) < \infty$ for all $x \in \cX$. Show that $g(x) := \sup_{\alpha} g_{\alpha}(x)$ is finite and convex on $\cX$. 
+
+\subparagraph{v)} Using what we've proven about subgradients, prove that a function $g: \cX \to \R$ is convex if and only if it can be written as the supremum of affine functions (e.g. supremum of  $g_{\alpha}(x) = \langle a_{\alpha}, x \rangle + b_{\alpha}$)
+
+
+
+\section*{Problem 2: Extensions for Gradient Descent}
+\paragraph{A)} Generalizations of SGD
+\subparagraph{i))} Prove the following statement:
+\begin{proposition*} Let $\Omega$ be a convex domain of radius $R$, and let $f$ be a convex function on $\Omega$. Let $x_0 \in \Omega$, and let $x_{t} = \Pi_{\Omega}(x_{t-1} - \eta g_t )$, where $\Exp[g_t | g_1,\dots,g_{t-1}] \in \partial f(x_t)$, and $\sup_{t} \Exp[\|g_t\|^2] \le L$.  Prove that 
+\begin{eqnarray}
+ f(\frac{1}{T}\sum_{t=1}^T x_t) \inf_{x \in \Omega} f(x) + \dots
+\end{eqnarray}
+You fill in the $\dots$.
+\end{proposition*}
+\subparagraph{ii)} Prove the following statement:
+\begin{proposition*}  Let $\Omega$ be a convex domain of radius $R$, Let $f_1,f_2,\dots,f_T$ be $L$-Lipschitz, convex functions on $\Omega$. Given any $x_0 \in \Omega$, let $x_{t} = \Pi_{\Omega}(x_{t-1} - \eta g_t ))$, where $g_t \in \partial f_t(x_t)$, and  $\eta = \frac{LR}{\sqrt{T}}$. Prove that
+\begin{eqnarray}
+\frac{1}{T}\sum_{t=1}^{T} f(\frac{1}{T}\sum_{t=1}^T x_t) \le \frac{1}{T}\sum_{t=1}^Tf_t(x_t) \le \inf_{x \in \Omega}\frac{1}{T}\sum_{t=1}^Tf_t(x_t) + \frac{\dots}{}
+\end{eqnarray}
+You fill in the $\dots$.
+\end{proposition*}
+
+\paragraph{B)}In this problem we show that in the stochastic setting, smoothness of the function $f$ does not help. Let $\Omega = [-1,1]$, let $\sigma$ be a random variable with $\Pr[\sigma = 1] = \Pr[\sigma = -1] = 1/2$, fix an $\epsilon \in (0,1/4)$. Let $z_1,z_2,\dots,z_T$ be $T$ i.i.d random variables, such that $z_i | \sigma$ are mutually independent, and 
+\begin{eqnarray}
+\Pr[z_i =  1 | \sigma] = 1/2 + \sigma \epsilon \text{ and } \Pr[z_i =  -1 | \sigma] = 1/2 - \sigma \epsilon 
+\end{eqnarray}
+You will need the following information
+\begin{lemma*} Let $\sigma$ and $z_1,z_2,\dots,z_T$ be as above. Then there exists a universal constant $C$ such that, if $T \le C \epsilon^2$, any algorithm which resturns an estimate $\widehat{\sigma}$ of $\sigma$ from observing $z_1,z_2,\dots,z_T$ satisfies $\Pr[\widehat{\sigma} \ne \sigma] \ge \frac{1}{4}$. 
+\end{lemma*}
+\subparagraph{i)} Construct a function on $f_{\sigma}$ such that $\Exp[z_i | \sigma] = \nabla f_{\sigma}(x)$ for all $x \in \Omega$. What is the optimum $x^*_{\sigma} $of $f_{\sigma}$? What is the ``smoothness'' of $f_{\sigma}$.
+\subparagraph{ii)} Show that there universal constants $c$ such that the following hold: Fix a $T \in \mathbb{N}$, and let $\cA$ be an algorithm which is allowed to make $T$ queries $x_t \in [-1,1]$ and $g_t$, where $\cA$ decides $x_t$, and recieves responses $g_t$ such that $\Exp[g_t] = \nabla f(x_t)$ and $|g_t| \le 1$ as.s. Then, there is a $0$-smooth, $1$-Lipschitz function $f$ and a mechanism generating responses $g_t$ such that the iterate $x_{T}$ satisfies
+\begin{eqnarray}
+\Exp[f(x_{1})] - \inf_{x \in [-1,1]} f(x)\ge c /\sqrt{T}
+\end{eqnarray}
+
+
+
+\subparagraph{iii)} Answer to Problem 1(B)(iii) here.
+
+\paragraph{C)} Answer to Problem 1(C) here.
+
+\paragraph{D)} Answer to Problem 1(D) here.
+
+\paragraph{E)} Answer to Problem 1(E) here.
+
+
+
+\section*{Bacgkround}
+\end{document}
