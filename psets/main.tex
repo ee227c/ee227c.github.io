@@ -34,7 +34,7 @@ Graduate Instructor: Max Simchowitz\\
 
 \paragraph{B)} Some facts about subgradients
 
-\subparagraph{i)} Show that the subgradient is not unique, but that the set of all subgradients is convex.
+\subparagraph{i)} Show that the subgradient is not unique, but that the set of all subgradients is convex. We will denote this \emph{set} $\partial f(x)$.
 
 \subparagraph{ii)} Show that if $f$ is differentiable at $x$, $\partial f(x) = \{\nabla f(x)\}$. 
 
@@ -49,12 +49,19 @@ Prove one direction of the theorem, $\partial f \subseteq \Conv \{\partial g_{\a
 
 \subparagraph{v)} (Hard) Prove the other direction of Danskin's theorem. Here you may want to work in epigraph space. 
 
-\section*{Problem 2: Extensions for Gradient Descent}
+
+\section*{Problem 2: Computing Some Subgradients}
+\paragraph{A)} Norms and Matrix Norms
+\subparagraph{i))} Using the result about the suprema of convex functions, show that $\|\cdot\|_1,\|\cdot\|_2,\|\cdot\|_{\infty}$ are convex functions by expressing each norm as $,,,$
+
+
+
+\section*{Problem 3: Extensions for Gradient Descent}
 \paragraph{A)} Generalizations of SGD
 \subparagraph{i))} Prove the following statement:
 \begin{proposition*} Let $\Omega$ be a convex domain of radius $R$, and let $f$ be a convex function on $\Omega$. Let $x_0 \in \Omega$, and let $x_{t} = \Pi_{\Omega}(x_{t-1} - \eta g_t )$, where $\Exp[g_t | g_1,\dots,g_{t-1}] \in \partial f(x_t)$, and $\sup_{t} \Exp[\|g_t\|^2] \le L$.  Prove that 
 \begin{eqnarray}
- f(\frac{1}{T}\sum_{t=1}^T x_t) \inf_{x \in \Omega} f(x) + \dots
+ f(\frac{1}{T}\sum_{t=1}^T x_t) \le \inf_{x \in \Omega} f(x) + \dots
 \end{eqnarray}
 You fill in the $\dots$.
 \end{proposition*}
