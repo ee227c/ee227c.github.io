@@ -1,2 +1,81 @@
-\section{Lecture 2: Optimization}
-\sectionlabel{optimization}
+\section{Lecture 2: Gradient Descent}
+\sectionlabel{gradient_descent}
+
+\subsection{Gradient Descent}
+
+% TODO: Gradient descent figure?
+
+The procedure of gradient descent is defined by the recursion:
+\[
+x_{t+1} = x_t - \eta \nabla f(x_t)
+\]
+where $\eta$ is the step size. This works to solve the problem
+\[
+\min_{x\in\domain} f(x)
+\]
+for $f$ convex, differentiable, and L-Lipschitz
+
+\begin{definition}[L-Lipschitz]
+A function is said to be \emph{L-Lipschitz} if its gradient is bounded,
+\[
+\|\nabla f(x)\| \leq L
+\]
+\end{definition}
+
+\begin{fact}
+f(x) is L-Lipschitz implies that the difference between two points in the range is bounded,
+\[
+|f(x) - f(y)| \leq L \|x - y\|
+\]
+\end{fact}
+
+%TODO better way to have these lines? Indentation looks weird
+
+\begin{question}
+How do we ensure that $x_{t+1}\in\domain$?
+\end{question}
+
+Solution: Project into $\domain$
+
+\begin{definition}[Projection]
+The \emph{projection} of a point $y$ onto a set $\domain$ is defined as
+\[
+\Pi_{\domain}(x) = \argmin_{y\in\domain} \|x-y\|
+\]
+\end{definition}
+
+\begin{example}
+\examplelabel{euclidean-ball}
+A projection onto the Euclidean ball $B_2$ is just normalization:
+\[
+\Pi_{B_2}(x) = \dfrac{x}{\|x\|}
+\]
+\end{example}
+
+% TODO: Pythagorean theorem figure
+
+%TODO Indentation
+The crucial property of projections is that they satisfy the following condition:
+\[
+\| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2
+\]
+i.e. the projection of $y$ onto a convex set containing $x$ is closer to $x$
+
+\begin{lemma}
+\[
+\| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2 - \| y - \Pi_{\domain}(y) \|^2
+\]
+Which follows from the Pythagorean theorem. Note that this lemma implies the above property.
+\end{lemma}
+
+\subsubsection{Modifying Gradient Descent with Projections}
+
+So now we can modify our original procedure to use two steps.
+\[
+y_{t+1} = x_t - \eta \nabla f(x_t)
+\]
+\[
+x_{t+1} = \Pi_{\domain}(y_{t+1})
+\]
+
+And we are guaranteed that $x_{t+1}\in\domain$. Note that computing the projection may be the hardest part of your problem, as you are computing an $\argmin$. However, there are convex sets for which we know explicitly how to compute the projection (see \exampleref{euclidean-ball}).
