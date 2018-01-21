@@ -3,7 +3,8 @@
 # Shell script to extract notes for single lecture
 # First argument specifies which lecture number to compile
 
-PDFLATEX=/usr/bin/pdflatex
+# PDFLATEX=/usr/bin/pdflatex
+PDFLATEX=/Library/TeX/texbin/pdflatex
 
 if [ $# -eq 0 ]
 then
