@@ -49,38 +49,42 @@ Please Signup for Scribing [Here](https://docs.google.com/spreadsheets/d/1OSW_Yz
 
 We suggest that each scribe takes down notes, and then all three meet after class to consolidate. 
 
-* [All lectures](notes/ee227c-notes.pdf)
-* Lecture 1 (Convexity) [pdf](notes/ee227c-lecture1.pdf) [ipynb](http://nbviewer.jupyter.org/urls/ee227c.github.io/notes/lecture1.ipynb)
+* [All available lectures (pdf)](notes/ee227c-notes.pdf)
 
-## Topics
-
-Convexity
-
-Gradient methods for various classes of convex functions
-
-Stochastic optimization
-
-Momentum and acceleration
-
-Lower bounds for first-order optimization
-
-Trade-offs between robustness and acceleration
-
-Mildly non-convex problems
-
-Backpropagation
-
-Subgradients
-
-Proximal methods
-
-Coordinate descent methods
-
-Primal-dual decomposition
-
-Ellipsoid algorithm
-
-Sum of squares
+| # | Date  | Topic  | pdf | ipynb  |
+|-|-|-|-|-|
+| 1 | 1/16 | Convexity  | [pdf](notes/ee227c-lecture1.pdf) | [ipynb](http://nbviewer.jupyter.org/urls/ee227c.github.io/notes/lecture1.ipynb)
+| 2 | 1/18 | Gradient method (non-smooth and smooth)  |   |   |
+| 3 | 1/23 | Gradient method (strongly convex) |   |   |
+| 4 | 1/25 | Gradient method (some applications) |   |   |
+| 5 | 1/30 | Conditional gradient (Frank-Wolfe algorithm) |   |   |
+| 6 | 2/1 |  Momentum and acceleration|   |   |
+| 7 | 2/6 |Nesterov's method  |   |   |
+| 8 | 2/8 |  Lower bounds|   |   |
+| 9 | 2/13 |  Robustness acceleration trade-offs |   |   |
+| 10 | 2/15 | Stochastc optimization |   |   |
+| 11 | 2/20 | Learning, regularization, and generalization |   |   |
+| 12 | 2/22 | Coordinate Descent |   |   |
+| 13 | 2/27 | Proximal Methods  |   |   |
+| 14 | 3/1 | Duality theory|   |   |
+| 15 | 3/6 | Algorithms using duality |   |   |
+| 16 | 3/8 | Differentiation and adjoints |   |   |
+| 17 | 3/13 | Backpropagation and applications |   |   |
+| 18 | 3/15 | Distributed Optimization |   |   |
+| 19 | 3/20 | Quasi-convex problems |   |   |
+| 20 | 3/22 | Alternating minimization |   |   |
+| -- | 3/27 | No class (Spring break) |   |   |
+| -- | 3/29 | No class (Spring break) |   |   |
+| 21 | 4/3  | Guest lecture by Ludwig Schmidt on non-convex constraints | | |
+| 22 | 4/5  | Guest lecture by Ludwig Schmidt on non-convex constraints | | |
+| 23 | 4/10 | Newton method |   |   |
+| 24 | 4/12 | Ellipsoid method |   |   |
+| 25 | 4/17 | Sampling from convex sets |   |   |
+| 25 | 4/19 | TBD |   |   |
+| 26 | 4/24 | Sum of squares |   |   |
+| 27 | 4/26 | Last lecture |   |   |
+| 28 | 5/1 | Reading, review, recitation |   |   |
+| 29 | 5/3 | Reading, review, recitation |   |   |
 
 ## Background
 
