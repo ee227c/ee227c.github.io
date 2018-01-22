@@ -21,7 +21,9 @@ body {
     line-height: $base-line-height;
     font-weight: 300;
     color: $text-color;
-    background-color: $background-color;
+    background: url('/assets/contour.svg');
+    background-repeat: no-repeat;
+    background-size: 1600px;
     -webkit-text-size-adjust: 100%;
 }
 
@@ -112,7 +114,6 @@ a {
 
     &:hover {
         background-color: $highlight-color;
-        color: $text-color;
         text-decoration: underline;
     }
 }
@@ -238,12 +239,12 @@ th {
     font-size: 18pt;
     font-variant: small-caps;
     text-align: left;
-    background-color:#aee;
+    background-color: $grey-color-light;
 }
 
 tr:nth-child(even) {
-    background-color: #ede;
+    background-color: $highlight-color;
 }
 tr:nth-child(odd) {
-    background-color: #dee;
+    background-color: #fff; /* #d6eaf8; */
 }
