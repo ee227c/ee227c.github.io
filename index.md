@@ -14,10 +14,10 @@ Office hours: Max on Mon 3-4pm, Soda 310 (starting 1/29), Moritz on Fri 9--9:50a
 ## Summary
 
 This course will explore theory and algorithms for nonlinear optimization. We
-will focus on problems that arise in machine learning and computational
-statistics, paying close attention to concerns about complexity, robustness, and
-implementation in these domains. Whenever possible, methods will be linked to
-particular application examples in data analysis.
+will focus on problems that arise in machine learning and modern data analysis,
+paying attention to concerns about complexity, robustness, and implementation in
+these domains. We will also see how tools from convex optimization can help
+tackle non-convex optimization problems common in practice.
 
 ## Updates
 
