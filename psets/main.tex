@@ -17,46 +17,62 @@ Graduate Instructor: Max Simchowitz\\
 
 
 
-\section*{Problem 1: Subgradients and Gradients}
-\paragraph{A)} Let $\cX$ be a closed set. Prove that that given any convex function $f: \cX \to \R$ and any $x \in \cX$, there exists a nonempty set $\partial f(x)$ such that, for all $g \in \partial f(x)$, $f(y) \ge f(x) + \langle g, y - x \rangle$. Do so following the steps:
-\subparagraph{i)} Define the \emph{Epigraph} of $f$, $\Epi(f) := \{(x,t) \in \cX \times \R: f(x) \le t\}$. Prove the $\Epi(f)$ is convex. Let $\Int(\cC)$ and $\Bd(\cC)$ denote the interior and boundary of a set $\cC$, respectively. Suppose that $(x,y) \in \Bd(\Epi(f))$. What can you say about the values of $f(x)$ and $y$?
+\section*{Problem 1: Existence of the Subgradients}
+Let $\cX$ be a convex set. Prove that that given any convex function $f: \cX \to \R$ and any $x \in \cX$, there at least one vector $g$ - called a \emph{subgradient} of $f$ at $x$ - such that $f(y) \ge f(x) + \langle g, y - x \rangle$ for all $y \in \cX$. You will do so following the steps below. 
+\paragraph{i)} Define the \emph{Epigraph} of $f$, $\Epi(f) := \{(x,t) \in \cX \times \R: f(x) \le t\}$. Prove the $\Epi(f)$ is convex. 
 
-\subparagraph{ii)} Using the separating hyperplane theorem from the notes (the full version, which applies to arbitrary convex sets not just compact ones), prove the supporting hyperplane theorem.  (see Background)
-\begin{theorem*}[Supporting Hyperplane] Let $\cC$ be a convex set, and let $x \in \Bd(\cC($. Then, there exists a hyperplane $\cH$ passing through $x$ such that $\cC \cap \cH \subset \Bd(\cC) $. 
+\paragraph{ii)} Recall the following definitions from real analysis
+\begin{definition*}[Boundary and Interior] For a set $\cX \subset \R^d$, its closure $\overline{\cX}$ is defined as the set of all $x \in \R^d$ (not necessarily in $\cX$) such that, for all $\epsilon > 0$, there exists a $y \in \cX$ such that $\|x - y\| \le \epsilon$. In other words, for every $\epsilon > 0$, the ball of radius $\epsilon$ around $x$ intersects $\cX$. $\Int(\cX)$ is defined as the set of all points $x \in \cX$ such that there exists an $\epsilon > 0$ for which, for all $y: \|x-y\| \le \epsilon$, $y \in \cX$; it other words, for some $\epsilon > 0$, the ball of radius $\epsilon > 0$ around $x$ lies entirely in $\cX$. Lastly, we define the boundary $\Bd(\cX) := \overline{\cX} - \Int(\cX) = \{x \in \overline{\cX} : x \notin \Int(\cX)\}$. 
+\end{definition*}
+
+
+Using the separating hyperplane theorem from the notes (the full version, which applies to arbitrary convex sets not just compact ones), prove the supporting hyperplane theorem.
+\begin{theorem*}[Supporting Hyperplane] Let $\cC \subset \R^d$ be a convex set, and let $x \in \Bd(\cC)$. Then, there exists a $w \in \R^d$ such that, for all $y \in \cC$, $\langle w, y - x \rangle \ge 0$. 
 \end{theorem*}
-\emph{Hint: Consider $\Int(\cC) := \{x \in \cC | x \notin \Bd(\cC)\}$. This set is convex (you don't need to prove this). Find an appropriate other convex set to which you can apply the separating hyperplane theorem.}
+\emph{Hint:  Find two (not-necessarily compact!) convex sets to apply the separating hyperplane theorem. You might want $\Int(\cC)$ to be one of them - and you should check that $\Int(\cC)$ is convex } 
 
-\subparagraph{iii)} Using part $i)$ and $ii)$, prove the existence of a subgradient. 
 
-\subparagraph{iv)} Let $\{g_{\alpha}\}$ be a (possibly infinite, uncountable) family of convex functions, and suppose that $g_{\alpha}(x) < \infty$ for all $x \in \cX$. Show that $g(x) := \sup_{\alpha} g_{\alpha}(x)$ is convex on $\cX$ (you may assume it's finite).
+\paragraph{iii)} Using part $i)$ and $ii)$, prove the existence of a subgradient. 
 
-\subparagraph{v)} Using what we've proven about subgradients, prove that a function $g: \cX \to \R$ is convex if and only if it can be written as the supremum of affine functions (e.g. supremum of  $g_{\alpha}(x) = \langle a_{\alpha}, x \rangle + b_{\alpha}$)
+\paragraph{iv)} Let $\{g_{\alpha}\}$ be a (possibly infinite, uncountable) family of convex functions, and suppose that $g_{\alpha}(x) < \infty$ for all $x \in \cX$. Show that $g(x) := \sup_{\alpha} g_{\alpha}(x)$ is convex on $\cX$ (you may assume $g(x)$ is finite).
 
-\paragraph{B)} Some facts about subgradients
+\paragraph{v)} Using what we've proven about subgradients, prove that a function $g: \cX \to \R$ is convex if and only if it can be written as the supremum of affine functions (e.g. supremum of functions of the form $g_{\alpha}(x) = \langle a_{\alpha}, x \rangle + b_{\alpha}$)
 
-\subparagraph{i)} Show that the subgradient is not unique, but that the set of all subgradients is convex. We will denote this \emph{set} $\partial f(x)$.
+\section*{Problem 2: Properties of Subgradients}
+
+\subparagraph{i)} Show by way of example that the subgradient is not necssarily unique, but that the set of all subgradients is convex. We will denote this \emph{set} $\partial f(x)$.
 
 \subparagraph{ii)} Show that if $f$ is differentiable at $x$, $\partial f(x) = \{\nabla f(x)\}$. 
 
 \subparagraph{iii)} Show that if $g_1 \in \partial f_1(x)$ and $g_2 \in \partial f_2(x)$, then $g_1 + g_2 \in \partial(f_1 + f_2)(x)$. 
 
 
-\subparagraph{iv)} Danskin's Theorem States
-\begin{theorem*}[Danskin] Let $\Omega$ be a convex domain, and let $f(x) = \sup_{\alpha} g_{\alpha}(x)$, where $g_{\alpha}$ are convex functions and finite on $\Omega$. Suppose $f$ is also finite on $\Omega$. Then for all $x \in \Omega$, $\partial f = \Conv \{\partial g_{\alpha}(x) | \sup_{x} g_{\alpha}(x) =f(x) \}$
+
+\subparagraph{vi)} Consider the following theorem
+\begin{theorem*}\label{thm:smthm} Let $\Omega$ be a convex domain, and let $f(x) = \sup_{\alpha} g_{\alpha}(x)$, where $g_{\alpha}$ are convex functions and finite on $\Omega$. Suppose $f$ is also finite on $\Omega$. Then for all $x \in \Omega$, $\partial f = \Conv \{\partial g_{\alpha}(x) | \sup_{x} g_{\alpha}(x) =f(x) \}$
 \end{theorem*}
 Prove one direction of the theorem, $\partial f \subseteq \Conv \{\partial g_{\alpha}(x) | \sup_{x} g_{\alpha}(x) =f(x) \}$
 
 
-\subparagraph{v)} (Hard) Prove the other direction of Danskin's theorem. Here you may want to work in epigraph space. 
+\subparagraph{v)} (Hard) Prove the other direction of Theorem~\ref{thm:smthm}. Here you may want to work in epigraph space. 
 
 
-\section*{Problem 2: Computing Some Subgradients}
-\paragraph{A)} Norms and Matrix Norms
-\subparagraph{i))} Using the result about the suprema of convex functions, show that $\|\cdot\|_1,\|\cdot\|_2,\|\cdot\|_{\infty}$ are convex functions by expressing each norm as $,,,$
+\section*{Problem 3: Subgradients of Norms}
+\paragraph{A)} Subgradient of the $L_1$ and $L_{\infty}$-norms
+\subparagraph{i))} Prove that, for all $x \in \R^d$, $\|x\|_1 = \sup_{y: \|y\|_{\infty} \le 1}\langle x, y \rangle$, $\|x\|_{\infty} = \sup_{y:\|y\|_1 \le 1}\langle x, y \rangle$. 
+\subparagraph{ii))} Compute $\partial \|x\|_1$ and $\partial \|x\|_{\infty}$
+\paragraph{A)} Subgradient of the $L_1$-norm
+\subparagraph{i))} Let $A \in \R^{m \times n}$. Let $\sigma_i(\cdot)$ denote the $i$-th singular value of a matrix. Using the inequality $\sum_{i=1}^{\min(n,m)}\sigma_i(AB) \le \sum_{i=1}^{\min(n,m)} \sigma_i(A)\sigma_i(B)$ for all $A \in \R^{m \times n}$ and $B \in \R^{n \times m}$, prove the follow: For all $X \in \R^{m \times n}$, 
+\begin{eqnarray}
+\|X\|_{\op} :=  \max_{Y \in \R^{m \times n}  \|Y\|_{\nuc} \le 1} \langle X, Y \rangle  \text{ and } \|X\|_{\nuc} =  \max_{Y \in \R^{m \times n} :\|Y\|_{\op} \le 1} \langle X, Y \rangle ~,
+\end{eqnarray}
+where $\|X\|_{\op} := \sigma_{\max}(X)$, $ \|Y\|_{\nuc} := \sum_{i=1}^{\min(n,m)} \sigma_i(Y)$, and $\langle X, Y \rangle := \tr(X^\top Y)$. You may want to refresh yourself on the relationship between traces, eigenvalues and singular values. 
+\subparagraph{ii))} Compute $\partial \|X\|_{\op}$ and $\partial \|X\|_{\nuc}$. Under what conditions is each subgradient unique?
+\paragraph{C)} Let  $\|\cdot\|$ be an arbitary norm (not necessarily Euclidean!) on $\R^d$. Define the dual norm $\|x\|_* := \sup_{x: \|x\| \le 1}\langle x,y \rangle$. 
+\subparagraph{i)} Show that the dual norm is a norm, and describe its subgradient.
+\subparagraph{ii)} Let $f$ be a convex function on a convex domain $\cX$. Show that $f$ is $L$-Lipschitz on $\cX$ if an only if, for all $x \in \cX$ and all $g \in \partial f(x)$, $\|g\|_{*} \le L$. 
 
-
-
-\section*{Problem 3: Extensions for Gradient Descent}
+\section*{Problem 4: Extensions for Gradient Descent}
 \paragraph{A)} Generalizations of SGD
 \subparagraph{i))} Prove the following statement:
 \begin{proposition*} Let $\Omega$ be a convex domain of radius $R$, and let $f$ be a convex function on $\Omega$. Let $x_0 \in \Omega$, and let $x_{t} = \Pi_{\Omega}(x_{t-1} - \eta g_t )$, where $\Exp[g_t | g_1,\dots,g_{t-1}] \in \partial f(x_t)$, and $\sup_{t} \Exp[\|g_t\|^2] \le L$.  Prove that 
@@ -85,18 +101,34 @@ You will need the following information
 \begin{eqnarray}
 \Exp[f(x_{1})] - \inf_{x \in [-1,1]} f(x)\ge c /\sqrt{T}
 \end{eqnarray}
+\section*{Mirror Descent}
+In this problem, we introduce a useful generalization of gradient descent. Let $\cX \subseteq \cD \subseteq \R^d$ be convex sets, and let $\Phi: \cD \to \R$ be a strictly convex, continuously differentiable map such that $\|\nabla \Phi(x)\|$ diverges on $\Bd(\cD)$, and $\nabla \Phi(\cD) = \R^d$. We call $\Phi$ a \emph{mirror map}.
 
+\paragraph{A)} Define the \emph{Bregman Divergence}
+\begin{eqnarray}
+D_{\Phi}(x,y) = f(x) - f(y) - \nabla f(y)^{\top}(x-y)
+\end{eqnarray}
+and the associated $\Phi$ projection
+\begin{eqnarray}
+\Pi_{\cX}^{\Phi}(y):= \arg\min_{x \in \cX} D_{\Phi(x,y)}
+\end{eqnarray}
+Show that $\Phi(x) = \frac{1}{2}\|x\|^2_2$ is a mirror map, and compute $D_{\Phi}(x,y)$ and explain what $\Pi_{\cX}^{\Phi}(y)$ corresponds to
+\paragraph{B)} Prove that, for all $x \in \cX$ and $y \in \cD$,
+\begin{eqnarray}
+(\nabla \Phi(\Pi_{\cX}^{\Phi}(y)) - \nabla \Phi(y))^\top(\Pi_{\cX}^{\Phi}(y) - x) \le 0
+\end{eqnarray}
+and conclude that
+\begin{eqnarray}
+D_{\phi}(x,\Phi_{x}(y)) + D_{\phi}(\Phi_{x}(y),y) \le D_{\Phi}(x,y) 
+\end{eqnarray}
+What does this reduce to when $\Phi(x) = \frac{1}{2}\|x\|^2_2$?
+\paragraph{C)} Consider the following algorithm, known as mirror descent. Let $\cX \subset \cD$ and $\Phi$ be as above, let $f: \cX \to \R$ be convex, let $x_1  \in \cX$. Fix an $\eta > 0$. For $t \ge 1$, define $y_{t+1}$ such that $\nabla \Phi(y_{t+1}) - \nabla \Phi(x_{t}) = \eta g_t$, where $g_t \in \partial f(x_t)$. Prove the following:
+\begin{theorem*} Let $\|\cdot\|$ be an \emph{arbitrary} norm on $\cX$, and suppose that $\Phi$ is $\kappa$ strongly convex with respect to $\|\cdot\|$ on $\cX$. Suppose that $f$ is L-Lipschitz with respect to $\|\cdot\|$. Prove that 
+\begin{eqnarray}
+f(\sum_{s=1}^T x_s) - \min_{x \in \cX} f(x) \le \frac{D(x,\pi)}{\eta} + \eta \frac{L^2 T}{\kappa}
+\end{eqnarray}
+\end{theorem*}
+Recall that $\Phi$ is $\kappa$-strongly convex with respect to $\|\cdot\|$ if and only $\Phi(x)  - \Phi(y) \le \nabla \Phi(x)^\top (x-y) + \frac{\kappa}{2}\|x-y\|^2$. 
+\paragraph{D)} A common setup for mirror descent is on the simplex, where $\cD: \{x: x_i > 0 \forall i \in [d]\}$, and $\cX := \{x \in \cD:\|x\| = 1\}$. Given an iterate $x_t$, compute the updates $y_{t+1}$ and $x_{t+1}$. 
 
-
-\subparagraph{iii)} Answer to Problem 1(B)(iii) here.
-
-\paragraph{C)} Answer to Problem 1(C) here.
-
-\paragraph{D)} Answer to Problem 1(D) here.
-
-\paragraph{E)} Answer to Problem 1(E) here.
-
-
-
-\section*{Bacgkround}
 \end{document}
