@@ -48,7 +48,7 @@ Using the separating hyperplane theorem from the notes (the full version, which 
 
 
 
-\subparagraph{vi)} Let $f(x) = \sup_{\alpha} g_{\alpha}(x)$. Show that $\Conv \{\partial g_{\alpha}(x) |  g_{\alpha}(x) =f(x) \} \subseteq \partial f$. 
+\subparagraph{vi)} Let $f(x) = \sup_{\alpha} g_{\alpha}(x)$ which $g_{\alpha}$ convex. Show that $\Conv \{\partial g_{\alpha}(x) |  g_{\alpha}(x) =f(x) \} \subseteq \partial f$. 
 
 \subparagraph{(v)} Prove that if $g_{\alpha}(x) = w_{\alpha}^\top x + b_{\alpha}$ are a compact family of affine functions (i.e. $\{(w_{\alpha},b_{\alpha})\} \subset \R^{d+1}$ is compact), then the converse is true, namely $\partial f \subset \Conv \{\partial g_{\alpha}(x) |  g_{\alpha}(x) =f(x) \} $. 
 
@@ -67,6 +67,7 @@ where $\|X\|_{\op} := \sigma_{\max}(X)$, $ \|Y\|_{\nuc} := \sum_{i=1}^{\min(n,m)
 \paragraph{C)} Let  $\|\cdot\|$ be an arbitary norm (not necessarily Euclidean!) on $\R^d$. Define the dual norm $\|y\|_* := \sup_{x: \|x\| \le 1}\langle x,y \rangle$. 
 \subparagraph{i)} Show that the dual norm is a norm, and describe its subgradient.
 \subparagraph{ii)} Let $f$ be a convex function on a convex domain $\cX$. Show that $f$ is $L$-Lipschitz on $\cX$ if an only if, for all $x \in \cX$ and all $g \in \partial f(x)$, $\|g\|_{*} \le L$. 
+
 
 \section*{Problem 4: Extensions for Gradient Descent}
 \paragraph{A)} Generalizations of SGD
