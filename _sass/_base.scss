@@ -217,3 +217,33 @@ pre {
         }
     }
 }
+
+
+/**
+ * Tables
+ */
+table {
+    border:0px;
+    width:100%;
+    border-collapse:collapse;
+}
+
+td, th {
+    margin:0px;
+    padding:10px;
+}
+
+th {
+    font-weight: normal;
+    font-size: 18pt;
+    font-variant: small-caps;
+    text-align: left;
+    background-color:#aee;
+}
+
+tr:nth-child(even) {
+    background-color: #ede;
+}
+tr:nth-child(odd) {
+    background-color: #dee;
+}
