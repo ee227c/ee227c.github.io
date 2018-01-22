@@ -18,7 +18,7 @@ Graduate Instructor: Max Simchowitz\\
 
 
 \section*{Problem 1: Existence of the Subgradients}
-Let $\cX$ be a convex set. Prove that that given any convex function $f: \cX \to \R$ and any $x \in \cX$, there at least one vector $g$ - called a \emph{subgradient} of $f$ at $x$ - such that $f(y) \ge f(x) + \langle g, y - x \rangle$ for all $y \in \cX$. You will do so following the steps below. 
+Let $\cX$ be a convex set. Prove that that given any convex function $f: \cX \to \R$ and any $x \in \cX$, there exists at least one vector $g$ - called a \emph{subgradient} of $f$ at $x$ - such that $f(y) \ge f(x) + \langle g, y - x \rangle$ for all $y \in \cX$. You will do so following the steps below. 
 \paragraph{i)} Define the \emph{Epigraph} of $f$, $\Epi(f) := \{(x,t) \in \cX \times \R: f(x) \le t\}$. Prove the $\Epi(f)$ is convex. 
 
 \paragraph{ii)} Recall the following definitions from real analysis
@@ -40,21 +40,17 @@ Using the separating hyperplane theorem from the notes (the full version, which 
 
 \section*{Problem 2: Properties of Subgradients}
 
-\subparagraph{i)} Show by way of example that the subgradient is not necssarily unique, but that the set of all subgradients is convex. We will denote this \emph{set} $\partial f(x)$.
+\subparagraph{i)} Show by way of example that the subgradient is not necssarily unique, but that the set of all subgradients is closed and convex. We will denote this \emph{set} $\partial f(x)$.
 
-\subparagraph{ii)} Show that if $f$ is differentiable at $x$, $\partial f(x) = \{\nabla f(x)\}$. 
+\subparagraph{ii)} Show that a convex $f$ is differentiable at $x$ if and only if $\partial f(x) = \{\nabla f(x)\}$. 
 
 \subparagraph{iii)} Show that if $g_1 \in \partial f_1(x)$ and $g_2 \in \partial f_2(x)$, then $g_1 + g_2 \in \partial(f_1 + f_2)(x)$. 
 
 
 
-\subparagraph{vi)} Consider the following theorem
-\begin{theorem*}\label{thm:smthm} Let $\Omega$ be a convex domain, and let $f(x) = \sup_{\alpha} g_{\alpha}(x)$, where $g_{\alpha}$ are convex functions and finite on $\Omega$. Suppose $f$ is also finite on $\Omega$. Then for all $x \in \Omega$, $\partial f = \Conv \{\partial g_{\alpha}(x) | \sup_{x} g_{\alpha}(x) =f(x) \}$
-\end{theorem*}
-Prove one direction of the theorem, $\partial f \subseteq \Conv \{\partial g_{\alpha}(x) | \sup_{x} g_{\alpha}(x) =f(x) \}$
+\subparagraph{vi)} Let $f(x) = \sup_{\alpha} g_{\alpha}(x)$. Show that $\Conv \{\partial g_{\alpha}(x) |  g_{\alpha}(x) =f(x) \} \subseteq \partial f$. 
 
-
-\subparagraph{v)} (Hard) Prove the other direction of Theorem~\ref{thm:smthm}. Here you may want to work in epigraph space. 
+\subparagraph{(v)} Prove that if $g_{\alpha}(x) = w_{\alpha}^\top x + b_{\alpha}$ are a compact family of affine functions (i.e. $\{(w_{\alpha},b_{\alpha})\} \subset \R^{d+1}$ is compact), then the converse is true, namely $\partial f \subset \Conv \{\partial g_{\alpha}(x) |  g_{\alpha}(x) =f(x) \} $. 
 
 
 \section*{Problem 3: Subgradients of Norms}
@@ -68,14 +64,14 @@ Prove one direction of the theorem, $\partial f \subseteq \Conv \{\partial g_{\a
 \end{eqnarray}
 where $\|X\|_{\op} := \sigma_{\max}(X)$, $ \|Y\|_{\nuc} := \sum_{i=1}^{\min(n,m)} \sigma_i(Y)$, and $\langle X, Y \rangle := \tr(X^\top Y)$. You may want to refresh yourself on the relationship between traces, eigenvalues and singular values. 
 \subparagraph{ii))} Compute $\partial \|X\|_{\op}$ and $\partial \|X\|_{\nuc}$. Under what conditions is each subgradient unique?
-\paragraph{C)} Let  $\|\cdot\|$ be an arbitary norm (not necessarily Euclidean!) on $\R^d$. Define the dual norm $\|x\|_* := \sup_{x: \|x\| \le 1}\langle x,y \rangle$. 
+\paragraph{C)} Let  $\|\cdot\|$ be an arbitary norm (not necessarily Euclidean!) on $\R^d$. Define the dual norm $\|y\|_* := \sup_{x: \|x\| \le 1}\langle x,y \rangle$. 
 \subparagraph{i)} Show that the dual norm is a norm, and describe its subgradient.
 \subparagraph{ii)} Let $f$ be a convex function on a convex domain $\cX$. Show that $f$ is $L$-Lipschitz on $\cX$ if an only if, for all $x \in \cX$ and all $g \in \partial f(x)$, $\|g\|_{*} \le L$. 
 
 \section*{Problem 4: Extensions for Gradient Descent}
 \paragraph{A)} Generalizations of SGD
 \subparagraph{i))} Prove the following statement:
-\begin{proposition*} Let $\Omega$ be a convex domain of radius $R$, and let $f$ be a convex function on $\Omega$. Let $x_0 \in \Omega$, and let $x_{t} = \Pi_{\Omega}(x_{t-1} - \eta g_t )$, where $\Exp[g_t | g_1,\dots,g_{t-1}] \in \partial f(x_t)$, and $\sup_{t} \Exp[\|g_t\|^2] \le L$.  Prove that 
+\begin{proposition*} Let $\Omega$ be a convex domain of radius $R$, and let $f$ be a convex function on $\Omega$. Let $x_0 \in \Omega$, and let $x_{t} = \Pi_{\Omega}(x_{t-1} - \eta g_t )$, where $\Exp[g_t | g_1,\dots,g_{t-1}] \in \partial f(x_t)$, and $\sup_{t} \Exp[\|g_t\|^2] \le L$ and $\eta = \frac{LR}{\sqrt{T}}$.  Prove that 
 \begin{eqnarray}
  f(\frac{1}{T}\sum_{t=1}^T x_t) \le \inf_{x \in \Omega} f(x) + \dots
 \end{eqnarray}
@@ -94,14 +90,14 @@ You fill in the $\dots$.
 \Pr[z_i =  1 | \sigma] = 1/2 + \sigma \epsilon \text{ and } \Pr[z_i =  -1 | \sigma] = 1/2 - \sigma \epsilon 
 \end{eqnarray}
 You will need the following information
-\begin{lemma*} Let $\sigma$ and $z_1,z_2,\dots,z_T$ be as above. Then there exists a universal constant $C$ such that, if $T \le C \epsilon^2$, any algorithm which resturns an estimate $\widehat{\sigma}$ of $\sigma$ from observing $z_1,z_2,\dots,z_T$ satisfies $\Pr[\widehat{\sigma} \ne \sigma] \ge \frac{1}{4}$. 
+\begin{lemma*} Let $\sigma$ and $z_1,z_2,\dots,z_T$ be as above. Then there exists a universal constant $C$ such that, if $T \le C \epsilon^2$, any algorithm which returns an estimate $\widehat{\sigma}$ of $\sigma$ from observing $z_1,z_2,\dots,z_T$ satisfies $\Pr[\widehat{\sigma} \ne \sigma] \ge \frac{1}{4}$, where $\Pr$ is taking over the randomness in $\sigma$, $z_1,\dots,Z_T$, and any randomness in the algorithm. 
 \end{lemma*}
-\subparagraph{i)} Construct a function on $f_{\sigma}$ such that $\Exp[z_i | \sigma] = \nabla f_{\sigma}(x)$ for all $x \in \Omega$. What is the optimum $x^*_{\sigma} $of $f_{\sigma}$? What is the ``smoothness'' of $f_{\sigma}$.
-\subparagraph{ii)} Show that there universal constants $c$ such that the following hold: Fix a $T \in \mathbb{N}$, and let $\cA$ be an algorithm which is allowed to make $T$ queries $x_t \in [-1,1]$ and $g_t$, where $\cA$ decides $x_t$, and recieves responses $g_t$ such that $\Exp[g_t] = \nabla f(x_t)$ and $|g_t| \le 1$ as.s. Then, there is a $0$-smooth, $1$-Lipschitz function $f$ and a mechanism generating responses $g_t$ such that the iterate $x_{T}$ satisfies
+\subparagraph{i)} Construct a function on $f_{\sigma}$ such that $\Exp[z_i | \sigma] = \nabla f_{\sigma}(x)$ for all $x \in \Omega$. What is the optimum $x^*_{\sigma} $of $f_{\sigma}$? What is the ``smoothness'' of $f_{\sigma}$?
+\subparagraph{ii)} Show that there exists a universal constant $c$ such that the following hold: Fix a $T \in \mathbb{N}$, and let $\cA$ be an algorithm which is allowed to make $T$ queries $x_t \in [-1,1]$ and $g_t$, where $\cA$ decides $x_t$, and recieves responses $g_t$ such that $\Exp[g_t] = \nabla f(x_t)$ and $|g_t| \le 1$ as.s. Then, there is a $0$-smooth, $1$-Lipschitz function $f$ and a mechanism for generating noisy subgradients $g_t$ such, for any algorithm using $g_t$ as gradient queries, the iterate $x_{T+1}$ satisfies
 \begin{eqnarray}
-\Exp[f(x_{1})] - \inf_{x \in [-1,1]} f(x)\ge c /\sqrt{T}
+\Exp[f(x_{T+1})] - \inf_{x \in [-1,1]} f(x)\ge c /\sqrt{T}
 \end{eqnarray}
-\section*{Mirror Descent}
+\section*{Problem 5: Generalized Projections}
 In this problem, we introduce a useful generalization of gradient descent. Let $\cX \subseteq \cD \subseteq \R^d$ be convex sets, and let $\Phi: \cD \to \R$ be a strictly convex, continuously differentiable map such that $\|\nabla \Phi(x)\|$ diverges on $\Bd(\cD)$, and $\nabla \Phi(\cD) = \R^d$. We call $\Phi$ a \emph{mirror map}.
 
 \paragraph{A)} Define the \emph{Bregman Divergence}
@@ -123,12 +119,12 @@ D_{\phi}(x,\Phi_{x}(y)) + D_{\phi}(\Phi_{x}(y),y) \le D_{\Phi}(x,y)
 \end{eqnarray}
 What does this reduce to when $\Phi(x) = \frac{1}{2}\|x\|^2_2$?
 \paragraph{C)} Consider the following algorithm, known as mirror descent. Let $\cX \subset \cD$ and $\Phi$ be as above, let $f: \cX \to \R$ be convex, let $x_1  \in \cX$. Fix an $\eta > 0$. For $t \ge 1$, define $y_{t+1}$ such that $\nabla \Phi(y_{t+1}) - \nabla \Phi(x_{t}) = \eta g_t$, where $g_t \in \partial f(x_t)$. Prove the following:
-\begin{theorem*} Let $\|\cdot\|$ be an \emph{arbitrary} norm on $\cX$, and suppose that $\Phi$ is $\kappa$ strongly convex with respect to $\|\cdot\|$ on $\cX$. Suppose that $f$ is L-Lipschitz with respect to $\|\cdot\|$. Prove that 
+\begin{theorem*} Let $\|\cdot\|$ be an \emph{arbitrary} norm on $\cX$, and suppose that $\Phi$ is a $\kappa$ strongly-convex mirror map with respect to $\|\cdot\|$ on $\cX$. Suppose that $f$ is L-Lipschitz with respect to $\|\cdot\|$. Prove that 
 \begin{eqnarray}
 f(\sum_{s=1}^T x_s) - \min_{x \in \cX} f(x) \le \frac{D(x,\pi)}{\eta} + \eta \frac{L^2 T}{\kappa}
 \end{eqnarray}
 \end{theorem*}
 Recall that $\Phi$ is $\kappa$-strongly convex with respect to $\|\cdot\|$ if and only $\Phi(x)  - \Phi(y) \le \nabla \Phi(x)^\top (x-y) + \frac{\kappa}{2}\|x-y\|^2$. 
-\paragraph{D)} A common setup for mirror descent is on the simplex, where $\cD: \{x: x_i > 0 \forall i \in [d]\}$, and $\cX := \{x \in \cD:\|x\| = 1\}$. Given an iterate $x_t$, compute the updates $y_{t+1}$ and $x_{t+1}$. 
+\paragraph{D)} A common setup for mirror descent is on the simplex, where $\cD: \{x: x_i > 0 \forall i \in [d]\}$, and $\cX := \{x \in \cD:\|x\|_1 = 1\}$. Given an iterate $x_t$, compute the updates $y_{t+1}$ and $x_{t+1}$. 
 
 \end{document}
