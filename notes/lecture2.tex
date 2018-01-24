@@ -51,11 +51,11 @@ A projection onto the Euclidean ball $B_2$ is just normalization:
 \end{example}
 
 \begin{figure}
-\figurelabel{project}
 \begin{center}
 \includegraphics[width=3in]{figures/lecture2-projection}
 \end{center}
-\caption{Projection of $y$ onto set $\mathcal{X}$. }
+\caption{Projection of $y$ onto set $\mathcal{X}$. (Figure taken from Bubeck) }
+\figurelabel{project}
 \end{figure}
 
 %TODO Indentation
@@ -98,7 +98,7 @@ then $$f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) \leq
 
 This means that the difference between the functional value of the average
 point during the optimization process from the optimal value is bounded above
-by a constant proportional to $\frac{1}{\sqrt{t}}$. 
+by a constant proportional to $\frac{1}{\sqrt{t}}$.
 
 % TODO: reference the first part of the lecture here.
 Before proving the theorem, recall that
@@ -112,9 +112,9 @@ Before proving the theorem, recall that
     \lVert v \lVert^2 - \lVert u - v \rVert^2$. This property can be seen by
     writing $\lVert u - v \rVert$ as $\lVert u - v \rVert = \lVert u \rVert^2 +
     \lVert v \lVert^2 - 2 u^\trans v$.
-    
+
     \item $L$-Lipchitz: For all $x$, $\lVert \nabla f(x) \rVert \leq L$.
-    
+
     \item Pythagorean Theorem: $\lVert \pi_\Omega (y) - x \rVert^2 \leq \lVert
     y - x \rVert^2 - \lVert y - \pi_\Omega (x) \rVert^2$
 
@@ -138,17 +138,17 @@ f(x^*)$.
 from the update rule for projected gradient descent. \equationref{c} comes from
 the ``Fundamental Theorem of Optimization.'' \equationref{d} comes from the
 update rule for projected gradient descent. \equationref{e} is because $f$ is
-$L$-Lipchitz. \equationref{f} 
+$L$-Lipchitz. \equationref{f}
 comes from the Pythagorean Theorem.
 
 Now, sum these differences from $s=1$ to $s=T$:
 
-%\begin{align}
-%    \sum_{s=1}^t f(x_s) - f(x^*) &\leq  \frac{1}{2\eta} \sum_{s=1}^t \left(\lVert x_s - x^* \rVert^2 - \lVert x_{s+1} - x^* \rVert^2 \right) + \frac{\eta L^2 t}{2} \equationlabel{g} \\
-%    &= \frac{1}{2\eta} \left(\lVert x_1 - x^* \rVert^2 - \lVert x_{t} - x^* \rVert^2 \right) + \frac{\eta L^2 t}{2} \equationlabel{h} \\
-%    &\leq \frac{1}{2\eta} \left(\lVert x_1 - x^* \rVert^2 + \frac{\eta L^2 t}{2} \equationlabel{i} \\
- %   &\leq \frac{R^2}{2\eta} + \frac{\eta L^2 t}{2} \equationlabel{j} \\
-%\end{align}
+\begin{align}
+   \sum_{s=1}^t f(x_s) - f(x^*) &\leq  \frac{1}{2\eta} \sum_{s=1}^t \left(\lVert x_s - x^* \rVert^2 - \lVert x_{s+1} - x^* \rVert^2 \right) + \frac{\eta L^2 t}{2} \equationlabel{g} \\
+   &= \frac{1}{2\eta} \left(\lVert x_1 - x^* \rVert^2 - \lVert x_{t} - x^{*} \rVert^2 \right) + \frac{\eta L^2 t}{2} \equationlabel{h} \\
+   &\leq \frac{1}{2\eta} \lVert x_1 - x^* \rVert^2 + \frac{\eta L^2 t}{2} \equationlabel{i} \\
+   &\leq \frac{R^2}{2\eta} + \frac{\eta L^2 t}{2} \equationlabel{j} \\
+\end{align}
 
 \equationref{h} is because \equationref{g} is a telescoping sum.
 \equationref{i} is because $\lVert x_{t} - x^* \rVert^2 \geq 0$.
@@ -166,30 +166,30 @@ the above sum:
 \equationref{k} is by convexity. $\frac{R^2}{2\eta} + \frac{\eta L^2 t}{2}$,
 the upper bound of the difference between $f\left(\frac{1}{t}\sum_{s=1}^t
 x_s\right)$ and $f\left(x^*\right)$ is minimized when $\eta$ is set to be
-$\frac{RL}{\sqrt{t}}$. 
+$\frac{RL}{\sqrt{t}}$.
 
 \end{proof}
 
 A continuously differentiable function f is $\beta$ smooth if the gradient $\nabla f$ is $\beta$-Lipschitz, i.e
 $$||\nabla f(x) - \nabla f(y)|| \leq \beta||x-y||$$
 
-We will show that gradient descent  with update rule 
+We will show that gradient descent  with update rule
 $$x_{t+1} = x_t - \eta \nabla f(x_t)$$
-attains a faster rate of convergence under smoothness condition.  
+attains a faster rate of convergence under smoothness condition.
 
 \begin{theorem}
-Let $f$ be convex and $\beta$-smooth on $\R^n$ then gradient descent with $\eta = \frac{1}{\beta}$ satsifies 
+Let $f$ be convex and $\beta$-smooth on $\R^n$ then gradient descent with $\eta = \frac{1}{\beta}$ satsifies
 $$f(x_t) - f(x^*) \leq \frac{2\beta||x_1 - x^*||^2}{t-1}$$
 \end{theorem}
-To prove this we will need the following two lemmas.  
+To prove this we will need the following two lemmas.
 
 \begin{lemma}\label{l1}
-Let $f$ be a $\beta$-smooth function on $\R^n$.  Then for any $x,y \in \R^n$, one has 
+Let $f$ be a $\beta$-smooth function on $\R^n$.  Then for any $x,y \in \R^n$, one has
 $$|f(x) - f(y) - \nabla f(y)^T(x-y)| \leq \frac{\beta}{2}||x-y||^2$$
 \end{lemma}
 
 \begin{proof}
-First represent $f(x) - f(y)$ as an integral, apply Cauchy-Schwarz and then $\beta$-smoothness: 
+First represent $f(x) - f(y)$ as an integral, apply Cauchy-Schwarz and then $\beta$-smoothness:
 
 $$|f(x) - f(y) - \nabla f(y)^T(x-y)|$$
 $$= \big|\int\limits_{0}^1 \nabla f(y + t(x-y))^T(x-y)dt - \nabla f(y)^T(x-y)\big|$$
@@ -198,15 +198,15 @@ $$\leq \int\limits_{0}^1 \beta t||x-y||^2dt$$
 $$= \frac{\beta}{2}||x-y||^2$$
 \end{proof}
 
-We also need 
+We also need
 
 \begin{lemma} \label{lm2}
-Let $f$ be a $\beta$-smooth function, then for any $x,y \in \R^n$, one has 
+Let $f$ be a $\beta$-smooth function, then for any $x,y \in \R^n$, one has
 $$f(x) - f(y)\leq \nabla f(x)^T(x-y) - \frac{1}{2\beta}||\nabla f(x) - \nabla f(y)||$$
 \end{lemma}
 
 \begin{proof}
-Let $z = y - \frac{1}{\beta}(\nabla f(y) - \nabla f(x))$.  Then one has 
+Let $z = y - \frac{1}{\beta}(\nabla f(y) - \nabla f(x))$.  Then one has
 $$f(x) - f(y)$$
 $$= f(x) - f(z) + f(z) - f(y)$$
 $$\leq \nabla f(x)^T(x-z) + \nabla f(y)^T(z-y) + \frac{\beta}{2}||z-y||^2$$
@@ -217,24 +217,24 @@ $$= \nabla f(x)^T(x-y) - \frac{1}{2\beta} ||\nabla f(x) - \nabla f(y)||^2$$
 Now we prove the theorem
 
 \begin{proof}
-By the update rule and lemma \ref{l1} we have 
-$$f(x_{s+1}) - f(x_s) \leq -\frac{1}{2\beta}||\nabla f(x_s)||^2 $$ 
+By the update rule and lemma \ref{l1} we have
+$$f(x_{s+1}) - f(x_s) \leq -\frac{1}{2\beta}||\nabla f(x_s)||^2 $$
 In particular, denoting $\delta_s = f(x_s) - f(x^*)$ this shows
 $$\delta_{s+1} \leq \delta_s - \frac{1}{2\beta}||\nabla f(x_s)||^2 $$
 One also has by convexity
 $$\delta_s \leq \nabla f(x)s)^T(x_s - x^*) \leq ||x_s - x^*|| \cdot ||\nabla f(x_s)||$$
-We will prove that $||x_s - x^*||$ is decreasing with $s$, which with the two above displays will imply 
+We will prove that $||x_s - x^*||$ is decreasing with $s$, which with the two above displays will imply
 $$\delta_{s+1}\leq \delta_s - \frac{1}{2\beta||x_1 - x^*||^2}\delta_s^2$$
-We solve the recurrence as follows.  Let $w = \frac{1}{2\beta||x_1 - x^*||^2}$, then 
+We solve the recurrence as follows.  Let $w = \frac{1}{2\beta||x_1 - x^*||^2}$, then
 $$w\delta_s^2 + \delta_{s+1} \leq \delta_s \iff w\frac{\delta_s}{\delta_{s+1}} + \frac
 {1}{\delta_s} \leq \frac{1}{\delta_{s+1}} \implies \frac{1}{\delta_{s+1}} - \frac{1}{\delta_s} \geq w \implies \frac{1}{\delta_t} \geq w(t-1)$$
-To finish the proof it remains to show that $||x_2 - x^*||$ is decreasing with $s$.  Using lemma \ref{lm2} one immediately gets 
+To finish the proof it remains to show that $||x_s - x^*||$ is decreasing with $s$.  Using lemma \ref{lm2} one immediately gets
 $$ (\nabla f(x) - \nabla f(y))^T(x - y) \geq \frac{1}{\beta} ||\nabla f(x) - \nabla f(y)||^2$$
 We use this and the fact that $\nabla f(x^*) = 0$
 $$||x_{s+1} - x^*||^2 = ||x_s - \frac{1}{\beta}\nabla f(x_s) - x^*||^2$$
-$$= ||x_s - x^*||^2 - \frac{2}{\beta}\nabla f(x_s)^T(x_s - x^*) + \frac{1}{\beta^2}||nabla f(x_s)||^2 $$
+$$= ||x_s - x^*||^2 - \frac{2}{\beta}\nabla f(x_s)^T(x_s - x^*) + \frac{1}{\beta^2}||\nabla f(x_s)||^2 $$
 $$\leq ||x_s - x^*||^2 - \frac{1}{\beta^2} ||\nabla f(x_s)||^2 $$
 $$\leq ||x_s - x^*||^2$$
-which concludes the proof.  
+which concludes the proof.
 \end{proof}
 
