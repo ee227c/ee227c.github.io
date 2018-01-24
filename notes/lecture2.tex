@@ -3,27 +3,87 @@
 
 
 \begin{theorem}[Project Gradient Descent for Lipchitz Functions]
-\theoremlabel{libpchitz}
-Assume that function $f$ is convex, differntiable, and closed with bounded gradients. Let $L$ be the Lipchitz constant of $f$ over the convex domain $\Omega$. Let $R$ be the upper bound on the distance from the initial point $x_1$ to the optimal point $x^* = \arg\min_{x \in \Omega} f(x)$ (i.e. $\lVert x_1 - x^* \rVert_2$). Let $t$ be the number of iterations of project gradient descent.
+\theoremlabel{libpchitz} 
 
-If the learning rate $\eta$ is set to $\eta=\frac{R}{L \sqrt(t)}$, then $f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) \leq \frac{RL}{\sqrt{t}}$.
+Assume that function $f$ is convex, differntiable, and closed with bounded
+gradients. Let $L$ be the Lipchitz constant of $f$ over the convex domain
+$\Omega$. Let $R$ be the upper bound on the distance from the initial point
+$x_1$ to the optimal point $x^* = \arg\min_{x \in \Omega} f(x)$ (i.e. $\lVert
+x_1 - x^* \rVert_2$). Let $t$ be the number of iterations of project gradient
+descent. If the learning rate $\eta$ is set to $\eta=\frac{R}{L \sqrt(t)}$,
+then $$f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) \leq
+\frac{RL}{\sqrt{t}}.$$ \end{theorem}
 
-This means that the difference between the functional value of the average point during the optimization process from the optimal value is bounded above by a constant proportional to $\frac{1}{\sqrt{t}}$. 
+This means that the difference between the functional value of the average
+point during the optimization process from the optimal value is bounded above
+by a constant proportional to $\frac{1}{\sqrt{t}}$. 
 
-\end{theorem}
-
+% TODO: reference the first part of the lecture here.
 Before proving the theorem, recall that
 \begin{itemize}
-    \item First order characterization of convexity: $f(y) = f(x) + \nabla f(x)^\top (y - x)$
-    \item "Fundamental Theorem of Optimization": An inner product can be written as a sum of norms: $u^\top v = \frac{1}{2}(\lVert u \rVert^2 + \lVert v \lVert^2 - \lVert u - v \rVert^2$. This property can be seen by writing $\lVert u - v \rVert$ as $\lVert u - v \rVert = \lVert u \rVert^2 + \lVert v \lVert^2 - 2 u^\top v$.
+
+    \item First order characterization of convexity: $f(y) = f(x) + \nabla
+    f(x)^\trans (y - x)$
+
+    \item "Fundamental Theorem of Optimization": An inner product can be
+    written as a sum of norms: $u^\trans v = \frac{1}{2}(\lVert u \rVert^2 +
+    \lVert v \lVert^2 - \lVert u - v \rVert^2$. This property can be seen by
+    writing $\lVert u - v \rVert$ as $\lVert u - v \rVert = \lVert u \rVert^2 +
+    \lVert v \lVert^2 - 2 u^\trans v$.
+    
     \item $L$-Lipchitz: For all $x$, $\lVert \nabla f(x) \rVert \leq L$.
-    \item $\lVert \pi_\Omega (y) - x \rVert^2 \leq \lVert y - x \rVert^2 - \lVert y - \pi_\Omega (x) \rVert^2$ % From above TODO
+    
+    \item Pythagorean Theorem: $\lVert \pi_\Omega (y) - x \rVert^2 \leq \lVert
+    y - x \rVert^2 - \lVert y - \pi_\Omega (x) \rVert^2$
+
 \end{itemize}
 
-
 \begin{proof}[Proof of \theoremref{libpchitz} for compact sets.]
-The proof begins by first bounding the difference in function values $f(x_s) - f(x^*)$.
+
+The proof begins by first bounding the difference in function values $f(x_s) -
+f(x^*)$.
+
 \begin{align}
-    f(x_s) - f(x^*) \leq 
+    f(x_s) - f(x^*) &\leq \nabla f(x_s)^\trans (x_s - s^*) \equationlabel{a} \\
+    &= \frac{1}{\eta}(x_s - y_{s+1})^\trans(x_s - x^*) \equationlabel{b} \\
+    &= \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 + \lVert x_s - y_{s+1} \rVert^2 - \lVert y_{s+1} - x^* \rVert^2 \right) \equationlabel{c} \\
+    &= \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 - \lVert y_{s+1} - x^* \rVert^2 \right) + \frac{\eta}{2} \lVert \nabla f(x_s) \rVert^2 \equationlabel{d} \\
+    &\leq \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 - \lVert y_{s+1} - x^* \rVert^2 \right) + \frac{\eta L^2}{2} \equationlabel{e} \\
+    &\leq \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 - \lVert x_{s+1} - x^* \rVert^2 \right) + \frac{\eta L^2}{2} \equationlabel{f} \\
 \end{align}
+
+\equationref{a} comes from the definition of convexity. \equationref{b} comes
+from the update rule for projected gradient descent. \equationref{c} comes from
+the ``Fundamental Theorem of Optimization.'' \equationref{d} comes from the
+update rule for projected gradient descent. \equationref{e} is because $f$ is
+$L$-Lipchitz. \equationref{f} comes from the Pythagorean Theorem.
+
+Now, sum these differences from $s=1$ to $s=T$:
+
+\begin{align}
+    \sum_{s=1}^t f(x_s) - f(x^*) &\leq  \frac{1}{2\eta} \sum_{s=1}^t \left(\lVert x_s - x^* \rVert^2 - \lVert x_{s+1} - x^* \rVert^2 \right) + \frac{\eta L^2 t}{2} \equationlabel{g} \\
+    &= \frac{1}{2\eta} \left(\lVert x_1 - x^* \rVert^2 - \lVert x_{t} - x^* \rVert^2 \right) + \frac{\eta L^2 t}{2} \equationlabel{h} \\
+    &\leq \frac{1}{2\eta} \left(\lVert x_1 - x^* \rVert^2 + \frac{\eta L^2 t}{2} \equationlabel{i} \\
+    &\leq \frac{R^2}{2\eta} + \frac{\eta L^2 t}{2} \equationlabel{j} \\
+\end{align}
+
+\equationref{h} is because \equationref{g} is a telescoping sum.
+\equationref{i} is because $\lVert x_{t} - x^* \rVert^2 \geq 0$.
+\equationref{j} is by the assumption that $\lVert x_1 - x^* \rVert^2 \leq R^2$.
+
+Then bound $f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right)$ by
+the above sum:
+
+\begin{align}
+    f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) &\leq \frac{1}{t} \sum_{s=1}^t f(x_s) \equationlabel{k} \\
+    \left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) &\leq \frac{1}{t} \sum_{s=1}^t f(x_s) - f\left(x^*\right) \equationlabel{l} \\
+    &\leq \frac{R^2}{2\eta} + \frac{\eta L^2 t}{2}
+\end{align}
+
+\equationref{k} is by convexity. $\frac{R^2}{2\eta} + \frac{\eta L^2 t}{2}$,
+the upper bound of the difference between $f\left(\frac{1}{t}\sum_{s=1}^t
+x_s\right)$ and $f\left(x^*\right)$ is minimized when $\eta$ is set to be
+$\frac{RL}{\sqrt{t}}$. 
+
+
 \end{proof}
