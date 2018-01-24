@@ -22,7 +22,7 @@ Graduate Instructor: Max Simchowitz\\
 \section*{Problem 1: Existence of the Subgradients}
 \begin{enumerate}
 \item
-Let~$\domain$ be a convex set. Prove that that given any convex function $f\colon\cX \to
+Let~$\cX$ be a convex set. Prove that that given any convex function $f\colon\cX \to
 \R$ and any $x \in \cX$, there exists at least one vector $g,$ called a
 \emph{subgradient} of $f$ at $x,$ such that $f(y) \ge f(x) + \langle g, y - x
 \rangle$ for all $y \in \cX$. 
@@ -36,50 +36,46 @@ Define the \emph{Epigraph} of $f$, $\Epi(f) := \{(x,t) \in \cX
 \item
 Recall the following definitions from real analysis:
 %
-\begin{definition*}[Boundary and Interior] For a set $\cX \subset \R^n$, its
-closure $\overline{\cX}$ is defined as the set of all $x \in \R^n$ (not necessarily in $\cX$) such that, for all $\epsilon > 0$, there exists a $y \in \cX$ such that $\|x - y\| \le \epsilon$. In other words, for every $\epsilon > 0$, the ball of radius $\epsilon$ around $x$ intersects $\cX$. $\Int(\cX)$ is defined as the set of all points $x \in \cX$ such that there exists an $\epsilon > 0$ for which, for all $y: \|x-y\| \le \epsilon$, $y \in \cX$; it other words, for some $\epsilon > 0$, the ball of radius $\epsilon > 0$ around $x$ lies entirely in $\cX$. Lastly, we define the boundary $\Bd(\cX) := \overline{\cX} - \Int(\cX) = \{x \in \overline{\cX} : x \notin \Int(\cX)\}$. 
+\begin{definition*}[Boundary and Interior] 
 \end{definition*}
 
 Using the separating hyperplane theorem from the notes (the full version, which applies to arbitrary convex sets not just compact ones), prove the supporting hyperplane theorem.
 \begin{theorem*}[Supporting Hyperplane] Let $\cC \subset \R^n$ be a convex set,
-and let $x \in \Bd(\cC)$. Then, there exists a $w \in \R^n$ such that, for all $y \in \cC$, $\langle w, y - x \rangle \ge 0$. 
+and let $x \in \Bd(\cC)$. Then, there exists a nonzero $w \in \R^n$ such that, for all $y \in \cC$, $\langle w, y - x \rangle \ge 0$. 
 \end{theorem*}
 \emph{Hint:  Find two (not-necessarily compact!) convex sets to apply the separating hyperplane theorem. You might want $\Int(\cC)$ to be one of them - and you should check that $\Int(\cC)$ is convex } 
 
-
 \item
-Using part $i)$ and $ii)$, prove the existence of a subgradient. 
+Using part $i)$ and $ii)$, prove the existence of a subgradient at $x \in \cX$. You may assume that $x \in \Int(\cX)$ to avoid annoying edge cases.
 \end{enumerate}
 
 \item
-Let $\{g_{\alpha}\}$ be a (possibly infinite, uncountable) family of convex functions, and suppose that $g_{\alpha}(x) < \infty$ for all $x \in \cX$. Show that $g(x) := \sup_{\alpha} g_{\alpha}(x)$ is convex on $\cX$ (you may assume $g(x)$ is finite).
+Let $\{f_{i}\}_{i \in I}$ be a (possibly infinite, uncountable) family of convex functions, and suppose that $f_{i}(x) < \infty$ for all $x \in \cX$. Show that $g(x) := \sup_{i} f_{i}(x)$ is convex on $\cX$ (you may assume $g(x)$ is finite).
 
 \item
-Using what we've proven about subgradients, prove that a function $g: \cX \to \R$ is convex if and only if it can be written as the supremum of affine functions (e.g. supremum of functions of the form $g_{\alpha}(x) = \langle a_{\alpha}, x \rangle + b_{\alpha}$)
+Using what we've proven about subgradients, prove that a function $g: \cX \to \R$ is convex if and only if it can be written as the supremum of affine functions (e.g. supremum of functions of the form $f_i(x) = \langle a_{i}, x \rangle + b_{i}$)
 \end{enumerate}
 
 \section*{Problem 2: Properties of Subgradients}
-
+Let $f$ be a convex function over a domain $\cX$. We will assume $x \in \Int(\cX)$. 
 \begin{enumerate}
 \item
 Show by way of example that the subgradient is not necssarily unique, but that the set of all subgradients is closed and convex. We will denote this \emph{set} $\partial f(x)$.
-\item
-Show that a convex $f$ is differentiable at $x$ if and only if $\partial f(x) = \{\nabla f(x)\}$. 
+\item Show that $f$ has a directional derivative in each direction. Use this to conclude that a convex $f$ is differentiable at $x$ only if $\partial f(x) = \{\nabla f(x)\}$.
 \item
 Show that if $g_1 \in \partial f_1(x)$ and $g_2 \in \partial f_2(x)$, then $g_1 + g_2 \in \partial(f_1 + f_2)(x)$. 
 \item
 Let $f(x) = \sup_{\alpha} g_{\alpha}(x)$ which $g_{\alpha}$ convex. Show that $\Conv \{\partial g_{\alpha}(x) |  g_{\alpha}(x) =f(x) \} \subseteq \partial f$. 
-\item
-Prove that if $g_{\alpha}(x) = w_{\alpha}^\top x +
-b_{\alpha}$ are a compact family of affine functions (i.e.
-$\{(w_{\alpha},b_{\alpha})\} \subset \R^{n+1}$ is compact), then the converse is true, namely $\partial f \subset \Conv \{\partial g_{\alpha}(x) |  g_{\alpha}(x) =f(x) \} $. 
+\item \emph{This problem is likely to be changed in further revisions} Prove that if $f_{i}(x) = w_{i}^\top x
+b_{i}$ are a compact family of affine functions (i.e.
+$\{(w_{i},b_{i})\} \subset \R^{n+1}$ is compact), then the converse is true, namely $\partial f \subset \Conv \{\partial g_{i}(x) |  g_{i}(x) =f(x) \} $. 
 \end{enumerate}
 
 
 \section*{Problem 3: Subgradients of Norms}
 \begin{enumerate}
 \item
-Subgradient of the $L_1$ and $L_{\infty}$-norms
+Subgradient of the $\ell_1$ and $\ell_{\infty}$-norms
 \begin{enumerate}
 \item
 Prove that, for all $x \in \R^n$, $\|x\|_1 = \sup_{y: \|y\|_{\infty} \le 1}\langle x, y \rangle$, $\|x\|_{\infty} = \sup_{y:\|y\|_1 \le 1}\langle x, y \rangle$. 
@@ -90,11 +86,11 @@ Compute $\partial \|x\|_1$ and $\partial \|x\|_{\infty}$
 Subgradient of the $L_1$-norm
 \begin{enumerate}
 \item
-Let $A \in \R^{m \times n}$. Let $\sigma_i(\cdot)$ denote the $i$-th singular value of a matrix. Using the inequality $\sum_{i=1}^{\min(n,m)}\sigma_i(AB) \le \sum_{i=1}^{\min(n,m)} \sigma_i(A)\sigma_i(B)$ for all $A \in \R^{m \times n}$ and $B \in \R^{n \times m}$, prove the follow: For all $X \in \R^{m \times n}$, 
+Let $A \in \R^{m \times n}$. Let $\sigma_i(\cdot)$ denote the $i$-th singular value of a matrix. Using the inequality $\sum_{i=1}^{\min(n,m)}\sigma_i(AB) \le \sum_{i=1}^{\min(n,m)} \sigma_i(A)\sigma_i(B)$ for all $A \in \R^{m \times n}$ and $B \in \R^{n \times m}$ (this is non-trivial, see \href{<https://math.stackexchange.com/questions/1648542/proving-holders-inequality-for-schatten-norms>}{<this Stack Exchange>}), prove the following: For all $X \in \R^{m \times n}$, 
 \begin{eqnarray}
 \|X\|_{\op} :=  \max_{Y \in \R^{m \times n}  \|Y\|_{\nuc} \le 1} \langle X, Y \rangle  \text{ and } \|X\|_{\nuc} =  \max_{Y \in \R^{m \times n} :\|Y\|_{\op} \le 1} \langle X, Y \rangle ~,
 \end{eqnarray}
-where $\|X\|_{\op} := \sigma_{\max}(X)$, $ \|Y\|_{\nuc} := \sum_{i=1}^{\min(n,m)} \sigma_i(Y)$, and $\langle X, Y \rangle := \tr(X^\top Y)$. You may want to refresh yourself on the relationship between traces, eigenvalues and singular values. 
+where $\|X\|_{\op} := \sigma_{\max}(X)$, $ \|Y\|_{\nuc} := \sum_{i=1}^{\min(n,m)} \sigma_i(Y)$, and $\langle X, Y \rangle := \tr(X^\top Y)$. You may want to refresh yourself on the relationship between traces, eigenvalues and singular values, and some trace tricks. Feel free to use the bound $\sum_{i} \lambda_i (A) \le \sum_i \sigma_i(A)$ for any squared matrix $A$. 
 \item
 Compute $\partial \|X\|_{\op}$ and $\partial \|X\|_{\nuc}$. Under what conditions is each subgradient unique?
 \end{enumerate}
@@ -104,8 +100,9 @@ on $\R^n$. Define the dual norm $\|y\|_* := \sup_{x: \|x\| \le 1}\langle x,y \ra
 \begin{enumerate}
 \item
 Show that the dual norm is a norm, and describe its subgradient.
+\item Show that for all $g,w \in \R^n$, $|\langle g, w \rangle| \le \|g\|_*\|w\|$
 \item
-Let $f$ be a convex function on a convex domain $\cX$. Show that $f$ is $L$-Lipschitz on $\cX$ if an only if, for all $x \in \cX$ and all $g \in \partial f(x)$, $\|g\|_{*} \le L$. 
+Let $f$ be a convex function on a convex domain $\cX$. Show that $f$ is $L$-Lipschitz on $\cX$ if an only if, for all $x \in \cX$ and all $g \in \partial f(x)$, $\|g\|_{*} \le L$.
 \end{enumerate}
 \end{enumerate}
 
@@ -138,16 +135,13 @@ In this problem we show that in the stochastic setting, smoothness of the functi
 \Pr[z_i =  1 | \sigma] = 1/2 + \sigma \epsilon \text{ and } \Pr[z_i =  -1 | \sigma] = 1/2 - \sigma \epsilon 
 \end{eqnarray}
 You will need the following information
-\begin{lemma*} Let $\sigma$ and $z_1,z_2,\dots,z_T$ be as above. Then there exists a universal constant $C$ such that, if $T \le C \epsilon^2$, any algorithm which returns an estimate $\widehat{\sigma}$ of $\sigma$ from observing $z_1,z_2,\dots,z_T$ satisfies $\Pr[\widehat{\sigma} \ne \sigma] \ge \frac{1}{4}$, where $\Pr$ is taking over the randomness in $\sigma$, $z_1,\dots,Z_T$, and any randomness in the algorithm. 
+\begin{lemma*} Let $\sigma$ and $z_1,z_2,\dots,z_T$ be as above. Then there exists a universal constant $C$ such that, if $T \le C \epsilon^{-2}$, any algorithm which returns an estimate $\widehat{\sigma}$ of $\sigma$ from observing $z_1,z_2,\dots,z_T$ satisfies $\Pr[\widehat{\sigma} \ne \sigma] \ge \frac{1}{4}$, where $\Pr$ is taking over the randomness in $\sigma$, $z_1,\dots,Z_T$, and any randomness in the algorithm. 
 \end{lemma*}
 \begin{enumerate}
 \item
 Construct a function on $f_{\sigma}$ such that $\E[z_i | \sigma] = \nabla f_{\sigma}(x)$ for all $x \in \Omega$. What is the optimum $x^*_{\sigma} $of $f_{\sigma}$? What is the ``smoothness'' of $f_{\sigma}$?
 \item 
-Show that there exists a universal constant $c$ such that the following hold: Fix a $T \in \mathbb{N}$, and let $\cA$ be an algorithm which is allowed to make $T$ queries $x_t \in [-1,1]$ and $g_t$, where $\cA$ decides $x_t$, and recieves responses $g_t$ such that $\E[g_t] = \nabla f(x_t)$ and $|g_t| \le 1$ as.s. Then, there is a $0$-smooth, $1$-Lipschitz function $f$ and a mechanism for generating noisy subgradients $g_t$ such, for any algorithm using $g_t$ as gradient queries, the iterate $x_{T+1}$ satisfies
-\begin{eqnarray}
-\E[f(x_{T+1})] - \inf_{x \in [-1,1]} f(x)\ge c /\sqrt{T}
-\end{eqnarray}
+Show that there is a universal constant $C'$ such that, for $T \le C'\epsilon^{-2}$, $\Exp[f_{\sigma}(x_{T+1}) - \min_{x \in [-1,1]}f_{\sigma}(x)] \ge \epsilon$. 
 \end{enumerate}
 \end{enumerate}
 \section*{Problem 5: Generalized Projections}
@@ -155,7 +149,7 @@ Show that there exists a universal constant $c$ such that the following hold: Fi
 In this problem, we introduce a useful generalization of gradient descent. Let
 $\cX \subseteq \cD \subseteq \R^n$ be convex sets, and let $\Phi: \cD \to \R$ be
 a strictly convex, continuously differentiable map such that $\|\nabla
-\Phi(x)\|$ diverges on $\Bd(\cD)$, and $\nabla \Phi(\cD) = \R^n$. We call $\Phi$ a \emph{mirror map}.
+\Phi(x)\|$ diverges on $\Bd(\cD)$, and for any sequence $x_n \in \cD$ such that $\lim \|x_n\| = \infty$, and $\nabla \Phi(\cD) = \R^n$. We call $\Phi$ a \emph{mirror map}.
 
 \begin{enumerate}
 \item
@@ -165,9 +159,9 @@ D_{\Phi}(x,y) = f(x) - f(y) - \nabla f(y)^{\top}(x-y)
 \end{eqnarray}
 and the associated $\Phi$ projection
 \begin{eqnarray}
-\Pi_{\cX}^{\Phi}(y):= \arg\min_{x \in \cX} D_{\Phi(x,y)}
+\Pi_{\cX}^{\Phi}(y):= \arg\min_{x \in \cX} D_{\Phi}(x,y)
 \end{eqnarray}
-Show that $\Phi(x) = \frac{1}{2}\|x\|^2_2$ is a mirror map, and compute $D_{\Phi}(x,y)$ and explain what $\Pi_{\cX}^{\Phi}(y)$ corresponds to
+Show that $\Phi(x) = \frac{1}{2}\|x\|^2_2$ is a mirror map for $\cD = \R^n$, and compute $D_{\Phi}(x,y)$ and explain what $\Pi_{\cX}^{\Phi}(y)$ corresponds to
 \item
 Prove that, for all $x \in \cX$ and $y \in \cD$,
 \begin{eqnarray}
@@ -177,7 +171,9 @@ and conclude that
 \begin{eqnarray}
 D_{\phi}(x,\Phi_{x}(y)) + D_{\phi}(\Phi_{x}(y),y) \le D_{\Phi}(x,y) 
 \end{eqnarray}
-What does this reduce to when $\Phi(x) = \frac{1}{2}\|x\|^2_2$?
+What does this reduce to when $\Phi(x) = \frac{1}{2}\|x\|^2_2$? For the above, you may use the following lemma:
+\begin{lemma*} Let $f$ be convex, and let $\cX$ be a closed convex set on which $f$ is differentiable. Then $x^* \in \arg\min_{x \in \cX} f(x)$, if and only if, for all $x \in \cX$, $\nabla f(x^*)^\top ( x^* - y) \le 0$ for all $y \in \cX$.
+\end{lemma*}
 \item
 Consider the following algorithm, known as mirror descent. Let $\cX \subset \cD$ and $\Phi$ be as above, let $f: \cX \to \R$ be convex, let $x_1  \in \cX$. Fix an $\eta > 0$. For $t \ge 1$, define $y_{t+1}$ such that $\nabla \Phi(y_{t+1}) - \nabla \Phi(x_{t}) = \eta g_t$, where $g_t \in \partial f(x_t)$. Prove the following:
 \begin{theorem*} Let $\|\cdot\|$ be an \emph{arbitrary} norm on $\cX$, and suppose that $\Phi$ is a $\kappa$ strongly-convex mirror map with respect to $\|\cdot\|$ on $\cX$. Suppose that $f$ is L-Lipschitz with respect to $\|\cdot\|$. Prove that 
@@ -188,6 +184,21 @@ f(\sum_{s=1}^T x_s) - \min_{x \in \cX} f(x) \le \frac{D(x,\pi)}{\eta} + \eta \fr
 Recall that $\Phi$ is $\kappa$-strongly convex with respect to $\|\cdot\|$ if and only $\Phi(x)  - \Phi(y) \le \nabla \Phi(x)^\top (x-y) + \frac{\kappa}{2}\|x-y\|^2$. 
 \item
 A common setup for mirror descent is on the simplex, where $\cD: \{x: x_i > 0 \forall i \in [d]\}$, and $\cX := \{x \in \cD:\|x\|_1 = 1\}$. Given an iterate $x_t$, compute the updates $y_{t+1}$ and $x_{t+1}$. 
+\end{enumerate}
+\newpage
+\section*{Background}
+\begin{enumerate}
+	\item A ball of radius $\epsilon$ about $x$ is the set $\{y:\|y-x\|_2 \le \epsilon\}$. One can also consider balls with other norms, but they are all qualitatively equivalent to the Euclidean norm. 
+	\item For a set $\cX \subset \R^n$, its
+	closure $\overline{\cX}$ is defined as the set of all $x \in \R^n$ (not necessarily in $\cX$) such that, for all $\epsilon > 0$, there exists a $y \in \cX$ such that $\|x - y\| \le \epsilon$. In other words, for every $\epsilon > 0$, the ball of radius $\epsilon$ around $x$ intersects $\cX$. $\Int(\cX)$ is defined as the set of all points $x \in \cX$ such that there exists an $\epsilon > 0$ for which, for all $y: \|x-y\| \le \epsilon$, $y \in \cX$; it other words, for some $\epsilon > 0$, the ball of radius $\epsilon > 0$ around $x$ lies entirely in $\cX$. Lastly, we define the boundary $\Bd(\cX) := \overline{\cX} - \Int(\cX) = \{x \in \overline{\cX} : x \notin \Int(\cX)\}$. 
+	\item A set is said to be \emph{open} if $\cX = \Int \cX$, and closed if $\cX \supseteq \Bd(\cX)$. A set $\cX \subset \R^n$ is called compact if and only if it is closed and bounded.
+	\item Given a set of real numbers $\{a_i\}_{i \in I}$ (here $I$ is an index set), $\sup_{i \in I} \{a_i\}$ is the smallest $a \in \R$ such that $a \ge a_i$ for all $i \in I$. If there is no such smallest $a$, $\sup \{a_i\}_{i \in I} = \infty$. Otherwise, $\sup \{a_i\}_{i \in I} = a_* \in \R$, and for every $\epsilon > 0$, there exists some $i = i(\epsilon) \in I$ such that $a_i \ge a_* - \epsilon$. 
+	\item When there exists an $i_*$ such that $a_{i_*} = \sup \{a_i\}_{i \in I}$, we say that the supremum is attained, and may replace $\sup$ with $\max$ for maximum. A finite set always has a maximum. When a maximum exists, we write $\arg\max_{i \in I} \{a_i\} := \{a_i: i \in I, a_i = \{\sup_{i' \in I} a_{i'}\}\}$ to denote the \emph{set} of maximizers. 
+	\item $\inf \{a_i\}_{i \in I}$ is defined as the least $a \in \R$ such that $a_i \ge a$ for all $i \in I$, and analogous properties hold.
+	\item Defining $f(x) = \sup_{i \in I} f_i(x)$, means that for every $x$, compute $\sup_{i \in I} \{f_i(x)\}$. 
+	\item A norm is $\|\cdot\|$ is a function from $\R^n \to \R_{\ge 0}$ such that $\|\alpha x\| = |\alpha|\|x\|$ for any $\alpha \in \R$, $\|x+y\| \le \|x\| +\|y\|$, and $\|x\| \ge 0$, and $\|x\| = 0 \iff x = 0$. 
+	\item A sequence $x_n$ is said to converge to a limit $x_*$ if, for every $\epsilon \ge 0$, there is an $N = N(\epsilon)$ sufficiently large that $\|x_n - x_*\| \le \epsilon$ for all $n \ge N$. We then write $\lim_{n \to \infty} x_n = x_*$.
+	\item If $f$ is continuous and $\lim_{n \to \infty} x_n = x_*$, then $\lim_{x_n \to \infty} f(x_n) = f(x_*)$. If $f$ is continuous and $\cX$ is compact, then $-\infty < \inf_{x \in \cX} f(x) \le \sup_{x \in \cX} < \infty$. Moreover, there exist $x_-$ and $x_+ \in \cX$ such that $f(x_i) = \inf_{x\in \cX} f(x)$ and $x_+ = \sup_{x\in \cX} f(x)$; hence, $\arg\min_{x \in \cX} f(x)$ and $\arg\max_{x \in \cX}f(x)$ are well-defined, and we can replace $\sup$ and $\max$ with $\inf$ and $\min$.  
 \end{enumerate}
 
 \end{document}
