@@ -207,11 +207,15 @@ $$f(x) - f(y)\leq \nabla f(x)^T(x-y) - \frac{1}{2\beta}||\nabla f(x) - \nabla f(
 
 \begin{proof}
 Let $z = y - \frac{1}{\beta}(\nabla f(y) - \nabla f(x))$.  Then one has
+
 $$f(x) - f(y)$$
-$$= f(x) - f(z) + f(z) - f(y)$$
-$$\leq \nabla f(x)^T(x-z) + \nabla f(y)^T(z-y) + \frac{\beta}{2}||z-y||^2$$
-$$= \nabla f(x)^T(x-y) + (\nabla f(x) - \nabla f(y))^T(y-z) + \frac{1}{2\beta}||\nabla f(x) - \nabla f(y)||^2$$
-$$= \nabla f(x)^T(x-y) - \frac{1}{2\beta} ||\nabla f(x) - \nabla f(y)||^2$$
+\begin{align}
+    &= f(x) - f(z) + f(z) - f(y) \\
+    &\leq \nabla f(x)^T(x-z) + \nabla f(y)^T(z-y) + \frac{\beta}{2}||z-y||^2 \\
+    &= \nabla f(x)^T(x-y) + (\nabla f(x) - \nabla f(y))^T(y-z) + \frac{1}{2\beta}||\nabla f(x) - \nabla f(y)||^2 \\
+    &= \nabla f(x)^T(x-y) - \frac{1}{2\beta} ||\nabla f(x) - \nabla f(y)||^2
+\end{align}
+
 \end{proof}
 
 Now we prove the theorem
@@ -231,10 +235,12 @@ $$w\delta_s^2 + \delta_{s+1} \leq \delta_s \iff w\frac{\delta_s}{\delta_{s+1}} +
 To finish the proof it remains to show that $||x_s - x^*||$ is decreasing with $s$.  Using lemma \ref{lm2} one immediately gets
 $$ (\nabla f(x) - \nabla f(y))^T(x - y) \geq \frac{1}{\beta} ||\nabla f(x) - \nabla f(y)||^2$$
 We use this and the fact that $\nabla f(x^*) = 0$
-$$||x_{s+1} - x^*||^2 = ||x_s - \frac{1}{\beta}\nabla f(x_s) - x^*||^2$$
-$$= ||x_s - x^*||^2 - \frac{2}{\beta}\nabla f(x_s)^T(x_s - x^*) + \frac{1}{\beta^2}||\nabla f(x_s)||^2 $$
-$$\leq ||x_s - x^*||^2 - \frac{1}{\beta^2} ||\nabla f(x_s)||^2 $$
-$$\leq ||x_s - x^*||^2$$
+\begin{align}
+    ||x_{s+1} - x^*||^2 &= ||x_s - \frac{1}{\beta}\nabla f(x_s) - x^*||^2 \\
+    &= ||x_s - x^*||^2 - \frac{2}{\beta}\nabla f(x_s)^T(x_s - x^*) + \frac{1}{\beta^2}||\nabla f(x_s)||^2 \\
+    &\leq ||x_s - x^*||^2 - \frac{1}{\beta^2} ||\nabla f(x_s)||^2 \\
+    &\leq ||x_s - x^*||^2
+\end{align}
 which concludes the proof.
 \end{proof}
 
