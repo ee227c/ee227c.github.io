@@ -85,9 +85,9 @@ x_{t+1} = \Pi_{\domain}(y_{t+1})
 And we are guaranteed that $x_{t+1}\in\domain$. Note that computing the projection may be the hardest part of your problem, as you are computing an $\argmin$. However, there are convex sets for which we know explicitly how to compute the projection (see \exampleref{euclidean-ball}).
 
 
-\begin{theorem}[Project Gradient Descent for Lipchitz Functions]
-\theoremlabel{libpchitz}
-Assume that function $f$ is convex, differntiable, and closed with bounded gradients. Let $L$ be the Lipchitz constant of $f$ over the convex domain $\Omega$. Let $R$ be the upper bound on the distance from the initial point $x_1$ to the optimal point $x^* = \arg\min_{x \in \Omega} f(x)$ (i.e. $\lVert x_1 - x^* \rVert_2$). Let $t$ be the number of iterations of project gradient descent.
+\begin{theorem}[Projected Gradient Descent for Lipchitz Functions]
+\theoremlabel{lipschitz}
+Assume that function $f$ is convex, differentiable, and closed with bounded gradients. Let $L$ be the Lipchitz constant of $f$ over the convex domain $\domain$. Let $R$ be the upper bound on the distance from the initial point $x_1$ to the optimal point $x^* = \arg\min_{x \in \domain} f(x)$ (i.e. $\lVert x_1 - x^* \rVert_2$). Let $t$ be the number of iterations of project gradient descent.
 
 If the learning rate $\eta$ is set to $\eta=\frac{R}{L \sqrt(t)}$, then $f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) \leq \frac{RL}{\sqrt{t}}$.
 
@@ -100,11 +100,11 @@ Before proving the theorem, recall that
     \item First order characterization of convexity: $f(y) = f(x) + \nabla f(x)^\top (y - x)$
     \item "Fundamental Theorem of Optimization": An inner product can be written as a sum of norms: $u^\top v = \frac{1}{2}(\lVert u \rVert^2 + \lVert v \lVert^2 - \lVert u - v \rVert^2$. This property can be seen by writing $\lVert u - v \rVert$ as $\lVert u - v \rVert = \lVert u \rVert^2 + \lVert v \lVert^2 - 2 u^\top v$.
     \item $L$-Lipchitz: For all $x$, $\lVert \nabla f(x) \rVert \leq L$.
-    \item $\lVert \pi_\Omega (y) - x \rVert^2 \leq \lVert y - x \rVert^2 - \lVert y - \pi_\Omega (x) \rVert^2$ % From above TODO
+    \item $\lVert \Pi_\domain (y) - x \rVert^2 \leq \lVert y - x \rVert^2 - \lVert y - \Pi_\domain (x) \rVert^2$ % From above TODO
 \end{itemize}
 
 
-\begin{proof}[Proof of \theoremref{libpchitz} for compact sets.]
+\begin{proof}[Proof of \theoremref{lipschitz} for compact sets.]
 The proof begins by first bounding the difference in function values $f(x_s) - f(x^*)$.
 \begin{align}
     f(x_s) - f(x^*) \leq
