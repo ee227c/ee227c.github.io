@@ -3,8 +3,6 @@
 
 \subsection{Gradient Descent}
 
-% TODO: Gradient descent figure?
-
 The procedure of gradient descent is defined by the recursion:
 \[
 x_{t+1} = x_t - \eta \nabla f(x_t)
@@ -13,17 +11,17 @@ where $\eta$ is the step size. This works to solve the problem
 \[
 \min_{x\in\domain} f(x)
 \]
-for $f$ convex, differentiable, and L-Lipschitz
+for $f$ convex, differentiable, and $L$-Lipschitz
 
-\begin{definition}[L-Lipschitz]
-A function is said to be \emph{L-Lipschitz} if its gradient is bounded,
+\begin{definition}[$L$-Lipschitz]
+A function is said to be \emph{$L$-Lipschitz} if its gradient is bounded,
 \[
 \|\nabla f(x)\| \leq L
 \]
 \end{definition}
 
 \begin{fact}
-f(x) is L-Lipschitz implies that the difference between two points in the range is bounded,
+f(x) is $L$-Lipschitz implies that the difference between two points in the range is bounded,
 \[
 |f(x) - f(y)| \leq L \|x - y\|
 \]
@@ -58,7 +56,6 @@ A projection onto the Euclidean ball $B_2$ is just normalization:
 \figurelabel{project}
 \end{figure}
 
-%TODO Indentation
 The crucial property of projections is that they satisfy the following condition:
 \[
 \| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2
@@ -84,17 +81,20 @@ x_{t+1} = \Pi_{\domain}(y_{t+1})
 
 And we are guaranteed that $x_{t+1}\in\domain$. Note that computing the projection may be the hardest part of your problem, as you are computing an $\argmin$. However, there are convex sets for which we know explicitly how to compute the projection (see \exampleref{euclidean-ball}).
 
-\begin{theorem}[Projected Gradient Descent for Lipchitz Functions]
+\subsection{Convergence Rate of Gradient Descent for $L$-Lipschitz Functions}
+
+\begin{theorem}[Projected Gradient Descent for $L$-Lipschitz Functions]
 \theoremlabel{lipschitz}
 
-Assume that function $f$ is convex, differntiable, and closed with bounded
+Assume that function $f$ is convex, differentiable, and closed with bounded
 gradients. Let $L$ be the Lipchitz constant of $f$ over the convex domain
-$\Omega$. Let $R$ be the upper bound on the distance from the initial point
-$x_1$ to the optimal point $x^* = \arg\min_{x \in \Omega} f(x)$ (i.e. $\lVert
-x_1 - x^* \rVert_2$). Let $t$ be the number of iterations of project gradient
-descent. If the learning rate $\eta$ is set to $\eta=\frac{R}{L \sqrt(t)}$,
+$\Omega$. Let $R$ be the upper bound on the distance $\lVert x_1 - x^* \rVert_2$
+from the initial point $x_1$ to the optimal point $x^* = \arg\min_{x \in \Omega} f(x)$.
+Let $t$ be the number of iterations of project gradient descent.
+If the learning rate $\eta$ is set to $\eta=\frac{R}{L \sqrt(t)}$,
 then $$f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) \leq
-\frac{RL}{\sqrt{t}}.$$ \end{theorem}
+\frac{RL}{\sqrt{t}}.$$
+\end{theorem}
 
 This means that the difference between the functional value of the average
 point during the optimization process from the optimal value is bounded above
@@ -170,12 +170,16 @@ $\frac{RL}{\sqrt{t}}$.
 
 \end{proof}
 
+\subsection{Convergence Rate of Gradient Descent for $\beta$-Smooth Functions}
+
+\begin{definition}[$\beta$-smoothness]
 A continuously differentiable function f is $\beta$ smooth if the gradient $\nabla f$ is $\beta$-Lipschitz, i.e
 $$||\nabla f(x) - \nabla f(y)|| \leq \beta||x-y||$$
+\end{definition}
 
-We will show that gradient descent  with update rule
+We will show that gradient descent with the update rule
 $$x_{t+1} = x_t - \eta \nabla f(x_t)$$
-attains a faster rate of convergence under smoothness condition.
+attains a faster rate of convergence under the smoothness condition.
 
 \begin{theorem}
 Let $f$ be convex and $\beta$-smooth on $\R^n$ then gradient descent with $\eta = \frac{1}{\beta}$ satsifies
