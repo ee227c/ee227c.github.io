@@ -29,8 +29,6 @@ f(x) is L-Lipschitz implies that the difference between two points in the range 
 \]
 \end{fact}
 
-%TODO better way to have these lines? Indentation looks weird
-
 \begin{question}
 How do we ensure that $x_{t+1}\in\domain$?
 \end{question}
@@ -52,14 +50,20 @@ A projection onto the Euclidean ball $B_2$ is just normalization:
 \]
 \end{example}
 
-% TODO: Pythagorean theorem figure
+\begin{figure}
+\figurelabel{project}
+\begin{center}
+\includegraphics[width=3in]{figures/lecture2-projection}
+\end{center}
+\caption{Projection of $y$ onto set $\mathcal{X}$. }
+\end{figure}
 
 %TODO Indentation
 The crucial property of projections is that they satisfy the following condition:
 \[
 \| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2
 \]
-i.e. the projection of $y$ onto a convex set containing $x$ is closer to $x$
+i.e. the projection of $y$ onto a convex set containing $x$ is closer to $x$. See \figureref{project} for a geometric picture.
 
 \begin{lemma}
 \[
