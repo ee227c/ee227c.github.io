@@ -34,7 +34,7 @@ How do we ensure that $x_{t+1}\in\domain$?
 Solution: Project onto $\domain$
 
 \begin{definition}[Projection]
-The \emph{projection} of a point $y$ onto a set $\domain$ is defined as
+The \emph{projection} of a point~$x$ onto a set $\domain$ is defined as
 \[
 \Pi_{\domain}(x) = \argmin_{y\in\domain} \|x-y\|
 \]
@@ -56,11 +56,12 @@ A projection onto the Euclidean ball $B_2$ is just normalization:
 \figurelabel{project}
 \end{figure}
 
-The crucial property of projections is that they satisfy the following condition:
+A crucial property of projections is that when $x\in\Omega,$ we have for any $y$
+(possibly outside $\Omega$):
 \[
-\| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2
+\| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2\
 \]
-i.e. the projection of $y$ onto a convex set containing $x$ is closer to $x$. See \figureref{project} for a geometric picture.
+That is, the projection of $y$ onto a convex set containing $x$ is closer to $x$. See \figureref{project} for a geometric picture.
 
 \begin{lemma}\lemmalabel{pythagorean}
 \[
