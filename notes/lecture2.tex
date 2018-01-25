@@ -62,7 +62,7 @@ The crucial property of projections is that they satisfy the following condition
 \]
 i.e. the projection of $y$ onto a convex set containing $x$ is closer to $x$. See \figureref{project} for a geometric picture.
 
-\begin{lemma}
+\begin{lemma}\lemmalabel{pythagorean}
 \[
 \| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2 - \| y - \Pi_{\domain}(y) \|^2
 \]
@@ -79,7 +79,10 @@ y_{t+1} = x_t - \eta \nabla f(x_t)
 x_{t+1} = \Pi_{\domain}(y_{t+1})
 \]
 
-And we are guaranteed that $x_{t+1}\in\domain$. Note that computing the projection may be the hardest part of your problem, as you are computing an $\argmin$. However, there are convex sets for which we know explicitly how to compute the projection (see \exampleref{euclidean-ball}).
+And we are guaranteed that $x_{t+1}\in\domain$. Note that computing the
+projection may be the hardest part of your problem, as you are computing an
+$\argmin$. However, there are convex sets for which we know explicitly how to
+compute the projection (see \exampleref{euclidean-ball}).
 
 \subsection{Convergence Rate of Gradient Descent for $L$-Lipschitz Functions}
 
@@ -100,25 +103,11 @@ This means that the difference between the functional value of the average
 point during the optimization process from the optimal value is bounded above
 by a constant proportional to $\frac{1}{\sqrt{t}}$.
 
-% TODO: reference the first part of the lecture here.
-Before proving the theorem, recall that
-\begin{itemize}
-
-    \item First order characterization of convexity: $f(y) = f(x) + \nabla
-    f(x)^\trans (y - x)$
-
-    \item "Fundamental Theorem of Optimization": An inner product can be
-    written as a sum of norms: $u^\trans v = \frac{1}{2}(\lVert u \rVert^2 +
-    \lVert v \lVert^2 - \lVert u - v \rVert^2$. This property can be seen by
-    writing $\lVert u - v \rVert$ as $\lVert u - v \rVert = \lVert u \rVert^2 +
-    \lVert v \lVert^2 - 2 u^\trans v$.
-
-    \item $L$-Lipchitz: For all $x$, $\lVert \nabla f(x) \rVert \leq L$.
-
-    \item Pythagorean Theorem: $\lVert \pi_\Omega (y) - x \rVert^2 \leq \lVert
-    y - x \rVert^2 - \lVert y - \pi_\Omega (x) \rVert^2$
-
-\end{itemize}
+Before proving the theorem, recall the "Fundamental Theorem of Optimization",
+which is that an inner product can be written as a sum of norms: $u^\trans v =
+\frac{1}{2}(\lVert u \rVert^2 + \lVert v \lVert^2 - \lVert u - v \rVert^2$.
+This property can be seen by writing $\lVert u - v \rVert$ as $\lVert u - v
+\rVert = \lVert u \rVert^2 + \lVert v \lVert^2 - 2 u^\trans v$.
 
 \begin{proof}[Proof of \theoremref{lipschitz} for compact sets.]
 
@@ -131,7 +120,7 @@ f(x^*)$.
     &= \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 + \lVert x_s - y_{s+1} \rVert^2 - \lVert y_{s+1} - x^* \rVert^2 \right) \equationlabel{c} \\
     &= \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 - \lVert y_{s+1} - x^* \rVert^2 \right) + \frac{\eta}{2} \lVert \nabla f(x_s) \rVert^2 \equationlabel{d} \\
     &\leq \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 - \lVert y_{s+1} - x^* \rVert^2 \right) + \frac{\eta L^2}{2} \equationlabel{e} \\
-    &\leq \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 - \lVert x_{s+1} - x^* \rVert^2 \right) + \frac{\eta L^2}{2} \equationlabel{f} \\
+    &\leq \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 - \lVert x_{s+1} - x^* \rVert^2 \right) + \frac{\eta L^2}{2} \equationlabel{f}
 \end{align}
 
 \equationref{a} comes from the definition of convexity. \equationref{b} comes
@@ -139,7 +128,7 @@ from the update rule for projected gradient descent. \equationref{c} comes from
 the ``Fundamental Theorem of Optimization.'' \equationref{d} comes from the
 update rule for projected gradient descent. \equationref{e} is because $f$ is
 $L$-Lipchitz. \equationref{f}
-comes from the Pythagorean Theorem.
+comes from \lemmaref{pythagorean}.
 
 Now, sum these differences from $s=1$ to $s=T$:
 
@@ -147,7 +136,7 @@ Now, sum these differences from $s=1$ to $s=T$:
    \sum_{s=1}^t f(x_s) - f(x^*) &\leq  \frac{1}{2\eta} \sum_{s=1}^t \left(\lVert x_s - x^* \rVert^2 - \lVert x_{s+1} - x^* \rVert^2 \right) + \frac{\eta L^2 t}{2} \equationlabel{g} \\
    &= \frac{1}{2\eta} \left(\lVert x_1 - x^* \rVert^2 - \lVert x_{t} - x^{*} \rVert^2 \right) + \frac{\eta L^2 t}{2} \equationlabel{h} \\
    &\leq \frac{1}{2\eta} \lVert x_1 - x^* \rVert^2 + \frac{\eta L^2 t}{2} \equationlabel{i} \\
-   &\leq \frac{R^2}{2\eta} + \frac{\eta L^2 t}{2} \equationlabel{j} \\
+   &\leq \frac{R^2}{2\eta} + \frac{\eta L^2 t}{2} \equationlabel{j}
 \end{align}
 
 \equationref{h} is because \equationref{g} is a telescoping sum.
