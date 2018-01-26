@@ -13200,16 +13200,12 @@ AABJRU5ErkJggg==
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a id="least-squares"></a></p>
 <h2 id="Least-Squares">Least Squares<a class="anchor-link" href="#Least-Squares">&#182;</a></h2><p>One of the most fundamental data analysis tools is <em>linear least squares</em>. Given an $m\times n$ matrix $A$ and a vector $b$ our goal is to find a vector $x\in\mathbb{R}^n$ that minimizes the following objective:</p>
-$$
-f(x) = \frac 1{2m}\sum_{i=1}^m (a_i^\top x - b_j)^2 
-=\frac1{2m}\|Ax-b\|^2
-$$<p>We can verify that
-$$
-\nabla f(x) = A^\top(Ax-b)
-\quad\text{and}\quad
-\nabla^2 f(x) = A^\top A.
-$$
-Hence, the objective is $\beta$-smooth with 
+<p>
+$$f(x) = \frac 1{2m}\sum_{i=1}^m (a_i^\top x - b_j)^2 
+=\frac1{2m}\|Ax-b\|^2$$
+</p><p>We can verify that $\nabla f(x) = A^\top(Ax-b)$ and
+$\nabla^2 f(x) = A^\top A.$</p>
+<p>Hence, the objective is $\beta$-smooth with 
 $\beta=\lambda_{\mathrm{max}}(A^\top A)$, and $\alpha$-strongly convex with $\alpha=\lambda_{\mathrm{min}}(A^\top A)$.</p>
 
 </div>
@@ -14958,9 +14954,9 @@ jgFGkiRVzv8PaEP5cPwccSAAAAAASUVORK5CYII=
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a id="regularization"></a></p>
 <h2 id="$\ell_2$-regularized-least-squares">$\ell_2$-regularized least squares<a class="anchor-link" href="#$\ell_2$-regularized-least-squares">&#182;</a></h2><p>In the underdetermined case, it is often desirable to restore strong convexity of the objective function by adding an $\ell_2^2$-penality, also known as <em>Tikhonov regularization</em>, $\ell_2$-regularization, or <em>weight decay</em>.</p>
-$$
-\frac1{2m}\|Ax-b\|^2 + \frac{\alpha}2\|x\|^2
-$$<p>Note: With this modification the objective is $\alpha$-strongly convex again.</p>
+<p>
+$$\frac1{2m}\|Ax-b\|^2 + \frac{\alpha}2\|x\|^2$$
+</p><p>Note: With this modification the objective is $\alpha$-strongly convex again.</p>
 
 </div>
 </div>
@@ -16098,7 +16094,9 @@ gg==
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a id="lasso"></a></p>
 <h2 id="LASSO">LASSO<a class="anchor-link" href="#LASSO">&#182;</a></h2><p>LASSO is the name for $\ell_1$-regularized least squares regression:</p>
-$$\frac1{2m}\|Ax-b\|^2 + \alpha\|x\|_1$$<p>We will see that LASSO is able to fine <em>sparse</em> solutions if they exist. This is a common motivation for using an $\ell_1$-regularizer.</p>
+<p>
+$$\frac1{2m}\|Ax-b\|^2 + \alpha\|x\|_1$$
+</p><p>We will see that LASSO is able to fine <em>sparse</em> solutions if they exist. This is a common motivation for using an $\ell_1$-regularizer.</p>
 
 </div>
 </div>
@@ -17810,7 +17808,9 @@ B8QEveSswP9QAAAAAElFTkSuQmCC
 <li>$\langle a_i, x\rangle \le -1$ when $y_i = -1$</li>
 </ul>
 <p>The smaller the norm $\|x\|$ the larger the <em>margin</em> between positive and negative instances. Therefore, it makes sense to throw in a regularizer that penalizes large norms. This leads to the objective.</p>
+<p>
 $$\frac 1m \sum_{i=1}^m \max\{1-y_i(a_i^\top x), 0\} + \frac{\alpha}2\|x\|^2$$
+</p>
 </div>
 </div>
 </div>
@@ -19648,9 +19648,10 @@ lORPknwhXdi6Kd0Y/1ySR04H7v5cY3wcaK0tpetM80Ppxu7OdGP5wXTrajxhs8Ddn/+GJF+f5L+n
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Given a positive semidefinite matrix $S\in\mathbb{R}^{n\times n}$ the objective function in sparse inverse covariance estimation is as follows:</p>
+<p>
 $$ \min_{X\in\mathbb{R}^{n\times n}, X\succeq 0} 
-\langle S, X\rangle - \log\det(X) + \alpha\|X\|_1
-$$<p>Here, we define
+\langle S, X\rangle - \log\det(X) + \alpha\|X\|_1$$
+</p><p>Here, we define
 $$\langle S, X\rangle = \mathrm{trace}(S^\top X)$$
 and
 $$\|X\|_1 = \sum_{ij}|X_{ij}|.$$</p>
