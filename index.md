@@ -65,7 +65,7 @@ See individual lectures below.
 | 1 | 1/16 | Convexity  | [pdf](notes/ee227c-lecture1.pdf) | [ipynb](http://nbviewer.jupyter.org/urls/ee227c.github.io/notes/lecture1.ipynb)
 | 2 | 1/18 | Gradient method (non-smooth and smooth) | [pdf](notes/ee227c-lecture2.pdf)  | ---  |
 | 3 | 1/23 | Gradient method (strongly convex) |   |   |
-| 4 | 1/25 | Gradient method (some applications) |   | [ipynb](http://nbviewer.jupyter.org/github/ee227c/ee227c.github.io/blob/master/code/lecture4.ipynb)  |
+| 4 | 1/25 | Gradient method (some applications) |   | [ipynb](http://nbviewer.jupyter.org/github/ee227c/ee227c.github.io/blob/master/code/lecture4.html)  |
 | 5 | 1/30 | Conditional gradient (Frank-Wolfe algorithm) |   |   |
 | 6 | 2/1 |  Momentum and acceleration|   |   |
 | 7 | 2/6 |Nesterov's method  |   |   |
