@@ -26,7 +26,7 @@ the semester to see if enrollment will have become available. Visitors are permi
 to audit only if there is enough space in the room. Please do leave available
 seats to enrolled students.
 
-## Assingments 
+## Assignments 
 
 Assignments will be posted on
 [Piazza](https://piazza.com/berkeley/spring2018/ee227c/home). If you haven't
