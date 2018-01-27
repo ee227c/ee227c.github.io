@@ -1,37 +1,44 @@
-\section{Lecture 2: Gradient Descent}
-\sectionlabel{gradient_descent}
+\section{Lecture 2: Gradient Method}
+\sectionlabel{gradient-descent}
+
+In this lecture we encounter the fundamentally important \emph{gradient method}
+and a few ways to analyze its convergence behavior.
+The goal here is to solve a problem of the form
+\[
+\min_{x\in\domain} f(x)\,
+\]
+where we'll make some additional assumptions on the
+function~$f\colon\domain\to\R.$
 
 \subsection{Gradient Descent}
 
-The procedure of gradient descent is defined by the recursion:
+For a differentiable function~$f,$ the basic gradient method startingf from an
+initial point $x_0$ is defined by the iterative description
 \[
-x_{t+1} = x_t - \eta \nabla f(x_t)
+x_{t+1} = x_t - \eta \nabla f(x_t)\qquad\qquad(t\ge 1)
 \]
-where $\eta$ is the step size. This works to solve the problem
-\[
-\min_{x\in\domain} f(x)
-\]
-for $f$ convex, differentiable, and $L$-Lipschitz
+where $\eta$ is the step size. 
+
+The first assumption that leads to a convergence analysis is that the gradients
+of the function aren't too big over the domain.
 
 \begin{definition}[$L$-Lipschitz]
-A function is said to be \emph{$L$-Lipschitz} if its gradient is bounded,
+A differentiable function~$f$ is said to be \emph{$L$-Lipschitz} over the
+domain~$\domain$ if for all~$x\in\domain,$ we have
 \[
-\|\nabla f(x)\| \leq L
+\|\nabla f(x)\| \leq L\,.
 \]
 \end{definition}
 
 \begin{fact}
-f(x) is $L$-Lipschitz implies that the difference between two points in the range is bounded,
+If a function~$f$ is $L$-Lipschitz, it implies that the difference between two points in the range is bounded,
 \[
 |f(x) - f(y)| \leq L \|x - y\|
 \]
 \end{fact}
 
-\begin{question}
-How do we ensure that $x_{t+1}\in\domain$?
-\end{question}
-
-Solution: Project onto $\domain$
+How can we ensure that $x_{t+1}\in\domain$?  One natural approach is to
+``project'' each iterate back onto the domain~$\domain.$
 
 \begin{definition}[Projection]
 The \emph{projection} of a point~$x$ onto a set $\domain$ is defined as
@@ -52,7 +59,8 @@ A projection onto the Euclidean ball $B_2$ is just normalization:
 \begin{center}
 \includegraphics[width=3in]{figures/lecture2-projection}
 \end{center}
-\caption{Projection of $y$ onto set $\mathcal{X}$. (Figure taken from Bubeck) }
+\caption{Projection of $y$ onto set $\mathcal{X}$. (Figure taken from \em{S.~Bubeck.
+Convex Optimization: Algorithms and Complexity}) }
 \figurelabel{project}
 \end{figure}
 
@@ -85,7 +93,7 @@ projection may be the hardest part of your problem, as you are computing an
 $\argmin$. However, there are convex sets for which we know explicitly how to
 compute the projection (see \exampleref{euclidean-ball}).
 
-\subsection{Convergence Rate of Gradient Descent for $L$-Lipschitz Functions}
+\subsection{Convergence rate of gradient descent for Lipschitz functions}
 
 \begin{theorem}[Projected Gradient Descent for $L$-Lipschitz Functions]
 \theoremlabel{lipschitz}
@@ -160,43 +168,40 @@ $\frac{RL}{\sqrt{t}}$.
 
 \end{proof}
 
-\subsection{Convergence Rate of Gradient Descent for $\beta$-Smooth Functions}
+\subsection{Convergence rate for smooth functions}
+
+The next property we'll encounter is called \emph{smoothness} and it often leads
+to stronger convergence guarantees.
 
 \begin{definition}[$\beta$-smoothness]
 A continuously differentiable function f is $\beta$ smooth if the gradient $\nabla f$ is $\beta$-Lipschitz, i.e
-$$||\nabla f(x) - \nabla f(y)|| \leq \beta||x-y||$$
+$$\|\nabla f(x) - \nabla f(y)\| \leq \beta\|x-y\|$$
 \end{definition}
 
-We will show that gradient descent with the update rule
-$$x_{t+1} = x_t - \eta \nabla f(x_t)$$
-attains a faster rate of convergence under the smoothness condition.
-
-\begin{theorem}
-Let $f$ be convex and $\beta$-smooth on $\R^n$ then gradient descent with $\eta = \frac{1}{\beta}$ satsifies
-$$f(x_t) - f(x^*) \leq \frac{2\beta||x_1 - x^*||^2}{t-1}$$
-\end{theorem}
-To prove this we will need the following two lemmas.
 
 \begin{lemma}\label{l1}
 Let $f$ be a $\beta$-smooth function on $\R^n$.  Then for any $x,y \in \R^n$, one has
-$$|f(x) - f(y) - \nabla f(y)^T(x-y)| \leq \frac{\beta}{2}||x-y||^2$$
+$$|f(x) - f(y) - \nabla f(y)^\trans(x-y)| \leq \frac{\beta}{2}\|x-y\|^2$$
 \end{lemma}
 
 \begin{proof}
 First represent $f(x) - f(y)$ as an integral, apply Cauchy-Schwarz and then $\beta$-smoothness:
 
-$$|f(x) - f(y) - \nabla f(y)^T(x-y)|$$
-$$= \big|\int\limits_{0}^1 \nabla f(y + t(x-y))^T(x-y)dt - \nabla f(y)^T(x-y)\big|$$
-$$\leq  \int\limits_{0}^1 ||\nabla f(y + t(x-y)) - \nabla f(y)||\cdot ||x-y||dt$$
-$$\leq \int\limits_{0}^1 \beta t||x-y||^2dt$$
-$$= \frac{\beta}{2}||x-y||^2$$
+\begin{align*}
+|f(x) - f(y) - \nabla f(y)^\trans(x-y)|\\
+&=\left|\int\limits_{0}^1 \nabla f(y + t(x-y))^\trans(x-y)dt - \nabla
+f(y)^\trans(x-y)\right|\\
+&\leq  \int\limits_{0}^1 \|\nabla f(y + t(x-y)) - \nabla f(y)\|\cdot \|x-y\|dt\\
+&\leq \int\limits_{0}^1 \beta t\|x-y\|^2dt\\
+&= \frac{\beta}{2}\|x-y\|^2\\
+\end{align*}
 \end{proof}
 
-We also need
+We also need the following lemma.
 
 \begin{lemma} \label{lm2}
 Let $f$ be a $\beta$-smooth function, then for any $x,y \in \R^n$, one has
-$$f(x) - f(y)\leq \nabla f(x)^T(x-y) - \frac{1}{2\beta}||\nabla f(x) - \nabla f(y)||$$
+$$f(x) - f(y)\leq \nabla f(x)^\trans(x-y) - \frac{1}{2\beta}\|\nabla f(x) - \nabla f(y)\|$$
 \end{lemma}
 
 \begin{proof}
@@ -205,35 +210,44 @@ Let $z = y - \frac{1}{\beta}(\nabla f(y) - \nabla f(x))$.  Then one has
 $$f(x) - f(y)$$
 \begin{align}
     &= f(x) - f(z) + f(z) - f(y) \\
-    &\leq \nabla f(x)^T(x-z) + \nabla f(y)^T(z-y) + \frac{\beta}{2}||z-y||^2 \\
-    &= \nabla f(x)^T(x-y) + (\nabla f(x) - \nabla f(y))^T(y-z) + \frac{1}{2\beta}||\nabla f(x) - \nabla f(y)||^2 \\
-    &= \nabla f(x)^T(x-y) - \frac{1}{2\beta} ||\nabla f(x) - \nabla f(y)||^2
+    &\leq \nabla f(x)^\trans(x-z) + \nabla f(y)^\trans(z-y) + \frac{\beta}{2}\|z-y\|^2 \\
+    &= \nabla f(x)^\trans(x-y) + (\nabla f(x) - \nabla f(y))^\trans(y-z) + \frac{1}{2\beta}\|\nabla f(x) - \nabla f(y)\|^2 \\
+    &= \nabla f(x)^\trans(x-y) - \frac{1}{2\beta} \|\nabla f(x) - \nabla f(y)\|^2
 \end{align}
 
 \end{proof}
 
-Now we prove the theorem
+
+We will show that gradient descent with the update rule
+$$x_{t+1} = x_t - \eta \nabla f(x_t)$$
+attains a faster rate of convergence under the smoothness condition.
+
+\begin{theorem}
+Let $f$ be convex and $\beta$-smooth on $\R^n$ then gradient descent with $\eta = \frac{1}{\beta}$ satsifies
+$$f(x_t) - f(x^*) \leq \frac{2\beta\|x_1 - x^*\|^2}{t-1}$$
+\end{theorem}
+To prove this we will need the following two lemmas.
 
 \begin{proof}
 By the update rule and lemma \ref{l1} we have
-$$f(x_{s+1}) - f(x_s) \leq -\frac{1}{2\beta}||\nabla f(x_s)||^2 $$
+$$f(x_{s+1}) - f(x_s) \leq -\frac{1}{2\beta}\|\nabla f(x_s)\|^2 $$
 In particular, denoting $\delta_s = f(x_s) - f(x^*)$ this shows
-$$\delta_{s+1} \leq \delta_s - \frac{1}{2\beta}||\nabla f(x_s)||^2 $$
+$$\delta_{s+1} \leq \delta_s - \frac{1}{2\beta}\|\nabla f(x_s)\|^2 $$
 One also has by convexity
-$$\delta_s \leq \nabla f(x)s)^T(x_s - x^*) \leq ||x_s - x^*|| \cdot ||\nabla f(x_s)||$$
-We will prove that $||x_s - x^*||$ is decreasing with $s$, which with the two above displays will imply
-$$\delta_{s+1}\leq \delta_s - \frac{1}{2\beta||x_1 - x^*||^2}\delta_s^2$$
-We solve the recurrence as follows.  Let $w = \frac{1}{2\beta||x_1 - x^*||^2}$, then
+$$\delta_s \leq \nabla f(x)s)^\trans(x_s - x^*) \leq \|x_s - x^*\| \cdot \|\nabla f(x_s)\|$$
+We will prove that $\|x_s - x^*\|$ is decreasing with $s$, which with the two above displays will imply
+$$\delta_{s+1}\leq \delta_s - \frac{1}{2\beta\|x_1 - x^*\|^2}\delta_s^2$$
+We solve the recurrence as follows.  Let $w = \frac{1}{2\beta\|x_1 - x^*\|^2}$, then
 $$w\delta_s^2 + \delta_{s+1} \leq \delta_s \iff w\frac{\delta_s}{\delta_{s+1}} + \frac
 {1}{\delta_s} \leq \frac{1}{\delta_{s+1}} \implies \frac{1}{\delta_{s+1}} - \frac{1}{\delta_s} \geq w \implies \frac{1}{\delta_t} \geq w(t-1)$$
-To finish the proof it remains to show that $||x_s - x^*||$ is decreasing with $s$.  Using lemma \ref{lm2} one immediately gets
-$$ (\nabla f(x) - \nabla f(y))^T(x - y) \geq \frac{1}{\beta} ||\nabla f(x) - \nabla f(y)||^2$$
+To finish the proof it remains to show that $\|x_s - x^*\|$ is decreasing with $s$.  Using lemma \ref{lm2} one immediately gets
+$$ (\nabla f(x) - \nabla f(y))^\trans(x - y) \geq \frac{1}{\beta} \|\nabla f(x) - \nabla f(y)\|^2$$
 We use this and the fact that $\nabla f(x^*) = 0$
 \begin{align}
-    ||x_{s+1} - x^*||^2 &= ||x_s - \frac{1}{\beta}\nabla f(x_s) - x^*||^2 \\
-    &= ||x_s - x^*||^2 - \frac{2}{\beta}\nabla f(x_s)^T(x_s - x^*) + \frac{1}{\beta^2}||\nabla f(x_s)||^2 \\
-    &\leq ||x_s - x^*||^2 - \frac{1}{\beta^2} ||\nabla f(x_s)||^2 \\
-    &\leq ||x_s - x^*||^2
+    \|x_{s+1} - x^*\|^2 &= \|x_s - \frac{1}{\beta}\nabla f(x_s) - x^*\|^2 \\
+    &= \|x_s - x^*\|^2 - \frac{2}{\beta}\nabla f(x_s)^\trans(x_s - x^*) + \frac{1}{\beta^2}\|\nabla f(x_s)\|^2 \\
+    &\leq \|x_s - x^*\|^2 - \frac{1}{\beta^2} \|\nabla f(x_s)\|^2 \\
+    &\leq \|x_s - x^*\|^2
 \end{align}
 which concludes the proof.
 \end{proof}
