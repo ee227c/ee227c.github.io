@@ -26,7 +26,7 @@ the semester to see if enrollment will have become available. Visitors are permi
 to audit only if there is enough space in the room. Please do leave available
 seats to enrolled students.
 
-## Assingments 
+## Assignments 
 
 Assignments will be posted on
 [Piazza](https://piazza.com/berkeley/spring2018/ee227c/home). If you haven't
@@ -77,9 +77,9 @@ See individual lectures below.
 | 13 | 2/27 | Proximal Methods  |   |   |
 | 14 | 3/1 | Duality theory|   |   |
 | 15 | 3/6 | Algorithms using duality |   |   |
-| 16 | 3/8 | Differentiation and adjoints |   |   |
-| 17 | 3/13 | Backpropagation and applications |   |   |
-| 18 | 3/15 | Distributed Optimization |   |   |
+| 18 | 3/8 | Distributed Optimization |   |   |
+| 16 | 3/13 | Backpropagation and adjoints |   |   |
+| 17 | 3/15 | Some implementation aspects |   |   |
 | 19 | 3/20 | Quasi-convex problems |   |   |
 | 20 | 3/22 | Alternating minimization |   |   |
 | -- | 3/27 | No class (Spring break) |   |   |
