@@ -55,7 +55,8 @@ We suggest that each scribe takes down notes, and then all three meet after clas
 
 ### [All available lecture notes (pdf)](notes/ee227c-notes.pdf)
 
-See individual lectures below.
+See individual lectures below. These notes likely contain several mistakes. If
+you spot any please send an email or pull request.
 
 ## Schedule
 
