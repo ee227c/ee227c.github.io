@@ -3,7 +3,7 @@
 # Shell script to extract notes for single lecture
 # First argument specifies which lecture number to compile
 
-PDFLATEX=/usr/bin/pdflatex
+PDFLATEX=`which pdflatex`
 
 if [ $# -eq 0 ]
 then
@@ -36,9 +36,9 @@ then
     echo 'Compiling sources again.'
     $PDFLATEX tmp-lecture.tex > /dev/null
     mv tmp-lecture.pdf ee227c-lecture$1.pdf
-    echo "Created lecture$1.pdf"
+    echo "Created ee227c-lecture$1.pdf"
     echo "Cleaning up."
     rm tmp-lecture.*
 else
-    echo "lecture$1.tex does not exist."  
+    echo "lecture$1.tex does not exist."
 fi
