@@ -27,7 +27,9 @@ Let~$\cX$ be a convex set. Prove that that given any convex function $f\colon\cX
 \emph{subgradient} of $f$ at $x,$ such that $f(y) \ge f(x) + \langle g, y - x
 \rangle$ for all $y \in \cX$. 
 
-To establish this claim, you may follow the steps below.
+
+To establish this claim, you may follow the steps below. 
+We will only prove the existence under slightly restricted assumptions, but you can assume that the vector $g$ above exists in full generality. 
 
 \begin{enumerate}
 \item
@@ -50,10 +52,10 @@ Using part $i)$ and $ii)$, prove the existence of a subgradient at $x \in \cX$. 
 \end{enumerate}
 
 \item
-Let $\{f_{i}\}_{i \in I}$ be a (possibly infinite, uncountable) family of convex functions, and suppose that $f_{i}(x) < \infty$ for all $x \in \cX$. Show that $g(x) := \sup_{i} f_{i}(x)$ is convex on $\cX$ (you may assume $g(x)$ is finite).
+Let $\{f_{i}\}_{i \in I}$ be a (possibly infinite, uncountable) family of convex functions, and suppose that $f_{i}(x) < \infty$ for all $x \in \cX$. Show that $f(x) := \sup_{i} f_{i}(x)$ is convex on $\cX$ (you may assume $f(x)$ is finite).
 
 \item
-Using what we've proven about subgradients, prove that a function $g: \cX \to \R$ is convex if and only if it can be written as the supremum of affine functions (e.g. supremum of functions of the form $f_i(x) = \langle a_{i}, x \rangle + b_{i}$)
+Using what we've proven about subgradients, prove that a function $f: \cX \to \R$ is convex if and only if it can be written as the supremum of affine functions (e.g. supremum of functions of the form $f_i(x) = \langle a_{i}, x \rangle + b_{i}$)
 \end{enumerate}
 
 \section*{Problem 2: Properties of Subgradients}
@@ -65,7 +67,7 @@ Show by way of example that the subgradient is not necssarily unique, but that t
 \item
 Show that if $g_1 \in \partial f_1(x)$ and $g_2 \in \partial f_2(x)$, then $g_1 + g_2 \in \partial(f_1 + f_2)(x)$. 
 \item
-Let $f(x) = \sup_{\alpha} g_{\alpha}(x)$ which $g_{\alpha}$ convex. Show that $\Conv \{\partial g_{\alpha}(x) |  g_{\alpha}(x) =f(x) \} \subseteq \partial f$. 
+Let $f(x) = \sup_{i} g_{i}(x)$ which $g_{i}$ convex. Show that $\Conv \{\partial g_{i}(x) |  g_{i}(x) =f(x) \} \subseteq \partial f$. 
 \item \emph{This problem is likely to be changed in further revisions} Prove that if $f_{i}(x) = w_{i}^\top x
 b_{i}$ are a compact family of affine functions (i.e.
 $\{(w_{i},b_{i})\} \subset \R^{n+1}$ is compact), then the converse is true, namely $\partial f \subset \Conv \{\partial g_{i}(x) |  g_{i}(x) =f(x) \} $. 
@@ -102,7 +104,7 @@ on $\R^n$. Define the dual norm $\|y\|_* := \sup_{x: \|x\| \le 1}\langle x,y \ra
 Show that the dual norm is a norm, and describe its subgradient.
 \item Show that for all $g,w \in \R^n$, $|\langle g, w \rangle| \le \|g\|_*\|w\|$
 \item
-Let $f$ be a convex function on a convex domain $\cX$. Show that $f$ is $L$-Lipschitz on $\cX$ if an only if, for all $x \in \cX$ and all $g \in \partial f(x)$, $\|g\|_{*} \le L$.
+Let $f$ be a convex function on a convex domain $\cX$. Show that $f$ is $L$-Lipschitz on $\cX$ if an only if, for all $x \in \cX$, all $g \in \partial f(x)$, and all $y \in \cX$, $\langle g, y-x \rangle \le L\|x-y\|$. Conclude that, if $x \in \Int(\cX)$, $f$ is $L$-Lipschitz, and $g \in \partial f(x)$ then $\|g\|_* \le L$. 
 \end{enumerate}
 \end{enumerate}
 
@@ -114,16 +116,16 @@ descent analysis we saw in class.
 
 \begin{enumerate}
 \item Prove the following statement:
-\begin{proposition*} Let $\Omega$ be a convex domain of radius $R$, and let $f$ be a convex function on $\Omega$. Let $x_0 \in \Omega$, and let $x_{t} = \Pi_{\Omega}(x_{t-1} - \eta g_t )$, where $\E[g_t | g_1,\dots,g_{t-1}] \in \partial f(x_t)$, and $\sup_{t} \E[\|g_t\|^2] \le L$ and $\eta = \frac{LR}{\sqrt{T}}$.  Prove that 
+\begin{proposition*} Let $\Omega$ be a convex domain of radius $R$, and let $f$ be a convex function on $\Omega$. Let $x_0 \in \Omega$, and let $x_{t} = \Pi_{\Omega}(x_{t-1} - \eta g_t )$, where $\E[g_t | g_1,\dots,g_{t-1}] \in \partial f(x_{t-1})$, and $\sup_{t} \E[\|g_t\|^2] \le L^2$ and $\eta = \frac{LR}{\sqrt{T}}$.  Prove that 
 \begin{eqnarray}
- f(\frac{1}{T}\sum_{t=1}^T x_t) \le \inf_{x \in \Omega} f(x) + \dots
+ \Exp[f(\frac{1}{T}\sum_{t=1}^T x_t)] \le \inf_{x \in \Omega} f(x) + \dots
 \end{eqnarray}
 You fill in the $\dots$.
 \end{proposition*}
 \item Prove the following statement:
-\begin{proposition*}  Let $\Omega$ be a convex domain of radius $R$, Let $f_1,f_2,\dots,f_T$ be $L$-Lipschitz, convex functions on $\Omega$. Given any $x_0 \in \Omega$, let $x_{t} = \Pi_{\Omega}(x_{t-1} - \eta g_t ))$, where $g_t \in \partial f_t(x_t)$, and  $\eta = \frac{LR}{\sqrt{T}}$. Prove that
+\begin{proposition*}  Let $\Omega$ be a convex domain of radius $R$, Let $f_1,f_2,\dots,f_T$ be $L$-Lipschitz, convex functions on $\Omega$. Given any $x_0 \in \Omega$, let $x_{t} = \Pi_{\Omega}(x_{t-1} - \eta g_t ))$, where $g_t \in \partial f_{t-1}(x_{t-1})$, and  $\eta = \frac{LR}{\sqrt{T}}$. Prove that
 \begin{eqnarray}
-\frac{1}{T}\sum_{t=1}^{T} f(\frac{1}{T}\sum_{t=1}^T x_t) \le \frac{1}{T}\sum_{t=1}^Tf_t(x_t) \le \inf_{x \in \Omega}\frac{1}{T}\sum_{t=1}^Tf_t(x_t) + \dots
+\frac{1}{T}\sum_{t=1}^Tf_t(x_t) \le \inf_{x \in \Omega}\frac{1}{T}\sum_{t=1}^Tf_t(x) + \dots
 \end{eqnarray}
 You fill in the $\dots$.
 \end{proposition*}
@@ -141,7 +143,7 @@ You will need the following information
 \item
 Construct a function on $f_{\sigma}$ such that $\E[z_i | \sigma] = \nabla f_{\sigma}(x)$ for all $x \in \Omega$. What is the optimum $x^*_{\sigma} $of $f_{\sigma}$? What is the ``smoothness'' of $f_{\sigma}$?
 \item 
-Show that there is a universal constant $C'$ such that, for $T \le C'\epsilon^{-2}$, $\Exp[f_{\sigma}(x_{T+1}) - \min_{x \in [-1,1]}f_{\sigma}(x)] \ge \epsilon$. 
+Show that there is a universal constant $C'$ such that, for $T \le C'\epsilon^{-2}$, $\E[f_{\sigma}(x_{T+1}) - \min_{x \in [-1,1]}f_{\sigma}(x)] \ge \epsilon$, where $\Exp_{\sigma}$ is taken over the randomness in $\sigma$, $z_1,\dots,Z_T$, and any randomness in the algorithm.  
 \end{enumerate}
 \end{enumerate}
 \section*{Problem 5: Generalized Projections}
@@ -175,15 +177,15 @@ What does this reduce to when $\Phi(x) = \frac{1}{2}\|x\|^2_2$? For the above, y
 \begin{lemma*} Let $f$ be convex, and let $\cX$ be a closed convex set on which $f$ is differentiable. Then $x^* \in \arg\min_{x \in \cX} f(x)$, if and only if, for all $x \in \cX$, $\nabla f(x^*)^\top ( x^* - y) \le 0$ for all $y \in \cX$.
 \end{lemma*}
 \item
-Consider the following algorithm, known as mirror descent. Let $\cX \subset \cD$ and $\Phi$ be as above, let $f: \cX \to \R$ be convex, let $x_1  \in \cX$. Fix an $\eta > 0$. For $t \ge 1$, define $y_{t+1}$ such that $\nabla \Phi(y_{t+1}) - \nabla \Phi(x_{t}) = \eta g_t$, where $g_t \in \partial f(x_t)$. Prove the following:
+Consider the following algorithm, known as mirror descent. Let $\cX \subset \cD$ and $\Phi$ be as above, let $f: \cX \to \R$ be convex, let $x_1  \in \cX$. Fix an $\eta > 0$. For $t \ge 1$, define $y_{t+1}$ such that $\nabla \Phi(y_{t+1}) - \nabla \Phi(x_{t}) = -\eta g_t$, where $g_t \in \partial f(x_t)$. Prove the following:
 \begin{theorem*} Let $\|\cdot\|$ be an \emph{arbitrary} norm on $\cX$, and suppose that $\Phi$ is a $\kappa$ strongly-convex mirror map with respect to $\|\cdot\|$ on $\cX$. Suppose that $f$ is L-Lipschitz with respect to $\|\cdot\|$. Prove that 
 \begin{eqnarray}
-f(\sum_{s=1}^T x_s) - \min_{x \in \cX} f(x) \le \frac{D(x,\pi)}{\eta} + \eta \frac{L^2 T}{\kappa}
+f(\frac{1}{T}\sum_{s=1}^T x_s) - \min_{x \in \cX} f(x) \le \frac{D(x^*,x_1)}{\eta} + \eta \frac{L^2 T}{\kappa}
 \end{eqnarray}
 \end{theorem*}
 Recall that $\Phi$ is $\kappa$-strongly convex with respect to $\|\cdot\|$ if and only $\Phi(x)  - \Phi(y) \le \nabla \Phi(x)^\top (x-y) + \frac{\kappa}{2}\|x-y\|^2$. 
 \item
-A common setup for mirror descent is on the simplex, where $\cD: \{x: x_i > 0 \forall i \in [d]\}$, and $\cX := \{x \in \cD:\|x\|_1 = 1\}$. Given an iterate $x_t$, compute the updates $y_{t+1}$ and $x_{t+1}$. 
+A common setup for mirror descent is on the simplex, where $\cD: \{x: x[i] > 0 \forall i \in [n]\}$, $\cX := \{x \in \cD:\|x\|_1 = 1\}$, and $\Phi(x) = \sum_i x[i] \log x[i]$. Given an iterate $x_t$, compute the updates $y_{t+1}$ and $x_{t+1}$. Here, $x[i]$ is the $i$-th coordinate of $x$.
 \end{enumerate}
 \newpage
 \section*{Background}
