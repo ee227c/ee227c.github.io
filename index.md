@@ -26,7 +26,7 @@ the semester to see if enrollment will have become available. Visitors are permi
 to audit only if there is enough space in the room. Please do leave available
 seats to enrolled students.
 
-## Assingments 
+## Assignments 
 
 Assignments will be posted on
 [Piazza](https://piazza.com/berkeley/spring2018/ee227c/home). If you haven't
@@ -55,7 +55,8 @@ We suggest that each scribe takes down notes, and then all three meet after clas
 
 ### [All available lecture notes (pdf)](notes/ee227c-notes.pdf)
 
-See individual lectures below.
+See individual lectures below. These notes likely contain several mistakes. If
+you spot any please send an email or pull request.
 
 ## Schedule
 
@@ -63,23 +64,23 @@ See individual lectures below.
 | # | Date  | Topic  | pdf | ipynb  |
 |-|-|-|-|-|
 | 1 | 1/16 | Convexity  | [pdf](notes/ee227c-lecture1.pdf) | [ipynb](http://nbviewer.jupyter.org/urls/ee227c.github.io/notes/lecture1.ipynb)
-| 2 | 1/18 | Gradient method (non-smooth and smooth) |   |   |
+| 2 | 1/18 | Gradient method (non-smooth and smooth) | [pdf](notes/ee227c-lecture2.pdf)  | ---  |
 | 3 | 1/23 | Gradient method (strongly convex) |   |   |
-| 4 | 1/25 | Gradient method (some applications) |   |   |
-| 5 | 1/30 | Conditional gradient (Frank-Wolfe algorithm) |   |   |
+| 4 | 1/25 | Gradient method (some applications) | [pdf](notes/ee227c-lecture4.pdf)  | [ipynb](code/lecture4.html)  |
+| 5 | 1/30 | Conditional gradient (Frank-Wolfe algorithm) |   | [ipynb](code/lecture5.html)  |
 | 6 | 2/1 |  Momentum and acceleration|   |   |
-| 7 | 2/6 |Nesterov's method  |   |   |
-| 8 | 2/8 |  Lower bounds|   |   |
-| 9 | 2/13 |  Robustness acceleration trade-offs |   |   |
+| 7 | 2/6 | Nesterov's method  |   |   |
+| 8 | 2/8 | Lower bounds|   |   |
+| 9 | 2/13 | Robustness acceleration trade-offs |   |   |
 | 10 | 2/15 | Stochastc optimization |   |   |
 | 11 | 2/20 | Learning, regularization, and generalization |   |   |
 | 12 | 2/22 | Coordinate Descent |   |   |
 | 13 | 2/27 | Proximal Methods  |   |   |
 | 14 | 3/1 | Duality theory|   |   |
 | 15 | 3/6 | Algorithms using duality |   |   |
-| 16 | 3/8 | Differentiation and adjoints |   |   |
-| 17 | 3/13 | Backpropagation and applications |   |   |
-| 18 | 3/15 | Distributed Optimization |   |   |
+| 18 | 3/8 | Distributed Optimization |   |   |
+| 16 | 3/13 | Backpropagation and adjoints |   |   |
+| 17 | 3/15 | Some implementation aspects |   |   |
 | 19 | 3/20 | Quasi-convex problems |   |   |
 | 20 | 3/22 | Alternating minimization |   |   |
 | -- | 3/27 | No class (Spring break) |   |   |
