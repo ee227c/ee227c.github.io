@@ -62,22 +62,20 @@ Using what we've proven about subgradients, prove that a function $f: \cX \to \R
 Let $f$ be a convex function over a domain $\cX$. We will assume $x \in \Int(\cX)$. 
 \begin{enumerate}
 \item
-Show by way of example that the subgradient is not necssarily unique, but that the set of all subgradients is closed and convex. We will denote this \emph{set} $\partial f(x)$.
+Show by way of example that the subgradient is not necssarily unique, but \emph{prove} that the set of all subgradients is closed and convex. We will denote this \emph{set} $\partial f(x)$.
 \item Show that $f$ has a directional derivative in each direction. Use this to conclude that a convex $f$ is differentiable at $x$ only if $\partial f(x) = \{\nabla f(x)\}$.
 \item
 Show that if $g_1 \in \partial f_1(x)$ and $g_2 \in \partial f_2(x)$, then $g_1 + g_2 \in \partial(f_1 + f_2)(x)$. 
 \item
 Let $f(x) = \sup_{i} g_{i}(x)$ which $g_{i}$ convex. Show that $\Conv \{\partial g_{i}(x) |  g_{i}(x) =f(x) \} \subseteq \partial f$. 
-\item \emph{This problem is likely to be changed in further revisions} Prove that if $f_{i}(x) = w_{i}^\top x
-b_{i}$ are a compact family of affine functions (i.e.
-$\{(w_{i},b_{i})\} \subset \R^{n+1}$ is compact), then the converse is true, namely $\partial f \subset \Conv \{\partial g_{i}(x) |  g_{i}(x) =f(x) \} $. 
+\item Here, you will be asked to show a partial converse to the above statement. Suppose that $\cX$ is a compact set, with non-empty interior, and let $f(x) = \max_{w \in \cX} \langle w, x \rangle$. Prove that $\partial f(x) \subset \Conv \{w: \langle w, x \rangle = f(x)\}$. Hint: A key step is to show that if $v$ satisfies $\max_{w \in \cX \cup \{v\}} \langle v, x \rangle = \max_{w \in \cX} \langle v, x \rangle$ for all $x \in \R^n$, then the separating hyperplane theorem implies $v \in \Conv(\cX)$.
+\item Using the previous two subproblems, derive a formula for $\partial \|\cdot\|$, where $\|\cdot\|$ is an arbitrary norm. (Hint: Use 1.C)
 \end{enumerate}
 
 
 \section*{Problem 3: Subgradients of Norms}
 \begin{enumerate}
-\item
-Subgradient of the $\ell_1$ and $\ell_{\infty}$-norms
+\item Subgradient of the $\ell_1$ and $\ell_{\infty}$-norms
 \begin{enumerate}
 \item
 Prove that, for all $x \in \R^n$, $\|x\|_1 = \sup_{y: \|y\|_{\infty} \le 1}\langle x, y \rangle$, $\|x\|_{\infty} = \sup_{y:\|y\|_1 \le 1}\langle x, y \rangle$. 
