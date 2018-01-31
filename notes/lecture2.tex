@@ -1,4 +1,4 @@
-\section{Lecture 2: Gradient Method}
+\section{Lecture 2: Gradient method}
 \sectionlabel{gradient-descent}
 
 In this lecture we encounter the fundamentally important \emph{gradient method}
@@ -8,9 +8,10 @@ The goal here is to solve a problem of the form
 \min_{x\in\domain} f(x)\,
 \]
 where we'll make some additional assumptions on the
-function~$f\colon\domain\to\R.$
+function~$f\colon\domain\to\R.$ The technical exposition closely follows the
+corresponding chapter in Bubeck's text~\cite{bubeck}.
 
-\subsection{Gradient Descent}
+\subsection{Gradient descent}
 
 For a differentiable function~$f,$ the basic gradient method startingf from an
 initial point $x_0$ is defined by the iterative description
@@ -60,7 +61,7 @@ A projection onto the Euclidean ball $B_2$ is just normalization:
 \includegraphics[width=3in]{figures/lecture2-projection}
 \end{center}
 \caption{Projection of $y$ onto set $\mathcal{X}$. (Figure taken from \em{S.~Bubeck.
-Convex Optimization: Algorithms and Complexity}) }
+Convex Optimization: Algorithms and Complexity}~\cite{bubeck}) }
 \figurelabel{project}
 \end{figure}
 
@@ -78,7 +79,7 @@ That is, the projection of $y$ onto a convex set containing $x$ is closer to $x$
 Which follows from the Pythagorean theorem. Note that this lemma implies the above property.
 \end{lemma}
 
-\subsubsection{Modifying Gradient Descent with Projections}
+\subsubsection{Modifying gradient descent with projections}
 
 So now we can modify our original procedure to use two steps.
 \[
