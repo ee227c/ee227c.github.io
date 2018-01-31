@@ -15,9 +15,9 @@ function~$f\colon\domain\to\R.$
 For a differentiable function~$f,$ the basic gradient method startingf from an
 initial point $x_0$ is defined by the iterative description
 \[
-x_{t+1} = x_t - \eta \nabla f(x_t)\qquad\qquad(t\ge 1)
+x_{t+1} = x_t - \eta \nabla_t f(x_t)\,\qquad\qquad(t\ge 0)
 \]
-where $\eta$ is the step size. 
+where $\eta_t$ is the so-called \emph{step size} that may vary with~$t.$ 
 
 The first assumption that leads to a convergence analysis is that the gradients
 of the function aren't too big over the domain.
