@@ -65,13 +65,13 @@ you spot any please send an email or pull request.
 |-|-|-|-|-|
 | 1 | 1/16 | Convexity  | [pdf](notes/ee227c-lecture1.pdf) | [ipynb](http://nbviewer.jupyter.org/urls/ee227c.github.io/notes/lecture1.ipynb)
 | 2 | 1/18 | Gradient method (non-smooth and smooth) | [pdf](notes/ee227c-lecture2.pdf)  | ---  |
-| 3 | 1/23 | Gradient method (strongly convex) |   |   |
+| 3 | 1/23 | Gradient method (strongly convex) | [pdf](notes/ee227c-lecture3.pdf)  | --- |
 | 4 | 1/25 | Gradient method (some applications) | [pdf](notes/ee227c-lecture4.pdf)  | [ipynb](code/lecture4.html)  |
-| 5 | 1/30 | Conditional gradient (Frank-Wolfe algorithm) |   |   |
+| 5 | 1/30 | Conditional gradient (Frank-Wolfe algorithm) |   | [ipynb](code/lecture5.html)  |
 | 6 | 2/1 |  Momentum and acceleration|   |   |
-| 7 | 2/6 |Nesterov's method  |   |   |
-| 8 | 2/8 |  Lower bounds|   |   |
-| 9 | 2/13 |  Robustness acceleration trade-offs |   |   |
+| 7 | 2/6 | Nesterov's method  |   |   |
+| 8 | 2/8 | Lower bounds|   |   |
+| 9 | 2/13 | Robustness acceleration trade-offs |   |   |
 | 10 | 2/15 | Stochastc optimization |   |   |
 | 11 | 2/20 | Learning, regularization, and generalization |   |   |
 | 12 | 2/22 | Coordinate Descent |   |   |

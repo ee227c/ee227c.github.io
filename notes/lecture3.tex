@@ -1,0 +1,275 @@
+\section{Lecture 3: Strong Convexity}
+\sectionlabel{strongconvexity}
+
+This lecture introduces the notion of
+$\alpha$-strong convexity
+and combines it with
+$\beta$-smoothness to develop the concept of
+condition number.
+Adding an assumption of, respectively,
+strong convexity or conditioning
+improves the rates of error decay
+for gradient descent proved
+in the previous lecture from
+$O(1/\sqrt{t})$ to $O(1/t)$ and
+$O(1/t)$ to $O(\mathrm{e}^{-t})$.
+
+\subsection{Reminders}
+
+Recall that we had (at least)
+two definitions apiece for
+convexity and smoothness:
+a general definition for all functions
+and a more compact definition for (twice-)differentiable functions.
+
+A function $f$ is convex
+if, for each input, there exists a
+globally valid \emph{linear} lower bound on the function:
+$f(y) \geq f(x) + g^\trans(x)(y-x)$.
+For differentiable functions,
+the role of $g$ is played by the gradient.
+
+A function $f$ is $\beta$-smooth
+if, for each input, there exists a
+globally valid \emph{quadratic} upper bound on the function,
+with (finite) quadratic parameter $\beta$:
+$f(y) \leq f(x) + g^\trans(x)(y-x) + \frac{\beta}{2}\Norm{x-y}^2$.
+More poetically,
+a smooth, convex function is
+"trapped between a parabola and a line".
+Since $\beta$ is covariant with affine transformations,
+e.g. changes of units of measurement,
+we will frequently refer to a $\beta$-smooth function as simply
+smooth.
+
+For twice-differentiable functions,
+these properties admit simple conditions
+for smoothness in terms of the Hessian,
+or matrix of second partial derivatives.
+A $\mathcal{D}^2$ function $f$ is convex if
+$\nabla^2f(x) \succeq 0$
+and it is $\beta$-smooth if
+$\nabla^2f(x) \preceq \beta I$.
+
+We furthermore defined the notion of $L$-Lipschitzness.
+A function $f$ is $L$-Lipschitz if the amount that it
+"stretches" its inputs is bounded by $L$:
+$\Abs{f(x)-f(y)} \leq L\Norm{x-y}$.
+Note that for differentiable functions,
+$\beta$-smoothness is equivalent to
+$\beta/2$-Lipschitzness of the gradient.
+
+\subsection{Strong Convexity}
+
+With these three concepts as sword,
+shield, and slightly larger shield,
+we were able to prove two error decay rates for gradient descent
+(and its projective, stochastic, and subgradient flavors).
+However, these rates were substantially slower than
+what's observed in certain settings in practice.
+
+Noting the asymmetry between our linear lower bound
+(from convexity)
+and our quadratic upper bound
+(from smoothness)
+we introduce a new, more restricted function class
+by upgrading our lower bound to second order.
+
+\begin{definition}[$\alpha$-Strong Convexity]
+A function $f\colon\domain\to\R$
+is \emph{$\alpha$-strongly convex}
+if, for all $x,y\in\domain$,
+the following inequality holds
+for some $\alpha>0$:
+\[
+f(y) \geq f(x) + g(x)^\trans(y-x) + \frac{\alpha}{2}\Norm{x-y}^2
+\]
+\end{definition}
+
+As with smoothness,
+we will often shorten "$\alpha$-strongly convex"
+to "strongly convex".
+A strongly convex, smooth function is one that can be
+"squeezed between two parabolas".
+If $\beta$-smoothness is a good thing,
+then $\alpha$-convexity guarantees
+we don't have too much of a good thing.
+
+Once again,
+twice-differentiable functions afford
+a quick condition:
+a $D^2$ function is $alpha$-strongly convex
+if $\nabla^2f(x) \succeq \alpha I$.
+
+Once again, note that $\alpha$ changes
+under affine transformations.
+Conveniently enough,
+for $\alpha$-strongly convex, $\beta$-smooth
+functions,
+we can define a basis-independent 
+quantity that combines these properties:
+
+\begin{definition}[Condition Number]
+An $\alpha$-strongly convex,
+$\beta$-smooth function $f$
+has \emph{condition number} $\frac{\alpha}{\beta}$.
+\end{definition}
+
+For a positive-definite quadratic function $f$,
+this definition of the condition number
+corresponds with the perhaps more familiar
+definition of the condition number of a matrix.
+
+\newpage
+\subsection{A Look Back and Ahead}
+
+The following table summarizes the results
+from the previous lecture and the results
+to be obtained in this lecture.
+In both, $\epsilon$ is the difference between
+$f$ at some value $x'$ computed
+from the outputs of gradient descent and
+$f$ calculated at an optimizer $x^*$.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|r|c|c|}
+        \hline
+         & Convex & Strongly Convex\\
+        \hline
+         Lipschitz & $\epsilon \leq O(1/\sqrt{t})$
+         & $\epsilon \leq O(1/t)$ \\
+         \hline
+         Smooth & $\epsilon \leq O(1/t)$
+         & $\epsilon \leq O(\mathrm{e}^{-t})$ \\
+         \hline
+    \end{tabular}
+    \caption{Bounds on error $\epsilon$
+    as a function of number of steps taken $t$
+    for gradient descent applied to various classes of functions.}
+    \label{tab:proofs}
+\end{table}
+
+The rate for conditioned functions
+is frequently observed in practice,
+so we have reason to believe this bound is tight
+for a relevant class of functions.
+Since a rate that is exponential in terms of the
+magnitude of the error
+is linear in terms of the bit precision,
+this rate of convergence is termed \emph{linear}.
+We now move to prove these rates.
+
+\subsection{Convergence Rate of Gradient Descent for $\alpha$-Strongly Convex Functions}
+
+\begin{theorem}\theoremlabel{convergence_strongconvexity} Assume $f\colon\domain\to\R$ is \emph{$\alpha$-strongly convex} and \emph{$L$-Lipschitz}. Let $x^{*}$ be an optimizer of $f$, and let $x_{s}$ be the updated point at step $s$ using projected gradient descent. Let the max number of iterations be $t$ with an adaptive step size $\eta_{s} = \frac{2}{\alpha(s+1)}$, then
+\[
+f\left(\sum_{s=1}^{t}\frac{2s}{t(t+1)}x_{s}\right) - f(x^{*})\leq\frac{2 L^{2}}{\alpha(t+1)}
+\]
+This implies the convergence rate of projected gradient descent for $\alpha$-strongly convex functions is similar to that of $\beta$-smooth functions with a bound on error $\epsilon \leq O(1/t)$.
+\end{theorem}
+
+In order to prove \theoremref{convergence_strongconvexity}, we need the following proposition.
+
+\begin{proposition}[Jensen's inequality]\propositionlabel{jensen_inequality}Assume $f\colon\domain\to\R$ is a convex function and $x_{1}, x_{2}, ...,$\\
+$,x_{n},\sum_{i=1}^{n}\gamma_{i}x_{i}/\sum_{i=1}^{n}\gamma_{i}\in\domain$ with weights $\gamma_{i} > 0$, then
+\[
+f\left(\frac{\sum_{i=1}^{n}\gamma_{i}x_{i}}{\sum_{i=1}^{n}\gamma_{i}}\right) \leq \frac{\sum_{i=1}^{n}\gamma_{i}f(x_{i})}{\sum_{i=1}^{n}\gamma_{i}}
+\]
+\end{proposition}
+
+For a graphical "proof" follow
+\href{http://mark.reid.name/blog/behold-jensens-inequality.html}{this link}.
+
+\begin{proof}[Proof of \theoremref{convergence_strongconvexity}.] Recall the two steps update rule of projected gradient descent
+\begin{align*}
+y_{s+1} &= x_{s} - \eta_{s}\nabla f(x_{s})\\
+x_{s+1} &= \Pi_{\domain}(y_{s+1})
+\end{align*}
+
+First, the proof begins by exploring an upper bound of difference between function values $f(x_{s})$ and $f(x^{*})$.
+\begin{align*}
+f(x_{s}) - f(x^{*}) &\leq \nabla f(x_{s})^{\trans}(x_{s}-x^{*}) - \frac{\alpha}{2}\|x_{s}-x^{*}\|^{2}\\
+			 &=\frac{1}{\eta_{s}} (x_{s} - y_{s+1})^{\trans}(x_{s}-x^{*}) - \frac{\alpha}{2}\|x_{s}-x^{*}\|^{2} \tag{by update rule}\\ 
+			 &=\frac{1}{2\eta_{s}} (\|x_{s} - x^{*}\|^{2} + \|x_{s} - y_{s+1}\|^{2} - \|y_{s+1}-x^{*}\|^{2}) - \frac{\alpha}{2}\|x_{s}-x^{*}\|^{2} \tag{by "Fundamental Theorem of Optimization"}\\
+			 &=\frac{1}{2\eta_{s}} (\|x_{s} - x^{*}\|^{2} - \|y_{s+1}-x^{*}\|^{2}) +\frac{\eta_{s}}{2}\|\nabla f(x_{s})\|^{2} - \frac{\alpha}{2}\|x_{s}-x^{*}\|^{2} \tag{by update rule}\\
+			 &\leq \frac{1}{2\eta_{s}} (\|x_{s} - x^{*}\|^{2} - \|x_{s+1}-x^{*}\|^{2}) +\frac{\eta_{s}}{2}\|\nabla f(x_{s})\|^{2} - \frac{\alpha}{2}\|x_{s}-x^{*}\|^{2} \tag{by \lemmaref{pythagorean}}\\
+			 &\leq (\frac{1}{2\eta_{s}} - \frac{\alpha}{2})\|x_{s}-x^{*}\|^{2} -\frac{1}{2\eta_{s}}\|x_{s+1}-x^{*}\|^{2} + \frac{\eta_{s}L^{2}}{2} \tag{by Lipschitzness}
+\end{align*}
+By multiplying $s$ on both sides and substituting the step size $\eta_{s}$ by $\frac{2}{\alpha(s+1)}$, we get
+\[
+s(f(x_{s}) - f(x^{*})) \leq \frac{L^{2}}{\alpha} + \frac{\alpha}{4}(s(s-1)\|x_{s}-x^{*}\|^{2} - s(s+1)\|x_{s+1} - x^{*}\|^{2})
+\]
+Finally, we can find the upper bound of the function value shown in \theoremref{convergence_strongconvexity} obtained using $t$ steps projected gradient descent
+\begin{align*}
+f\left(\sum_{s=1}^{t}\frac{2s}{t(t+1)}x_{s}\right)&\leq \sum_{s=1}^{t}\frac{2s}{t(t+1)}f(x_{s}) \tag{by \propositionref{jensen_inequality}}\\
+                                                           &\leq \frac{2}{t(t+1)}\sum_{s=1}^{t}\left(sf(x^{*}) + \frac{L^{2}}{\alpha} +  \frac{\alpha}{4}(s(s-1)\|x_{s}-x^{*}\|^{2} - s(s+1)\|x_{s+1} - x^{*}\|^{2}) \right)\\
+                                                           &= \frac{2}{t(t+1)}\sum_{s=1}^{t}sf(x^{*}) + \frac{2L^{2}}{\alpha(t+1)} - \frac{\alpha}{2}\|x_{t+1} - x^{*}\|^{2} \tag{by telescoping sum}\\
+                                                           &\leq f(x^{*}) + \frac{2L^{2}}{\alpha(t+1)}
+\end{align*}
+This concludes that solving an optimization problem with a strongly convex objective function with projected gradient descent has a convergence rate is of the order $\frac{1}{t+1}$, which is faster compared to the case purely with Lipschitzness.
+\end{proof}
+
+\subsection{Convergence Rate of Gradient Descent for $\alpha$-Strongly Convex and $\beta$-Smooth Functions}
+
+\begin{theorem}\theoremlabel{convergence_smooth_and_strongconvexity} Assume $f\colon\R^n\to\R$ is \emph{$\alpha$-strongly convex} and \emph{$\beta$-smooth}. Let $x^{*}$ be an optimizer of $f$, and let $x_{t}$ be the updated point at step $t$ using gradient descent with a constant step size $\frac{1}{\beta}$, i.e. using the update rule $x_{t+1} = x_t - \frac{1}{\beta}\nabla f(x_t)$. Then
+\[
+\|x_{t+1} - x^*\|^2 \leq \exp{(-t \frac{\alpha}{\beta})}\|x_1 - x^*\|^2
+\]
+\end{theorem}
+
+In order to prove \theoremref{convergence_smooth_and_strongconvexity}, we require use of the following lemma. 
+\begin{lemma}\lemmalabel{smooth_strong_convex_f_diff}
+    Assume $f$ as in \theoremref{convergence_smooth_and_strongconvexity}. Then $\forall x,y \in \R^n$ and an update of the form $x^+ = x - \frac{1}{\beta}\nabla f(x)$,
+    \[
+    f(x^+) - f(y) \leq \nabla f(x)^\trans (x-y) - \frac{1}{2\beta}\|\nabla f(x)\|^2 - \frac{\alpha}{2}\|x-y\|^2
+    \]
+\end{lemma}
+\begin{proof}[Proof of \lemmaref{smooth_strong_convex_f_diff}.]
+    \begin{align*}
+        f(x^+) - f(x) + f(x) - f(y) &\leq \nabla f(x)^\trans (x^+ - x) + \frac{\beta}{2}\|x^+ - x\|^2 \tag{Smoothness} \\
+        & \quad \ + \nabla f(x)^\trans (x-y) - \frac{\alpha}{2}\|x-y\|^2 \tag{Strong convexity} \\
+        &= \nabla f(x)^\trans(x^+ - y) + \frac{1}{2\beta}\|\nabla f(x)\|^2 - \frac{\alpha}{2}\|x-y\|^2 \tag{Definition of $x^+$} \\
+        &= \nabla f(x)^\trans (x - y) - \frac{1}{2\beta}\|\nabla f(x)\|^2 - \frac{\alpha}{2}\|x-y\|^2 \tag{Definition of $x^+$}
+    \end{align*}
+\end{proof}
+Now with \lemmaref{smooth_strong_convex_f_diff} we are able to prove  \theoremref{convergence_smooth_and_strongconvexity}.
+\begin{proof}[Proof of \theoremref{convergence_smooth_and_strongconvexity}.]
+\begin{align*}
+    \|x_{t+1} -x^*\|^2 &= \|x_t - \frac{1}{\beta}\nabla f(x_t) - x^*\|^2 \\
+    &= \|x_t-x^*\|^2 - \frac{2}{\beta} \nabla f(x_t)^\trans(x_t - x^*) + \frac{1}{\beta^2}\|\nabla f(x_t)\|^2 \\
+    &\leq (1-\frac{\alpha}{\beta})\|x_t-x^*\|^2 \tag{Use of \lemmaref{smooth_strong_convex_f_diff} with $y=x^*$, $x=x_t$}\\
+    &\leq (1-\frac{\alpha}{\beta})^t \|x_1-x^*\|^2 \\ 
+    &\leq \exp{(-t \frac{\alpha}{\beta})} \|x_1-x^*\|^2
+\end{align*}
+\end{proof}
+
+We can also prove the same result for the constrained case using projected gradient descent.
+
+\begin{theorem}\theoremlabel{constrained_convergence_smooth_and_strongconvexity} Assume $f\colon\domain\to\R$ is \emph{$\alpha$-strongly convex} and \emph{$\beta$-smooth}. Let $x^{*}$ be an optimizer of $f$, and let $x_{t}$ be the updated point at step $t$ using projected gradient descent with a constant step size $\frac{1}{\beta}$, i.e. using the update rule $x_{t+1} = \Pi_{\domain}(x_{t} - \frac{1}{\beta}\nabla f(x_{t}))$ where $\Pi_{\domain}$ is the projection operator. Then
+\[
+\|x_{t+1} - x^*\|^2 \leq \exp{(-t \frac{\alpha}{\beta})}\|x_1 - x^*\|^2
+\]
+\end{theorem}
+As in \theoremref{convergence_smooth_and_strongconvexity}, we will require the use of the following Lemma in order to prove \theoremref{constrained_convergence_smooth_and_strongconvexity}. 
+
+\begin{lemma}\lemmalabel{constrained_smooth_strong_convex_f_diff}
+    Assume $f$ as in \theoremref{convergence_smooth_and_strongconvexity}. Then $\forall x,y \in \domain$, define $x^+\in\domain$ as $x^+ = \Pi_{\domain}(x - \frac{1}{\beta}\nabla f(x))$ and the function $g\colon\domain\to\R$ as $g(x) = \beta(x-x^+)$. Then
+    \[
+        f(x^+) - f(y) \leq g(x)^\trans (x-y) - \frac{1}{2\beta}\|g(x)\|^2 - \frac{\alpha}{2}\|x-y\|^2
+    \]
+\end{lemma}
+
+\begin{proof}[Proof of \lemmaref{constrained_smooth_strong_convex_f_diff}.]
+    The following is given by the Projection Lemma, for all $x,x^+,y$ defined as in \theoremref{constrained_convergence_smooth_and_strongconvexity}.
+    \begin{align*}
+        \nabla f(x)^\trans (x^+ - y) &\leq g(x)^\trans(x^+ - y)
+    \end{align*}
+    Therefore, following the form of the proof of \lemmaref{smooth_strong_convex_f_diff},
+    \begin{align*}
+        f(x^+) - f(x) + f(x) - f(y) &\leq \nabla f(x)^\trans(x^+-y) + \frac{1}{2\beta}\|\nabla g(x)\|^2 - \frac{\alpha}{2}\|x-y\|^2\\
+        &\leq \nabla g(x)^\trans(x^+-y) + \frac{1}{2\beta}\|\nabla g(x)\|^2 - \frac{\alpha}{2}\|x-y\|^2\\
+        &= \nabla g(x)^\trans(x-y) - \frac{1}{2\beta}\|\nabla g(x)\|^2 - \frac{\alpha}{2}\|x-y\|^2\\
+    \end{align*}
+\end{proof}
+The proof of \theoremref{constrained_convergence_smooth_and_strongconvexity} is exactly as in \theoremref{convergence_smooth_and_strongconvexity} after substituting the appropriate projected gradient descent update in place of the standard gradient descent update, with \lemmaref{constrained_smooth_strong_convex_f_diff} used in place of \lemmaref{smooth_strong_convex_f_diff}. 
