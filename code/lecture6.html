@@ -11948,9 +11948,11 @@ $$
 p_t(a) = \prod_{i=1}^t (1-\eta_ta)\,.\qquad(*)
 $$
 </p><p>We can upper bound the norm of the error term as</p>
+<p>
 $$
 \|e_t\|\le \|p_t(A)\|\cdot\|e_0\|\,.
-$$<p>Since $A$ is a symmetric matrix with eigenvalues in $[\alpha,\beta],$ it's not hard to justify that</p>
+$$
+</p><p>Since $A$ is a symmetric matrix with eigenvalues in $[\alpha,\beta],$ it's not hard to justify that</p>
 <p>
 $$
 \|p_t(A)\|\le \max_{\alpha\le a\le\beta} \left|p_t(a)\right|\,.
@@ -11972,7 +11974,7 @@ $$
 \|e_t\|\le \left(1-\frac1{\kappa}\right)^t\|e_1\|
 \le \exp\left(-\alpha t/\beta\right)\|x_0-x^*\|\,.
 $$
-</p><p>This is exactly the rate we proved in Lecture 3 for any smooth and strongly convex function. So, no surprise yet.</p>
+</p><p>This is exactly the rate we proved in Lecture 3 for any smooth and strongly convex function. So, no surprise&mdash;yet!</p>
 <p>Let's look at this polynomial a bit closer. In the example below we choose $\alpha=1$ and $\beta=10$ so that $\kappa=10.$ The relevant interval is therefore $[1,10].$</p>
 
 </div>
@@ -11994,7 +11996,7 @@ $$
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="p">[</span><span class="n">p</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="s1">&#39;g--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;max value&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">p</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">xs</span><span class="p">),</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;degree 6&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="p">[</span><span class="n">p</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="s1">&#39;b--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;max value&#39;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
 </pre></div>
 
 </div>
@@ -12839,7 +12841,8 @@ TkSuQmCC
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="chebyshev"></a></p>
 <h2 id="Chebyshev-polynomials">Chebyshev polynomials<a class="anchor-link" href="#Chebyshev-polynomials">&#182;</a></h2><p>Chebyshev polynomials turn out to give an optimal answer to the question that we asked. Suitably rescaled, they minimize the absolute value in a desired interval $[\alpha, \beta]$ while satisfying the normalization constraint of having value $1$ at the origin.</p>
-<p>Before we do the rescaling, we will first look at the standard Chebyshev polynomials ("of the first kind") on the interval $[-1,1].$ These polynomials have several natural equivalent definitions. We define the Chebyshev polynomial $T_k$ recursively as follows:</p>
+<p>Before we do the rescaling, we will first look at the standard Chebyshev polynomials ("of the first kind") on the interval $[-1,1].$ These polynomials have several natural equivalent definitions.</p>
+<p><strong>Definition.</strong> We define the Chebyshev polynomial $T_k$ recursively as follows:</p>
 <p>
 $$
 \begin{align}
@@ -14630,7 +14633,7 @@ $$
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="p">[</span><span class="n">P</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="s1">&#39;g--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;max value&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">P</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">xs</span><span class="p">),</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;degree 6&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="p">[</span><span class="n">P</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="s1">&#39;b--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;max value&#39;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
 </pre></div>
 
 </div>
@@ -15583,7 +15586,7 @@ jIiIiIiIyE6YgBEREREREdnJ/wOwDUf4CoomVwAAAABJRU5ErkJggg==
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="p">[</span><span class="n">P</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="s1">&#39;g--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;max value&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">p</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">xs</span><span class="p">),</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;deg-6 naive&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="p">[</span><span class="n">p</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="s1">&#39;b--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;max value&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
 </pre></div>
 
 </div>
@@ -15593,17 +15596,6 @@ jIiIiIiIyE6YgBEREREREdnJ/wOwDUf4CoomVwAAAABJRU5ErkJggg==
 <div class="output_wrapper">
 <div class="output">
 
-
-<div class="output_area">
-<div class="prompt output_prompt">Out[8]:</div>
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.legend.Legend at 0x7f8182a9d590&gt;</pre>
-</div>
-
-</div>
 
 <div class="output_area">
 <div class="prompt"></div>
@@ -16553,7 +16545,7 @@ for some $\epsilon\approx 2/\kappa.$
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>A well-known fact about the Chebyshev polynomials comes in handy.</p>
 <p><strong>Fact.</strong> For $x>1,$ we have $T_k(x)=\cosh(k\cdot\mathrm{arccosh}(x)).$</p>
-<p>Recall that $\cosh(x) = (e^x+e^{-x})/2$ and $\mathrm{arccosh}(x) = \ln(x+\sqrt{x^2-1}).$</p>
+<p>Recall that $\cosh(x) = (e^x+e^{-x})/2$ and $\mathrm{arccosh}(x) = \ln(x+\sqrt{x^2-1}).$ How do you pronounce any of these?</p>
 
 </div>
 </div>
@@ -17717,7 +17709,7 @@ $$
 $$
 P_{k+1}(a) = (\eta_k a + \gamma_k)P_k(a) + \mu_k P_{k-1}(a),
 $$
-</p><p>where we can work out the coefficients $\eta_k,\gamma_k,\mu_k$ from the definition. Since $P_k(0)=1,$ we must have $\gamma_k+\mu_k=1.$ This leads to a simple update rule for our iterates:</p>
+</p><p>where we can work out the coefficients $\eta_k,\gamma_k,\mu_k$ from the recurrence definition. Since $P_k(0)=1,$ we must have $\gamma_k+\mu_k=1.$ This leads to a simple update rule for our iterates:</p>
 <p>
 $$
 \begin{align}
@@ -17725,7 +17717,9 @@ x_{k+1} &= (\eta_k A + (1-\mu_k))x_k + \mu_k x_{k-1}-\eta_k b\\
 &= x_k - \eta_k\nabla f(x_k) + \mu_k (x_k - x_{k-1})
 \end{align}
 $$
-</p><p>We see that this update form is very similar to plain gradient descent except for the additional term $\mu_k(x_k - x_{k-1}).$ This term can be interpreted as a <em>momentum</em> term, pushing the algorithm in the direction of where it was headed before.</p>
+</p><p>We can easily compute this by keeping around not just the last iterate, but also the previous one.</p>
+<h3 id="One-momentum-please...">One momentum please...<a class="anchor-link" href="#One-momentum-please...">&#182;</a></h3><p>We see that the update rule above is actually very similar to plain gradient descent except for the additional term  $\mu_k(x_k - x_{k-1}).$</p>
+<p>This term can be interpreted as a <em>momentum</em> term, pushing the algorithm in the direction of where it was headed before.</p>
 <p>In the next lecture, we'll dig deaper into momentum and see how to generalize the result for quadratics to general convex functions.</p>
 
 </div>
