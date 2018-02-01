@@ -67,7 +67,7 @@ you spot any please send an email or pull request.
 | 2 | 1/18 | Gradient method (non-smooth and smooth) | [pdf](notes/ee227c-lecture2.pdf)  | ---  |
 | 3 | 1/23 | Gradient method (strongly convex) | [pdf](notes/ee227c-lecture3.pdf)  | --- |
 | 4 | 1/25 | Gradient method (some applications) | [pdf](notes/ee227c-lecture4.pdf)  | [ipynb](code/lecture4.html)  |
-| 5 | 1/30 | Conditional gradient (Frank-Wolfe algorithm) |   | [ipynb](code/lecture5.html)  |
+| 5 | 1/30 | Conditional gradient (Frank-Wolfe algorithm) | [pdf](nots/ee227c-lecture5.pdf)  | [ipynb](code/lecture5.html)  |
 | 6 | 2/1 |  Discovering acceleration |   | [ipynb](code/lecture6.html)  |
 | 7 | 2/6 | Nesterov's method  |   |   |
 | 8 | 2/8 | Lower bounds|   |   |
