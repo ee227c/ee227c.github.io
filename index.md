@@ -70,8 +70,8 @@ you spot any please send an email or pull request.
 | 5 | 1/30 | Conditional gradient (Frank-Wolfe algorithm) | [pdf](notes/ee227c-lecture5.pdf)  | [ipynb](code/lecture5.html)  |
 | 6 | 2/1 |  Discovering acceleration |   | [ipynb](code/lecture6.html)  |
 | 7 | 2/6 | Nesterov's method  |   |   |
-| 8 | 2/8 | Lower bounds|   |   |
-| 9 | 2/13 | Robustness acceleration trade-offs |   |   |
+| 8 | 2/8 | Eigenvalue intermezzo |   |   |
+| 9 | 2/13 | Lower bounds, robustness vs acceleration |   |   |
 | 10 | 2/15 | Stochastc optimization |   |   |
 | 11 | 2/20 | Learning, regularization, and generalization |   |   |
 | 12 | 2/22 | Coordinate Descent |   |   |
@@ -89,8 +89,8 @@ you spot any please send an email or pull request.
 | 22 | 4/5  | Guest lecture by Ludwig Schmidt on non-convex constraints | | |
 | 23 | 4/10 | Newton method |   |   |
 | 24 | 4/12 | Ellipsoid method |   |   |
-| 25 | 4/17 | Sampling from convex sets |   |   |
-| 25 | 4/19 | TBD |   |   |
+| 25 | 4/17 | Interior point methods |   |   |
+| 25 | 4/19 | Interior point methods |   |   |
 | 26 | 4/24 | Sum of squares |   |   |
 | 27 | 4/26 | Last lecture |   |   |
 | 28 | 5/1 | Reading, review, recitation |   |   |
