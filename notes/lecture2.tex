@@ -125,7 +125,7 @@ The proof begins by first bounding the difference in function values $f(x_s) -
 f(x^*)$.
 
 \begin{align}
-    f(x_s) - f(x^*) &\leq \nabla f(x_s)^\trans (x_s - s^*) \equationlabel{a} \\
+    f(x_s) - f(x^*) &\leq \nabla f(x_s)^\trans (x_s - x^*) \equationlabel{a} \\
     &= \frac{1}{\eta}(x_s - y_{s+1})^\trans(x_s - x^*) \equationlabel{b} \\
     &= \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 + \lVert x_s - y_{s+1} \rVert^2 - \lVert y_{s+1} - x^* \rVert^2 \right) \equationlabel{c} \\
     &= \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 - \lVert y_{s+1} - x^* \rVert^2 \right) + \frac{\eta}{2} \lVert \nabla f(x_s) \rVert^2 \equationlabel{d} \\
@@ -158,7 +158,7 @@ the above sum:
 
 \begin{align}
     f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) &\leq \frac{1}{t} \sum_{s=1}^t f(x_s) \equationlabel{k} \\
-    \left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) &\leq \frac{1}{t} \sum_{s=1}^t f(x_s) - f\left(x^*\right) \equationlabel{l} \\
+    f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) &\leq \frac{1}{t} \sum_{s=1}^t f(x_s) - f\left(x^*\right) \equationlabel{l} \\
     &\leq \frac{R^2}{2\eta} + \frac{\eta L^2 t}{2}
 \end{align}
 
