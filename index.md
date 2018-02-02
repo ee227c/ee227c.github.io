@@ -19,13 +19,6 @@ paying attention to concerns about complexity, robustness, and implementation in
 these domains. We will also see how tools from convex optimization can help
 tackle non-convex optimization problems common in practice.
 
-## Updates
-
-* *The class and its waitlist are completely full.* Please check back later in
-the semester to see if enrollment will have become available. Visitors are permitted
-to audit only if there is enough space in the room. Please do leave available
-seats to enrolled students.
-
 ## Assignments 
 
 Assignments will be posted on
@@ -49,7 +42,9 @@ containing plots and illustrative examples.
 
 ### [Sign up for scribing here](https://docs.google.com/spreadsheets/d/1OSW_Yznt80k40Zmf6MVRvz3wT-An0XFbNkEEWNbEjNE/edit?usp=sharing)
 
-All three scribes should collaborate to prove a *single* tex file. Moritz will have a skeleton of notes available [here](https://github.com/ee227c/ee227c.github.io/tree/master/notes), which students will fill in, following [these instructions](https://github.com/ee227c/ee227c.github.io/blob/master/notes/instructions.pdf). 
+All three scribes should collaborate to provide a *single* tex file as seen
+[here](https://github.com/ee227c/ee227c.github.io/tree/master/notes).
+Students are required to closely follow [these instructions](https://github.com/ee227c/ee227c.github.io/blob/master/notes/instructions.pdf). 
 
 We suggest that each scribe takes down notes, and then all three meet after class to consolidate. 
 
