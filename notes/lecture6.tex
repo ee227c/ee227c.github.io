@@ -94,7 +94,7 @@ It follows that:
 \end{proof}
 
 \subsection{Accelerated gradient descent}
-In the previous section, we proved a lower bound on the convergence rate. In this section, we would like to improve on this. Consider whether there was any point where we were careless in the proof above? One obvious candidate is that our choice of step size, $\eta_k = \frac{1}{\beta}$, was chosen rather arbitrarily. In fact, by choosing the sequence $\eta_k$ we can select \textit{any} degree-$t$ polynomial of the form:
+In the previous section, we proved an upper bound on the convergence rate. In this section, we would like to improve on this. Consider whether there was any point where we were careless in the proof above? One obvious candidate is that our choice of step size, $\eta_k = \frac{1}{\beta}$, was chosen rather arbitrarily. In fact, by choosing the sequence $\eta_k$ we can select \textit{any} degree-$t$ polynomial of the form:
 \[
 p(A) = \prod_{k=1}^t \left(I - \eta_K A\right).
 \]
@@ -102,12 +102,12 @@ p(A) = \prod_{k=1}^t \left(I - \eta_K A\right).
 Note that:
 % TODO: this is apparently an equality, do we want to strengthen it?
 \begin{equation*}
-\left\|p(A)\right\|_2 \leq \max_{x \in \lambda(A)} \left|p(x)\right|
+\left\|p(A)\right\|_2 = \max_{x \in \lambda(A)} \left|p(x)\right|
 \end{equation*}
 % Note this is actually also an equality.
 where $p(A)$ is a matrix polynomial, and $p(t)$ is the corresponding scalar polynomial. In general, we may not know the set of eigenvalues $\lambda(A)$, but we do know that all eigenvalues are in the range $[\alpha, \beta]$. Relaxing the inequality accordingly:
 \begin{equation*}
-\left\|p(A)\right\| \leq \max_{x \in [\alpha, \beta]} \left|p(x)\right|.
+\left\|p(A)\right\| = \max_{x \in [\alpha, \beta]} \left|p(x)\right|.
 \end{equation*}
 
 We want a polynomial $p(t)$ that takes on small values in $[\alpha, \beta]$. We impose an additional normalization constraint that $p(0) = 1$ (otherwise we could `cheat' by scaling the polynomial down everywhere on its domain), but allow it to take on arbitrary values elsewhere.
@@ -119,7 +119,7 @@ A naive solution chooses a uniform step size $\eta_t = \frac{2}{\alpha + \beta}$
 \]
 recovering the same convergence rate we proved previously.
 \begin{figure}[h]
-\includegraphics[width=15cm]{figures/lecture6-naive_polynome.pdf}
+\includegraphics[width=0.9\textwidth]{figures/lecture6-naive_polynome.pdf}
 \centering
 \caption{Naive Polynomial}
 \label{naive_p}
@@ -142,7 +142,7 @@ T_k(a) &= 2a T_{k-1}(a) - T_{k-2}(a),\ \text{for }k \geq 2.
 And figure \ref{chebychev_poly} is the plot of the Chebyshev polynomials for $i=0, 1, 2, 3, 4$. 
 
 \begin{figure}[ht]
-\includegraphics[width=15cm]{figures/lecture6-cheb_polynome.pdf}
+\includegraphics[width=0.9\textwidth]{figures/lecture6-cheb_polynome.pdf}
 \centering
 \caption{Chebychev polynomials}
 \label{chebychev_poly}
@@ -156,14 +156,14 @@ Recall that the eigenvalues of the matrix we consider are in the interval $[\alp
 P_k(a) = \frac{T_k\left(\frac{\alpha + \beta - 2a}{\beta - \alpha}\right)}{T_k\left(\frac{\alpha + \beta}{\beta - \alpha}\right)}.
 \end{equation*}
 \begin{figure}[ht]
-\includegraphics[width=15cm]{figures/lecture6-rescaled_cheb.pdf}
+\includegraphics[width=0.9\textwidth]{figures/lecture6-rescaled_cheb.pdf}
 \centering
 \caption{Rescaled Chebyshev}
 \label{rescales_chebyshev}
 \end{figure}
 
 \begin{figure}[ht]
-\includegraphics[width=15cm]{figures/lecture6-rescaled_cheb_vs_naive.pdf}
+\includegraphics[width=0.9\textwidth]{figures/lecture6-rescaled_cheb_vs_naive.pdf}
 \centering
 \caption{Rescaled Chebyshev VS Naive Polynomial}
 \label{rescaled_chebyshev_vs_naive_p}
@@ -229,7 +229,7 @@ Thus, this establishes that the Chebyshev polynomial achieves the error bound:
 This means that for large $\kappa,$ we get quadratic savings in the degree we need before the error drops off exponentially. Figure \ref{convergence} shows the different rates of convergence, we clearly see that the 
 
 \begin{figure}[ht]
-\includegraphics[width=15cm]{figures/lecture6-conv.pdf}
+\includegraphics[width=0.9\textwidth]{figures/lecture6-conv.pdf}
 \centering
 \caption{Convergence for naive polynomial and Chebyshev}
 \label{convergence}
