@@ -8,7 +8,7 @@ In this lecture, we seek to find methods that converge faster than those discuss
 \begin{equation*}
 f(x) = \frac{1}{2}x^T A x - b^T x + c,
 \end{equation*}
-where $A \in \mathbb{S}^n$, $b \in \R^n$ and $c \in \R$.
+where $A \in S^n$, $b \in \R^n$ and $c \in \R$.
 \end{definition}
 
 %\begin{remark}
@@ -16,7 +16,7 @@ Note that substituting $n=1$ into the above definition recovers the familiar uni
 \begin{equation*}
 x^TAx = x^T \tilde{A} x\ \forall x \in \R^n.
 \end{equation*}
-Restricting $A \in \mathbb{S}^n$ ensures each quadratic function has a \textit{unique} representation.
+Restricting $A \in S^n$ ensures each quadratic function has a \textit{unique} representation.
 
 The gradient and Hessian of a general quadratic function take the form:
 \begin{align*}
@@ -67,7 +67,7 @@ Write:
 \[
 f(x) = \frac{1}{2}x^T A x - b^T x + c,
 \]
-where $A \in \mathbb{S}^n$, $b \in \R^n$ and $c \in \R$. A gradient descent update with step size $\eta_t$ takes the form:
+where $A \in S^n$, $b \in \R^n$ and $c \in \R$. A gradient descent update with step size $\eta_t$ takes the form:
 \[
 x_{t+1} = x_t - \eta_t \nabla f(x_t) = x_t - \eta_t \left(Ax_t - b\right)
 \]
@@ -75,7 +75,7 @@ Subtracting $x^*$ from both sides of this equation and using the property that $
 \begin{align*}
 x_{t+1} - x^* &= \left(x_t - \eta_t\left(Ax_t - b\right)\right) - \left(x^* - \eta_t\left(Ax^* - b\right)\right) \\
 &= (I - \eta_t A)(x_t - x^*).
-\end{align*}
+\end{align*}S
 Thus:
 \begin{align*}
 \left\|x_{t+1} - x^*\right\|_2 &\leq \left\|(I - \eta_t A)\right\|_2 \left\|(x_t - x^*)\right\|_2 \\
