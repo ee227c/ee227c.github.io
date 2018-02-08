@@ -1,0 +1,61 @@
+\documentclass[12pt]{article}
+\usepackage{macros}
+\begin{document}
+\section{Lecture 5: Conditional Gradient (Frank-Wolfe)}
+\sectionlabel{Conditional gradient}
+
+\subsection{Conditional Gradient intuition}
+\textbf{MAKE EQUATION REFERENCES}
+Projected gradient can be computationally inefficient. Conditional gradient is an alternative. Suppose you are trying to minimize the following example: 
+\textbf{INCLUDE FIGURE PROVIDING GOOD EXAMPLE OF APPROXIMATE LINEARITY}
+
+Suppose that we assume the linearization of our function is really good. Instead of trying to minimize our function, we would try and minimize the linear approximation
+\begin{equation}
+\bar{x}_t = \underset{x \exists \Omega}{\text{arg min}} f(x_t) + \nabla f(x_t)\trans (x-x_t) 
+\end{equation}
+
+\begin{example}[Nuclear Norm Minimization] 
+Used for matrix completion
+\begin{itemize}
+\item Projection is $\mathbb{O}(n^3))$
+\item Linear optimization is $\tilde{\mathbb{O}}(n^2)$
+\end{itemize}
+\end{example}
+
+\begin{definition}[Conditional Gradient]
+Start from $x_0$. For t=1 to T steps: $x+{t+1} = x_t - \eta_t(\bar{x}_t - x_t$ where $\bar{x}_t \exists \underset{x\exists \Omega}{\text{argmin}} f(x_t) + \nabla f(x_t)\trans (x-x_t) = \underset{x\exists \Omega}{\text{argmin}} \nabla f(x_t)\trans x$
+\end{definition}
+
+\begin{theorem}[Conditional Gradient Descent Theorem?]
+Given $f:\Omega \rightarrow \R^n$ is $\beta$-smooth, convex. Additionally, the optimum is inside the domain. Then Frank Wolfe achieves, for every $x^* \exists \Omega$ we achieve convergence and $\eta_t = \frac{2}{t+2}$ 
+\begin{equation}
+f(x_t) - f(x^*) \leq \frac{2\beta D^2}{t+2}
+\end{equation}
+where $D = \underset{x,y\exists \Omega}{\text{max}}\|x-y\|$ which is the "diameter" of the domain. 
+\end{theorem}
+
+\begin{proof}[Convergence rate of Frank Wolfe]
+By smoothness and convexity we can write $f(y) \leq f(x) - \nabla f(x)\trans(y-x) \frac{\beta}{2} \|x - y\|^2$
+Writing $y=x_{t+1}$ and $x= x_t$ then we get 
+\begin{equation}
+f(x_{t+1}) \leq f(x_t) + \eta_t \nabla f(x_t)\trans(\bar{x}_t - x_t) + \frac{\eta_t^2 \beta}{2} \|\bar{x}_t - x_t \|^2
+\end{equation}
+Note that the last term is bounded by the diameter squared. The crux of the proof is to note that $\bar{x}_t$ is minimizes the dot product of the gradient and x, so we can replace $\nabla f(x_t)\trans(\bar{x}_t)$ with $\nabla f(x_t)\cdot x*$.
+Now again, using convexity we can write $\nabla f(x_t)\trans(x* - x_t) \leq f(x*) - f(x_t)$. Combining this with the previous simplification yields
+\begin{equation}
+f(x_t+1) - f(x^*) \leq (1-\eta _t)(f(x_t) - f(x^*)) + \frac{\eta_t^2 \beta D^2}{2}
+\end{equation}
+Now we apply an induction: \\
+ t=1: $f(x_1) - f(x^*) \leq \frac{\beta D^2}{2}$ \\
+ This holds by using the smoothness and convexity (reference here) and noting that the gradient is zero at the optimum. 
+ $t > 1$: \\
+ Using (**) we have 
+ \begin{equation}
+ f\left(x_{t+1}\right) - f\left(x^*\right) \leq \left(1-\frac{2}{t+2}\right)\left(f\left(x_t\right) - f\left(x^*\right)\right) + \frac{4}{2(t+2)}\beta D^2
+ \end{equation}
+ By the induction hypothesis we can bound $f(x_t) - f(x^*)$ with $\frac{2\beta D^2}{t+1}$ which gives us the expression on the RHS $\beta D^2(\frac{2t}{(t+2)^2} + \frac{2}{(t+2)^2}) = 2\beta D^2 \frac{t+1}{t+2}\frac{1}{t+2} \leq 2 \beta D^2 \frac{t+2}{t+3}\frac{1}{t+2} = \frac{2\beta D^2}{t+3}$ 
+\end{proof}
+
+\subsection{Toy Problem Time}
+
+\end{document}
