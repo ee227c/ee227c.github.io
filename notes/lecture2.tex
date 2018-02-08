@@ -104,10 +104,10 @@ point during the optimization process from the optimal value is bounded above
 by a constant proportional to $\frac{1}{\sqrt{t}}$.
 
 Before proving the theorem, recall the "Fundamental Theorem of Optimization",
-which is that an inner product can be written as a sum of norms: $u^\trans v =
-\frac{1}{2}(\lVert u \rVert^2 + \lVert v \lVert^2 - \lVert u - v \rVert^2$.
-This property can be seen by writing $\lVert u - v \rVert$ as $\lVert u - v
-\rVert = \lVert u \rVert^2 + \lVert v \lVert^2 - 2 u^\trans v$.
+which is that an inner product can be written as a sum of norms: $$u^\trans v =
+\frac{1}{2}\left(\lVert u \rVert_2^2 + \lVert v \lVert_2^2 - \lVert u - v \rVert_2^2\right).$$
+This property can be seen by writing $\lVert u - v \rVert_2$ as $$\lVert u - v
+\rVert_2^2 = \lVert u \rVert_2^2 + \lVert v \lVert_2^2 - 2 u^\trans v.$$
 
 \begin{proof}[Proof of \theoremref{lipschitz} for compact sets.]
 
@@ -148,14 +148,16 @@ the above sum:
 
 \begin{align}
     f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) &\leq \frac{1}{t} \sum_{s=1}^t f(x_s) \equationlabel{k} \\
-    \left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) &\leq \frac{1}{t} \sum_{s=1}^t f(x_s) - f\left(x^*\right) \equationlabel{l} \\
-    &\leq \frac{R^2}{2\eta} + \frac{\eta L^2 t}{2}
+    \left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) &\leq \frac{1}{t} \left(\sum_{s=1}^t f(x_s) \right) - f\left(x^*\right) \equationlabel{l} \\
+    \left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) &\leq \frac{1}{t} \sum_{s=1}^t \left(f(x_s) - f\left(x^*\right)\right) \equationlabel{m} \\
+    &\leq \frac{1}{t}\left(\frac{R^2}{2\eta} + \frac{\eta L^2 t}{2}\right) \\
+    &= \frac{R^2}{2\eta t} + \frac{\eta L^2}{2}
 \end{align}
 
-\equationref{k} is by convexity. $\frac{R^2}{2\eta} + \frac{\eta L^2 t}{2}$,
+\equationref{k} is by convexity. $\frac{R^2}{2\eta t} + \frac{\eta L^2}{2}$,
 the upper bound of the difference between $f\left(\frac{1}{t}\sum_{s=1}^t
 x_s\right)$ and $f\left(x^*\right)$ is minimized when $\eta$ is set to be
-$\frac{RL}{\sqrt{t}}$.
+$\frac{R}{L\sqrt{t}}$.
 
 \end{proof}
 
