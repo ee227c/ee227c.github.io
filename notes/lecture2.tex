@@ -1,4 +1,4 @@
-\section{Lecture 2: Gradient Method}
+\section{Lecture 2: Gradient method}
 \sectionlabel{gradient-descent}
 
 In this lecture we encounter the fundamentally important \emph{gradient method}
@@ -8,16 +8,17 @@ The goal here is to solve a problem of the form
 \min_{x\in\domain} f(x)\,
 \]
 where we'll make some additional assumptions on the
-function~$f\colon\domain\to\R.$
+function~$f\colon\domain\to\R.$ The technical exposition closely follows the
+corresponding chapter in Bubeck's text~\cite{Bubeck}.
 
-\subsection{Gradient Descent}
+\subsection{Gradient descent}
 
 For a differentiable function~$f,$ the basic gradient method startingf from an
 initial point $x_0$ is defined by the iterative description
 \[
-x_{t+1} = x_t - \eta \nabla f(x_t)\qquad\qquad(t\ge 1)
+x_{t+1} = x_t - \eta \nabla_t f(x_t)\,\qquad\qquad(t\ge 0)
 \]
-where $\eta$ is the step size. 
+where $\eta_t$ is the so-called \emph{step size} that may vary with~$t.$ 
 
 The first assumption that leads to a convergence analysis is that the gradients
 of the function aren't too big over the domain.
@@ -60,7 +61,7 @@ A projection onto the Euclidean ball $B_2$ is just normalization:
 \includegraphics[width=3in]{figures/lecture2-projection}
 \end{center}
 \caption{Projection of $y$ onto set $\mathcal{X}$. (Figure taken from \em{S.~Bubeck.
-Convex Optimization: Algorithms and Complexity}) }
+Convex Optimization: Algorithms and Complexity}~\cite{Bubeck}) }
 \figurelabel{project}
 \end{figure}
 
@@ -78,7 +79,7 @@ That is, the projection of $y$ onto a convex set containing $x$ is closer to $x$
 Which follows from the Pythagorean theorem. Note that this lemma implies the above property.
 \end{lemma}
 
-\subsubsection{Modifying Gradient Descent with Projections}
+\subsubsection{Modifying gradient descent with projections}
 
 So now we can modify our original procedure to use two steps.
 \[
@@ -124,7 +125,7 @@ The proof begins by first bounding the difference in function values $f(x_s) -
 f(x^*)$.
 
 \begin{align}
-    f(x_s) - f(x^*) &\leq \nabla f(x_s)^\trans (x_s - s^*) \equationlabel{a} \\
+    f(x_s) - f(x^*) &\leq \nabla f(x_s)^\trans (x_s - x^*) \equationlabel{a} \\
     &= \frac{1}{\eta}(x_s - y_{s+1})^\trans(x_s - x^*) \equationlabel{b} \\
     &= \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 + \lVert x_s - y_{s+1} \rVert^2 - \lVert y_{s+1} - x^* \rVert^2 \right) \equationlabel{c} \\
     &= \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 - \lVert y_{s+1} - x^* \rVert^2 \right) + \frac{\eta}{2} \lVert \nabla f(x_s) \rVert^2 \equationlabel{d} \\
@@ -157,7 +158,7 @@ the above sum:
 
 \begin{align}
     f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) &\leq \frac{1}{t} \sum_{s=1}^t f(x_s) \equationlabel{k} \\
-    \left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) &\leq \frac{1}{t} \sum_{s=1}^t f(x_s) - f\left(x^*\right) \equationlabel{l} \\
+    f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) &\leq \frac{1}{t} \sum_{s=1}^t f(x_s) - f\left(x^*\right) \equationlabel{l} \\
     &\leq \frac{R^2}{2\eta} + \frac{\eta L^2 t}{2}
 \end{align}
 

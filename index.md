@@ -19,13 +19,6 @@ paying attention to concerns about complexity, robustness, and implementation in
 these domains. We will also see how tools from convex optimization can help
 tackle non-convex optimization problems common in practice.
 
-## Updates
-
-* *The class and its waitlist are completely full.* Please check back later in
-the semester to see if enrollment will have become available. Visitors are permitted
-to audit only if there is enough space in the room. Please do leave available
-seats to enrolled students.
-
 ## Assignments 
 
 Assignments will be posted on
@@ -49,7 +42,9 @@ containing plots and illustrative examples.
 
 ### [Sign up for scribing here](https://docs.google.com/spreadsheets/d/1OSW_Yznt80k40Zmf6MVRvz3wT-An0XFbNkEEWNbEjNE/edit?usp=sharing)
 
-All three scribes should collaborate to prove a *single* tex file. Moritz will have a skeleton of notes available [here](https://github.com/ee227c/ee227c.github.io/tree/master/notes), which students will fill in, following [these instructions](https://github.com/ee227c/ee227c.github.io/blob/master/notes/instructions.pdf). 
+All three scribes should collaborate to provide a *single* tex file as seen
+[here](https://github.com/ee227c/ee227c.github.io/tree/master/notes).
+Students are required to closely follow [these instructions](https://github.com/ee227c/ee227c.github.io/blob/master/notes/instructions.pdf). 
 
 We suggest that each scribe takes down notes, and then all three meet after class to consolidate. 
 
@@ -66,12 +61,12 @@ you spot any please send an email or pull request.
 | 1 | 1/16 | Convexity  | [pdf](notes/ee227c-lecture1.pdf) | [ipynb](http://nbviewer.jupyter.org/urls/ee227c.github.io/notes/lecture1.ipynb)
 | 2 | 1/18 | Gradient method (non-smooth and smooth) | [pdf](notes/ee227c-lecture2.pdf)  | ---  |
 | 3 | 1/23 | Gradient method (strongly convex) | [pdf](notes/ee227c-lecture3.pdf)  | --- |
-| 4 | 1/25 | Gradient method (some applications) | [pdf](notes/ee227c-lecture4.pdf)  | [ipynb](code/lecture4.html)  |
-| 5 | 1/30 | Conditional gradient (Frank-Wolfe algorithm) |   | [ipynb](code/lecture5.html)  |
-| 6 | 2/1 |  Momentum and acceleration|   |   |
-| 7 | 2/6 | Nesterov's method  |   |   |
-| 8 | 2/8 | Lower bounds|   |   |
-| 9 | 2/13 | Robustness acceleration trade-offs |   |   |
+| 4 | 1/25 | Some applications of gradient methods | [pdf](notes/ee227c-lecture4.pdf)  | [ipynb](code/lecture4.html)  |
+| 5 | 1/30 | Conditional gradient (Frank-Wolfe algorithm) | [pdf](notes/ee227c-lecture5.pdf)  | [ipynb](code/lecture5.html)  |
+| 6 | 2/1 |  Discovering acceleration with Chebyshev polynomials | [pdf](notes/ee227c-lecture6.pdf)  | [ipynb](code/lecture6.html)  |
+| 7 | 2/6 | Nesterov's accelerated gradient descent  |   |   |
+| 8 | 2/8 | Eigenvalue intermezzo |   |   |
+| 9 | 2/13 | Lower bounds, robustness vs acceleration |   |   |
 | 10 | 2/15 | Stochastc optimization |   |   |
 | 11 | 2/20 | Learning, regularization, and generalization |   |   |
 | 12 | 2/22 | Coordinate Descent |   |   |
@@ -89,8 +84,8 @@ you spot any please send an email or pull request.
 | 22 | 4/5  | Guest lecture by Ludwig Schmidt on non-convex constraints | | |
 | 23 | 4/10 | Newton method |   |   |
 | 24 | 4/12 | Ellipsoid method |   |   |
-| 25 | 4/17 | Sampling from convex sets |   |   |
-| 25 | 4/19 | TBD |   |   |
+| 25 | 4/17 | Interior point methods |   |   |
+| 25 | 4/19 | Interior point methods |   |   |
 | 26 | 4/24 | Sum of squares |   |   |
 | 27 | 4/26 | Last lecture |   |   |
 | 28 | 5/1 | Reading, review, recitation |   |   |

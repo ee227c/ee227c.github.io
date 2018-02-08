@@ -62,22 +62,20 @@ Using what we've proven about subgradients, prove that a function $f: \cX \to \R
 Let $f$ be a convex function over a domain $\cX$. We will assume $x \in \Int(\cX)$. 
 \begin{enumerate}
 \item
-Show by way of example that the subgradient is not necssarily unique, but that the set of all subgradients is closed and convex. We will denote this \emph{set} $\partial f(x)$.
+Show by way of example that the subgradient is not necssarily unique, but \emph{prove} that the set of all subgradients is closed and convex. We will denote this \emph{set} $\partial f(x)$.
 \item Show that $f$ has a directional derivative in each direction. Use this to conclude that a convex $f$ is differentiable at $x$ only if $\partial f(x) = \{\nabla f(x)\}$.
 \item
 Show that if $g_1 \in \partial f_1(x)$ and $g_2 \in \partial f_2(x)$, then $g_1 + g_2 \in \partial(f_1 + f_2)(x)$. 
 \item
 Let $f(x) = \sup_{i} g_{i}(x)$ which $g_{i}$ convex. Show that $\Conv \{\partial g_{i}(x) |  g_{i}(x) =f(x) \} \subseteq \partial f$. 
-\item \emph{This problem is likely to be changed in further revisions} Prove that if $f_{i}(x) = w_{i}^\top x
-b_{i}$ are a compact family of affine functions (i.e.
-$\{(w_{i},b_{i})\} \subset \R^{n+1}$ is compact), then the converse is true, namely $\partial f \subset \Conv \{\partial g_{i}(x) |  g_{i}(x) =f(x) \} $. 
+\item Here, you will be asked to show a partial converse to the above statement. Suppose that $\cX$ is a compact set, with non-empty interior, and let $f(x) = \max_{w \in \cX} \langle w, x \rangle$. Prove that $\partial f(x) \subset \Conv \{w: \langle w, x \rangle = f(x)\}$. Hint: A key step is to show that if $v$ satisfies $\max_{w \in \cX \cup \{v\}} \langle w, x \rangle = \max_{w \in \cX} \langle w, x \rangle$ for all $x \in \R^n$, then the separating hyperplane theorem implies $v \in \Conv(\cX)$.
+\item Using the previous two subproblems, derive a formula for $\partial \|\cdot\|$, where $\|\cdot\|$ is an arbitrary norm. (Hint: Use 1.C)
 \end{enumerate}
 
 
 \section*{Problem 3: Subgradients of Norms}
 \begin{enumerate}
-\item
-Subgradient of the $\ell_1$ and $\ell_{\infty}$-norms
+\item Subgradient of the $\ell_1$ and $\ell_{\infty}$-norms
 \begin{enumerate}
 \item
 Prove that, for all $x \in \R^n$, $\|x\|_1 = \sup_{y: \|y\|_{\infty} \le 1}\langle x, y \rangle$, $\|x\|_{\infty} = \sup_{y:\|y\|_1 \le 1}\langle x, y \rangle$. 
@@ -95,6 +93,10 @@ Let $A \in \R^{m \times n}$. Let $\sigma_i(\cdot)$ denote the $i$-th singular va
 where $\|X\|_{\op} := \sigma_{\max}(X)$, $ \|Y\|_{\nuc} := \sum_{i=1}^{\min(n,m)} \sigma_i(Y)$, and $\langle X, Y \rangle := \tr(X^\top Y)$. You may want to refresh yourself on the relationship between traces, eigenvalues and singular values, and some trace tricks. Feel free to use the bound $\sum_{i} \lambda_i (A) \le \sum_i \sigma_i(A)$ for any squared matrix $A$. 
 \item
 Compute $\partial \|X\|_{\op}$ and $\partial \|X\|_{\nuc}$. Under what conditions is each subgradient unique?
+\emph{Hint: }As you prove the result, one direction of the inclusion will be easy but the other may be more difficult to verify. Don't worry about this, but if you would like to be truly rigorous about the other inclusion, consider using the following lemma:
+\begin{lemma*} Let $\mathcal{O}(n):= \{O \in \R^{n \times n}:O^\top O = I\}$, and let $X \in \R^{m \times n}$, and let $D \in \R^{m \times n}$ be diagonal (padded with zeros to account for $m\ne n$ mismatch). Then for any maximizers $O_1,O_2$ of $\max_{O_1 \in \mathcal{O}(m),O_2 \in \mathcal{O}(n)}\langle X, O_1DO_2^\top \rangle$ is attained with $O_1$ and $O_2$, there exists an an SVD-decomposition of $X$ such that $X =  U\Sigma V^\top \in \R^{m \times n}$ must satisfy $U^\top O_1$ and $O_2^\top V$ are diagonal matrices with $\{-1,1\}$ on the diagonals.
+\end{lemma*}
+
 \end{enumerate}
 \item 
 Let  $\|\cdot\|$ be an arbitary norm (not necessarily Euclidean!)
@@ -143,21 +145,21 @@ You will need the following information
 \item
 Construct a function on $f_{\sigma}$ such that $\E[z_i | \sigma] = \nabla f_{\sigma}(x)$ for all $x \in \Omega$. What is the optimum $x^*_{\sigma} $of $f_{\sigma}$? What is the ``smoothness'' of $f_{\sigma}$?
 \item 
-Show that there is a universal constant $C'$ such that, for $T \le C'\epsilon^{-2}$, $\E[f_{\sigma}(x_{T+1}) - \min_{x \in [-1,1]}f_{\sigma}(x)] \ge \epsilon$, where $\Exp_{\sigma}$ is taken over the randomness in $\sigma$, $z_1,\dots,Z_T$, and any randomness in the algorithm.  
+Show that there is a universal constant $C'$ such that, for $T \le C'\epsilon^{-2}$, any algorithm which produces iterates $x_1,x_2,\dots$ ifrom access to the noisy gradients of $f_{\sigma}$, constructed above, must have $\E[f_{\sigma}(x_{T+1}) - \min_{x \in [-1,1]}f_{\sigma}(x)] \ge \epsilon$, where $\Exp_{\sigma}$ is taken over the randomness in $\sigma$, $z_1,\dots,Z_T$, and any randomness in the algorithm.  
 \end{enumerate}
 \end{enumerate}
 \section*{Problem 5: Generalized Projections}
 
 In this problem, we introduce a useful generalization of gradient descent. Let
-$\cX \subseteq \cD \subseteq \R^n$ be convex sets, and let $\Phi: \cD \to \R$ be
-a strictly convex, continuously differentiable map such that $\|\nabla
-\Phi(x)\|$ diverges on $\Bd(\cD)$, and for any sequence $x_n \in \cD$ such that $\lim \|x_n\| = \infty$, and $\nabla \Phi(\cD) = \R^n$. We call $\Phi$ a \emph{mirror map}.
+$\cX \subseteq \cD \subseteq \R^n$ be convex sets, and let $\Phi: \cD \to \R$ be (a)
+a strictly convex, (b) continuously differentiable map (c) suppose $\|\nabla
+\Phi(x)\|$ diverges on $\Bd(\cD)$, and diverges for any sequence $x_n \in \cD$ such that $\lim \|x_n\| = \infty$ and (d) $\nabla \Phi(\cD) = \R^n$. We call $\Phi$ a \emph{mirror map}.
 
 \begin{enumerate}
 \item
 Define the \emph{Bregman Divergence}
 \begin{eqnarray}
-D_{\Phi}(x,y) = f(x) - f(y) - \nabla f(y)^{\top}(x-y)
+D_{\Phi}(x,y) = \Phi(x) - \Phi(y) - \nabla \Phi(y)^{\top}(x-y)
 \end{eqnarray}
 and the associated $\Phi$ projection
 \begin{eqnarray}
