@@ -1,6 +1,9 @@
 \section{Lecture 6: Discovering acceleration}
 
-In this lecture, we seek to find methods that converge faster than those discussed in previous lectures. To derive this accelerated method, we start by considering the special case of optimizing quadratic functions.
+In this lecture, we seek to find methods that converge faster than those
+discussed in previous lectures. To derive this accelerated method, we start by
+considering the special case of optimizing quadratic functions. Our exposition
+loosely follows Chapter~$17$ in Lax's excellent text~\cite{lax}.
 
 \subsection{Quadratics}
 
@@ -74,46 +77,50 @@ x_{t+1} = x_t - \eta_t \nabla f(x_t) = x_t - \eta_t \left(Ax_t - b\right)
 Subtracting $x^*$ from both sides of this equation and using the property that $Ax^* - b = \nabla f(x^*) = 0$:
 \begin{align*}
 x_{t+1} - x^* &= \left(x_t - \eta_t\left(Ax_t - b\right)\right) - \left(x^* - \eta_t\left(Ax^* - b\right)\right) \\
-&= (I - \eta_t A)(x_t - x^*).
-\end{align*}S
-Thus:
+&= (I - \eta_t A)(x_t - x^*)\\
+&= \prod_{k=1}^t (I-\eta_k A)(x_1-x^*)\,.
+\end{align*}
+Thus,
 \begin{align*}
-\left\|x_{t+1} - x^*\right\|_2 &\leq \left\|(I - \eta_t A)\right\|_2 \left\|(x_t - x^*)\right\|_2 \\
-&\leq \left(\prod_{k=1}^t \left\| I - \eta_k A\right\|_2\right) \left\|x_1 - x^*\right\|_2.
+\left\|x_{t+1} - x^*\right\|_2 &\leq \left\|\prod_{k=1}^t(I - \eta_t
+A)\right\|_2 \left\|x_1 - x^*\right\|_2
+\leq \left(\prod_{k=1}^t \left\| I - \eta_k A\right\|_2\right) \left\|x_1 - x^*\right\|_2.
 \end{align*}
 
 Set $\eta_k = \frac{1}{\beta}$ for all $k$. Note that $\frac{\alpha}{\beta}I \preceq \frac{1}{\beta}A \preceq I$, so:
 \begin{equation*}
 \max_{A \in \R^{n\times n}} \left\|I - \frac{1}{\beta} A\right \|_2 = 1 - \frac{\alpha}{\beta} = 1 - \frac{1}{\kappa}.
 \end{equation*}
-It follows that:
+It follows that
 \begin{align*}
-\left\|x_{t+1} - x^*\right\|_2 &\leq \left(1 - \frac{1}{\kappa}\right)^t \left\|x_1 - x^*\right\|_2 \\
-&\leq \exp \left(-\frac{t}{\kappa}\right) \left\|x_1 - x^*\right\|_2.
+\left\|x_{t+1} - x^*\right\|_2 &\leq \left(1 - \frac{1}{\kappa}\right)^t \left\|x_1 - x^*\right\|_2 
+\leq \exp \left(-\frac{t}{\kappa}\right) \left\|x_1 - x^*\right\|_2.
 \end{align*}
 \end{proof}
 
 \subsection{Accelerated gradient descent}
 In the previous section, we proved an upper bound on the convergence rate. In this section, we would like to improve on this. Consider whether there was any point where we were careless in the proof above? One obvious candidate is that our choice of step size, $\eta_k = \frac{1}{\beta}$, was chosen rather arbitrarily. In fact, by choosing the sequence $\eta_k$ we can select \textit{any} degree-$t$ polynomial of the form:
 \[
-p(A) = \prod_{k=1}^t \left(I - \eta_K A\right).
+p(A) = \prod_{k=1}^t \left(I - \eta_k A\right).
 \]
 
 Note that:
-% TODO: this is apparently an equality, do we want to strengthen it?
 \begin{equation*}
-\left\|p(A)\right\|_2 = \max_{x \in \lambda(A)} \left|p(x)\right|
+\left\|p(A)\right\| = \max_{x \in \lambda(A)} \left|p(x)\right|
 \end{equation*}
-% Note this is actually also an equality.
-where $p(A)$ is a matrix polynomial, and $p(t)$ is the corresponding scalar polynomial. In general, we may not know the set of eigenvalues $\lambda(A)$, but we do know that all eigenvalues are in the range $[\alpha, \beta]$. Relaxing the inequality accordingly:
+where $p(A)$ is a matrix polynomial, and $p(t)$ is the corresponding scalar
+polynomial. In general, we may not know the set of eigenvalues $\lambda(A)$, but
+we do know that all eigenvalues are in the range $[\alpha, \beta].$ Relaxing
+the upper bound, we get
 \begin{equation*}
-\left\|p(A)\right\| = \max_{x \in [\alpha, \beta]} \left|p(x)\right|.
+\left\|p(A)\right\| \le \max_{x \in [\alpha, \beta]} \left|p(x)\right|\,.
 \end{equation*}
-
-We want a polynomial $p(t)$ that takes on small values in $[\alpha, \beta]$. We impose an additional normalization constraint that $p(0) = 1$ (otherwise we could `cheat' by scaling the polynomial down everywhere on its domain), but allow it to take on arbitrary values elsewhere.
+We can see now that we
+want a polynomial $p(a)$ that takes on small values in $[\alpha, \beta],$ while 
+satisfying the additional normalization constraint~$p(0) = 1.$ 
 
 \subsubsection{A naive polynomial solution}
-A naive solution chooses a uniform step size $\eta_t = \frac{2}{\alpha + \beta}$. Note that:
+A naive solution chooses a uniform step size $\eta_t = \frac{2}{\alpha + \beta}$. Note that
 \[
 \max_{x \in [\alpha, \beta]} \left|1 - \frac{2}{\alpha + \beta} x\right| = \frac{\beta - \alpha}{\alpha + \beta} \leq \frac{\beta}{\alpha} = \kappa,
 \]
@@ -124,27 +131,29 @@ recovering the same convergence rate we proved previously.
 \caption{Naive Polynomial}
 \label{naive_p}
 \end{figure}
-
-
-The resulting polynomial $p_t(x)$ is plotted in figure \ref{naive_p} for degrees $t = 3$ and $t = 6$, with $\alpha = 1$ and $\beta = 10$. Note that doubling the degree from three to six only halves the maximum absolute value the polynomial attains in $[\alpha,\beta]$, explaining why convergence is so slow.
-
+%
+The resulting polynomial $p_t(x)$ is plotted in Figure~\ref{naive_p} for degrees
+$t = 3$ and $t = 6$, with $\alpha = 1$ and $\beta = 10$. Note that doubling the
+degree from three to six only halves the maximum absolute value the polynomial
+attains in $[\alpha,\beta]$, explaining why convergence is so slow.
 
 \subsection{Chebyshev polynomials}
-% TODO for Andy: fill in the below, on Chebyshev polynomials.
-
-Fortunately, we can do better than this by speeding up gradient descent using Chebyshev polynomials. The Chebyshev polynomials are a sequence of orthogonal polynomials which are related to de Moivre's formula and which can be defined recursively. We will use Chebyshev polynomials of the first kind which are donated $T_n$.
-
-The Chebyshev polynomials of the first kind are defined by the recurrence relation:
+%
+Fortunately, we can do better than this by speeding up gradient descent using
+Chebyshev polynomials. The Chebyshev polynomials are a sequence of orthogonal
+polynomials which are related to de Moivre's formula and which can be defined
+recursively. We will use Chebyshev polynomials of the first kind,
+defined by the recurrence relation:
 \begin{align*}
 T_0(a) &= 1,\quad T_1(a) = a \\
-T_k(a) &= 2a T_{k-1}(a) - T_{k-2}(a),\ \text{for }k \geq 2.
+T_k(a) &= 2a T_{k-1}(a) - T_{k-2}(a),\ \text{for }k \geq 2\,.
 \end{align*}
-And figure \ref{chebychev_poly} is the plot of the Chebyshev polynomials for $i=0, 1, 2, 3, 4$. 
+Figure \ref{chebychev_poly} plots the first few Chebyshev polynomials.
 
 \begin{figure}[ht]
 \includegraphics[width=0.9\textwidth]{figures/lecture6-cheb_polynome.pdf}
 \centering
-\caption{Chebychev polynomials}
+\caption{Chebychev polynomials of varying degrees.}
 \label{chebychev_poly}
 \end{figure}
 
@@ -179,12 +188,15 @@ Let's compare on figure \ref{rescaled_chebyshev_vs_naive_p} this beautiful Cheby
 
 The Chebyshev polynomial leads to an accelerated version of gradient descent. Before we describe the iterative process, let's first see what error bound comes out of the Chebyshev polynomial.
 
-So, just how large is the polynomial in the interval $[\alpha, \beta]$? First, note that the maximum value is attained at $\alpha$. Plugging this into the definition of the rescaled Chebyshev polynomial we get the upper bound for any $a\in[\alpha, \beta],$
+So, just how large is the polynomial in the interval $[\alpha, \beta]$? First,
+note that the maximum value is attained at $\alpha$. Plugging this into the
+definition of the rescaled Chebyshev polynomial, we get the upper bound for any
+$a\in[\alpha, \beta],$
 
 \begin{align*}
-|P_k(a)| &\leq |P_k(\alpha)| \\
-&= \frac{|T_k(1)|}{|T_K\left(\frac{\beta + \alpha}{\beta - \alpha}\right)|} \\
-&= {|T_K\left(\frac{\beta + \alpha}{\beta - \alpha}\right)^{-1}|}.
+|P_k(a)| &\leq |P_k(\alpha)| 
+= \frac{|T_k(1)|}{|T_K\left(\frac{\beta + \alpha}{\beta - \alpha}\right)|} 
+\le \left|T_K\left(\frac{\beta + \alpha}{\beta - \alpha}\right)^{-1}\right|.
 \end{align*}
 Recalling the condition number $\kappa=\beta/\alpha,$ we have
 \begin{equation*}
@@ -221,9 +233,10 @@ Then, the reciprocal is what we needed to upper bound the error of our algorithm
 
 Thus, this establishes that the Chebyshev polynomial achieves the error bound:
 \begin{align*}
-\left\Vert X_{t+1} - X^* \right\Vert &\leq 2(1 + \sqrt{\epsilon})^{-t} \left\Vert X_0 -X^*\right\Vert \\
-&\approx 2(1 + \sqrt{\frac{2}{\kappa}})^{-t} \left\Vert X_0 -X^*\right\Vert \\
-&\leq 2\exp\left(-t \sqrt{\frac{2}{\kappa}}\right) \left\Vert X_0 -X^*\right\Vert.
+\left\Vert x_{t+1} - x^* \right\Vert &\leq 2(1 + \sqrt{\epsilon})^{-t}
+\left\Vert x_0 -x^*\right\Vert \\
+&\approx 2\left(1 + \sqrt{\frac{2}{\kappa}}\right)^{-t} \left\Vert x_0 -x^*\right\Vert \\
+&\leq 2\exp\left(-t \sqrt{\frac{2}{\kappa}}\right) \left\Vert x_0 -x^*\right\Vert.
 \end{align*}
 
 This means that for large $\kappa,$ we get quadratic savings in the degree we need before the error drops off exponentially. Figure \ref{convergence} shows the different rates of convergence, we clearly see that the 
@@ -244,9 +257,9 @@ P_{K+1}(a) = (\eta_k a + \gamma_k)P_k(a) + \mu_k P_{k-1}(a).
 where we can work out the coefficients $\eta_k,\gamma_k,\mu_k$ from the recurrence definition. Since $P_k(0)=1,$ we must have $\gamma_k+\mu_k=1.$ This leads to a simple update rule for our iterates:
 
 \begin{eqnarray*}
-X_{k+1} &= (\eta_k A + \gamma_k)X_k + (1 - \gamma_K)X_{k-1} - \eta_k b \\
-&= (\eta_K A + (1 - \mu_k))X_k + \mu_k X_{k-1} - \eta_k b \\
-&= X_k - \eta_k(AX_k - b) + \mu_k(X_k - X_{k-1}).
+x_{k+1} &= (\eta_k A + \gamma_k)x_k + (1 - \gamma_K)x_{k-1} - \eta_k b \\
+&= (\eta_k A + (1 - \mu_k))x_k + \mu_k x_{k-1} - \eta_k b \\
+&= x_k - \eta_k(Ax_k - b) + \mu_k(x_k - x_{k-1}).
 \end{eqnarray*}
 
 We see that the update rule above is actually very similar to plain gradient descent except for the additional term  $\mu_k(x_k - x_{k-1}).$ This term can be interpreted as a \textit{momentum} term, pushing the algorithm in the direction of where it was headed before. In the next lecture, we'll dig deeper into momentum and see how to generalize the result for quadratics to general convex functions.
