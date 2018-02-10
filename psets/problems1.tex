@@ -134,7 +134,7 @@ You fill in the $\dots$.
 \end{enumerate}
 
 \item 
-In this problem we show that in the stochastic setting, smoothness of the function $f$ does not help. Let $\Omega = [-1,1]$, let $\sigma$ be a random variable with $\Pr[\sigma = 1] = \Pr[\sigma = -1] = 1/2$, fix an $\epsilon \in (0,1/4)$. Let $z_1,z_2,\dots,z_T$ be $T$ i.i.d random variables, such that $z_i | \sigma$ are mutually independent, and 
+In this problem we show that in the stochastic setting, smoothness of the function $f$ does not help. Let $\Omega = [-1,1]$, let $\sigma$ be a random variable with $\Pr[\sigma = 1] = \Pr[\sigma = -1] = 1/2$, fix an $\epsilon \in (0,1/4)$. Let $z_1,z_2,\dots,z_T$ be $T$ random variables, such that $z_i | \sigma$ are mutually independent, and 
 \begin{eqnarray}
 \Pr[z_i =  1 | \sigma] = 1/2 + \sigma \epsilon \text{ and } \Pr[z_i =  -1 | \sigma] = 1/2 - \sigma \epsilon 
 \end{eqnarray}
@@ -143,9 +143,11 @@ You will need the following information
 \end{lemma*}
 \begin{enumerate}
 \item
-Construct a function on $f_{\sigma}$ such that $\E[z_i | \sigma] = \nabla f_{\sigma}(x)$ for all $x \in \Omega$. What is the optimum $x^*_{\sigma} $of $f_{\sigma}$? What is the ``smoothness'' of $f_{\sigma}$?
+Construct a function on $f_{\sigma}$ such that $\E[z_i | \sigma] = \nabla f_{\sigma}(x)$ for all $x \in \Omega$. What is the minimizer $x^*_{\sigma} $of $f_{\sigma}$ on $\Omega$? What is the ``smoothness'' of $f_{\sigma}$?
 \item 
-Show that there is a universal constant $C'$ such that, for $T \le C'\epsilon^{-2}$, any algorithm which produces iterates $x_1,x_2,\dots$ ifrom access to the noisy gradients of $f_{\sigma}$, constructed above, must have $\E[f_{\sigma}(x_{T+1}) - \min_{x \in [-1,1]}f_{\sigma}(x)] \ge \epsilon$, where $\Exp_{\sigma}$ is taken over the randomness in $\sigma$, $z_1,\dots,Z_T$, and any randomness in the algorithm.  
+Consider an algorithm which at time $t$, can access an oracle for a noisy gradient $g_t$ at one value $x_t \in \Omega$ such that $\Exp[g_t(x_t) | \sigma] = \nabla f_\sigma(x_t)$, and $|g_t| \le 1$. Suppose that $x_1$ is fixed, and the iterates of this algorithm are produced in such a way that $x_{t+1}$ depends only on $\{(x_s,g_s):s \le t\}$ (that is, the algorithm does not have direct access to $\sigma$). 
+
+Show that there is a universal constant $C'$ such that, for $T \le C'\epsilon^{-2}$, the following holds: any algorithm which produces iterates $x_1,x_2,\dots$ as above, must have $\E[f_{\sigma}(x_{T+1}) - \min_{x \in [-1,1]}f_{\sigma}(x)] \ge \epsilon$, where $\Exp_{\sigma}$ is taken over the randomness in $\sigma$, $z_1,\dots,Z_T$, and any randomness in the algorithm.  
 \end{enumerate}
 \end{enumerate}
 \section*{Problem 5: Generalized Projections}
@@ -173,19 +175,22 @@ Prove that, for all $x \in \cX$ and $y \in \cD$,
 \end{eqnarray}
 and conclude that
 \begin{eqnarray}
-D_{\phi}(x,\Phi_{x}(y)) + D_{\phi}(\Phi_{x}(y),y) \le D_{\Phi}(x,y) 
+D_{\phi}(x,\Pi_{\cX}^{\Phi}(y)) + D_{\phi}(\Pi_{\cX}^{\Phi},y) \le D_{\Phi}(x,y) 
 \end{eqnarray}
 What does this reduce to when $\Phi(x) = \frac{1}{2}\|x\|^2_2$? For the above, you may use the following lemma:
 \begin{lemma*} Let $f$ be convex, and let $\cX$ be a closed convex set on which $f$ is differentiable. Then $x^* \in \arg\min_{x \in \cX} f(x)$, if and only if, for all $x \in \cX$, $\nabla f(x^*)^\top ( x^* - y) \le 0$ for all $y \in \cX$.
 \end{lemma*}
 \item
-Consider the following algorithm, known as mirror descent. Let $\cX \subset \cD$ and $\Phi$ be as above, let $f: \cX \to \R$ be convex, let $x_1  \in \cX$. Fix an $\eta > 0$. For $t \ge 1$, define $y_{t+1}$ such that $\nabla \Phi(y_{t+1}) - \nabla \Phi(x_{t}) = -\eta g_t$, where $g_t \in \partial f(x_t)$. Prove the following:
+Consider the following algorithm, known as mirror descent. Let $\cX \subset \cD$ and $\Phi$ be as above, let $f: \cX \to \R$ be convex, let $x_1  \in \cX$. Fix an $\eta > 0$. For $t \ge 1$, define $y_{t+1}$ such that $\nabla \Phi(y_{t+1}) - \nabla \Phi(x_{t}) = -\eta g_t$, where $g_t \in \partial f(x_t)$, and $x_{t+1} = \Pi_{\cX}^{\Phi}(y_{t+1})$. 
+
+
+Prove the following:
 \begin{theorem*} Let $\|\cdot\|$ be an \emph{arbitrary} norm on $\cX$, and suppose that $\Phi$ is a $\kappa$ strongly-convex mirror map with respect to $\|\cdot\|$ on $\cX$. Suppose that $f$ is L-Lipschitz with respect to $\|\cdot\|$. Prove that 
 \begin{eqnarray}
-f(\frac{1}{T}\sum_{s=1}^T x_s) - \min_{x \in \cX} f(x) \le \frac{D(x^*,x_1)}{\eta} + \eta \frac{L^2 T}{\kappa}
+f(\frac{1}{T}\sum_{s=1}^T x_s) - \min_{x \in \cX} f(x) \le \frac{D(x^*,x_1)}{T\eta} + \eta \frac{L^2 }{\kappa}
 \end{eqnarray}
 \end{theorem*}
-Recall that $\Phi$ is $\kappa$-strongly convex with respect to $\|\cdot\|$ if and only $\Phi(x)  - \Phi(y) \le \nabla \Phi(x)^\top (x-y) + \frac{\kappa}{2}\|x-y\|^2$. 
+Recall that $\Phi$ is $\kappa$-strongly convex with respect to $\|\cdot\|$ if and only $\Phi(x)  - \Phi(y) \le \nabla \Phi(x)^\top (x-y) - \frac{\kappa}{2}\|x-y\|^2$. 
 \item
 A common setup for mirror descent is on the simplex, where $\cD: \{x: x[i] > 0 \forall i \in [n]\}$, $\cX := \{x \in \cD:\|x\|_1 = 1\}$, and $\Phi(x) = \sum_i x[i] \log x[i]$. Given an iterate $x_t$, compute the updates $y_{t+1}$ and $x_{t+1}$. Here, $x[i]$ is the $i$-th coordinate of $x$.
 \end{enumerate}
