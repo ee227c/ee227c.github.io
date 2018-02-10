@@ -1,0 +1,159 @@
+\section{Lecture 5: Conditional Gradient (Frank-Wolfe)}
+\sectionlabel{frankwolfe}
+In this lecture we discuss the conditional gradient method, also known as the
+Frank-Wolfe (FW) algorithm~\cite{Frank1956}. The motivation for this approach is
+that the projection step in projected gradient descent can be computationally
+inefficient in certain scenarios.
+
+\subsection{The algorithm}
+Conditional gradient side steps the projection step using a clever idea.
+
+We start from some point~$x_0\in\domain$. Then, for time steps $t = 1$ to $T$, 
+where $T$ is our final time step, we set
+\[
+x_{t+1} = x_t + \eta_t(\bar{x_t}-x_t)
+\]
+where
+$$ \bar{x_t} = \arg\min_{x\in \domain} f(x_t) + \nabla f(x_t) ^\trans (x-x_t).$$
+This expression simplifies to:
+$$ \bar{x_t} = \arg\min_{x\in \domain} \nabla f(x_t) ^\trans x $$
+Note that we need step size $\eta_t \in [0,1]$ to guarantee $x_{t+1} \in \domain$.
+
+So, rather than taking a gradient step and projecting onto the constraint set.
+We optimize a liner function (defined by the gradient) inside the constraint
+set.
+
+\subsection{Conditional gradient convergence analysis}
+
+As it turns out, conditional gradient enjoys a convergence gurantee similar to
+the one we saw for projected gradient descent.
+
+\begin{theorem}[Convergence Analysis]
+\theoremlabel{convergence}
+Assume we have a function $f\colon\domain\to\R$ that is convex, $\beta$-smooth
+and attains its global minimum at a point~$x^*\in\domain.$ Then, Frank-Wolfe achieves
+$$ f(x_t) - f(x^*) \leq \frac{2\beta D^2}{t+2}$$
+with step size $$\eta_t = \frac{2}{t+2}.$$
+Here, $D$ is the diameter of $\domain$, defined as
+$ D = \max_{x-y \in \domain} \| x-y \|.$ 
+\end{theorem}
+Note that we can trade our assumption of the existence of $x^*$ for a dependence on $L$, the Lipschitz constant, in our bound.
+
+\begin{proof}[Proof of \theoremref{convergence}.]
+By smoothness and convexity, we have
+$$ f(y) \leq f(x) +\nabla f(x) ^\trans (x-x_t) + \frac{\beta}{2} \| x-y \| ^2 $$
+Letting $ y = x_{t+1} $ and $x= x_t$, combined with the progress rule of conditional gradient descent, the above equation yields:
+$$ f(x_{t+1}) \leq f(x_t) + \eta_t \nabla f(x_t) ^\trans (\bar{x_t} - x_t) + \frac{\eta_t^2\beta}{2} \| \bar{x_t} - x_t \| ^2 $$
+We now recall the definition of $D$ from \theoremref{convergence} and observe that $\| \bar{x_t} - x_t \| ^2 \leq D^2$. Thus, we rewrite the inequality:
+$$ f(x_{t+1}) \leq f(x_t) + \eta_t \nabla f(x_t) ^\trans (x_t^* - x_t) + \frac{\eta_t^2\beta D ^2}{2} $$
+Because of convexity, we also have that
+$$ \nabla f(x_t) ^\trans (x^*-x_t) \leq f(x^*) - f(x_t) $$
+Thus,
+\begin{equation}\equationlabel{convergenceInequal}
+f(x_{t+1})-f(x^*) \leq (1-\eta_t)(f(x_t)-f(x^*)) + \frac{\eta_t^2\beta D ^2}{2}
+\end{equation}
+We use induction in order to prove $f(x_t)-f(x^*) \leq \frac{2\beta D^2}{t+2}$  based on \equationref{convergenceInequal} above.\\
+First step: Base Case $t=0$ \\
+Since $ f(x_{t+1})-f(x^*) \leq (1-\eta_t)(f(x_t)-f(x^*)) + \frac{\eta_t^2\beta D ^2}{2}$, when t=0, $\eta_t =\frac{2}{0+2}=1, then $
+\begin{align*} f(x_1)-f(x^*) &\leq (1-\eta_t)(f(x_t)-f(x^*)) + \frac{\beta}{2}\| x_1-x^* \|^2 \\
+&= (1-1)(f(x_t)-f(x^*)) + \frac{\beta}{2}\| x_1-x^* \|^2 \\
+&\leq \frac{\beta D^2}{2}\\
+&\leq \frac{2\beta D^2}{3}
+\end{align*}
+Thus, the induction hypothesis holds for our base case.
+
+Proceeding by induction,
+we assume that $f(x_t)-f(x^*) \leq \frac{2\beta D^2}{t+2}$ holds for all
+integers up to $t$ and we show the claim for $t+1.$
+
+By \equationref{convergenceInequal},
+\begin{align*} f(x_{t+1})-f(x^*) &\leq \left(1- \frac{2}{t+2}\right) (f(x_t)-f(x^*))+ \frac{4}{2(t+2)} \beta D^2 \\
+& \leq \left(1- \frac{2}{t+2}\right)\frac{2\beta D^2}{t+2}
++ \frac{4}{2(t+2)} \beta D^2 \\
+& = \beta D^2 \left(\frac{2t}{(t+2)^2}+\frac{2}{(t+2)^2}\right) \\
+& = 2\beta D^2 \cdot\frac{t+1}{(t+2)^2} \\
+& = 2\beta D^2 \cdot\frac{t+1}{t+2}\cdot\frac{1}{t+2} \\
+& \leq 2\beta D^2 \cdot\frac{t+2}{t+3}\cdot\frac{1}{t+2} \\
+& = 2\beta D^2 \frac{1}{t+3}
+\end{align*}
+Thus, the inequality also holds for the $t+1$ case.
+
+\end{proof}
+
+\subsection{Application to nuclear norm optimization problems}
+
+The code for the following examples can be found \href{https://ee227c.github.io/code/lecture5.html}{here}.
+
+\subsubsection{Nuclear norm projection}
+The \textit{nuclear norm} (sometimes called \textit{Schatten $1$-norm} or \textit{trace norm}) of a matrix $A$, denoted $\|A\|_*$, is defined as the sum of its singular values
+\[
+\|A\|_* = \sum_i \sigma_i(A)\,.
+\]
+The norm can be computed from the singular value decomposition of $A$.
+We denote the unit ball of the nuclear norm by 
+\[
+B_*^{m\times n}=\{A\in\mathbb{R}^{m\times n} \mid \|A\|_*\le 1\}.
+\]
+How can we project a matrix $A$ onto $B_*$? Formally, we want to solve
+\[
+\min_{X\in B_*}\|A-X\|_F^2
+\]
+Due to the rotational invariance of the Frobenius norm, the solution is obtained by projecting the singular values onto the unit simplex. This operation corresponds to shifting all singular values by the same parameter $\theta$ and clipping values at $0$ so that the sum of the shifted and clipped values is equal to $1$. This algorithm can be found in \cite{Duchi2008}.
+
+\subsubsection{Low-rank matrix completion}
+
+Suppose we have a partially observable matrix $Y$, of which the missing entries are filled with 0 and we would like to find its completion form projected on a nuclear norm ball. Formally we have the objective function
+\[
+\min_{X\in B_*}\frac{1}{2}\|Y-P_O(X)|_F^2
+\]
+where $P_O$ is a linear projection onto a subset of coordinates of $X$ specified by $O$. In this example $P_O(X)$ will generate a matrix with corresponding observable entries as in $Y$ while other entries being 0. We can have $P_O(X) = X \odot O$ where $O$ is a matrix with binary entries.
+Calculate the gradient of this function we will have
+\[
+\nabla f(X) = Y-X \odot O
+\]
+We can use projected gradient descent to solve this problem but it is more efficient to use Frank-Wolfe algorithm. We need to solve the linear optimization oracle
+\[
+\bar{X}_t\in \argmin_{X\in{B_*}}\nabla f(X_t)^\trans X
+\]
+
+To simplify this problem, we need a simple fact that follows from the singular
+value decomposition.
+%
+\begin{fact}
+\factlabel{fact}
+The unit ball of the nuclear norm is the convex hull of rank-$1$ matrices
+\[
+\mathrm{conv}\{uv^\trans|\|u\|=\|v\|=1, u\in\R^m, v\in\R^n\}
+=\{X\in\R^{m\times n}\mid \|X\|_*=1\}\,.
+\]
+\end{fact}
+
+From this fact it follows that the minimum of $\nabla f(X_t)^\top X$ is attained
+at a rank-$1$ matrix $uv^\top$ for unit vectors $u$ and $v$. 
+Equivalently, we can maximize $-\nabla f(X_t)^\top uv^\top$ 
+over all unit vectors~$u$ and~$v.$ Put
+$Z = -\nabla f(X_T)$ and note that
+\[
+Z^\top uv^\top = \tr(Z^\top uv^\top) = \tr(u^\top Z v) = u^\top Z v\,.
+\]
+
+Another way to see this is to note that 
+the dual norm of a nuclear norm is operator norm,
+\[
+\|Z\| = \max_{\|X\|_*\leq 1}\langle Z, X\rangle\,.
+\]
+
+Either way, we see that to run Frank-Wolfe over the nuclear norm ball we only
+need a way to compute the top left and singular vetors of a matrix. One way of
+doing this is using the classical power method:
+
+\begin{itemize}
+\item Pick a random unit vector $x_1$ and let $y_1 = A^\trans x/\|A^\trans x\|.$
+\item From $k=1$ to $k=T-1:$
+\begin{itemize}
+\item Put $x_{k+1}=\frac{Ay_k}{\|Ay_k\|}$
+\item Put $y_{k+1}=\frac{A^\trans x_{k+1}}{\|A^\trans x_{k+1}\|}$
+\end{itemize}
+\item Return $x_T$ and $y_T$ 
+as approximate top left and right singular vectors.
+\end{itemize}
