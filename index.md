@@ -61,10 +61,10 @@ you spot any please send an email or pull request.
 | 1 | 1/16 | Convexity  | [pdf](notes/ee227c-lecture1.pdf) | [ipynb](http://nbviewer.jupyter.org/urls/ee227c.github.io/notes/lecture1.ipynb)
 | 2 | 1/18 | Gradient method (non-smooth and smooth) | [pdf](notes/ee227c-lecture2.pdf)  | ---  |
 | 3 | 1/23 | Gradient method (strongly convex) | [pdf](notes/ee227c-lecture3.pdf)  | --- |
-| 4 | 1/25 | Gradient method (some applications) | [pdf](notes/ee227c-lecture4.pdf)  | [ipynb](code/lecture4.html)  |
+| 4 | 1/25 | Some applications of gradient methods | [pdf](notes/ee227c-lecture4.pdf)  | [ipynb](code/lecture4.html)  |
 | 5 | 1/30 | Conditional gradient (Frank-Wolfe algorithm) | [pdf](notes/ee227c-lecture5.pdf)  | [ipynb](code/lecture5.html)  |
-| 6 | 2/1 |  Discovering acceleration |   | [ipynb](code/lecture6.html)  |
-| 7 | 2/6 | Nesterov's method  |   |   |
+| 6 | 2/1 |  Discovering acceleration with Chebyshev polynomials | [pdf](notes/ee227c-lecture6.pdf)  | [ipynb](code/lecture6.html)  |
+| 7 | 2/6 | Nesterov's accelerated gradient descent  |   |   |
 | 8 | 2/8 | Eigenvalue intermezzo |   |   |
 | 9 | 2/13 | Lower bounds, robustness vs acceleration |   |   |
 | 10 | 2/15 | Stochastc optimization |   |   |
