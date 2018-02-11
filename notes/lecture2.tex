@@ -18,7 +18,7 @@ initial point $x_0$ is defined by the iterative description
 \[
 x_{t+1} = x_t - \eta \nabla_t f(x_t)\,\qquad\qquad(t\ge 0)
 \]
-where $\eta_t$ is the so-called \emph{step size} that may vary with~$t.$ 
+where $\eta_t$ is the so-called \emph{step size} that may vary with~$t.$
 
 The first assumption that leads to a convergence analysis is that the gradients
 of the function aren't too big over the domain.
@@ -155,7 +155,7 @@ Now, sum these differences from $s=1$ to $s=t$:
 Finally,
 
 \begin{align*}
-    f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) 
+    f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right)
 &\leq \frac{1}{t} \sum_{s=1}^t f(x_s) - f\left(x^*\right) \tag{by convexity} \\
 &\leq \frac{R^2}{2\eta t} + \frac{\eta L^2}{2} \tag{by \equationref{j}}\\
 &\leq \frac{RL}{\sqrt{t}} \tag{for $\eta=R/L\sqrt{t}.$}
