@@ -55,23 +55,14 @@ A projection onto the Euclidean ball $B_2$ is just normalization:
 \Pi_{B_2}(x) = \dfrac{x}{\|x\|}
 \]
 \end{example}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=3in]{figures/lecture2-projection}
-\end{center}
-\caption{Projection of $y$ onto set $\mathcal{X}$. (Figure taken from \em{S.~Bubeck.
-Convex Optimization: Algorithms and Complexity}~\cite{Bubeck}) }
-\figurelabel{project}
-\end{figure}
-
+%
 A crucial property of projections is that when $x\in\Omega,$ we have for any $y$
 (possibly outside $\Omega$):
 \[
 \| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2\
 \]
-That is, the projection of $y$ onto a convex set containing $x$ is closer to $x$. See \figureref{project} for a geometric picture.
-
+That is, the projection of $y$ onto a convex set containing $x$ is closer to $x$. 
+%
 \begin{lemma}\lemmalabel{pythagorean}
 \[
 \| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2 - \| y - \Pi_{\domain}(y) \|^2
