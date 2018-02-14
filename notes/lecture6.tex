@@ -140,9 +140,7 @@ attains in $[\alpha,\beta]$, explaining why convergence is so slow.
 \subsection{Chebyshev polynomials}
 %
 Fortunately, we can do better than this by speeding up gradient descent using
-Chebyshev polynomials. The Chebyshev polynomials are a sequence of orthogonal
-polynomials which are related to de Moivre's formula and which can be defined
-recursively. We will use Chebyshev polynomials of the first kind,
+Chebyshev polynomials. We will use Chebyshev polynomials of the first kind,
 defined by the recurrence relation:
 \begin{align*}
 T_0(a) &= 1,\quad T_1(a) = a \\
@@ -157,7 +155,9 @@ Figure \ref{chebychev_poly} plots the first few Chebyshev polynomials.
 \label{chebychev_poly}
 \end{figure}
 
-Why Chebyshev polynomials? Suitably rescaled, they minimize the absolute value in a desired interval $[\alpha, \beta]$ while satisfying the normalization constraint of having value $1$ at the origin.
+Why Chebyshev polynomials? Suitably rescaled, they minimize the absolute value
+in a desired interval $[\alpha, \beta]$ while satisfying the normalization
+constraint of having value~$1$ at the origin.
 
 Recall that the eigenvalues of the matrix we consider are in the interval $[\alpha, \beta]$. We need to rescale the Chebyshev polynomials so that they're supported on this interval and still attain value $1$ at the origin. This is accomplished by the polynomial
 
