@@ -13,7 +13,7 @@ corresponding chapter in Bubeck's text~\cite{Bubeck}.
 
 \subsection{Gradient descent}
 
-For a differentiable function~$f,$ the basic gradient method startingf from an
+For a differentiable function~$f,$ the basic gradient method starting from an
 initial point $x_0$ is defined by the iterative description
 \[
 x_{t+1} = x_t - \eta \nabla_t f(x_t)\,\qquad\qquad(t\ge 0)
@@ -63,7 +63,8 @@ A crucial property of projections is that when $x\in\Omega,$ we have for any $y$
 \]
 That is, the projection of $y$ onto a convex set containing $x$ is closer to $x$. 
 %
-\begin{lemma}\lemmalabel{pythagorean}
+\begin{lemma}
+\lemmalabel{pythagorean}
 \[
 \| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2 - \| y - \Pi_{\domain}(y) \|^2
 \]
@@ -91,7 +92,7 @@ compute the projection (see \exampleref{euclidean-ball}).
 \theoremlabel{lipschitz}
 
 Assume that function $f$ is convex, differentiable, and closed with bounded
-gradients. Let $L$ be the Lipchitz constant of $f$ over the convex domain
+gradients. Let $L$ be the Lipschitz constant of $f$ over the convex domain
 $\Omega$. Let $R$ be the upper bound on the distance $\lVert x_1 - x^* \rVert_2$
 from the initial point $x_1$ to the optimal point $x^* = \arg\min_{x \in \Omega} f(x)$.
 Let $t$ be the number of iterations of project gradient descent.
@@ -127,7 +128,7 @@ f(x^*)$.
 from the update rule for projected gradient descent. \equationref{c} comes from
 the ``Fundamental Theorem of Optimization.'' \equationref{d} comes from the
 update rule for projected gradient descent. \equationref{e} is because $f$ is
-$L$-Lipchitz. \equationref{f}
+$L$-Lipschitz. \equationref{f}
 comes from \lemmaref{pythagorean}.
 
 Now, sum these differences from $s=1$ to $s=t$:
@@ -209,7 +210,7 @@ $$x_{t+1} = x_t - \eta \nabla f(x_t)$$
 attains a faster rate of convergence under the smoothness condition.
 
 \begin{theorem}
-Let $f$ be convex and $\beta$-smooth on $\R^n$ then gradient descent with $\eta = \frac{1}{\beta}$ satsifies
+Let $f$ be convex and $\beta$-smooth on $\R^n$ then gradient descent with $\eta = \frac{1}{\beta}$ satisfies
 $$f(x_t) - f(x^*) \leq \frac{2\beta\|x_1 - x^*\|^2}{t-1}$$
 \end{theorem}
 To prove this we will need the following two lemmas.
