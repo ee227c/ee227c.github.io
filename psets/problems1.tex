@@ -118,7 +118,11 @@ descent analysis we saw in class.
 
 \begin{enumerate}
 \item Prove the following statement:
-\begin{proposition*} Let $\Omega$ be a convex domain of radius $R$, and let $f$ be a convex function on $\Omega$. Let $x_0 \in \Omega$, and let $x_{t} = \Pi_{\Omega}(x_{t-1} - \eta g_t )$, where $\E[g_t | g_1,\dots,g_{t-1}] \in \partial f(x_{t-1})$, and $\sup_{t} \E[\|g_t\|^2] \le L^2$ and $\eta = \frac{LR}{\sqrt{T}}$.  Prove that 
+\begin{proposition*} Let $\Omega$ be a convex domain of radius $R$, and let $f$
+be a convex function on $\Omega$. Let $x_0 \in \Omega$, and let $x_{t} =
+\Pi_{\Omega}(x_{t-1} - \eta g_t )$, where $\E[g_t | g_1,\dots,g_{t-1}] \in
+\partial f(x_{t-1})$, and $\sup_{t} \E[\|g_t\|^2] \le L^2$ and $\eta =
+\frac{R}{L\sqrt{T}}$.  Prove that 
 \begin{eqnarray}
  \Exp[f(\frac{1}{T}\sum_{t=1}^T x_t)] \le \inf_{x \in \Omega} f(x) + \dots
 \end{eqnarray}
