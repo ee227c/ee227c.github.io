@@ -13,12 +13,12 @@ corresponding chapter in Bubeck's text~\cite{Bubeck}.
 
 \subsection{Gradient descent}
 
-For a differentiable function~$f,$ the basic gradient method startingf from an
+For a differentiable function~$f,$ the basic gradient method starting from an
 initial point $x_0$ is defined by the iterative description
 \[
 x_{t+1} = x_t - \eta \nabla_t f(x_t)\,\qquad\qquad(t\ge 0)
 \]
-where $\eta_t$ is the so-called \emph{step size} that may vary with~$t.$ 
+where $\eta_t$ is the so-called \emph{step size} that may vary with~$t.$
 
 The first assumption that leads to a convergence analysis is that the gradients
 of the function aren't too big over the domain.
@@ -55,24 +55,16 @@ A projection onto the Euclidean ball $B_2$ is just normalization:
 \Pi_{B_2}(x) = \dfrac{x}{\|x\|}
 \]
 \end{example}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=3in]{figures/lecture2-projection}
-\end{center}
-\caption{Projection of $y$ onto set $\mathcal{X}$. (Figure taken from \em{S.~Bubeck.
-Convex Optimization: Algorithms and Complexity}~\cite{Bubeck}) }
-\figurelabel{project}
-\end{figure}
-
+%
 A crucial property of projections is that when $x\in\Omega,$ we have for any $y$
 (possibly outside $\Omega$):
 \[
 \| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2\
 \]
-That is, the projection of $y$ onto a convex set containing $x$ is closer to $x$. See \figureref{project} for a geometric picture.
-
-\begin{lemma}\lemmalabel{pythagorean}
+That is, the projection of $y$ onto a convex set containing $x$ is closer to $x$. 
+%
+\begin{lemma}
+\lemmalabel{pythagorean}
 \[
 \| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2 - \| y - \Pi_{\domain}(y) \|^2
 \]
@@ -100,11 +92,11 @@ compute the projection (see \exampleref{euclidean-ball}).
 \theoremlabel{lipschitz}
 
 Assume that function $f$ is convex, differentiable, and closed with bounded
-gradients. Let $L$ be the Lipchitz constant of $f$ over the convex domain
+gradients. Let $L$ be the Lipschitz constant of $f$ over the convex domain
 $\Omega$. Let $R$ be the upper bound on the distance $\lVert x_1 - x^* \rVert_2$
 from the initial point $x_1$ to the optimal point $x^* = \arg\min_{x \in \Omega} f(x)$.
 Let $t$ be the number of iterations of project gradient descent.
-If the learning rate $\eta$ is set to $\eta=\frac{R}{L \sqrt(t)}$,
+If the learning rate $\eta$ is set to $\eta=\frac{R}{L\sqrt(t)}$,
 then $$f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) \leq
 \frac{RL}{\sqrt{t}}.$$
 \end{theorem}
@@ -113,13 +105,12 @@ This means that the difference between the functional value of the average
 point during the optimization process from the optimal value is bounded above
 by a constant proportional to $\frac{1}{\sqrt{t}}$.
 
-Before proving the theorem, recall the "Fundamental Theorem of Optimization",
+Before proving the theorem, recall the ``Fundamental Theorem of Optimization'',
 which is that an inner product can be written as a sum of norms: $u^\trans v =
-\frac{1}{2}(\lVert u \rVert^2 + \lVert v \lVert^2 - \lVert u - v \rVert^2$.
-This property can be seen by writing $\lVert u - v \rVert$ as $\lVert u - v
-\rVert = \lVert u \rVert^2 + \lVert v \lVert^2 - 2 u^\trans v$.
+\frac{1}{2}(\lVert u \rVert^2 + \lVert v \lVert^2 - \lVert u - v \rVert^2)$.
+This property can be seen from $\lVert u - v \rVert^2 = \lVert u \rVert^2 + \lVert v \lVert^2 - 2 u^\trans v$.
 
-\begin{proof}[Proof of \theoremref{lipschitz} for compact sets.]
+\begin{proof}[Proof of \theoremref{lipschitz}.]
 
 The proof begins by first bounding the difference in function values $f(x_s) -
 f(x^*)$.
@@ -137,7 +128,7 @@ f(x^*)$.
 from the update rule for projected gradient descent. \equationref{c} comes from
 the ``Fundamental Theorem of Optimization.'' \equationref{d} comes from the
 update rule for projected gradient descent. \equationref{e} is because $f$ is
-$L$-Lipchitz. \equationref{f}
+$L$-Lipschitz. \equationref{f}
 comes from \lemmaref{pythagorean}.
 
 Now, sum these differences from $s=1$ to $s=t$:
@@ -153,19 +144,14 @@ Now, sum these differences from $s=1$ to $s=t$:
 \equationref{i} is because $\lVert x_{t} - x^* \rVert^2 \geq 0$.
 \equationref{j} is by the assumption that $\lVert x_1 - x^* \rVert^2 \leq R^2$.
 
-Then bound $f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right)$ by
-the above sum:
+Finally,
 
-\begin{align}
-    f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) &\leq \frac{1}{t} \sum_{s=1}^t f(x_s) \equationlabel{k} \\
-    f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) &\leq \frac{1}{t} \sum_{s=1}^t f(x_s) - f\left(x^*\right) \equationlabel{l} \\
-    &\leq \frac{R^2}{2\eta} + \frac{\eta L^2 t}{2}
-\end{align}
-
-\equationref{k} is by convexity. $\frac{R^2}{2\eta} + \frac{\eta L^2 t}{2}$,
-the upper bound of the difference between $f\left(\frac{1}{t}\sum_{s=1}^t
-x_s\right)$ and $f\left(x^*\right)$ is minimized when $\eta$ is set to be
-$\frac{RL}{\sqrt{t}}$.
+\begin{align*}
+    f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right)
+&\leq \frac{1}{t} \sum_{s=1}^t f(x_s) - f\left(x^*\right) \tag{by convexity} \\
+&\leq \frac{R^2}{2\eta t} + \frac{\eta L^2}{2} \tag{by \equationref{j}}\\
+&\leq \frac{RL}{\sqrt{t}} \tag{for $\eta=R/L\sqrt{t}.$}
+\end{align*}
 
 \end{proof}
 
@@ -224,7 +210,7 @@ $$x_{t+1} = x_t - \eta \nabla f(x_t)$$
 attains a faster rate of convergence under the smoothness condition.
 
 \begin{theorem}
-Let $f$ be convex and $\beta$-smooth on $\R^n$ then gradient descent with $\eta = \frac{1}{\beta}$ satsifies
+Let $f$ be convex and $\beta$-smooth on $\R^n$ then gradient descent with $\eta = \frac{1}{\beta}$ satisfies
 $$f(x_t) - f(x^*) \leq \frac{2\beta\|x_1 - x^*\|^2}{t-1}$$
 \end{theorem}
 To prove this we will need the following two lemmas.
