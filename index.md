@@ -64,7 +64,7 @@ you spot any please send an email or pull request.
 | 4 | 1/25 | Some applications of gradient methods | [pdf](notes/ee227c-lecture4.pdf)  | [ipynb](code/lecture4.html)  |
 | 5 | 1/30 | Conditional gradient (Frank-Wolfe algorithm) | [pdf](notes/ee227c-lecture5.pdf)  | [ipynb](code/lecture5.html)  |
 | 6 | 2/1 |  Discovering acceleration with Chebyshev polynomials | [pdf](notes/ee227c-lecture6.pdf)  | [ipynb](code/lecture6.html)  |
-| 7 | 2/6 | Nesterov's accelerated gradient descent  |   |   |
+| 7 | 2/6 | Nesterov's accelerated gradient descent  | [pdf](notes/ee227c-lecture7.pdf)  | ---  |
 | 8 | 2/8 | Eigenvalue intermezzo |   |   |
 | 9 | 2/13 | Lower bounds, robustness vs acceleration |   |   |
 | 10 | 2/15 | Stochastc optimization |   |   |
