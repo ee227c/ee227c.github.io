@@ -25,12 +25,13 @@ Here, the parameter~$\beta$ is the smoothness constant of the function we're
 minimizing. The step size $\eta$ and the parameter~$\tau$ will be chosen below
 so as to give us a convergence guarantee.
 
+\subsection{Convergence analysis}
+
 We first show that for a simple setting of the step sizes, the algorithm reduces
 its initial error from some value~$d$ to $\frac{d}{2}.$ We will then repeatedly
 restart the algorithm to continue reducing the error. This is a slight departure
 from Nesterov's method which does not need restrating, albeit requiring a much
 more delicate step size schedule that complicates the analysis.
-
 
 \begin{lemma}
 \lemmalabel{lecture7-main}
@@ -135,6 +136,8 @@ Note that the last run of the algorithm dominates the total number of steps up t
 constant factor.
 \end{proof}
 
+\subsection{Strongly convex case}
+
 We can prove a variant of \lemmaref{lecture7-main} that applies when the
 function is also $\alpha$-strongly convex, ultimately leading to a linear
 convergence rate. The idea is just a general trick to convert a convergence rate
@@ -174,27 +177,23 @@ ordinary gradient descent method to different functions.
 
 \begin{table}[h]
   \begin{center}
-    \begin{tabular}{ | p{2cm} | c | c |}
+    \begin{tabular}{ | l | c | c |}
       \hline
         & Nesterov's Method 
         & Ordinary GD Method \\ \hline
       $\beta$-smooth, convex 
       & \begin{tabular}{c}
-        $\cO \left(\frac{\beta}{t^2}\right)$
-        \rule[0cm]{0cm}{0.8cm}
+        $O\left(\beta/t^2\right)$
         \end{tabular}
       & \begin{tabular}{c}
-        $\cO \left(\frac{\beta}{t} \right)$
-        \rule[0cm]{0cm}{0.8cm}
+        $O\left(\beta/t\right)$
         \end{tabular} \\ \hline
       $\beta$-smooth, $\alpha$-strongly convex 
       & \begin{tabular}{c}
-        $2^{-\Omega(t\sqrt{\frac{\alpha}{\beta}})}$
-        \rule[0cm]{0cm}{1cm}
+        $\exp\left(-\Omega(t\sqrt{\alpha/\beta})\right)$
         \end{tabular} 
       & \begin{tabular}{c}
-        $2^{-\Omega(t\frac{\alpha}{\beta})}$
-        \rule[0cm]{0cm}{1cm}
+        $\exp\left(-\Omega(t\alpha/\beta)\right)$
         \end{tabular} \\ \hline
     \end{tabular}
   \end{center}
