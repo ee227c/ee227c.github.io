@@ -13,6 +13,8 @@
 \usepackage{xspace}
 \usepackage{graphicx}
 \usepackage{color}
+\usepackage{tikz}
+\usepackage{pgfplots}
 \definecolor{DarkGreen}{rgb}{0.1,0.5,0.1}
 \definecolor{DarkRed}{rgb}{0.5,0.1,0.1}
 \definecolor{DarkBlue}{rgb}{0.1,0.1,0.5}
@@ -28,15 +30,15 @@
     numberstyle=\tiny\color{Gray},
     stringstyle=\color{DarkGreen},
     basicstyle=\footnotesize,
-    breakatwhitespace=false,
-    breaklines=true,
-    captionpos=b,
-    keepspaces=true,
-    numbers=left,
-    numbersep=5pt,
-    showspaces=false,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
     showstringspaces=false,
-    showtabs=false,
+    showtabs=false,                  
     tabsize=2
 }
 \lstset{style=mystyle}
@@ -44,7 +46,7 @@
 \usepackage[small]{caption}
 \usepackage[pdftex]{hyperref}
 \hypersetup{
-    unicode=false,          % non-Latin characters in AcrobatÂ¿s bookmarks
+    unicode=false,          % non-Latin characters in Acrobat¿s bookmarks
     pdftoolbar=true,        % show Acrobat toolbar?
     pdfmenubar=true,        % show Acrobat menu?
     pdffitwindow=false,      % page fit to window when opened
@@ -97,6 +99,12 @@
 \newtheorem{example}[theorem]{Example}
 \newtheorem{question}{Question}[section]
 
+\newtheorem{theorem*}{Theorem}
+\newtheorem{proposition*}{Proposition}
+\newtheorem{lemma*}{Lemma}
+\newtheorem{definition*}{Definition}
+
+
 % Macros for latex references, creates proper hyperlinks
 \newcommand{\chapterlabel}[1]{\label{ch:#1}}
 \newcommand{\chapterref}[1]{\hyperref[ch:#1]{Chapter~\ref{ch:#1}}}
@@ -116,8 +124,6 @@
 \newcommand{\tableref}[1]{\hyperref[tab:#1]{Table~\ref{tab:#1}}}
 \newcommand{\itemlabel}[1]{\label{item:#1}}
 \newcommand{\itemref}[1]{\hyperref[item:#1]{Item~(\ref{item:#1})}}
-\newcommand{\examplelabel}[1]{\label{example:#1}}
-\newcommand{\exampleref}[1]{\hyperref[example:#1]{Example~\ref{example:#1}}}
 \newcommand{\lemmalabel}[1]{\label{lem:#1}}
 \newcommand{\lemmaref}[1]{\hyperref[lem:#1]{Lemma~\ref{lem:#1}}}
 \newcommand{\proplabel}[1]{\label{prop:#1}}
@@ -195,6 +201,13 @@
 \newcommand{\cX}{{\cal X}}
 \newcommand{\cY}{{\cal Y}}
 \newcommand{\cZ}{{\cal Z}}
+
+
+\newcommand{\dom}{\mathrm{dom}}
+\newcommand{\Epi}{\mathrm{Epi}}
+\newcommand{\Int}{\mathrm{Int} }
+\newcommand{\Bd}{\mathrm{Bd}}
+\newcommand{\Conv}{\mathrm{Conv}}
 
 % binary relations
 \newcommand{\defeq}{\stackrel{\small \mathrm{def}}{=}}
@@ -288,6 +301,8 @@
 \newcommand{\poly}{{\rm poly}}
 \newcommand{\vol}{\mathrm{vol}}
 \newcommand{\supp}{\mathrm{supp}}
+\newcommand{\nuc}{\mathrm{nuc}}
+\newcommand{\op}{\mathrm{op}}
 
 % distributions
 \newcommand{\Laplace}{\mathrm{Lap}}
@@ -303,6 +318,5 @@
 
 \newcommand{\domain}{\Omega}
 \newcommand{\epi}{\mathrm{epi}}
-\DeclareMathOperator*{\argmin}{\arg\!\min}
 
 \newcommand{\latexcommand}[1]{{\tt\textbackslash #1}}
