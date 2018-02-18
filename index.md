@@ -104,6 +104,7 @@ We discourage the use of MATLAB.
 
 ### Textbooks
 
+* Nonlinear Programming (3rd edition). D. Bertsekas, Athena Scientific.
 * Numerical Optimization. J. Nocedal and S. J. Wright, Springer Series in Operations Research, Springer-Verlag, New York, 2006 (2nd edition).
 * Convex Optimization. S. Boyd and L. Vandenberghe. Cambridge University Press,
 Cambridge, 2003. [PDF available here](http://www.stanford.edu/~boyd/cvxbook/)
