@@ -39,9 +39,11 @@ subspace}.
 %
 \begin{definition}[Krylov subspace]
 For a matrix $A \in \R^{n x n}$ and a vector $b \in \R^n$, 
-the Krylov sequence of order $t$ is $b, Ab, A^2b, ...., A^tb$. 
-We define the Krylov subspace as
-$K_t(A,b)=\mathrm{span}\{b, Ab, A^2b, \ldots, A^t\} \subseteq \R^n$. 
+the \emph{Krylov sequence} of order $t$ is $b, Ab, A^2b, ...., A^tb$. 
+We define the \emph{Krylov subspace} as
+\[
+K_t(A,b)=\mathrm{span}(\{b, Ab, A^2b, \ldots, A^t\}) \subseteq \R^n\,.
+\]
 \end{definition}
 
 Krylov subspace naturally connect to polynomial approximation problems.
@@ -153,14 +155,15 @@ course be built iteratively by repeatedly multiplying by~$A.$ For reasons of
 numerical stability it makes sense to normalize after each matrix-vector
 multiplication. This preserved the direction of the iterate and therefore does
 not change our convergence analysis. The resulting algorithms is the well known
-power method.
+power method, defined recursively as follows:
 %
-\begin{definition}[Power method]
 \begin{align*}
 x_0 &= \frac{b}{\|b\|} \\
 x_t &= \frac{A x_{t-1}}{\|Ax_{t-1}\|}
 \end{align*}
-\end{definition}
+%
+This method goes back more than hundred years to a paper by M\"untz in 1913, but
+continues to find new applications today.
 %
 \subsection{Applying Chebyshev polynomials}
 
@@ -266,16 +269,16 @@ these methods are similar, the case of linear equations is a bit more intuitive.
 We want to solve $Ax = b,$ with  $A\succ 0$ symmetric. The conjugate gradient
 method maintains a sequence of three points:
 \begin{align*}
-x_0 &= 0: \text{ ``candidate solution''} \\
-r_0 &= b: \text{ ``residual''} \\
-p_0 &= r_0: \text{ ``search direction''} \\
+x_0 &= 0 \tag{ ``candidate solution''} \\
+r_0 &= b \tag{ ``residual''} \\
+p_0 &= r_0 \tag{ ``search direction''}
 \end{align*}
-For $t = 1,2, \dots$
+For $t \ge 1:$
 \begin{align*}
-\eta_t &= \frac{\|r_t\|}{\langle p_{t-1}, Ap_{t-1}\rangle}: \text{``step size''} \\
+\eta_t &= \frac{\|r_t\|}{\langle p_{t-1}, Ap_{t-1}\rangle} \tag{``step size''} \\
 x_t &= x_{t-1} + \eta_t p_{t-1} \\
 r_t &= r_{t-1} - \eta_t A r_{t-1} \\
-p_t &= r_t + \frac{\|r_t\|^2}{\|r_{t-1}\|^2}p_{t-1} \\ 
+p_t &= r_t + \frac{\|r_t\|^2}{\|r_{t-1}\|^2}p_{t-1}
 \end{align*}
 \end{definition}
 
@@ -284,7 +287,7 @@ p_t &= r_t + \frac{\|r_t\|^2}{\|r_{t-1}\|^2}p_{t-1} \\
 The following three equations must always be true for the conjugate gradient
 method algorithm:
 \begin{itemize}
-\item $\mathrm{span}\{r_0, ...r_{t-1}\} = K_t(A,b)$
+\item $\mathrm{span}(\{r_0, ...r_{t-1}\}) = K_t(A,b)$
 \item For $j<t$ we have $\langle r_t, r_j\rangle = 0$ and in particular
 $r_t \perp K_t(A,b).$
 \item The search directions are conjugate $p_i^{\trans} A p_j = 0$ for $i\ne j.$
