@@ -1,0 +1,88 @@
+\documentclass[12pt]{article}
+
+\usepackage{macros}
+
+\title{Problem Set 2 for EE227C (Spring 2018):\\
+ Convex Optimization and Approximation }
+\author{Instructor: Moritz Hardt\\
+{\small Email: \tt hardt+ee227c@berkeley.edu}\\ ~\\
+Graduate Instructor: Max Simchowitz\\
+{\small Email: \tt msimchow+ee227c@berkeley.edu}\\ ~\\
+}
+
+\begin{document}
+%\setenumerate[0]{leftmargin=0pt}
+%\setenumerate[1]{leftmargin=50pt}
+\setlist[enumerate,1]{leftmargin=0pt,label=\bf(\Alph*)}
+\setlist[enumerate,2]{leftmargin=0pt,label=\bf(\Alph{enumi}.\arabic*)}
+
+
+\maketitle
+
+\section*{Problem 1: Backtracking Line Search}
+	Let $f: \R^n \to \R$ be an $m$-strongly convex, $M$-smooth (and thus differentiable) function with global minimum $x^*$. Consider the following algorithm: 
+
+
+	Initialize with an arbitrary $x_0 \in \R^n$, and fix parameters $\alpha \in (0,1/2),\beta \in (0,1)$. Then at each step $t = 1,2,\dots$, do the following: 
+	%
+
+	(a) Let $g_t = \nabla f(x_t)$. 
+	%
+
+	(b) For $k = \{0,1,\dots\}$ in sequence, check if the following ``sufficient decrease'' condition holds:
+	\begin{eqnarray}
+	f(x - tg_t) \le f(x) - \alpha \beta^k \cdot \|g_t\|^2
+	\end{eqnarray}
+	Assuming that this condition holds for some $k$ (you will show this), set $\eta_t = \beta^k$. 
+
+	(c) Set $x_t \leftarrow x_{t-1}-\eta_tg_t$
+	\begin{enumerate}
+		\item Show that condition $1$ holds for all $t \in (0,1/M]$.
+		\item Show that $\eta_t \ge \min\{1,\beta/M\}$.
+		 %
+		 Conclude that step (b) of the above algorithm aways terminates.
+		\item Using part $b$, show that 
+		\begin{eqnarray}
+		f(x_t - \eta_t g_t) \le f(x) - \alpha \min\{1,\frac{\beta}{M}\}\|\nabla f(x_t)^2\|
+		\end{eqnarray}
+		\item Show that there is a constant $C = C(\alpha,\beta,M,m) < 1$ such 
+		\begin{eqnarray}
+		f(x_t - \eta_t g_t) - f(x) \le C(\alpha,\beta,M,m) \cdot (f(x_t) - f(x_t))
+		\end{eqnarray}
+	\end{enumerate}
+
+
+\section*{Problem 2: Random Descent Directions}
+
+	Let $f: \R^n \to \R$ be an $m$-strongly convex, $M$-smooth (and thus differentiable) function with global minimum $x^*$. 
+%
+	Consider the following algorithm: Initialize with an arbitrary $x_0 \in \R^n$. 
+%
+	Then at each step $t = 1,2,\dots$, do the following: 
+	%
+
+	(a) Choose $g_t \unifsim \spheren$ (equivalently, $g_t$ has the distribution of $\frac{g}{\|g\|}$, where $g\sim \mathcal{N}(0,I_n)$). 
+	%
+
+	(b) Compute a step size $\eta_t := \min_{\eta \ge 0} f(x_{t-1}-\eta g_t)$.
+	%
+
+	(c) set $x_t \leftarrow x_{t-1}-\eta g_t$
+
+\begin{enumerate}
+	\item Prove that the above algorithm is a (non-strict) descent method; that is $f(x_t)$ is non-increasing in $t$. Also prove that unless $x_t = x_*$, $f(x_{t+1}) < f(x_t)$ with probability $1/2$. 
+	\item Prove that there exists a numerical constant $C$ such that, if 
+	\begin{eqnarray}
+	t \ge T(\epsilon) := C n \cdot \frac{M}{m} \log (\frac{f(x_0) - f(x^*)}{\epsilon})~,
+	\end{eqnarray}
+	then $\Exp[f(x_t) - f(x^*)] \le \epsilon$. 
+	\item Ammend the stated algorithm to use line search instead of solving for the exactly-optimal step size. Are the rates qualitatively similar?
+\end{enumerate}
+\section*{Problem 3: Sh*t about Quadratics (in progress)}
+	\begin{enumerate}
+		\item Let $n = 1000$
+
+	\end{enumerate}
+
+
+\end{document}
