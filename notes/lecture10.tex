@@ -1,0 +1,175 @@
+\section{Lecture 10: Stochastic Optimization}
+In this lecture, we examine the stochastic gradient descent method and different contexts of its use, including Empirical Risk Minimization and Mirror Descent. 
+\subsection{The Stochastic Gradient Method}
+
+Following Robbins-Monro \cite{Robbins&Monro:1951}, we define the stochastic approximation method as follows. 
+
+\begin{definition}(Stochastic Gradient Method)
+We want to minimize functions $f\colon$ of the following form. For all $x \in \domain$:
+\begin{align*}
+    f(x) &= \E_{Z\sim \cD}g(x,Z) \\
+    f(x) &= \frac{1}{n}\sum_{i=1}^n f_i(x)
+\end{align*}
+
+To do so, we define the following update rule, where $x_0\in\domain$:
+\begin{equation*}
+    \forall t\geq0,\ x_{t+1} = x_t - \eta_t\nabla f_{i_t}(x_t) 
+\end{equation*}
+where $i_t\in\{1,\dots,n\}$ is either selected at random at each step, or cycled through a random permutation of $\{1,\dots,n\}$.
+\end{definition}
+
+\begin{fact}
+For all $t\geq0$ and $x\in\domain$,
+\begin{equation}
+    \E\nabla f_{i_t}(x) = \nabla f(x)
+\end{equation}
+\end{fact}
+
+\subsubsection{Sanity check}
+
+Let us check that on a simple problem, stochastic gradient descent yields the optimum. Let $p_1, \dots, p_m\in \R^n$, and define $f\colon \R^n \rightarrow \R_+$:
+\begin{equation*}
+    \forall x\in \R^n,\ f(x) = \frac{1}{2m}\sum_{i=1}^m \|x-p_i\|_2^2
+\end{equation*}
+Note that for all $i\in\{1,\dots, m\}$ :
+
+\begin{align*}
+    \forall x \in \R^n,\ f_i(x) &= \frac{1}{2}\|x-p_i\|_2^2 \\
+    \forall x \in \R^n,\ \nabla f_i(x) &= x-p_i
+\end{align*}
+and therefore 
+\begin{equation*}
+    x^* = \argmin_{x\in\R^d} f(x) = \frac{1}{m}\sum_{i=1}^mp_i
+\end{equation*}
+
+Now, run SGM with $\eta_t=\frac{1}{t}$ in cyclic order i.e. $i_t = t$ and $x_0=0$:
+\begin{align*}
+    x_0 &= 0 \\
+    x_1 &= 0 - \frac{1}{1}(0-p_1) = p_1 \\
+    x_2 &= p_1 - \frac{1}{2}(p_1-p_2) = \frac{p_1+p_2}{2}\\
+    \vdots\\
+    x_n &= \frac{1}{m}\sum_{i=1}^mp_i = x^*
+\end{align*}
+
+\subsection{Application: the Perceptron Algorithm}
+
+
+The \href{https://www.nytimes.com/1958/07/08/archives/new-navy-device-learns-by-doing-psychologist-shows-embryo-of.html}{New York Times} wrote in 1958 that the Perceptron \cite{Rosenblatt58theperceptron:} was "The embryo of an electronic computer that [the Navy] expects will be able to walk, talk, see, write, reproduce itself and be conscious of its existence."
+
+\begin{definition}
+(Perceptron) Given a set of datapoints and labels $\{(x_1, y_1),\dots,(x_m,y_m)\in \R^n\times \{-1,1\}\}$ and $w_0\in\R^n$, the Perceptron is the following algorithm. For $(i_t)_t$ selected uniformly at random:
+
+\begin{equation*}
+    \forall t\geq0,\; w_{t+1} =w_t(1-\gamma) + \eta \begin{cases}
+    y_{i_t}x_{i_t}& \text{if } y_{i_t}\langle w_t, x_{i_t}\rangle <1\\
+    0              & \text{otherwise}
+\end{cases}
+\end{equation*}
+\end{definition}
+
+Reversing the problem, the Perceptron is equivalent to running the SGM on the Support Vector Machine (SVM) objective function.
+
+\begin{definition}
+(SVM) Given a set of datapoints and labels $\{(x_1, y_1),\dots,(x_m,y_m)\in \R^n\times \{-1,1\}\}$, the SVM objective function is:
+
+\begin{equation*}
+    f(w) = \frac{1}{n}\sum_{i=1}^m \max(1-\langle w, x_i\rangle,\; 0) + \lambda \|w\|_2^2
+\end{equation*}
+
+NB: $u\mapsto \max(1-u,\;0)$ is known as the Hinge Loss. $\lambda \|w\|_2^2$ is known as the regularization term.
+\end{definition}
+
+\subsection{Empirical Risk Optimization}
+We have two spaces of objects $\mathcal{X}$ and ${\mathcal{Y}}$ and want to learn a function $h :x\to y$ which outputs an object $y\in \mathcal{Y}$, given $ x\in \mathcal{X}$. Assume there is a joint distribution $\mathcal{D}: \mathcal{X} \times \mathcal{Y}$ and the training set consists of $m$ instances $(x_1, y_1), \ldots, (x_m,y_m)$ drawn i.i.d. from $\mathcal{D}$.\\
+\\
+We also define a non-negative real-valued loss function $L (y^\prime,y)$ to measure the difference between the prediction $y^\prime$ and the true outcome $y$.
+
+\begin{definition}
+The risk associated with h(x) is defined as the expectation of the loss function:
+\begin{equation*}
+    R[h] = \mathbb{E}_{\mathcal{X} \times \mathcal{Y} \in \mathcal{D}} L(h(x),y)
+\end{equation*}
+\end{definition}
+The ultimate goal of a learning algorithm is to find $h^*$ among a class of functions $\mathcal{H}$ that minimizes $R[h]$:
+\begin{equation*}
+    h^* = \text{arg}\min_{h \in \mathcal{H}} R[h]
+\end{equation*}
+In general, the risk $R[h]$ can not be computed because the joint distribution is unknown. Therefore,
+\begin{definition}
+we can compute empirical risk, by averaging the loss function of the training set:
+\begin{equation*}
+    R_n[h] = \frac{1}{n} \sum^n_{i=1}L(h(x_i),y_i)
+\end{equation*}
+\end{definition}
+And the goal is to find $h^* = \text{arg}\min_{h \in \mathcal{H}} R_n[h]$.
+\subsection{Online Learning}
+\textbf{Taking advice from experts}\\
+Assume we have access to predictions of $n$ experts. Let these predictions at time $t$ be $f_{1,t}, \ldots, f_{n,t}$.\\
+At each step $t : t = 1, \ldots, T$:
+\begin{itemize}
+    \item we observe $f_{1,t}, \ldots, f_{n,t}$ from $n$ experts.
+    \item we randomly choose one expert $I_t \in \{1, \ldots, n\}$
+    \item we receive feedback $f_t \in [-1,1]^n$ and incur loss $f_{t,I_t} \in [-1,1]$
+\end{itemize}
+Let $w_t \in \Delta_n = \{ w \in \mathbb{R}^n : w \geq 0, \|w\| = 1\}$. At each step t, we draw $I_t$ randomly and independently as $I_t \sim w_t$. More explicitly, $\forall i \in \{1, \ldots, n\},\; \mathbb{P}[I_t = i] = w_t[i]$.\\
+\\
+Then we define the expected loss at step t:
+\begin{equation*}
+    \mathbb{E}_{I_t \sim w_{t}}f_{t,I_t} =\sum_{i =1}^n\mathbb{P}[I_t = i] f_{t,I_t} = \langle w_{t}, f_t\rangle
+\end{equation*}
+The update rule is:
+\begin{align*}
+    \forall i,\; v_t^{(i)} &= w_{t-1}^{(i)}e^{-\eta f_t(i)} \\
+    w_t &= \Pi_\Delta (v_t)
+\end{align*}
+Then we measure our regret:
+\begin{equation*}
+   R = \sum^T_{t = 1} \langle w_{t}, f_t \rangle - min_{w \in \Delta_n} \sum^{T}_{t = 1} \langle w, f_t \rangle
+\end{equation*}
+where $w$ is the best distribution from hindsight.
+The question is \textit{how do we bound the regret?}
+\subsubsection{Mirror Descent}
+Recall that mirror descent requires a mirror map $\phi : \Omega \to R$ over a domain $\Omega \in \mathbb{R}^n$ where $\phi$ is strongly convex and continuously differentiable. \\
+\\
+The associated projection:
+\begin{equation*}
+    \Pi^\phi_\domain (y) = \argmin_{x\in\domain} \mathcal{D}_\phi(x,y)
+\end{equation*}
+where $\mathcal{D}_\phi(x,y)$ is Bregman distance.
+\begin{definition}
+    Bregman Distance measures how good the first order approximation of function $\phi$ is:
+    \begin{equation*}
+        \mathcal{D}_\phi(x,y) = \phi(x) - \phi(y) - \nabla \phi(y) ^\intercal (x-y)
+    \end{equation*}
+\end{definition}
+The mirror descent update rule is:
+\begin{align*}
+    \nabla \phi(y_{t+1}) &= \nabla \phi (x_t) - \eta g_t \\
+    x_{t+1} &=  \Pi^\phi_\domain (y_{t+1})
+\end{align*}
+where $g_t \in \partial f(x_t)$
+\begin{theorem}
+    let $\|\cdot\|$ be arbitrary norm and suppose that $\phi$ is $\alpha$-strongly convex      \textbf{w.r.t.} $\|\cdot\|$ on $\domain$. Suppose that $f_t$ is $L$-lipschitz \textbf{w.r.t.} $\|\cdot\|$, we have:
+    \begin{equation*}
+        \frac{1}{T}\sum^T_{t=1} f_t(x_t) \leq \frac{ \mathcal{D}_\phi(x^*,x_0)}{T \eta}+ \eta \frac{L^2}{2\alpha}
+    \end{equation*}
+NB: This was proved in homework 1.
+\end{theorem}
+\subsection{Apply Multiplicative weights to Mirror Descent}
+Multiplicative weights are an instance of the Mirror Descent where $\Phi: w\mapsto \sum_{i=1}^m w_i \log(w_i)$.
+
+Note that $\nabla\Phi : w\mapsto 1 + \log(w)$ where the log is taken elementwise.
+The update rule in Mirror Descent becomes:
+\begin{align*}
+    \nabla\Phi(v_{t+1}) &=\nabla\Phi(w_{t}) - \eta_tf_t \\
+    \implies v_{t+1} &= w_te^{-\eta_t f_t}
+\end{align*}
+
+Now comes the projection step. The Bregman divergence is, for all $(x,y)\in\domain^2$:
+\begin{align*}
+    D_{\Phi}(x,y) &= \Phi(x)-\Phi(y) - \nabla\Phi(y)^T(x-y)
+\end{align*}
+yielding for all $y$:
+\begin{align*}
+    \Pi_{\domain}^{\Phi}(y) = \argmin_{x\in\domain}D_{\Phi}(x,y)
+\end{align*}
