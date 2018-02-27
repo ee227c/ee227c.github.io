@@ -67,7 +67,7 @@ you spot any please send an email or pull request.
 | 7 | 2/6 | Nesterov's accelerated gradient descent  | [pdf](notes/ee227c-lecture7.pdf)  | ---  |
 | 8 | 2/8 | Eigenvalue intermezzo | [pdf](notes/ee227c-lecture8.pdf)  | ---  |
 | 9 | 2/13 | Lower bounds, robustness vs acceleration |   |   |
-| 10 | 2/15 | Stochastc optimization |   |   |
+| 10 | 2/15 | Stochastc optimization | [pdf](notes/ee227c-lecture10.pdf)  |   |
 | 11 | 2/20 | Learning, regularization, and generalization |   |   |
 | 12 | 2/22 | Coordinate Descent |   |   |
 | 13 | 2/27 | Proximal Methods  |   |   |
