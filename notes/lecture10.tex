@@ -166,8 +166,11 @@ This is a relative benchmark. Small regret does not say that the loss is necessa
 small. It only says that had we played the same strategy at all steps, we
 couldn't have done much better even with the benefit of hindsight.
 
+\subsection{Multiplicative weights update}
+
 Perhaps the most important online learning algorithm is the \emph{multiplicative
-weights update} given by the following simple update rule:
+weights update}. Starting from the uniform distribution~$w_1,$ proceed according
+to the following simple update rule for $t>1,$
 \begin{align*}
     v_t[i] &= w_{t-1}[i]e^{-\eta f_t[i]} \tag{exponential weights update}\\
     w_t &= v_t/(\textstyle\sum_i v_t[i]) \tag{normalize}
@@ -210,9 +213,13 @@ In the first homework, we proved the following results.
 \end{theorem}
 
 
-Multiplicative weights are an instance of the Mirror Descent where $\Phi: w\mapsto \sum_{i=1}^m w_i \log(w_i)$.
-
-Note that $\nabla\Phi : w\mapsto 1 + \log(w)$ where the log is taken elementwise.
+Multiplicative weights are an instance of the Mirror Descent where $\Phi(w)=
+\sum_{i=1}^m w_i \log(w_i)$ is the negative entropy function.
+We have that
+\[
+\nabla\Phi(w) =  1 + \log(w),
+\]
+where the logarithm is elementwise.
 The update rule in Mirror Descent becomes:
 \begin{align*}
     \nabla\Phi(v_{t+1}) &=\nabla\Phi(w_{t}) - \eta_tf_t \\
@@ -221,9 +228,28 @@ The update rule in Mirror Descent becomes:
 
 Now comes the projection step. The Bregman divergence is, for all $(x,y)\in\domain^2$:
 \begin{align*}
-    D_{\Phi}(x,y) &= \Phi(x)-\Phi(y) - \nabla\Phi(y)^T(x-y)
+    D_{\Phi}(x,y) &= \Phi(x)-\Phi(y) - \nabla\Phi(y)^T(x-y)\,.
 \end{align*}
-yielding for all $y$:
+If we write out this expression and simplify, we recover the well-known
+\emph{relative entropy}. The projection
 \begin{align*}
     \Pi_{\domain}^{\Phi}(y) = \argmin_{x\in\domain}D_{\Phi}(x,y)
 \end{align*}
+turns out to just correspond to the normalization step in the update rule.
+
+\paragraph{Concrete rate of convergence.}
+To get a concrete rate of convergence from the preceeding theorem,
+we still need to determine what value of the strong convexity
+constant~$\alpha$ we get in our setting. Here, we choose the norm to be the
+$\ell_\infty$-norm. It follows from Pinsker's inequality
+that $\Phi$ is $1/2$-strongly convex with respect to the $\ell_\infty$-norm.
+Moreover, in the $\ell_\infty$-norm all gradients are bounded by~$1,$ since the
+loss ranges in~$[1,1].$ Finally, the relative entropy between the initial
+uniform distribution any any other distribution is at most $\log(n).$ Putting
+these facts together and balancing the step size~$\eta,$ we get the normalized 
+regret bound
+\[
+O\left(\sqrt{\frac{\log n}{T}}\right).
+\]
+In particular, this shows that the normalized regret of the multiplicative
+update rule is vanishing over time.
