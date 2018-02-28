@@ -1,43 +1,49 @@
-\section{Lecture 10: Stochastic Optimization}
-In this lecture, we examine the stochastic gradient descent method and different contexts of its use, including Empirical Risk Minimization and Mirror Descent. 
-\subsection{The Stochastic Gradient Method}
+\section{Lecture 10: Stochastic optimization}
+The goal in stochastic optimization is to 
+minimize functions of the form
+\[
+    f(x) = \E_{z\sim \cD}g(x,z)\,
+\]
+which have stochastic component given by a distribution~$\cD.$ In the case where
+the distribution has finite support, the function can be written as
+\[
+    f(x) = \frac{1}{m}\sum_{i=1}^m f_i(x)\,.
+\]
+To solve these kinds of problems, we examine the stochastic gradient descent
+method and some if its many applications.
 
-Following Robbins-Monro \cite{Robbins&Monro:1951}, we define the stochastic approximation method as follows. 
+\subsection{The stochastic gradient method}
 
-\begin{definition}(Stochastic Gradient Method)
-We want to minimize functions $f\colon$ of the following form. For all $x \in \domain$:
-\begin{align*}
-    f(x) &= \E_{Z\sim \cD}g(x,Z) \\
-    f(x) &= \frac{1}{n}\sum_{i=1}^n f_i(x)
-\end{align*}
+Following Robbins-Monro \cite{Robbins&Monro:1951}, we define the stochastic
+gradient method as follows. 
 
-To do so, we define the following update rule, where $x_0\in\domain$:
+\begin{definition}[Stochastic gradient method]
+The stochastic gradient method starts from a point $x_0\in\domain$ and proceeds
+according to the update rule
 \begin{equation*}
-    \forall t\geq0,\ x_{t+1} = x_t - \eta_t\nabla f_{i_t}(x_t) 
+    x_{t+1} = x_t - \eta_t\nabla f_{i_t}(x_t) 
 \end{equation*}
-where $i_t\in\{1,\dots,n\}$ is either selected at random at each step, or cycled through a random permutation of $\{1,\dots,n\}$.
+where $i_t\in\{1,\dots,m\}$ is either selected at random at each step, or cycled
+through a random permutation of $\{1,\dots,m\}$.
 \end{definition}
 
-\begin{fact}
-For all $t\geq0$ and $x\in\domain$,
-\begin{equation}
+Either of the two methods for selecting~$i_t$ above, lead to the fact that
+\[
     \E\nabla f_{i_t}(x) = \nabla f(x)
-\end{equation}
-\end{fact}
-
+\]
+This is also true when $f(x)=\E g(x,z)$ and at each step we update according to
+$\nabla g(x,z)$ for randomly drawn~$z\sim\cD.$
+%
 \subsubsection{Sanity check}
 
-Let us check that on a simple problem, stochastic gradient descent yields the optimum. Let $p_1, \dots, p_m\in \R^n$, and define $f\colon \R^n \rightarrow \R_+$:
+Let us check that on a simple problem that the stochastic gradient descent yields the optimum. Let $p_1, \dots, p_m\in \R^n$, and define $f\colon \R^n \rightarrow \R_+$:
 \begin{equation*}
     \forall x\in \R^n,\ f(x) = \frac{1}{2m}\sum_{i=1}^m \|x-p_i\|_2^2
 \end{equation*}
-Note that for all $i\in\{1,\dots, m\}$ :
-
-\begin{align*}
-    \forall x \in \R^n,\ f_i(x) &= \frac{1}{2}\|x-p_i\|_2^2 \\
-    \forall x \in \R^n,\ \nabla f_i(x) &= x-p_i
-\end{align*}
-and therefore 
+Note that 
+here $f_i(x) = \frac{1}{2}\|x-p_i\|_2^2$ 
+and $\nabla f_i(x) = x-p_i.$ 
+Moreover,
 \begin{equation*}
     x^* = \argmin_{x\in\R^d} f(x) = \frac{1}{m}\sum_{i=1}^mp_i
 \end{equation*}
@@ -51,43 +57,64 @@ Now, run SGM with $\eta_t=\frac{1}{t}$ in cyclic order i.e. $i_t = t$ and $x_0=0
     x_n &= \frac{1}{m}\sum_{i=1}^mp_i = x^*
 \end{align*}
 
-\subsection{Application: the Perceptron Algorithm}
+\subsection{The Perceptron}
 
+The
+\href{https://www.nytimes.com/1958/07/08/archives/new-navy-device-learns-by-doing-psychologist-shows-embryo-of.html}{New
+York Times} wrote in 1958 that the Perceptron \cite{Rosenblatt58theperceptron:}
+was:
+\begin{quote}
+\emph{the embryo of an electronic computer that [the Navy] expects will be able
+to walk, talk, see, write, reproduce itself and be conscious of its existence.}
+\end{quote}
 
-The \href{https://www.nytimes.com/1958/07/08/archives/new-navy-device-learns-by-doing-psychologist-shows-embryo-of.html}{New York Times} wrote in 1958 that the Perceptron \cite{Rosenblatt58theperceptron:} was "The embryo of an electronic computer that [the Navy] expects will be able to walk, talk, see, write, reproduce itself and be conscious of its existence."
+So, let's see.
 
-\begin{definition}
-(Perceptron) Given a set of datapoints and labels $\{(x_1, y_1),\dots,(x_m,y_m)\in \R^n\times \{-1,1\}\}$ and $w_0\in\R^n$, the Perceptron is the following algorithm. For $(i_t)_t$ selected uniformly at random:
-
+\begin{definition}[Perceptron] 
+Given labeled points~$((x_1, y_1),\dots,(x_m,y_m))\in(\R^n\times\{-1,1\})^m,$ 
+and and initial point~$w_0\in\R^n$, the Perceptron is the following algorithm. 
+For $i_t\in\{1,\dots,m\}$ selected uniformly at random,
 \begin{equation*}
-    \forall t\geq0,\; w_{t+1} =w_t(1-\gamma) + \eta \begin{cases}
+w_{t+1} =w_t(1-\gamma) + \eta \begin{cases}
     y_{i_t}x_{i_t}& \text{if } y_{i_t}\langle w_t, x_{i_t}\rangle <1\\
     0              & \text{otherwise}
 \end{cases}
 \end{equation*}
 \end{definition}
 
-Reversing the problem, the Perceptron is equivalent to running the SGM on the Support Vector Machine (SVM) objective function.
+Reverse-engineering the algorithm, the Perceptron is equivalent to running the
+SGM on the Support Vector Machine (SVM) objective function.
 
-\begin{definition}
-(SVM) Given a set of datapoints and labels $\{(x_1, y_1),\dots,(x_m,y_m)\in \R^n\times \{-1,1\}\}$, the SVM objective function is:
+\begin{definition}[SVM] 
 
+Given labeled points~$((x_1, y_1),\dots,(x_m,y_m))\in(\R^n\times\{-1,1\})^m,$ 
+the SVM objective function is:
 \begin{equation*}
-    f(w) = \frac{1}{n}\sum_{i=1}^m \max(1-\langle w, x_i\rangle,\; 0) + \lambda \|w\|_2^2
+    f(w) = \frac{1}{n}\sum_{i=1}^m \max(1-y_i\langle w, x_i\rangle,\; 0) + \lambda \|w\|_2^2
 \end{equation*}
-
-NB: $u\mapsto \max(1-u,\;0)$ is known as the Hinge Loss. $\lambda \|w\|_2^2$ is known as the regularization term.
+The loss function $\max(1-z,\;0)$ is known as the Hinge Loss. The extra 
+term~$\lambda \|w\|_2^2$ is known as the regularization term.
 \end{definition}
 
-\subsection{Empirical Risk Optimization}
-We have two spaces of objects $\mathcal{X}$ and ${\mathcal{Y}}$ and want to learn a function $h :x\to y$ which outputs an object $y\in \mathcal{Y}$, given $ x\in \mathcal{X}$. Assume there is a joint distribution $\mathcal{D}: \mathcal{X} \times \mathcal{Y}$ and the training set consists of $m$ instances $(x_1, y_1), \ldots, (x_m,y_m)$ drawn i.i.d. from $\mathcal{D}$.\\
-\\
-We also define a non-negative real-valued loss function $L (y^\prime,y)$ to measure the difference between the prediction $y^\prime$ and the true outcome $y$.
+\subsection{Empirical risk minimization}
+We have two spaces of objects $\mathcal{X}$ and ${\mathcal{Y}},$ where we think
+of $\mathcal{X}$ as the space of \emph{instances} or \emph{examples}, and
+$\mathcal{Y}$ is a the set of \emph{labels} or \emph{classes}.
+
+Our goal is to \emph{learn} a function $h\colon\mathcal{X}\to\mathcal{Y}$ which
+outputs an object $y\in \mathcal{Y}$, given $ x\in \mathcal{X}$.  Assume there
+is a joint distribution $\mathcal{D}$ over the space~$\mathcal{X} \times
+\mathcal{Y}$ and the training set consists of $m$ instances $(x_1, y_1), \ldots,
+(x_m,y_m)$ drawn i.i.d.~from $\mathcal{D}$.
+
+We also define a non-negative real-valued loss function $\ell(y^\prime,y)$ to
+measure the difference between the prediction $y^\prime$ and the true outcome
+$y$.
 
 \begin{definition}
 The risk associated with h(x) is defined as the expectation of the loss function:
 \begin{equation*}
-    R[h] = \mathbb{E}_{\mathcal{X} \times \mathcal{Y} \in \mathcal{D}} L(h(x),y)
+    R[h] = \mathbb{E}_{\mathcal{X} \times \mathcal{Y} \in \mathcal{D}} \ell(h(x),y)
 \end{equation*}
 \end{definition}
 The ultimate goal of a learning algorithm is to find $h^*$ among a class of functions $\mathcal{H}$ that minimizes $R[h]$:
@@ -95,49 +122,75 @@ The ultimate goal of a learning algorithm is to find $h^*$ among a class of func
     h^* = \text{arg}\min_{h \in \mathcal{H}} R[h]
 \end{equation*}
 In general, the risk $R[h]$ can not be computed because the joint distribution is unknown. Therefore,
-\begin{definition}
-we can compute empirical risk, by averaging the loss function of the training set:
+
+The \emph{empirical risk} is defined by averaging the loss function of the training set:
 \begin{equation*}
-    R_n[h] = \frac{1}{n} \sum^n_{i=1}L(h(x_i),y_i)
+    R_n[h] = \frac{1}{n} \sum^n_{i=1}\ell(h(x_i),y_i)
 \end{equation*}
-\end{definition}
-And the goal is to find $h^* = \text{arg}\min_{h \in \mathcal{H}} R_n[h]$.
+An empirical risk minimizer is any point $h^* \in \arg\min_{h \in \mathcal{H}} R_n[h]$.
+
+The stochastic gradient method can be thought of as minimizing the risk
+directly, if each example is only used once. In cases where we make multiple
+passes over the training set, it is better to think of it as minimizing the
+empirical risk, which can give different solutions than minimizing the risk.
+We'll develop tools to relate risk and empirical risk in the next lecture.
+
 \subsection{Online Learning}
-\textbf{Taking advice from experts}\\
-Assume we have access to predictions of $n$ experts. Let these predictions at time $t$ be $f_{1,t}, \ldots, f_{n,t}$.\\
-At each step $t : t = 1, \ldots, T$:
+
+An interesting variant of this learning setup is called \emph{online learning}.
+It arises when we do not have a set of training data, but rather must make
+decisions one-by-one.
+
+\paragraph{Taking advice from experts.}
+Imagine we have access to the predictions of $n$ experts. 
+We start from an initial distribution over experts, given by
+weights~$w_1\in\Delta_n = \{ w\in\R^n\colon \sum_i w_i=1, w_i\ge0\}.$
+
+At each step $t = 1, \ldots, T$:
 \begin{itemize}
-    \item we observe $f_{1,t}, \ldots, f_{n,t}$ from $n$ experts.
-    \item we randomly choose one expert $I_t \in \{1, \ldots, n\}$
-    \item we receive feedback $f_t \in [-1,1]^n$ and incur loss $f_{t,I_t} \in [-1,1]$
+    \item we randomly choose an expert according to~$w_t$
+    \item nature deals us a loss function $f_t\in[-1,1]^n,$ specifying for each
+expert~$i$ the loss~$f_t[i]$ incurred by the prediction of expert~$i$ at
+time~$t.$
+    \item we incur the expected loss $\E_{i\sim w_t}f_t[i]=\langle
+w_t,f_t\rangle.$
+    \item we get to update our distribution to from $w_t$ to $w_{t+1}.$
 \end{itemize}
-Let $w_t \in \Delta_n = \{ w \in \mathbb{R}^n : w \geq 0, \|w\| = 1\}$. At each step t, we draw $I_t$ randomly and independently as $I_t \sim w_t$. More explicitly, $\forall i \in \{1, \ldots, n\},\; \mathbb{P}[I_t = i] = w_t[i]$.\\
-\\
-Then we define the expected loss at step t:
+
+At the end of the day, we measure how well we performed relative to the best
+fixed distribution over experts in hindsight. This is called \emph{regret}:
 \begin{equation*}
-    \mathbb{E}_{I_t \sim w_{t}}f_{t,I_t} =\sum_{i =1}^n\mathbb{P}[I_t = i] f_{t,I_t} = \langle w_{t}, f_t\rangle
+   R = \sum^T_{t = 1} \langle w_{t}, f_t \rangle - \min_{w \in \Delta_n} \sum^{T}_{t = 1} \langle w, f_t \rangle
 \end{equation*}
-The update rule is:
+This is a relative benchmark. Small regret does not say that the loss is necessarily
+small. It only says that had we played the same strategy at all steps, we
+couldn't have done much better even with the benefit of hindsight.
+
+Perhaps the most important online learning algorithm is the \emph{multiplicative
+weights update} given by the following simple update rule:
 \begin{align*}
-    \forall i,\; v_t^{(i)} &= w_{t-1}^{(i)}e^{-\eta f_t(i)} \\
-    w_t &= \Pi_\Delta (v_t)
+    v_t[i] &= w_{t-1}[i]e^{-\eta f_t[i]} \tag{exponential weights update}\\
+    w_t &= v_t/(\textstyle\sum_i v_t[i]) \tag{normalize}
 \end{align*}
-Then we measure our regret:
-\begin{equation*}
-   R = \sum^T_{t = 1} \langle w_{t}, f_t \rangle - min_{w \in \Delta_n} \sum^{T}_{t = 1} \langle w, f_t \rangle
-\end{equation*}
-where $w$ is the best distribution from hindsight.
-The question is \textit{how do we bound the regret?}
-\subsubsection{Mirror Descent}
-Recall that mirror descent requires a mirror map $\phi : \Omega \to R$ over a domain $\Omega \in \mathbb{R}^n$ where $\phi$ is strongly convex and continuously differentiable. \\
-\\
-The associated projection:
+The question is \textit{how do we bound the regret} of the multiplicative
+weights update? We could do a direct analysis, but instead we'll relate
+multiplicative weights to gradient descent and use the convergence guarantees
+we already know.
+
+\subsection{Multiplicative weights as mirror descent}
+
+Recall that mirror descent requires a mirror map $\phi : \Omega \to R$ over a
+domain $\Omega \in \mathbb{R}^n$ where $\phi$ is strongly convex and
+continuously differentiable.
+
+The associated projection is
 \begin{equation*}
     \Pi^\phi_\domain (y) = \argmin_{x\in\domain} \mathcal{D}_\phi(x,y)
 \end{equation*}
-where $\mathcal{D}_\phi(x,y)$ is Bregman distance.
+where $\mathcal{D}_\phi(x,y)$ is Bregman divergence.
 \begin{definition}
-    Bregman Distance measures how good the first order approximation of function $\phi$ is:
+The Bregman divergence measures how good the first order approximation of the
+function~$\phi$ is:
     \begin{equation*}
         \mathcal{D}_\phi(x,y) = \phi(x) - \phi(y) - \nabla \phi(y) ^\intercal (x-y)
     \end{equation*}
@@ -147,15 +200,16 @@ The mirror descent update rule is:
     \nabla \phi(y_{t+1}) &= \nabla \phi (x_t) - \eta g_t \\
     x_{t+1} &=  \Pi^\phi_\domain (y_{t+1})
 \end{align*}
-where $g_t \in \partial f(x_t)$
+where $g_t \in \partial f(x_t).$ 
+In the first homework, we proved the following results.
 \begin{theorem}
     let $\|\cdot\|$ be arbitrary norm and suppose that $\phi$ is $\alpha$-strongly convex      \textbf{w.r.t.} $\|\cdot\|$ on $\domain$. Suppose that $f_t$ is $L$-lipschitz \textbf{w.r.t.} $\|\cdot\|$, we have:
     \begin{equation*}
         \frac{1}{T}\sum^T_{t=1} f_t(x_t) \leq \frac{ \mathcal{D}_\phi(x^*,x_0)}{T \eta}+ \eta \frac{L^2}{2\alpha}
     \end{equation*}
-NB: This was proved in homework 1.
 \end{theorem}
-\subsection{Apply Multiplicative weights to Mirror Descent}
+
+
 Multiplicative weights are an instance of the Mirror Descent where $\Phi: w\mapsto \sum_{i=1}^m w_i \log(w_i)$.
 
 Note that $\nabla\Phi : w\mapsto 1 + \log(w)$ where the log is taken elementwise.
