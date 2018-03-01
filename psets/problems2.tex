@@ -22,25 +22,28 @@ Graduate Instructor: Max Simchowitz\\
 \section*{Problem 1: Backtracking Line Search}
 	Let $f: \R^n \to \R$ be an $m$-strongly convex, $M$-smooth (and thus differentiable) function with global minimum $x^*$. Consider the following algorithm: 
 
+	\begin{algorithm}[H]
+	\SetAlgoLined
+	\textbf{Input:} Parameters $\alpha \in (0,1/2)$, $\beta \in (0,1)$, $x_0 \in \R^n$\;
+	\For{$t = 0,1,2,\dots$}{
+	$g_t \leftarrow \nabla f(x_t)$\;
+	\For{$k = 0,1,2,\dots$\label{loop}}{
+	If ``sufficient decrease'' condition holds
+		\begin{eqnarray}
+		f(x - tg_t) \le f(x) - \alpha \beta^k \cdot \|g_t\|^2~,
+		\end{eqnarray}
+		set $\eta_t = \beta^k$ and \textbf{break}
+	}\
+	Set $x_t \leftarrow x_{t-1}-\eta_tg_t$\
+	}
+	\caption{Backtracking Line Search}
+	\end{algorithm}
 
-	Initialize with an arbitrary $x_0 \in \R^n$, and fix parameters $\alpha \in (0,1/2),\beta \in (0,1)$. Then at each step $t = 1,2,\dots$, do the following: 
-	%
-
-	(a) Let $g_t = \nabla f(x_t)$. 
-	%
-
-	(b) For $k = \{0,1,\dots\}$ in sequence, check if the following ``sufficient decrease'' condition holds:
-	\begin{eqnarray}
-	f(x - tg_t) \le f(x) - \alpha \beta^k \cdot \|g_t\|^2
-	\end{eqnarray}
-	Assuming that this condition holds for some $k$ (you will show this), set $\eta_t = \beta^k$. 
-
-	(c) Set $x_t \leftarrow x_{t-1}-\eta_tg_t$
 	\begin{enumerate}
 		\item Show that condition $1$ holds for all $t \in (0,1/M]$.
 		\item Show that $\eta_t \ge \min\{1,\beta/M\}$.
 		 %
-		 Conclude that step (b) of the above algorithm aways terminates.
+		 Conclude that the loop in Line~\ref{loop} aways terminates.
 		\item Using part $b$, show that 
 		\begin{eqnarray}
 		f(x_t - \eta_t g_t) \le f(x) - \alpha \min\{1,\frac{\beta}{M}\}\|\nabla f(x_t)^2\|
@@ -56,18 +59,19 @@ Graduate Instructor: Max Simchowitz\\
 
 	Let $f: \R^n \to \R$ be an $m$-strongly convex, $M$-smooth (and thus differentiable) function with global minimum $x^*$. 
 %
-	Consider the following algorithm: Initialize with an arbitrary $x_0 \in \R^n$. 
-%
-	Then at each step $t = 1,2,\dots$, do the following: 
-	%
+	Consider the following algorithm:
 
-	(a) Choose $g_t \unifsim \spheren$ (equivalently, $g_t$ has the distribution of $\frac{g}{\|g\|}$, where $g\sim \mathcal{N}(0,I_n)$). 
-	%
+	\begin{algorithm}[H]
+	\SetAlgoLined
+	\textbf{Input:} Parameters $\alpha \in (0,1/2)$, $\beta \in (0,1)$, $x_0 \in \R^n$\;
+	\For{$t = 0,1,2,\dots$}{
 
-	(b) Compute a step size $\eta_t := \min_{\eta \ge 0} f(x_{t-1}-\eta g_t)$.
-	%
-
-	(c) set $x_t \leftarrow x_{t-1}-\eta g_t$
+	Set $g_t \unifsim \spheren $\;
+	Set $\eta_t := \min_{\eta \ge 0} f(x_{t-1}-\eta g_t)$\;
+	Set $x_t \leftarrow x_{t-1}-\eta g_t$\;
+	}
+	\caption{Random Direction Line Search}
+	\end{algorithm}
 
 \begin{enumerate}
 	\item Prove that the above algorithm is a (non-strict) descent method; that is $f(x_t)$ is non-increasing in $t$. Also prove that unless $x_t = x_*$, $f(x_{t+1}) < f(x_t)$ with probability $1/2$. 
@@ -93,7 +97,7 @@ Graduate Instructor: Max Simchowitz\\
 		\item Setting $x_0 = 0$, run gradient descent, a heavy-ball method or nesterov method to solve $\min_{x} \mathbf{f}(x)$ for a good number of iterations (use your discretion). You may compute the eigenvalues of $\mathbf{N}$ to tune your step parameters. 
 		\item For both gradient descent and heavy-ball, record for each trial iteration $s$, the difference between $\mathbf{f}(x_s) - \min_{x} \mathbf{f}(x)$ for each iteration. 
 		\item Using the step sizes, largest/smallest eigenvalues of $\mathbf{N}$, and the initial point $x_0 = 0$, compute a worst case upper bound for $\mathbf{f}(x_s) - \min_{x} \mathbf{f}(x)$ for each iteration $s$ of gradient descent and the heavy ball method.
-		\item Run gradient descent, but this time compute the optimality gap unising ``best'' iterate in the Krylov space. THat is, compute 
+		\item Run gradient descent, but this time compute the optimality gap unising ``best'' iterate in the Krylov space. That is, compute 
 		\begin{eqnarray}
 		\min_{x \in \mathrm{span}(x_1,\dots,x_s)}\mathbf{f}(x) - \min_{x} \mathbf{f}(x)
 		\end{eqnarray}
