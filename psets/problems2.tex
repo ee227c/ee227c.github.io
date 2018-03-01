@@ -79,22 +79,17 @@ Graduate Instructor: Max Simchowitz\\
 	\item Ammend the stated algorithm to use line search instead of solving for the exactly-optimal step size. Are the rates qualitatively similar?
 \end{enumerate}
 \section*{Problem 3: Sh*t about Quadratics}
-	In this problem, you are going to test the sharpness of our upper and lower bounds for quadratics on a randomly generated instance. Let $\cS = \{1,.5,.2,.1,.05\}$ and $n = 500$. Now, for each $\epsilon \in \cS$, generate the random matrix $\mathbf{M}$ as follows: 
+	In this problem, you are going to test the sharpness of our upper and lower bounds for quadratics on a randomly generated instance. Fix $n = 500$. We define the distribution over PSD matrix $\cD(\epsilon)$:
+	\begin{definition} $\cD(\epsilon)$ is a distribution of matrix $\mathbf{M} = \mathbf{M}^\top$, defined as follows. Let $\mathbf{X} \in \R^{n \times n}$ denote a matrix with i.i.d $\cN(0,1)$ entries. Generate a random vector $\mathbf{u}$ uniformly from the unit sphere. Define the matrix $\mathbf{M} = \frac{1}{\sqrt{2n}}(\mathbf{X} + \mathbf{X}^{\top}) + (1+\epsilon)\mathbf{u}\mathbf{u}^\top$.
+	\end{definition}
 
-	(a)Generate an $n \times n$ random wigner matrix $\mathbf{W} \in \R^{n \times n}$, 
-		\begin{eqnarray*}
-		\mathbf{W} = \frac{1}{\sqrt{2n}} (\mathbf{X} + \mathbf{X}^{\top})
-		\end{eqnarray*}
-		where $\mathbf{X} \in \R^{n \times n}$ is a matrix with i.i.d standard normal entries. 
-	
-	(b) Generate $\mathbf{u}$ uniformly on the unit sphere, and set $\mathbf{M} = \mathbf{W} + (1 + \epsilon)\mathbf{u}\mathbf{u}^{\top}$. 
 
-	(c) Now, for each $\epsilon \in \cS$, do the following:
+	Now, for each $\epsilon \in \cS := \{1,.5,.2,.1,.05\}$, do the following
 	\begin{enumerate}
 		\item Conduct trials $t = 1,2,\dots,10$.
 		\begin{enumerate}
-		\item Generate $\mathbf{M}$ as above, and a random vector $\mathbf{v}$ uniformly on the unit sphere. 
-		\item Set $\gamma = 2\lambda_{\max}(\mathbf{W}) - \lambda_{2}(\mathbf{W})$, and define the matrix $\mathbf{N} = \gamma I  - \mathbf{M}$. Definally, define the function $\mathbf{f}(x) = \min_{x} x^T \mathbf{N} x - 2 \langle \mathbf{v}, x \rangle$. 
+		\item Generate $\mathbf{M} \sim \cD(\epsilon)$ as above, and a random vector $\mathbf{v}$ uniformly on the unit sphere. 
+		\item Set $\gamma = 2\lambda_{\max}(\mathbf{W}) - \lambda_{2}(\mathbf{W})$, and define the matrix $\mathbf{N} = \gamma I  - \mathbf{M}$. Definally, define the function $\mathbf{f}(x) = \min_{x} x^T \mathbf{N} x - 2 \langle \mathbf{v}, x \rangle$. What is the condition number of $\mathbf{N}$?
 		\item Setting $x_0 = 0$, run gradient descent, a heavy-ball method or nesterov method to solve $\min_{x} \mathbf{f}(x)$ for a good number of iterations (use your discretion). You may compute the eigenvalues of $\mathbf{N}$ to tune your step parameters. 
 		\item For both gradient descent and heavy-ball, record for each trial iteration $s$, the difference between $\mathbf{f}(x_s) - \min_{x} \mathbf{f}(x)$ for each iteration. 
 		\item Using the step sizes, largest/smallest eigenvalues of $\mathbf{N}$, and the initial point $x_0 = 0$, compute a worst case upper bound for $\mathbf{f}(x_s) - \min_{x} \mathbf{f}(x)$ for each iteration $s$ of gradient descent and the heavy ball method.
