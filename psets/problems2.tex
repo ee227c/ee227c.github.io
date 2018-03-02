@@ -30,7 +30,7 @@ Graduate Instructor: Max Simchowitz\\
 	\For{$k = 0,1,2,\dots$\label{loop}}{
 	If ``sufficient decrease'' condition holds
 		\begin{eqnarray}
-		f(x - tg_t) \le f(x) - \alpha \beta^k \cdot \|g_t\|^2~,
+		f(x_t - \beta^k g_t) \le f(x_t) - \alpha \beta^k \cdot \|g_t\|^2~,
 		\end{eqnarray}
 		set $\eta_t = \beta^k$ and \textbf{break}
 	}\
@@ -65,12 +65,20 @@ Graduate Instructor: Max Simchowitz\\
 	\SetAlgoLined
 	\textbf{Input:} Parameters $\alpha \in (0,1/2)$, $\beta \in (0,1)$, $x_0 \in \R^n$\;
 	\For{$t = 0,1,2,\dots$}{
-
-	Set $g_t \unifsim \spheren $\;
-	Set $\eta_t := \min_{\eta \ge 0} f(x_{t-1}-\eta g_t)$\;
-	Set $x_t \leftarrow x_{t-1}-\eta g_t$\;
+	Set $g_t \unifsim \spheren$\;
+	Set $\eta_t := \min_{\eta \ge 0} f(x_{t}-\eta g_t)$\;
+	Set $x_{t+1} \leftarrow x_{t}-\eta g_t$\;
 	}
 	\caption{Random Direction Line Search}
+	\algorithmfootnote{
+	%
+	$\spheren:= \{v \in \R^n: \|v\|_2^2 = 1 \}$ denotes the unit sphere in 
+	%
+	$\R^n$. 
+	%
+	$g_t \unifsim \spheren $ denotes the unique rotation invariant distribution on the unit sphere. 
+	%
+	For example, if $h \sim \mathcal{N}(0,I)$, then $h/\|h\|  \unifsim \spheren $}
 	\end{algorithm}
 
 \begin{enumerate}
