@@ -69,15 +69,15 @@ you spot any please send an email or pull request.
 | 9 | 2/13 | Lower bounds, robustness vs acceleration |   |   |
 | 10 | 2/15 | Stochastc optimization | [pdf](notes/ee227c-lecture10.pdf)  |   |
 | 11 | 2/20 | Learning, regularization, and generalization |   |   |
-| 12 | 2/22 | Coordinate Descent |   |   |
-| 13 | 2/27 | Proximal Methods  |   |   |
-| 14 | 3/1 | Duality theory|   |   |
-| 15 | 3/6 | Algorithms using duality |   |   |
-| 16 | 3/8 | Distributed Optimization |   |   |
-| 17 | 3/13 | Backpropagation and adjoints |   |   |
-| 18 | 3/15 | Some implementation aspects |   |   |
-| 19 | 3/20 | Quasi-convex problems |   |   |
-| 20 | 3/22 | Alternating minimization |   |   |
+| 12 | 2/22 | Coordinate Descent (guest lecture by Max Simchowitz) |   |   |
+| 13 | 2/27 | Duality theory  |   |   |
+| 14 | 3/1 | Dual decomposition, method of multipliers | [pdf](notes/ee227c-lecture14.pdf) |   |
+| 15 | 3/6 | Stochastic Dual Coordinate Ascent |   |   |
+| 16 | 3/8 | Backpropagation and adjoints |   |   |
+| 17 | 3/13 | Non-convex problems |   |   |
+| 18 | 3/15 | Quasi-convex problems |   |   |
+| 19 | 3/20 |  |   |   |
+| 20 | 3/22 |  |   |   |
 | -- | 3/27 | No class (Spring break) |   |   |
 | -- | 3/29 | No class (Spring break) |   |   |
 | 21 | 4/3  | Guest lecture by Ludwig Schmidt on non-convex constraints | | |
