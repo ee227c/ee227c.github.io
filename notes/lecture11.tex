@@ -1,0 +1,130 @@
+\section{Lecture 11: Learning, Stability, Regularization
+}
+
+In this lecture we take a look of machine learning, and empirical risk minimization in particular. We define the distribution of our data as $D$ over $X\times Y$, $X\subseteq \R^{n}, \,Y = \{ -1,1 \}$
+\begin{itemize}
+\item "Model" is specified by a set of parameters $w \in \domain \in \mathbb{R}^{n}$
+\item "Loss function" $L: \domain \times (X\times Y) \rightarrow \R$, note that $l(w,z)$ gives the loss of model $w$ on instance $z$
+\item Population objective (\textit{Risk}): $R(w)=\underset{z\in D}{\mathbb{E}}[l(w,z)]$
+\item Goal: Find $w$ that minimizes $R(w)$
+\end{itemize}
+
+One way to accomplish this is to use stochastic optimization:
+$$w_{t+1} = w_{t} - \eta \nabla \ell(w_t,z_t) \quad z\in D $$
+\subsection{Empirical Risk}
+Suppose $S\in (X \times Y)^{m}, \,\, S=((x_1,y_1),......,(x_m,y_m))$, and $z_i$ represents the instance $(x_i,y_i), i\in \{1, ...,m \}$.The empirical risk is define as:
+$$R_{s}(w) = \frac{1}{m}\sum_{i=1}^{m}\ell(w,z_i)$$
+Our goal is to minimize this empirical risk. However, what we really want is : $R_{s}(w) = R(w)$.
+\begin{itemize}
+\item $R(w)$ captures loss on unseen example 
+\item $R_s(w)$ captures loss on seen example
+\end{itemize}
+\begin{definition}[Generalization error]
+$$\mathcal{E}_{\text{gen}}(w) = R(w) - R_{s}(w)$$
+Then: $R(w) = R_{s}(w) + \mathcal{E}_{\text{gen}}(w)$, where optimization can handle the part $R_{s}(w)$ pretty well.
+\end{definition}
+\textbf{How do we bound $\mathcal{E}_{\text{gen}}(w)$ ?}
+\begin{itemize}
+\item Principle: generalization error = stability
+\item Stability: How much does your model change if you change one training point
+\end{itemize}
+
+Choose Sample:
+
+$$S = (z_1, ... , z_m) \quad \quad  S^{\prime} = (z^{\prime}_1, ... ,z^{\prime}_{m})$$ 
+$S$ and $S^{\prime}$ can be completely different, we denote $S^{(i)}$ as:
+$$S^{(i)} = (z_1, \,... ,\, z_{i-1}, \,\underline{\mathbf{z_{i}^{\prime}}},\, z_{i+1}, \,... \,,z_{m})$$
+\begin{definition}[Average stability] The average stability of an algorithm $A: (X,Y)^{m} \rightarrow \domain$:
+$$\Delta(A) = \mathbb{E}[\frac{1}{m}\sum_{i=1}^{m}[\ell(A(s),z_i^{\prime}) - \ell(A(s^{(i)}),z_{i}^{\prime})]]$$
+\end{definition}
+This can be interpreted as performance on something unseen versus something seen.
+\begin{theorem}
+$$\mathbb{E}[\mathcal{E}_{\text(gen)}(A)] = \Delta(A)$$
+\end{theorem}
+\begin{proof}
+\begin{align*}
+\mathbb{E}[\mathcal{E}_{\text(gen)}(A)]  &= R(A(s)) - R_{s}(A(s)) \\
+\mathbb{E} [R_{s}(A(s))] &= \mathbb{E}[\frac{1}{m}\sum_{i=1}^{m}\ell(A(s),z_i)] \\
+\mathbb{E} [R(A(s))]&= \mathbb{E}[\frac{1}{m}\sum_{i=1}^{m}\ell(A(s),z_i^{\prime})]
+\end{align*}
+Hence, since $\mathbb{E}[\ell(A(s),z_i)] = \mathbb{E}\ell(A(s^{(i)}),z_i^{\prime})$
+$\mathbb{E}[R - R_s] = \Delta(A)$
+\end{proof}
+
+
+
+
+
+\subsection{Uniform Stability}
+We would now show how stability is related to generalization. For doing so we need to define the concept of \textit{uniform stability}.
+
+\begin{definition}[Uniform stability]The uniform stability of an algorithm $A$ is defined as 
+\begin{equation*}
+\Delta_{\sup} (A) = \sup_{\mathcal{S}, \mathcal{S}' \in ( \mathcal{X}, \mathcal{Y} )^m } \sup_{i \in [m]} |l(A(S), z_i') - l(A(S^{(i)}, z_i')|
+\end{equation*}
+\end{definition}
+
+\begin{corollary}
+    $\mathcal{E}_{\text{gen}}(A) \leq \Delta_{\sup} (A)$
+\end{corollary}
+
+This corollary turns out to be surprisingly useful since many algorithms are uniformly stable. For instance, strongly convex loss function is sufficient for stability, and hence generalization.
+
+\subsection{Empirical Risk Minimization (ERM)}
+
+
+
+\begin{theorem}Assume $l(w, z)$ is $\alpha-$strongly convex with respect $w \in \domain$ abd $L-$Lipschitz. Let $\hat w_s = \arg \min_{w\in \domain} \frac{1}{m} \sum_{i=1}^m l(w, z_i)$. Then, ERM satisfies:
+\begin{equation*}
+\Delta_{\sup} (\text{ERM}) \leq \frac{4L^2}{\alpha m} = \mathcal{O}(\frac{1}{m}) 
+\end{equation*}
+\end{theorem}
+
+An interesting point is that there is no explicit reference to the complexity of the class. In the following we present the proof.
+
+\begin{proof}
+We need to show that $| ( l(\hat w_{S^(i)}, z_i') - l(\hat w_{S}, z_i')) |  \leq \frac{4 L^2}{\alpha m}$.
+\begin{enumerate}
+\item On one hand, by strong convexity we know that
+$R_S(\hat w_{S^(i)}) - R_S(\hat w_{S}) \geq \frac{\alpha}{2} \| \hat w_{S} - \hat w_{S^(i)} \|^2 $.
+
+\item On the other hand, 
+\begin{align*}
+& R_S(\hat w_{S^(i)}) - R_S(\hat w_{S}) = \\
+& \frac{1}{m} ( l(\hat w_{S^(i)}, z_i) - l(\hat w_{S}, z_i)) + \frac{1}{m} \sum_{i \neq j} ( l(\hat w_{S^(i)}, z_j) - l(\hat w_{S}, z_j))  \leq \\
+&\frac{1}{m} | l(\hat w_{S^(i)}, z_i) - l(\hat w_{S}, z_i)| + \frac{1}{m} | ( l(\hat w_{S^(i)}, z_i') - l(\hat w_{S}, z_i')) | + (R_{S(i)}(\hat w_{S^(i)}) - R_{S(i)}(\hat w_{S^(i)})) \leq \\ 
+& \frac{2 L}{m} \| \hat w_{S^(i)} - \hat w_{S}\| 
+\end{align*}
+
+In the last inequality we have used that $ (R_{S(i)}(\hat w_{S^(i)}) - R_{S(i)}(\hat w_{S^(i)})) \leq 0$, and the fact that $l$ is $L-$lipschitz.
+\end{enumerate}
+
+Putting it all together $\| \hat w_{S^(i)} - \hat w_{S} \| \leq \frac{4 L}{\alpha m}$. Then by the Lipschitz condition we have that $\frac{1}{m} | ( l(\hat w_{S^(i)}, z_i') - l(\hat w_{S}, z_i')) | \leq L \| \hat w_{S^(i)} - \hat w_{S} \| \leq \frac{4 L ^ 2}{\alpha m} \Rightarrow \Delta_{\sup} (\text{ERM}) \leq \frac{4 L ^ 2}{\alpha m}$.
+
+\end{proof}
+
+
+\subsection{Regularization}
+
+Not all the ERM problems are strongly convex. However, if the problem is convex we can consider the regularized objective
+\begin{equation*}
+r(w, z) = l(w, z) + \frac{\alpha}{2} \| w \|^2
+\end{equation*}
+
+$r(w, z)$ is $\alpha-$strongly convex. The last term is named l2-regularization, weight decay or Tikhonov regularization depending on the field you work on. Therefore, we now have the following chain of implications:
+$$
+\text{regularization} \Rightarrow \text{strong convexity} \Rightarrow \text{uniform stability} \Rightarrow \text{generalization}
+$$
+
+We can also show that solving the regularized objective also solves the unregularized objective. Assume that $\domain \subseteq \mathcal{B}_2(R)$, by setting $\alpha \approx \frac{L^2}{R^2 m}$ we can show that the minimizer of the regularized risk also minimizes the unregularized risk up to error $\mathcal{O}(\frac{LR}{\sqrt{m}})$. Moreover, by the previous theorem the generalized error will also be $\mathcal{O}(\frac{LR}{\sqrt{m}})$. See Theorem 3 in \cite{Shalev2010LearnabilitySA}.
+
+\subsection{Implicit Regularization}
+
+In implicit regularization the algorithm itself regularizes the objective, instead of explicitly adding a regularization term. The following theorem describes the regularization effect of the Stochastic Gradient Method (SGM). 
+
+\begin{theorem}Assume $l(\cdot, z)$ is $\beta$-smooth and $L$-Lipschitz, and run SGM for T steps. Then, the algorithm has uniform stability
+\begin{equation*}
+\Delta_{\sup}(\text{SGM}_T) \leq \frac{2 L^2}{m} \sum_{t=1}^T \eta_t
+\end{equation*}
+\end{theorem}
+Note for $\eta_t \approx \frac{1}{m}$ then $\Delta_{\sup}(\text{SGM}_T) = \mathcal{O}(\frac{\log(T)}{m})$, and for $\eta_t \approx \frac{1}{\sqrt{m}}$ and $T=\mathcal{O}(m)$ then $\Delta_{\sup}(\text{SGM}_T) = \mathcal{O}(\frac{1}{m} )$. See \cite{HardtRS15} for proof.
