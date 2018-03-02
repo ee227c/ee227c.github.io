@@ -8,10 +8,10 @@ computation or enable parallelization.
 \subsection{Review}
 
 Recall the \emph{primal problem}
-\begin{align}
-\min_{x \in \Omega} &f(x) \\
+\begin{align*}
+\min_{x \in \Omega}~&f(x) \\
 \text{s.t.}~& A x = b
-\end{align}
+\end{align*}
 The corresponding dual problem is obtained by considering the
 \emph{Lagrangian}
 \[
@@ -81,10 +81,10 @@ optimizing $h(\lambda)$ over $\lambda$, which may not be available
 in closed form. Instead, notice that if we can interchange $\inf$ and
 $\sup$ (e.g.~strong duality, Sion's theorem applied when $\Omega$ is
 compact) then we can rewrite
-\begin{align}
+\begin{align*}
 \sup_{\lambda} \inf_{x \in \Omega} f(x) + \lambda^T(A x - b) - \frac{1}{2 \eta_t} \|\lambda - \lambda_t\|^2 &= \inf_{x \in \Omega} \sup_\lambda f(x) + \lambda^T(A x - b) - \frac{1}{2\eta_t} \|\lambda_t - \lambda\|^2 \\
 &= \inf_{x \in \Omega} f(x) + \lambda_t^T (A x - b) + \frac{\eta_t}{2}\|A x - b\|^2
-\end{align}
+\end{align*}
 where the inner $\sup$ is optimized in closed-form by
 $\lambda = \lambda_t + \eta_t(A x - b)$. To isolate the remaining
 optimization over $x$, we make the following definition.
@@ -125,11 +125,11 @@ which are trivially parallelizable.
 
 Suppose we can partition the primal problem into blocks of size
 $(n_i)_{i=1}^N$, i.e.
-\begin{align}
+\begin{align*}
 x ^T = ((x^{(1)})^T, \cdots, (x^{(N)})^T) &\qquad& x_i \in \R^{n_i}, \sum_{i=1}^N n_i = n \\
 A = [A_1 \vert \cdots \vert A_N] &\qquad& A x = \sum_{i=1}^N A_i x^{(i)} \\
 f(x) = \sum_{i=1}^N f_i(x^{(i)})
-\end{align}
+\end{align*}
 
 Then the Lagrangian is also separable in $x$
 \[
@@ -226,18 +226,18 @@ In other words, we can split the objective and constraints into two blocks $x$ a
 
 The method of multipliers would jointly optimize the augmented Lagrangian
 on both blocks in one single optimization step:
-\begin{align}
+\begin{align*}
 (x_{t+1}, z_{t+1}) &= \inf_{x,z} L_\eta(x,z,\lambda_t)\\
 \lambda_{t+1} &= \lambda_t + \eta(A x_{t+1} + B z_{t+1} - c)
-\end{align}
+\end{align*}
 
 In contrast, ADMM alternates (the ``A'' in ``ADMM'') between optimizing
 the augmented Lagrangian over $x$ and $z$:
-\begin{align}
+\begin{align*}
 x_{t+1} &= \inf_{x} L_\eta(x, z_t, \lambda_t) \\
 z_{t+1} &= \inf_{z} L_\eta(x_{t+1}, z, \lambda_t) \\
 \lambda_{t+1} &= \lambda_t + \eta(A x_{t+1} + B z_{t+1} - c)
-\end{align}
+\end{align*}
 
 Unlike the method of multipliers, this is not parallelizable
 since $x_{t+1}$ must be computed before $z_{t+1}$. Also, convergence
@@ -255,20 +255,20 @@ epigraph
 \]
 \end{itemize}
 Then, as $t \to \infty$, ADMM satisfies
-\begin{align}
+\begin{align*}
 f(x_t) + g(z_t) &\to p^*\\
 \lambda_t &\to \lambda^*
-\end{align}
+\end{align*}
 \end{theorem}
 
 \textbf{Aside}: Saddles are useful because $\inf$ and the $\sup$ can
 be swapped. To see this, note the saddle condition
 \[L(x^*, \lambda) \leq L(x^*, \lambda^*) \leq L(x, \lambda^*)\]
 implies that
-\begin{align}
+\begin{align*}
 \inf_x \sup_\lambda L(x,\lambda)
 &\leq \sup_\lambda L(x^*, \lambda)\\
 &\leq L(x^*, \lambda^*) \\
 &= \inf_x L(x, \lambda^*) \\
 &\leq \sup_\lambda \inf_x L(x,\lambda)
-\end{align}
+\end{align*}
