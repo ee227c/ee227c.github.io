@@ -8,9 +8,10 @@ computation or enable parallelization.
 \subsection{Review}
 
 Recall the \emph{primal problem}
-\[
-\min_{x \in \Omega} f(x) : A x = b
-\]
+\begin{align}
+\min_{x \in \Omega} &f(x) \\
+\text{s.t.}~& A x = b
+\end{align}
 The corresponding dual problem is obtained by considering the
 \emph{Lagrangian}
 \[
@@ -27,7 +28,7 @@ and the \emph{dual problem} is
 \]
 
 \begin{definition}[Concave functions]
-$f$ is concave $\iff -f$ is convex.
+A function $f$ is concave $\iff -f$ is convex.
 \end{definition}
 
 \begin{fact}
@@ -199,8 +200,8 @@ We take the positive part because of the $\lambda \geq 0$ constraint.
 
 \textbf{Aside}: In resource allocation problems, the values of the dual variables
 $\lambda$ at the optimal point have an economic interpretation as
-``prices'' to the resources. In this example, $\lambda_k$ can be
-interpreted as the utility per unit of flow over link $k$.
+``prices'' to the resources. In this example, $\lambda_k$ should be
+interpreted as the price per unit of flow over link $k$.
 \end{example}
 
 \subsection{ADMM --- Alternating direction method of multipliers}
