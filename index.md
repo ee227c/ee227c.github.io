@@ -67,8 +67,8 @@ you spot any please send an email or pull request.
 | 7 | 2/6 | Nesterov's accelerated gradient descent  | [pdf](notes/ee227c-lecture7.pdf)  | ---  |
 | 8 | 2/8 | Eigenvalue intermezzo | [pdf](notes/ee227c-lecture8.pdf)  | ---  |
 | 9 | 2/13 | Lower bounds, robustness vs acceleration |   |   |
-| 10 | 2/15 | Stochastc optimization | [pdf](notes/ee227c-lecture10.pdf)  |   |
-| 11 | 2/20 | Learning, regularization, and generalization |   |   |
+| 10 | 2/15 | Stochastc optimization | [pdf](notes/ee227c-lecture10.pdf)  | ---  |
+| 11 | 2/20 | Learning, regularization, and generalization | [pdf](notes/ee227c-lecture11.pdf)   | ---  |
 | 12 | 2/22 | Coordinate Descent (guest lecture by Max Simchowitz) |   |   |
 | 13 | 2/27 | Duality theory  |   |   |
 | 14 | 3/1 | Dual decomposition, method of multipliers | [pdf](notes/ee227c-lecture14.pdf) |   |
