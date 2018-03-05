@@ -1,4 +1,4 @@
-\section{Lecture 11: Learning, Stability, Regularization
+jsection{Lecture 11: Learning, Stability, Regularization
 }
 
 In this lecture we take a look at machine learning, and empirical risk minimization in particular. We define the distribution of our data as $D$ over $X\times Y$, $X\subseteq \R^{n}, \,Y \subseteq \R^{m^{\prime}}$. For instance, in a classification tasks with two labels $Y$ is usually specified as $ Y = \{ -1,1 \}$.
@@ -33,7 +33,7 @@ Choose two independent samples $S = (z_1, ... , z_m) \quad \quad  S^{\prime} = (
 $S$ and $S^{\prime}$ can be completely different, we denote $S^{(i)}$ as:
 $$S^{(i)} = (z_1, \,... ,\, z_{i-1}, \,\underline{\mathbf{z_{i}^{\prime}}},\, z_{i+1}, \,... \,,z_{m})$$
 \begin{definition}[Average stability] The average stability of an algorithm $A: (X \times Y)^{m} \rightarrow \domain$:
-$$\Delta(A) = \mathbb{E}[\frac{1}{m}\sum_{i=1}^{m}[\ell(A(s),z_i^{\prime}) - \ell(A(s^{(i)}),z_{i}^{\prime})]]$$
+$$\Delta(A) = \mathbb{E}_{S, S^{\prime}}[\frac{1}{m}\sum_{i=1}^{m}[\ell(A(S),z_i^{\prime}) - \ell(A(S^{(i)}),z_{i}^{\prime})]]$$
 \end{definition}
 This can be interpreted as performance on something unseen versus something seen.
 \begin{theorem}
@@ -54,7 +54,7 @@ $\mathbb{E}[R - R_s] = \Delta(A)$
 
 
 \subsection{Uniform Stability}
-We would now show how stability is related to generalization. For doing so we need to define the concept of \textit{uniform stability}.
+We just saw how stability and generalization are related. However, in order to derive reasonable upper bounds we need to the define the concept of \textit{uniform stability}.
 
 \begin{definition}[Uniform stability]The uniform stability of an algorithm $A$ is defined as 
 \begin{equation*}
