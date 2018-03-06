@@ -37,47 +37,48 @@ Examples of functions with block decompositions and group sparsity include:
     \begin{eqnarray}
     f(x) := \sum_{i=1}^n \phi_i(\langle w^{(i)} , x \rangle )
     \end{eqnarray}
-    where $\phi_i: \R \to \R$, and $w^{(i)}$ is non-zero except in a few coordinates. 
+    where $\phi_i: \R \to \R$, and $w^{(i)}$ is zero except in a few coordinates. 
 \end{enumerate} 
 
-
+% Code the produce the figure below
 \begin{figure}[t]
 \centering
+\includegraphics{figures/lecture12-function_coordinate_graph.pdf}
 
-\definecolor{myblue}{RGB}{80,80,160}
-\definecolor{mygreen}{RGB}{80,160,80}
-\usetikzlibrary{positioning,chains,fit,shapes,calc}
-
-\begin{tikzpicture}[thick,
-  every node/.style={draw,circle},
-  fsnode/.style={fill=myblue},
-  ssnode/.style={fill=mygreen},
-  every fit/.style={draw=none},
-  shorten >= 3pt,shorten <= 3pt
-]
-
-% Function
-\begin{scope}[start chain=going right,node distance=7mm]
-\foreach \i in {1,2,...,5}
-  \node[fsnode,on chain] (x\i) [label=below: $x_\i$] {};
-\end{scope}
-\node [myblue,fit=(x1) (x5),label=left:variable] {};
-
-% Coordinates
-\begin{scope}[yshift=2cm,xshift=.5cm,start chain=going right,node distance=7mm]
-\foreach \i in {1,2,...,4}
-  \node[ssnode,on chain] (f\i) [label=above: $f_\i$] {};
-\end{scope}
-\node [mygreen,fit=(f1) (f4),label=left:function] {};
-
-% Edges
-\draw (x1) -- (f1);
-\draw (x2) -- (f2);
-\draw (x3) -- (f4);
-\draw (x4) -- (f4);
-\draw (x5) -- (f1);
-\draw (x5) -- (f3);
-\end{tikzpicture}
+%\definecolor{myblue}{RGB}{80,80,160}
+%\definecolor{mygreen}{RGB}{80,160,80}
+%\usetikzlibrary{positioning,chains,fit,shapes,calc}
+%
+%\begin{tikzpicture}[thick,
+%  every node/.style={draw,circle},
+%  fsnode/.style={fill=myblue},
+%  ssnode/.style={fill=mygreen},
+%  every fit/.style={draw=none},
+%  shorten >= 3pt,shorten <= 3pt
+%]
+%
+%% Function
+%\begin{scope}[start chain=going right,node distance=7mm]
+%\foreach \i in {1,2,...,5}
+%  \node[fsnode,on chain] (x\i) [label=below: $x_\i$] {};
+%\end{scope}
+%\node [myblue,fit=(x1) (x5),label=left:variable] {};
+%
+%% Coordinates
+%\begin{scope}[yshift=2cm,xshift=.5cm,start chain=going right,node distance=7mm]
+%\foreach \i in {1,2,...,4}
+%  \node[ssnode,on chain] (f\i) [label=above: $f_\i$] {};
+%\end{scope}
+%\node [mygreen,fit=(f1) (f4),label=left:function] {};
+%
+%% Edges
+%\draw (x1) -- (f1);
+%\draw (x2) -- (f2);
+%\draw (x3) -- (f4);
+%\draw (x4) -- (f4);
+%\draw (x5) -- (f1);
+%\draw (x5) -- (f3);
+%\end{tikzpicture}
 \vspace{-20pt}
 \caption{
   Example of the bipartite graph between component functions
@@ -88,9 +89,9 @@ Examples of functions with block decompositions and group sparsity include:
 }
 \end{figure}
 
-\section{Coordinate Descent}
+\subsection{Coordinate Descent}
   Denote $\partial_i f= \frac{\partial f}{x_i}$.
-  For each round $t = 1,2,\dots$, the coordinate descent algorithms
+  For each round $t = 1,2,\dots$, the coordinate descent algorithm
   chooses an index $i_t \in [n]$, and computes
 	\begin{eqnarray}
 	x_{t+1} = x_t - \eta_t\partial_{i_t}f(x_t) \cdot e_{i_t} \ .
@@ -141,14 +142,14 @@ Examples of functions with block decompositions and group sparsity include:
 	\end{eqnarray}
 	In many cases, if the values of $L_i$ are heterogenous, we can optimize the values of $p_i$. 
 	\subsection{Importance Sampling For Smooth Coordinate Descent}
-	In this section, we consider coordinate descent with an \emph{biased}
+	In this section, we consider coordinate descent with a \emph{biased}
   estimator of the gradient. Suppose that we have, for $x \in \R^n$
   and $\alpha \in \R$, the inequality
 	\begin{eqnarray}
     |\partial_{x_i} f(x) - \partial_{x_i} f(x + \alpha e_i)|
     \le \beta_{i}|\alpha|
 	\end{eqnarray}
-	where $\beta_i$ are possibly heterogenous. Note that if that $f$ is twice-continuously differentiable, the above condition is equivalently to $\nabla^2_{ii}f(x) \le \beta_i$, or that $\mathrm{Diag}(\nabla^2 f(x)) \preceq \mathrm{diag}(\boldsymbol{\beta})$.  Define the distribution $p^\gamma$ via
+	where $\beta_i$ are possibly heterogenous. Note that if that $f$ is twice-continuously differentiable, the above condition is equivalent to $\nabla^2_{ii}f(x) \le \beta_i$, or $\mathrm{Diag}(\nabla^2 f(x)) \preceq \mathrm{diag}(\boldsymbol{\beta})$.  Define the distribution $p^\gamma$ via
 	\begin{eqnarray}
 	p^{\gamma}_i = \frac{\beta_i^{\gamma}}{\sum_{j=1}^n \beta_j^{\gamma}}
 	\end{eqnarray}
@@ -256,99 +257,17 @@ Examples of functions with block decompositions and group sparsity include:
 
 	\end{proof}
 
-	 What's surprising is that $\mathrm{RCD}(\gamma)$ is a descent method, despite being random. This is not true of normal SGD. 
-
-
-	\subsection{}
-	When does $\mathrm{RCD}(\gamma)$ actually do better? If $\gamma = 1$, the savings are proportional to the ration of $\sum_{i=1} \beta_i / \beta \cdot (T_{coord}/T_{grad})$. When $f$ is twice differentiable, this is the ratio of 
+	\subsection{Random Coordinate vs.\ Stochastic Gradient Descent}
+	What's surprising is that $\mathrm{RCD}(\gamma)$ is a descent method, despite being random. This is not true of normal SGD. 
+	But when does $\mathrm{RCD}(\gamma)$ actually do better? If $\gamma = 1$, the savings are proportional to the ratio of $\sum_{i=1} \beta_i / \beta \cdot (T_{coord}/T_{grad})$. When $f$ is twice differentiable, this is the ratio of 
 	\begin{eqnarray}
 	\frac{\tr(\max_{x} \nabla^2 f(x))}{\|\max_{x} \nabla^2 f(x)\|_{\op}} (T_{coord}/T_{grad})
 	\end{eqnarray}
-	\subsection{Other Extensions}
+	\subsection{Other Extensions to Coordinate Descent}
 	\begin{enumerate}
 		\item Non-Stochastic, Cyclic SGD
-		\item Sampling w/ Replacement
+		\item Sampling with Replacement
 		\item Strongly Convex + Smooth!?
 		\item Strongly Convex (generalize SGD)
-		\item Acceleration? See Tu et al. Breaking Locality Accelerates Block Gauss-Seidel
+		\item Acceleration? See \cite{tu2017breaking}
 	\end{enumerate}
-	
-\subsection{Duality and Coordinate Descent}
-\subsection{The Fenchel Dual}
-\begin{definition} Let $f: \R^n \to \R$ be a convex function. Then its Fenchel dual is defined as
-\begin{eqnarray}
-f^*(w) := \sup_{x \in \R^n} \langle w, x \rangle - f(x)
-\end{eqnarray}
-\end{definition}
-Observe that $f^*(w)$ is convex, being a supremum of affine functions. Moreover, since $x \mapsto \langle w, x \rangle - f(x)$ is concae, the inner supremum is convex, and is optimized if and only if 
-\begin{eqnarray}
-w \in \partial f(x)
-\end{eqnarray}
-Note moreover that, by Danksin's Theorem, 
-\begin{eqnarray}
-\partial f^*(w) := \{x \in \arg\sup \langle w, x \rangle - f(x)\} = \{x: w \in \partial f(x)\}
-\end{eqnarray}
-In particular, $\partial f^*(0)$ is the set of minimizers of $f$. 
-\subsection{Duals of Coordinate Functions}
-Suppose that 
-\begin{eqnarray}
-f(x) = \sum_{i=1}^N \phi_i(c_i^Tx) + R(x)
-\end{eqnarray}
-Consider the subsitution $\alpha_i = c_i^Tx$, so that $z = C^\top x$. Then, we can write 
-\begin{eqnarray*}
-\arg\min_{x}f(x) &=&  \arg\min_{x,z}  \sum_{i=1}^n \phi_i(\alpha_i) + \lambda R(x) : C^\top x = z \\
-&=&  \arg\min_{x,z}  \max_{w} \sum_{i=1}^n \phi_i(\alpha_i) +  R(x) - w^{\top}(C^\top x - z ) \\
-&\ge&   \max_{w} \arg\min_{x,z} \sum_{i=1}^n \phi_i(z_i) +  R(x) - w^{\top}(C^\top x - z ) \\
-&=&   \max_{w} -\arg\min_{x,z} \sum_{i=1}^n \phi_i(z_i) - \alpha_iw_i + R(x) - (Cw)^{\top} x \\
-&=&   \max_{w} -\arg\max_{z} \sum_{i=1}^n z_iw_i -  \phi_i(\alpha_i)  \arg\max_{x}+ (Cw)^{\top} x - R(x) \\
-&=&   \max_{w} - \sum_{i=1}^n \phi_i^*(w_i) +  R^*(Cw) \\
-\end{eqnarray*}
-We can call the above objective $D(w):= - \sum_{i=1}^n \phi_i^*(w_i) +  \arg\max_{x} (Cw)^{\top} x - R(x)$. Observe that by weak duality, we have that for any pair of points $(w,x) \in \R^N \times \R^n$, we
-\begin{eqnarray}
-f(x) \ge f(x^*) \ge D(w^*) \ge D(w)
-\end{eqnarray}
-Hence, if we can maintain a pair of points $(w_t,x_t)$ such that $f(x_t) - D(w_t) \le \epsilon$, then we get for free that $f(x_t) - f(x^*) \le \epsilon$. Moreover, the objective $D(w)$ is \emph{concave} so it can be efficiently optimized.
-\subsection{}
-A natural pair of $(w,x)$. In general, one should hope that the pair $(w_t,x_t)$ are related by some easy to compute correspondence. Suppose that we have a rule $x(w)$, which maps any point $w$ to a point $x$, so that $x_t = x(w_t)$. We should hope that $x(w_*) \in \arg\min_{x} f(x)$, for any $w^* \in \arg\max_w D(w)$. More generally, this can be solved by noting for a dual optimal pair $(w^*,x^*)$, one must have that 
-\begin{eqnarray}
-x^* \in \arg\min_{x} R(x) - (Cw)^{\top}x
-\end{eqnarray}
-When $R(x)$ is differentiable, this implies that $\nabla R(x) = Cw$ and if $R(x)$ is strictly convex, $\nabla R(x)$ is invertible, and so we would generally take our pair ato be $(w,(\nabla R)^{-1}(Cw))$. 
-
-In general, $(\nabla R)^{-1}$ might be hard to compute. But for ridge-penalties, if $R(x) = \frac{\lambda}{2} \|x\|^2$, then $\nabla R(x) = \lambda x$, so we have that $\lambda x = Cw$, whence $x = \frac{1}{\lambda}Cw$, which isn't so bad. 
-
-Note that this implies that whenever you have a square loss penalty, any optimal $x^*$ is always in the span of the data, which is powerful when the number of features $n$ greatly exceeds the number of examples $N$.
-\subsection{SDCA}
-\begin{enumerate}
-	\item s
-\end{enumerate}
-
-\begin{lemma} Suppose that $\phi$ is $\beta$-smooth. Then $\phi^*$ is $\alpha = 1/\beta$-strongly convex. 
-\end{lemma}
-
-\begin{lemma}
-Let $g$ be a $\alpha$-strongly convex (for $\alpha \ge 0$), and let $w_0,x_0 \in \R$. Then, for any $u \in \R^n$ and any 
-\begin{multline}
-\min_{w} \{g(w) + \frac{L}{2}(w - x_0 )^2\} - \{g(w_0) - \frac{L}{2}(w_0 - x_0)^2\} \le \\
-s\{g(u) + u(w_0 - x_0) - g(w_0) - w_0(w_0 - x_0)  - (\frac{\alpha(1-s) + L s}{2})(w_0 - u)^2\}
-\end{multline}
-\end{lemma}
-\begin{proof} Observe that we have (this is another definition of strong convexity):
-\begin{eqnarray}
-g(w_0 + s(u - w_0)) \le (1-s)g(w_0) + sg(u) - \frac{\alpha}{2}s(1-s)(w_0 - u)^2
-\end{eqnarray}
-Hence, 
-\begin{eqnarray}
-&& \min_{w} \{g(w) + \frac{L}{2}(w - x_0)^2\} - \{g(w_0) - \frac{\lambda}{2}(w_0 - x_0)^2\} \\
-&\le& g(w_0 + s(u - w_0)) + \frac{L}{2}(w_0 + s(u - w_0) - x_0)^2 - - \{g(w_0) - \frac{L}{2}(w_0 - x_0)^2\}\\
-&=& g(w_0 + s(u - w_0)) - g(w_0) + \frac{L}{2} \{(s(u-w_0))^2 + s(u-w_0)(w_0 - x_0)\}\\
-&=& (1-s)g(w_0) + sg(u) - \frac{\alpha}{2}s(1-s)(w_0 - u)^2 - g(w_0) + \frac{L}{2} \{(s(u-w_0))^2 + s(u-w_0)(w_0 - x_0)\}\\
-&=& s\{g(u) + u(w_0 - x_0) - g(w_0) - w_0(w_0 - x_0)  - (\frac{\alpha(1-s) + L s}{2})(w_0 - u)^2\}
-\end{eqnarray}
-
-
-
-\end{proof}
-
-\begin{theorem}[SCDA] 
-\end{theorem}
