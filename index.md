@@ -69,7 +69,7 @@ you spot any please send an email or pull request.
 | 9 | 2/13 | Lower bounds, robustness vs acceleration |   |   |
 | 10 | 2/15 | Stochastc optimization | [pdf](notes/ee227c-lecture10.pdf)  | ---  |
 | 11 | 2/20 | Learning, regularization, and generalization | [pdf](notes/ee227c-lecture11.pdf)   | ---  |
-| 12 | 2/22 | Coordinate Descent (guest lecture by Max Simchowitz) |   |   |
+| 12 | 2/22 | Coordinate Descent (guest lecture by Max Simchowitz) | [pdf](notes/ee227c-lecture12.pdf)  | ---  |
 | 13 | 2/27 | Duality theory  |   |   |
 | 14 | 3/1 | Dual decomposition, method of multipliers | [pdf](notes/ee227c-lecture14.pdf) |   |
 | 15 | 3/6 | Stochastic Dual Coordinate Ascent |   |   |
