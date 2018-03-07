@@ -1,0 +1,224 @@
+\section{Lecture 11: Learning, Stability, Regularization
+}
+
+In this lecture we take a look at machine learning, and empirical risk
+minimization in particular. We define the distribution of our data as $D$ over
+$X\times Y$, where $X\subseteq \R^{d}$ and $Y$ is some discrete set of class
+labels. For instance, in a binary classification tasks with two labels $Y$ 
+might be $ Y = \{ -1,1 \}$.
+\begin{itemize}
+\item A ``model'' is specified by a set of parameters $w \in
+\domain\subseteq\mathbb{R}^n$
+\item The ``loss function'' is denoted by $\ell\colon \domain \times (X\times Y)
+\rightarrow \R$, note that $\ell(w,z)$ gives the loss of model $w$ on instance
+$z.$
+\item The risk of a model is defined as $R(w)=\E_{z\sim D}[\ell(w,z)].$
+\end{itemize}
+Our goal is to find a model~$w$ that minimizes~$R(w).$
+
+One way to accomplish this is to use stochastic optimization directly on the
+population objective:
+$$w_{t+1} = w_{t} - \eta \nabla \ell(w_t,z_t) \quad z\sim D$$
+
+When given a finite data set, however, it is usually effective to make multiple
+passes over the data. In this case, the stochastic gradient method may no longer
+optimize risk directly.
+%
+\subsection{Empirical risk and generalization error}
+
+Consider a finite sample Suppose $S=((x_1,y_1),......,(x_m,y_m))\in(X\times
+Y)^m$, where $z_i=(x_i,y_i)$ represents the $i$-th labeled example.
+The empirical risk is defined as
+\[
+R_{S}(w) = \frac{1}{m}\sum_{i=1}^{m}\ell(w,z_i)\,.
+\]
+Empirical risk minimization is commonly used as a proxy for minimizing the
+unknown population risk. But how good is this proxy? Ideally, we would like that
+the point~$w$ that we find via empirical risk minimization has $R_S(w)\approx
+R(w).$ However, this may not be the case, since the risk $R(w)$ captures loss on
+unseen example, while the empirical risk $R_S(w)$ captures loss on seen
+examples. Generally, we expect to do much better on seen examples than unseen
+examples. This performance gap between seen and unseen examples is what we call
+\emph{generalization error}.
+
+\begin{definition}[Generalization error]
+We define the \emph{generalization error} of a model~$w$ as
+$$\epsilon_{\text{gen}}(w) = R(w) - R_{s}(w)\,.$$
+\end{definition}
+Note the following tautological, yet important identity:
+\begin{equation}
+R(w) = R_{S}(w) + \epsilon_{\text{gen}}(w)
+\end{equation} 
+What this shows in particular is that if we manage to make the empirical risk
+$R_S(w)$ small through optimization, then all that remains to worry about is
+generalization error.
+
+So, how can we bound generalization error? The fundamental relationship we'll
+establish in this lecture is that generalization error equals an algorithmic
+robustness property that we call \emph{algorithmic stability}. Intuitively,
+algorithmic stability measures how sensitive an algorithm is to changes in a
+single training example.
+
+\subsection{Algorithmic stability}
+
+To introduce the idea of stability, we choose two independent samples
+$S = (z_1, ... , z_m)$ and $S^{\prime} = (z^{\prime}_1, ... ,z^{\prime}_{m})$,
+each drawn independently and identically from~$D$. Here, the second sample $S'$
+is called a \emph{ghost sample} and mainly serves an analytical purpose.
+
+Correlating the two samples in a single point, we introduce the hybrid sample
+$S^{(i)}$ as:
+$$S^{(i)} = (z_1, \,... ,\, z_{i-1}, \,z_{i}^{\prime},\, z_{i+1}, \,... \,,z_{m})$$
+Note that here the $i$-th example comes from~$S',$ while all others come
+from~$S.$
+
+With this notation at hand, we can introduce a notion of average stability.
+\begin{definition}[Average stability] 
+The \emph{average stability} of an algorithm $A: (X \times Y)^{m} \rightarrow \domain$:
+$$\Delta(A) = \E_{S,
+S^{\prime}}\left[\frac{1}{m}\sum_{i=1}^{m}\left(\ell(A(S),z_i^{\prime}) -
+\ell(A(S^{(i)}),z_{i}^{\prime})\right)\right]$$
+\end{definition}
+This definition can be interpreted as comparing the performance of the algorithm 
+on an unseen versus a seen example. This is the intuition why average stability,
+in fact, equals generalization error.
+\begin{theorem}
+$$\E[\epsilon_{\text{gen}}(A)] = \Delta(A)$$
+\end{theorem}
+\begin{proof}
+Note that
+\begin{align*}
+\E[\epsilon_{\text{gen}}(A)] &= R(A(S)) - R_{S}(A(S))\,, \\
+\E\left[R_{S}(A(S))\right]] &=
+\E\left[\frac{1}{m}\sum_{i=1}^{m}\ell(A(S),z_i)\right]\,,\\
+\E [R(A(S))]&=
+\E\left[\frac{1}{m}\sum_{i=1}^{m}\ell(A(S),z_i^{\prime})\right]\,.
+\end{align*}
+At the same time, since $z_i$ and $z_i'$ are identically distributed and
+independent of the other examples, we have
+\[
+\E\ell(A(S),z_i) = \E\ell(A(S^{(i)}),z_i^{\prime})\,.
+\]
+Applying this identity to each term in the empirical risk above, and comparing
+with the definition of $\Delta(A),$ we conclude
+$\E[R(A(S)) - R_S(A(S))] = \Delta(A)$
+\end{proof}
+
+\subsubsection{Uniform stability}
+%
+While average stability gave us an exact characterization of generalization
+error, it can be hard to work with the expectation over $S$ and $S'.$ Uniform
+stability replaces the averages by suprema, leading to a stronger but useful
+notion~\cite{BousquettE02}.
+%
+\begin{definition}[Uniform stability]
+The uniform stability of an algorithm $A$ is defined as 
+\begin{equation*}
+\Delta_{\sup}(A) = \sup_{\mathcal{S}, \mathcal{S}' \in (X\times Y)^m } 
+\sup_{i \in [m]} |\ell(A(S), z_i') - \ell(A(S^{(i)}, z_i')|
+\end{equation*}
+\end{definition}
+
+Since uniform stability upper bounds average stability, we know that uniform
+stability upper bounds generalization error (in expectatation).
+%
+\begin{corollary}
+$\E[\epsilon_{\text{gen}}(A)] \leq \Delta_{\sup} (A)$
+\end{corollary}
+
+This corollary turns out to be surprisingly useful since many algorithms are
+uniformly stable. For instance, strongly convex loss function is sufficient for
+stability, and hence generalization as we will show next.
+
+\subsection{Stability of empirical risk minimization}
+
+The next theorem due to~\cite{Shalev2010LearnabilitySA} shows that empirical
+risk minimization of a strongly convex loss function is uniformly stable.
+
+\begin{theorem}
+Assume $\ell(w, z)$ is $\alpha$-strongly convex over the domain~$\domain$
+and $L$-Lipschitz. 
+Let $\hat w_S = \arg \min_{w\in \domain} \frac{1}{m} \sum_{i=1}^m \ell(w, z_i)$
+denote the empirical risk minimizer (ERM).
+Then, ERM satisfies
+\begin{equation*}
+\Delta_{\sup} (\text{ERM}) \leq \frac{4L^2}{\alpha m}\,.
+\end{equation*}
+\end{theorem}
+
+An interesting point is that there is no explicit reference to the complexity of
+the class. In the following we present the proof.
+
+\begin{proof}
+Denote by $\hat w_S$ the empirical risk minimizer on a sample~$S.$
+Fix arbitrary samples $S,S'$ of size $m$ and an index $i\in[m].$
+We need to show that 
+\[
+|( \ell(\hat w_{S^{(i)}}, z_i') - \ell(\hat w_{S}, z_i')) |  \leq \frac{4
+L^2}{\alpha m}\,.
+\]
+On one hand, by strong convexity we know that
+\[
+R_S(\hat w_{S^{(i)}}) - R_S(\hat w_{S}) \geq \frac{\alpha}{2} \| \hat w_{S} -
+\hat w_{S^{(i)}} \|^2 \,.
+\]
+On the other hand, 
+\begin{align*}
+& R_S(\hat w_{S^{(i)}}) - R_S(\hat w_{S})\\
+&=  \frac{1}{m} ( \ell(\hat w_{S^{(i)}}, z_i) - \ell(\hat w_{S}, z_i)) + \frac{1}{m} \sum_{i \neq j} ( \ell(\hat w_{S^{(i)}}, z_j) - \ell(\hat w_{S}, z_j))\\
+&=\frac{1}{m} (\ell(\hat w_{S^{(i)}}, z_i) - \ell(\hat w_{S}, z_i)) 
++ \frac{1}{m} (\ell(\hat w_{S}, z_i') - \ell(\hat w_{S^{(i)}}, z_i')) 
++ \left(R_{S^{(i)}}(\hat w_{S^{(i)}}) - R_{S^{(i)}}(\hat w_{S})\right)\\ 
+&\leq \frac{1}{m} | \ell(\hat w_{S^{(i)}}, z_i) - \ell(\hat w_{S}, z_i)| +
+\frac{1}{m} | ( \ell(\hat w_{S}, z_i') - \ell(\hat w_{S^{(i)}}, z_i')) | \\
+&\leq  \frac{2 L}{m} \| \hat w_{S^{(i)}} - \hat w_{S}\|\,.
+\end{align*}
+Here, we used that 
+\[
+R_{S^{(i)}}(\hat w_{S^{(i)}}) - R_{S^{(i)}}(\hat w_{S})) \leq 0
+\]
+and the fact that $\ell$ is $L-$lipschitz.
+
+Putting it all together $\| \hat w_{S^{(i)}} - \hat w_{S} \| \leq \frac{4 L}{\alpha m}$. Then by the Lipschitz condition we have that 
+\[
+\frac{1}{m} | ( \ell(\hat w_{S^{(i)}}, z_i') - \ell(\hat w_{S}, z_i')) | \leq L
+\| \hat w_{S^{(i)}} - \hat w_{S} \| \leq \frac{4 L ^ 2}{\alpha m}\,.
+\]
+Hence, $\Delta_{\sup}(\text{ERM}) \leq \frac{4 L ^ 2}{\alpha m}$.
+
+\end{proof}
+
+
+\subsection{Regularization}
+
+Not all the ERM problems are strongly convex. However, if the problem is convex we can consider the regularized objective
+\begin{equation*}
+r(w, z) = \ell(w, z) + \frac{\alpha}{2} \| w \|^2
+\end{equation*}
+
+The regularized loss $r(w, z)$ is $\alpha-$strongly convex. The last term is
+named $\ell_2$-regularization, weight decay or Tikhonov regularization depending on
+the field you work on. Therefore, we now have the following chain of
+implications: 
+$$
+\text{regularization} \Rightarrow \text{strong convexity} \Rightarrow \text{uniform stability} \Rightarrow \text{generalization}
+$$
+
+We can also show that solving the regularized objective also solves the
+unregularized objective. Assume that $\domain \subseteq \mathcal{B}_2(R)$, by
+setting $\alpha \approx \frac{L^2}{R^2 m}$ we can show that the minimizer of the
+regularized risk also minimizes the unregularized risk up to error
+$\mathcal{O}(\frac{LR}{\sqrt{m}})$. Moreover, by the previous theorem the
+generalized error will also be $\mathcal{O}(\frac{LR}{\sqrt{m}})$. See Theorem~3
+in~\cite{Shalev2010LearnabilitySA} for details.
+
+\subsection{Implicit Regularization}
+
+In implicit regularization the algorithm itself regularizes the objective, instead of explicitly adding a regularization term. The following theorem describes the regularization effect of the Stochastic Gradient Method (SGM). 
+
+\begin{theorem}Assume $\ell(\cdot, z)$ is convex, $\beta$-smooth and $L$-Lipschitz. If we run SGM for T steps, then the algorithm has uniform stability
+\begin{equation*}
+\Delta_{\sup}(\text{SGM}_T) \leq \frac{2 L^2}{m} \sum_{t=1}^T \eta_t
+\end{equation*}
+\end{theorem}
+Note for $\eta_t \approx \frac{1}{m}$ then $\Delta_{\sup}(\text{SGM}_T) = \mathcal{O}(\frac{\log(T)}{m})$, and for $\eta_t \approx \frac{1}{\sqrt{m}}$ and $T=\mathcal{O}(m)$ then $\Delta_{\sup}(\text{SGM}_T) = \mathcal{O}(\frac{1}{\sqrt{m}} )$. See \cite{HardtRS15} for proof.
