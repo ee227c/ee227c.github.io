@@ -70,7 +70,7 @@ you spot any please send an email or pull request.
 | 10 | 2/15 | Stochastc optimization | [pdf](notes/ee227c-lecture10.pdf)  | ---  |
 | 11 | 2/20 | Learning, regularization, and generalization | [pdf](notes/ee227c-lecture11.pdf)   | ---  |
 | 12 | 2/22 | Coordinate Descent (guest lecture by Max Simchowitz) | [pdf](notes/ee227c-lecture12.pdf)  | ---  |
-| 13 | 2/27 | Duality theory  |   |   |
+| 13 | 2/27 | Duality theory  | [pdf](notes/ee227c-lecture13.pdf) | --- |
 | 14 | 3/1 | Dual decomposition, method of multipliers | [pdf](notes/ee227c-lecture14.pdf) |   |
 | 15 | 3/6 | Stochastic Dual Coordinate Ascent |   |   |
 | 16 | 3/8 | Backpropagation and adjoints |   |   |
