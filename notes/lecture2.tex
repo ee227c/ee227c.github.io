@@ -21,7 +21,8 @@ x_{t+1} = x_t - \eta \nabla_t f(x_t)\,\qquad\qquad(t\ge 0)
 where $\eta_t$ is the so-called \emph{step size} that may vary with~$t.$
 
 The first assumption that leads to a convergence analysis is that the gradients
-of the function aren't too big over the domain.
+of the function aren't too big over the domain. This turns out to follow from a
+natural Lipschitz continuity assumption.
 
 \begin{definition}[$L$-Lipschitz]
 A function~$f\colon\domain\to\R$ is \emph{$L$-Lipschitz} if for every
