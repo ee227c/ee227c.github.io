@@ -24,17 +24,17 @@ The first assumption that leads to a convergence analysis is that the gradients
 of the function aren't too big over the domain.
 
 \begin{definition}[$L$-Lipschitz]
-A differentiable function~$f$ is said to be \emph{$L$-Lipschitz} over the
-domain~$\domain$ if for all~$x\in\domain,$ we have
+A function~$f\colon\domain\to\R$ is \emph{$L$-Lipschitz} if for every
+$x,y\in\domain,$ we have
 \[
-\|\nabla f(x)\| \leq L\,.
+|f(x) - f(y)| \leq L \|x - y\|
 \]
 \end{definition}
 
 \begin{fact}
-If a function~$f$ is $L$-Lipschitz, it implies that the difference between two points in the range is bounded,
+If the function~$f$ is $L$-Lipschitz, differentiable, and convex, then
 \[
-|f(x) - f(y)| \leq L \|x - y\|
+\|\nabla f(x)\| \leq L\,.
 \]
 \end{fact}
 
