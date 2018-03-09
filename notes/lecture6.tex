@@ -126,9 +126,12 @@ want a polynomial $p(a)$ that takes on small values in $[\alpha, \beta],$ while
 satisfying the additional normalization constraint~$p(0) = 1.$ 
 
 \subsubsection{A simple polynomial solution}
-A naive solution chooses a uniform step size $\eta_t = \frac{2}{\alpha + \beta}$. Note that
+A simple solution has a uniform step size $\eta_t = \frac{2}{\alpha + \beta}$. 
+Note that
 \[
-\max_{x \in [\alpha, \beta]} \left|1 - \frac{2}{\alpha + \beta} x\right| = \frac{\beta - \alpha}{\alpha + \beta} \leq \frac{\beta}{\alpha} = \kappa,
+\max_{x \in [\alpha, \beta]} \left|1 - \frac{2}{\alpha + \beta} x\right| 
+= \frac{\beta - \alpha}{\alpha + \beta} \leq \frac{\beta-\alpha}{\beta} =
+1-\frac1\kappa,
 \]
 recovering the same convergence rate we proved previously.
 \begin{figure}[h]
