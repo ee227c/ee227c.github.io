@@ -83,9 +83,10 @@ x_{t+1} = \Pi_{\domain}(y_{t+1})
 \]
 
 And we are guaranteed that $x_{t+1}\in\domain$. Note that computing the
-projection may be the hardest part of your problem, as you are computing an
-$\arg\min$. However, there are convex sets for which we know explicitly how to
-compute the projection (see \exampleref{euclidean-ball}).
+projection may be computationally the hardest part of the problem.
+However, there are convex sets for which we know explicitly how to
+compute the projection (see \exampleref{euclidean-ball}). We will see several
+other non-trivial examples in later lectures.
 
 \subsection{Convergence rate of gradient descent for Lipschitz functions}
 
@@ -112,10 +113,9 @@ which is that an inner product can be written as a sum of norms: $u^\trans v =
 This property can be seen from $\lVert u - v \rVert^2 = \lVert u \rVert^2 + \lVert v \lVert^2 - 2 u^\trans v$.
 
 \begin{proof}[Proof of \theoremref{lipschitz}.]
-
 The proof begins by first bounding the difference in function values $f(x_s) -
 f(x^*)$.
-
+%
 \begin{align}
     f(x_s) - f(x^*) &\leq \nabla f(x_s)^\trans (x_s - x^*) \equationlabel{a} \\
     &= \frac{1}{\eta}(x_s - y_{s+1})^\trans(x_s - x^*) \equationlabel{b} \\
@@ -133,7 +133,6 @@ $L$-Lipschitz. \equationref{f}
 comes from \lemmaref{pythagorean}.
 
 Now, sum these differences from $s=1$ to $s=t$:
-
 \begin{align}
    \sum_{s=1}^t f(x_s) - f(x^*) &\leq  \frac{1}{2\eta} \sum_{s=1}^t \left(\lVert x_s - x^* \rVert^2 - \lVert x_{s+1} - x^* \rVert^2 \right) + \frac{\eta L^2 t}{2} \equationlabel{g} \\
    &= \frac{1}{2\eta} \left(\lVert x_1 - x^* \rVert^2 - \lVert x_{t} - x^{*} \rVert^2 \right) + \frac{\eta L^2 t}{2} \equationlabel{h} \\
@@ -146,7 +145,6 @@ Now, sum these differences from $s=1$ to $s=t$:
 \equationref{j} is by the assumption that $\lVert x_1 - x^* \rVert^2 \leq R^2$.
 
 Finally,
-
 \begin{align*}
     f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right)
 &\leq \frac{1}{t} \sum_{s=1}^t f(x_s) - f\left(x^*\right) \tag{by convexity} \\
@@ -173,36 +171,36 @@ $$|f(x) - f(y) - \nabla f(y)^\trans(x-y)| \leq \frac{\beta}{2}\|x-y\|^2$$
 \end{lemma}
 
 \begin{proof}
-First represent $f(x) - f(y)$ as an integral, apply Cauchy-Schwarz and then $\beta$-smoothness:
-
+Express $f(x) - f(y)$ as an integral, then apply Cauchy-Schwarz and 
+$\beta$-smoothness as follows:
 \begin{align*}
-|f(x) - f(y) - \nabla f(y)^\trans(x-y)|\\
+|f(x) - f(y) - \nabla f(y)^\trans(x-y)|
 &=\left|\int\limits_{0}^1 \nabla f(y + t(x-y))^\trans(x-y)dt - \nabla
 f(y)^\trans(x-y)\right|\\
 &\leq  \int\limits_{0}^1 \|\nabla f(y + t(x-y)) - \nabla f(y)\|\cdot \|x-y\|dt\\
 &\leq \int\limits_{0}^1 \beta t\|x-y\|^2dt\\
-&= \frac{\beta}{2}\|x-y\|^2\\
+&= \frac{\beta}{2}\|x-y\|^2\qedhere
 \end{align*}
 \end{proof}
 
 We also need the following lemma.
 
 \begin{lemma} \label{lm2}
-Let $f$ be a $\beta$-smooth function, then for any $x,y \in \R^n$, one has
-$$f(x) - f(y)\leq \nabla f(x)^\trans(x-y) - \frac{1}{2\beta}\|\nabla f(x) - \nabla f(y)\|$$
+Let $f$ be a $\beta$-smooth convex function, then for any $x,y \in \R^n$, one has
+$$f(x) - f(y)\leq \nabla f(x)^\trans(x-y) - 
+\frac{1}{2\beta}\|\nabla f(x) - \nabla f(y)\|$$
 \end{lemma}
 
 \begin{proof}
-Let $z = y - \frac{1}{\beta}(\nabla f(y) - \nabla f(x))$.  Then one has
-
-$$f(x) - f(y)$$
-\begin{align}
+Let $z = y - \frac{1}{\beta}(\nabla f(y) - \nabla f(x))$.  Then,
+\begin{align*}
+f(x) - f(y)
     &= f(x) - f(z) + f(z) - f(y) \\
     &\leq \nabla f(x)^\trans(x-z) + \nabla f(y)^\trans(z-y) + \frac{\beta}{2}\|z-y\|^2 \\
     &= \nabla f(x)^\trans(x-y) + (\nabla f(x) - \nabla f(y))^\trans(y-z) + \frac{1}{2\beta}\|\nabla f(x) - \nabla f(y)\|^2 \\
     &= \nabla f(x)^\trans(x-y) - \frac{1}{2\beta} \|\nabla f(x) - \nabla f(y)\|^2
-\end{align}
-
+\end{align*}
+Here, the inequality follows from convexity and smoothness.
 \end{proof}
 
 
