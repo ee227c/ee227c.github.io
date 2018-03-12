@@ -191,13 +191,14 @@ Suppose that
 \begin{eqnarray}
 f(x) = \sum_{i=1}^N \phi_i(c_i^Tx) + R(x)
 \end{eqnarray}
-Consider the subsitution $\alpha_i = c_i^Tx$, so that $z = C^\top x$. Then, we can write 
+Consider the subsitution $z_i = c_i^Tx$, so that $z = C^\top x$. Then, letting $\Ind(x)$ denote the convex indicator which is $0$ if $x = 0$ and $\infty$ otherwise, can write 
 \begin{eqnarray*}
-\arg\min_{x}f(x) &=&  \arg\min_{x,z}  \sum_{i=1}^n \phi_i(\alpha_i) + \lambda R(x) : C^\top x = z \\
-&=&  \arg\min_{x,z}  \max_{w} \sum_{i=1}^n \phi_i(\alpha_i) +  R(x) - w^{\top}(C^\top x - z ) \\
-&\ge&   \max_{w} \arg\min_{x,z} \sum_{i=1}^n \phi_i(z_i) +  R(x) - w^{\top}(C^\top x - z ) \\
-&=&   \max_{w} -\arg\min_{x,z} \sum_{i=1}^n \phi_i(z_i) - \alpha_iw_i + R(x) - (Cw)^{\top} x \\
-&=&   \max_{w} -\arg\max_{z} \sum_{i=1}^n z_iw_i -  \phi_i(\alpha_i)  \arg\max_{x}+ (Cw)^{\top} x - R(x) \\
+\min_{x}f(x) &=&  \min_{x,z}  \sum_{i=1}^n \phi_i(z_i) + \lambda R(x) : C^\top x = z \\
+&=&  \min_{x,z}  \sum_{i=1}^n \phi_i(z_i) + \lambda R(x) +  \Ind(C^\top x - z) \\
+&=&  \min_{x,z}  \max_{w \in \R^n} \sum_{i=1}^n \phi_i(z_i) +  R(x) - w^{\top}(C^\top x - z ) \\
+&\ge&   \max_{w \in \R^n} \arg\min_{x,z} \sum_{i=1}^n \phi_i(z_i) +  R(x) - w^{\top}(C^\top x - z ) \\
+&=&   \max_{w} -\arg\min_{x,z} \sum_{i=1}^n \phi_i(z_i) - z_iw_i + R(x) - (Cw)^{\top} x \\
+&=&   \max_{w} -\arg\max_{z} \sum_{i=1}^n z_iw_i -  \phi_i(z_i)  \arg\max_{x}+ (Cw)^{\top} x - R(x) \\
 &=&   \max_{w} - \sum_{i=1}^n \phi_i^*(w_i) +  R^*(Cw) \\
 \end{eqnarray*}
 We can call the above objective $D(w):= - \sum_{i=1}^n \phi_i^*(w_i) +  \arg\max_{x} (Cw)^{\top} x - R(x)$. Observe that by weak duality, we have that for any pair of points $(w,x) \in \R^N \times \R^n$, we
