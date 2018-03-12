@@ -87,13 +87,24 @@ Graduate Instructor: Max Simchowitz\\
 	\begin{eqnarray}
 	t \ge T(\epsilon) := C n \cdot \frac{M}{m} \log (\frac{f(x_0) - f(x^*)}{\epsilon})~,
 	\end{eqnarray}
-	then $\Exp[f(x_t) - f(x^*)] \le \epsilon$. 
+	then $\Exp[f(x_t) - f(x^*)] \le \epsilon$. \emph{Hint:} Do not analyze the algorithm like you SGD, but more like coordinate descent. Since the method is a non-strict descent method, accept that on some rounds, you might not make any progress. Just ensure that, with constant probability on each round, you make some progress. 
+
+
+	You might want to prove this lemma:
+	\begin{lemma}Let $g \unifsim \spheren$, and let $v \in \R^n$. Then, there exist universal constants $c_1,c_2 > 0$ (independent of $n$ and $v$) such that 
+	\begin{eqnarray}
+	\Pr[\langle v, g \rangle^2 \ge c_1\Exp[\langle v, g \rangle^2]] \ge c_2
+	\end{eqnarray}
+	\end{lemma}
+	To prove the lemma, use the fact that if $g \unifsim \spheren$, then $g$ has the same distribution of $z/\|z\|$, where $z \sim \mathcal{N}(0,I/d)$. 
+
+
 	\item Ammend the stated algorithm to use line search instead of solving for the exactly-optimal step size. To be clear, you don't have access to $\nabla f(x_t)$, all you are allowed to do at round $t$ is the following:
 	\begin{enumerate}
 		\item Sample \emph{one} direction $g_t \unifsim \spheren$.
 		\item Making (finite) function evaluations of the form $f(x_t - \eta g_t)$ for $\eta \in \R$. Ideally, this should be at most logarithmic in problem parameters.
 	\end{enumerate}
-	State \emph{both} the number of iterations and the number of function evaluations. Are the rates qualitatively similar? \emph{Hint:} Make the method a non-strict descent method, but accept that on some rounds, you might not make any progress, and you can let $x_{t+1} = x_t$. Just ensure that, with constant probability on each round, you make some progress. 
+	State \emph{both} the number of iterations and the number of function evaluations. Are the rates qualitatively similar? 
 \end{enumerate}
 \section*{Problem 3: Sh*t about Quadratics}
 	In this problem, you are going to test the sharpness of our upper and lower bounds for quadratics on a randomly generated instance. Fix $n = 500$. We define the distribution over PSD matrix $\cD(\epsilon)$:
