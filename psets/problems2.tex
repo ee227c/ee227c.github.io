@@ -40,8 +40,8 @@ Graduate Instructor: Max Simchowitz\\
 	\end{algorithm}
 
 	\begin{enumerate}
-		\item Show that condition $1$ holds for all $t \in (0,1/M]$.
-		\item Show that $\eta_t \ge \min\{1,\beta/M\}$.
+		\item Show that condition $1$ holds for whenever $\beta^k \in (0,1/M]$.
+		\item Show that $\eta_t \ge \min\{1,\beta/M\}$. 
 		 %
 		 Conclude that the loop in Line~\ref{loop} aways terminates.
 		\item Using part $b$, show that 
@@ -88,7 +88,12 @@ Graduate Instructor: Max Simchowitz\\
 	t \ge T(\epsilon) := C n \cdot \frac{M}{m} \log (\frac{f(x_0) - f(x^*)}{\epsilon})~,
 	\end{eqnarray}
 	then $\Exp[f(x_t) - f(x^*)] \le \epsilon$. 
-	\item Ammend the stated algorithm to use line search instead of solving for the exactly-optimal step size. Are the rates qualitatively similar?
+	\item Ammend the stated algorithm to use line search instead of solving for the exactly-optimal step size. To be clear, you don't have access to $\nabla f(x_t)$, all you are allowed to do at round $t$ is the following:
+	\begin{enumerate}
+		\item Sample \emph{one} direction $g_t \unifsim \spheren$.
+		\item Making (finite) function evaluations of the form $f(x_t - \eta g_t)$ for $\eta \in \R$. Ideally, this should be at most logarithmic in problem parameters.
+	\end{enumerate}
+	State \emph{both} the number of iterations and the number of function evaluations. Are the rates qualitatively similar? \emph{Hint:} Make the method a non-strict descent method, but accept that on some rounds, you might not make any progress, and you can let $x_{t+1} = x_t$. Just ensure that, with constant probability on each round, you make some progress. 
 \end{enumerate}
 \section*{Problem 3: Sh*t about Quadratics}
 	In this problem, you are going to test the sharpness of our upper and lower bounds for quadratics on a randomly generated instance. Fix $n = 500$. We define the distribution over PSD matrix $\cD(\epsilon)$:
@@ -101,7 +106,7 @@ Graduate Instructor: Max Simchowitz\\
 		\item Conduct trials $t = 1,2,\dots,10$.
 		\begin{enumerate}
 		\item Generate $\mathbf{M} \sim \cD(\epsilon)$ as above, and a random vector $\mathbf{v}$ uniformly on the unit sphere. 
-		\item Set $\gamma = 2\lambda_{\max}(\mathbf{W}) - \lambda_{2}(\mathbf{W})$, and define the matrix $\mathbf{N} = \gamma I  - \mathbf{M}$. Definally, define the function $\mathbf{f}(x) = \min_{x} x^T \mathbf{N} x - 2 \langle \mathbf{v}, x \rangle$. What is the condition number of $\mathbf{N}$?
+		\item Set $\gamma = 2\lambda_{\max}(\mathbf{M}) - \lambda_{2}(\mathbf{M})$, and define the matrix $\mathbf{N} = \gamma I  - \mathbf{M}$. Definally, define the function $\mathbf{f}(x) = \min_{x} x^T \mathbf{N} x - 2 \langle \mathbf{v}, x \rangle$. What is the condition number of $\mathbf{N}$?
 		\item Setting $x_0 = 0$, run gradient descent, a heavy-ball method or nesterov method to solve $\min_{x} \mathbf{f}(x)$ for a good number of iterations (use your discretion). You may compute the eigenvalues of $\mathbf{N}$ to tune your step parameters. 
 		\item For both gradient descent and heavy-ball, record for each trial iteration $s$, the difference between $\mathbf{f}(x_s) - \min_{x} \mathbf{f}(x)$ for each iteration. 
 		\item Using the step sizes, largest/smallest eigenvalues of $\mathbf{N}$, and the initial point $x_0 = 0$, compute a worst case upper bound for $\mathbf{f}(x_s) - \min_{x} \mathbf{f}(x)$ for each iteration $s$ of gradient descent and the heavy ball method.
