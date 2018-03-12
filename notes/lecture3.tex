@@ -65,24 +65,24 @@ As with smoothness, we will often shorten ``$\alpha$-strongly convex'' to
 ``squeezed between two parabolas''.  If $\beta$-smoothness is a good thing, then
 $\alpha$-convexity guarantees we don't have too much of a good thing.
 
-Once again, twice-differentiable functions afford a quick condition: a $D^2$
-function is $alpha$-strongly convex if $\nabla^2f(x) \succeq \alpha I$.
+A twice differentiable function
+is $\alpha$-strongly convex if $\nabla^2f(x) \succeq \alpha I$.
 
 Once again, note that $\alpha$ changes under affine transformations.
 Conveniently enough, for $\alpha$-strongly convex, $\beta$-smooth functions, we
-can define a basis-independent quantity that combines these properties:
+can define a basis-independent quantity called the \emph{condition number}.
 
 \begin{definition}[Condition Number]
 An $\alpha$-strongly convex, $\beta$-smooth function $f$
 has \emph{condition number} $\frac{\beta}{\alpha}$.
 \end{definition}
 
-For a positive-definite quadratic function $f$, this definition of the condition
+For a positive-definite quadratic function~$f$, this definition of the condition
 number corresponds with the perhaps more familiar definition of the condition
-number of a matrix.
+number of the matrix defining the quadratic.
 
-\subsection{A look back and ahead}
-
+\paragraph{A look back and ahead.}
+%
 The following table summarizes the results from the previous lecture and the
 results to be obtained in this lecture.  In both, the value~$\epsilon$ is the
 difference between $f$ at some value $x'$ computed from the outputs of gradient
@@ -98,7 +98,7 @@ descent and $f$ calculated at an optimizer $x^*$.
          & $\epsilon \leq O(1/t)$ \\
          \hline
          Smooth & $\epsilon \leq O(1/t)$
-         & $\epsilon \leq O(\mathrm{e}^{-t})$ \\
+         & $\epsilon \leq e^{-\Omega(t)}$ \\
          \hline
     \end{tabular}
     \caption{Bounds on error $\epsilon$
@@ -216,9 +216,9 @@ Now with \lemmaref{smooth_strong_convex_f_diff} we are able to prove  \theoremre
 \begin{align*}
     \|x_{t+1} -x^*\|^2 &= \|x_t - \frac{1}{\beta}\nabla f(x_t) - x^*\|^2 \\
     &= \|x_t-x^*\|^2 - \frac{2}{\beta} \nabla f(x_t)^\trans(x_t - x^*) + \frac{1}{\beta^2}\|\nabla f(x_t)\|^2 \\
-    &\leq (1-\frac{\alpha}{\beta})\|x_t-x^*\|^2 \tag{Use of \lemmaref{smooth_strong_convex_f_diff} with $y=x^*$, $x=x_t$}\\
-    &\leq (1-\frac{\alpha}{\beta})^t \|x_1-x^*\|^2 \\ 
-    &\leq \exp{(-t \frac{\alpha}{\beta})} \|x_1-x^*\|^2
+    &\leq \big(1-\frac{\alpha}{\beta}\big)\|x_t-x^*\|^2 \tag{Use of \lemmaref{smooth_strong_convex_f_diff} with $y=x^*$, $x=x_t$}\\
+    &\leq \big(1-\frac{\alpha}{\beta}\big)^t \|x_1-x^*\|^2 \\ 
+    &\leq \exp\left(-t \frac{\alpha}{\beta}\right) \|x_1-x^*\|^2\qedhere
 \end{align*}
 \end{proof}
 

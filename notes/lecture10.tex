@@ -104,30 +104,33 @@ $\mathcal{Y}$ is a the set of \emph{labels} or \emph{classes}.
 Our goal is to \emph{learn} a function $h\colon\mathcal{X}\to\mathcal{Y}$ which
 outputs an object $y\in \mathcal{Y}$, given $ x\in \mathcal{X}$.  Assume there
 is a joint distribution $\mathcal{D}$ over the space~$\mathcal{X} \times
-\mathcal{Y}$ and the training set consists of $m$ instances $(x_1, y_1), \ldots,
-(x_m,y_m)$ drawn i.i.d.~from $\mathcal{D}$.
+\mathcal{Y}$ and the training set consists of $m$ instances $S=((x_1, y_1), \ldots,
+(x_m,y_m))$ drawn i.i.d.~from $\mathcal{D}$.
 
 We also define a non-negative real-valued loss function $\ell(y^\prime,y)$ to
 measure the difference between the prediction $y^\prime$ and the true outcome
 $y$.
 
 \begin{definition}
-The risk associated with h(x) is defined as the expectation of the loss function:
+The \emph{risk} of a function $h\colon\mathcal{X}\to\mathcal{Y}$ is defined as 
 \begin{equation*}
-    R[h] = \mathbb{E}_{\mathcal{X} \times \mathcal{Y} \in \mathcal{D}} \ell(h(x),y)
+    R[h] = \mathbb{E}_{(x,y)\sim\mathcal{D}} \ell(h(x),y)\,.
 \end{equation*}
 \end{definition}
 The ultimate goal of a learning algorithm is to find $h^*$ among a class of functions $\mathcal{H}$ that minimizes $R[h]$:
 \begin{equation*}
-    h^* = \text{arg}\min_{h \in \mathcal{H}} R[h]
+    h^* \in \arg\min_{h \in \mathcal{H}} R[h]
 \end{equation*}
-In general, the risk $R[h]$ can not be computed because the joint distribution is unknown. Therefore,
+In general, the risk $R[h]$ cannot be computed because the joint distribution is unknown. 
 
-The \emph{empirical risk} is defined by averaging the loss function of the training set:
+Therefore, we instead minimize a proxy objective known as 
+\emph{empirical risk} and defined by averaging the loss function over 
+the training set:
 \begin{equation*}
-    R_n[h] = \frac{1}{n} \sum^n_{i=1}\ell(h(x_i),y_i)
+    R_S[h] = \frac{1}{m} \sum^m_{i=1}\ell(h(x_i),y_i)
 \end{equation*}
-An empirical risk minimizer is any point $h^* \in \arg\min_{h \in \mathcal{H}} R_n[h]$.
+An empirical risk minimizer is any point $h^* \in \arg\min_{h \in \mathcal{H}}
+R_S[h]$.
 
 The stochastic gradient method can be thought of as minimizing the risk
 directly, if each example is only used once. In cases where we make multiple
@@ -180,10 +183,9 @@ weights update? We could do a direct analysis, but instead we'll relate
 multiplicative weights to gradient descent and use the convergence guarantees
 we already know.
 
-\subsection{Multiplicative weights as mirror descent}
-
-Recall that mirror descent requires a mirror map $\phi : \Omega \to R$ over a
-domain $\Omega \in \mathbb{R}^n$ where $\phi$ is strongly convex and
+Specifically, we will interpret muiltiplicative weights as an instance of mirror
+descent.  Recall that mirror descent requires a mirror map $\phi : \Omega \to R$
+over a domain $\Omega \in \mathbb{R}^n$ where $\phi$ is strongly convex and
 continuously differentiable.
 
 The associated projection is
