@@ -75,8 +75,8 @@ you spot any please send an email or pull request.
 | 12 | 2/22 | Coordinate Descent (guest lecture by Max Simchowitz) | [pdf](notes/ee227c-lecture12.pdf)  | ---  |
 | | | **Part IV: Dual methods** | | |
 | 13 | 2/27 | Duality theory  | [pdf](notes/ee227c-lecture13.pdf) | --- |
-| 14 | 3/1 | Dual decomposition, method of multipliers | [pdf](notes/ee227c-lecture14.pdf) |   |
-| 15 | 3/6 | Stochastic Dual Coordinate Ascent |   |   |
+| 14 | 3/1 | Dual decomposition, method of multipliers | [pdf](notes/ee227c-lecture14.pdf) | ---  |
+| 15 | 3/6 | Stochastic Dual Coordinate Ascent | [pdf](notes/ee227c-lecture15.pdf)  | ---  |
 | 16 | 3/8 | Backpropagation and adjoints |   |   |
 | | | **Part V: Non-convex problems** | | |
 | 17 | 3/13 | Non-convex problems |   |   |
