@@ -1,16 +1,4 @@
-\documentclass[12pt]{article}
-
-\usepackage{macros}
-
-\input{title}
-
-\begin{document}
-
-\maketitle
-
-\input{abstract}
-
-\section{Backpropagation and adjoints}
+\section{Lecture 16: Backpropagation and adjoints}
  From now onwards, we give up the luxuries afforded by convexity and move to the realm of non-convex functions. In the problems we have seen so far, deriving a closed-form expression for the gradients was fairly straightforward. But, doing so can be a challenging task for general non-convex functions. In this class, we are going to focus our attention on functions that can be expressed as compositions of multiple functions. In what follows, we will introduce \textit{backpropagation} - a popular technique that exploits the composite nature of the functions to compute gradients incrementally. 
 
 \subsection{Warming up}
@@ -185,8 +173,3 @@ Using the same approach for partial derivative w.r.t. $B$, we get
 (\Lambda_2)_{pq} = (A^T \Lambda)_{pq}
 \end{align*}
 \end{proof}
-
-\bibliographystyle{alpha}
-\bibliography{notes}
-
-\end{document}
