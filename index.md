@@ -77,7 +77,7 @@ you spot any please send an email or pull request.
 | 13 | 2/27 | Duality theory  | [pdf](notes/ee227c-lecture13.pdf) | --- |
 | 14 | 3/1 | Dual decomposition, method of multipliers | [pdf](notes/ee227c-lecture14.pdf) | ---  |
 | 15 | 3/6 | Stochastic Dual Coordinate Ascent | [pdf](notes/ee227c-lecture15.pdf)  | ---  |
-| 16 | 3/8 | Backpropagation and adjoints |   |   |
+| 16 | 3/8 | Backpropagation and adjoints | [pdf](notes/ee227c-lecture16.pdf) | --- |
 | | | **Part V: Non-convex problems** | | |
 | 17 | 3/13 | Non-convex problems |   |   |
 | 18 | 3/15 | Quasi-convex problems |   |   |
