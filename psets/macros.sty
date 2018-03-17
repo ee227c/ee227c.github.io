@@ -7,6 +7,8 @@
 \usepackage{enumitem}
 \usepackage{srcltx}
 \usepackage{multirow}
+\usepackage[linesnumbered]{algorithm2e}
+
 \usepackage{boxedminipage}
 \usepackage[margin=1.1in]{geometry}
 \usepackage{nicefrac}
@@ -206,6 +208,9 @@
 \newcommand{\Int}{\mathrm{Int} }
 \newcommand{\Bd}{\mathrm{Bd}}
 \newcommand{\Conv}{\mathrm{Conv}}
+\newcommand{\Clos}{\mathrm{Clos}}
+\newcommand{\unifsim}{\overset{\mathrm{unif}}{\sim}}
+\newcommand{\spheren}{\cS^{n-1}}
 
 % binary relations
 \newcommand{\defeq}{\stackrel{\small \mathrm{def}}{=}}
@@ -301,6 +306,8 @@
 \newcommand{\supp}{\mathrm{supp}}
 \newcommand{\nuc}{\mathrm{nuc}}
 \newcommand{\op}{\mathrm{op}}
+\newcommand{\Diag}{\mathrm{Diag}}
+\newcommand{\Prox}{\mathsf{P}}
 
 % distributions
 \newcommand{\Laplace}{\mathrm{Lap}}
@@ -316,5 +323,17 @@
 
 \newcommand{\domain}{\Omega}
 \newcommand{\epi}{\mathrm{epi}}
+\newcommand{\Jacob}{\mathrm{D}}
 
+\newenvironment{solution}
+  {\begin{proof}[Solution]}
+  {\end{proof}}
 \newcommand{\latexcommand}[1]{{\tt\textbackslash #1}}
+\newcommand{\algorithmfootnote}[2][\footnotesize]{%
+  \let\old@algocf@finish\@algocf@finish% Store algorithm finish macro
+  \def\@algocf@finish{\old@algocf@finish% Update finish macro to insert "footnote"
+    \leavevmode\rlap{\begin{minipage}{\linewidth}
+    #1#2
+    \end{minipage}}%
+  }%
+}

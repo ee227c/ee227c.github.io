@@ -1,0 +1,212 @@
+\section{Lecture 7: Nesterov’s accelerated gradient descent}
+
+Previously, we saw how we can accelerate gradient descent for minimizing
+quadratics~$f(x)=x^\trans A x+b^\trans x,$ where $A$ is a positive definite
+matrix. In particular, we achieved a quadratic improvement in the dependence
+on the condition number of the matrix~$A$ than what standard gradient descent
+achieved. The resulting update rule had the form
+\[
+x_{t+1} = x_t -\eta_t\nabla f(x_t) + \mu(x_t-x_{t-1})\,,
+\]
+where we interpreted the last term as a form of ``momentum''. In this simple
+form, the update rule is sometimes called Polyak's \emph{heavy ball method}.
+
+To get the same accelerated convergence rate for general smooth convex functions
+that we saw for quadratics, we will have to work a bit harder and look into
+Nesterov's celebrated \emph{accelerated gradient method}~\cite{Nesterov83,
+Nesterov04}
+
+Specifically, we will see that Nesterov's method achieves a convergence rate
+of~$\cO \left(\frac{\beta}{t^2}\right)$ for $\beta$-smooth functions. For smooth
+functions which are also $\alpha$-strongly convex, we will achieve a rate of
+$\exp\left( -\Omega\left(\sqrt{\frac{\beta}{\alpha}} t\right)\right)$. 
+
+The update rule is a bit more complicated than the plain momentum rule 
+and proceeds as follows:
+\begin{align*}
+x_0 &= y_0 = z_0, \\
+x_{t+1} &= \tau z_t + (1 - \tau) y_t \tag{$t\ge 0$}\\
+y_t &= x_t - \frac{1}{\beta} \nabla f(x_t) \tag{$t\ge 1$}\\
+z_t &= z_{t-1} - \eta\nabla f(x_t)\tag{$t\ge 1$}
+\end{align*}
+Here, the parameter~$\beta$ is the smoothness constant of the function we're
+minimizing. The step size $\eta$ and the parameter~$\tau$ will be chosen below
+so as to give us a convergence guarantee.
+
+\subsection{Convergence analysis}
+
+We first show that for a simple setting of the step sizes, the algorithm reduces
+its initial error from some value~$d$ to $\frac{d}{2}.$ We will then repeatedly
+restart the algorithm to continue reducing the error. This is a slight departure
+from Nesterov's method which does not need restrating, albeit requiring a much
+more delicate step size schedule that complicates the analysis.
+
+\begin{lemma}
+\lemmalabel{lecture7-main}
+Suppose $f\colon\R^n\to\R$ is a convex, $\beta$-smooth function that attains its
+minimum at a point~$x^*\in\R^n.$
+Assume that the initial point satisfies $\|x_0-x^*\|\le R$ and $f(x_0)-f(x^*)\le
+d.$ Put $\eta = \frac{R}{\sqrt{d\beta}}$, and 
+$\tau$ s.t. $\frac{1-\tau}{\tau} = \eta \beta$.
+
+Then after $T = 4R\sqrt{\frac{\beta}{d}}$ steps, 
+we have 
+\[
+f(\bar{x})- f(x^*) \leq \frac{d}{2},
+\]
+where $\bar{x} = \frac{1}{T} \sum_{k=0}^{T-1} x_t$.
+\end{lemma}
+
+\begin{proof}
+In Lecture~2, we showed the following properties for smooth and convex
+functions:
+\begin{equation}
+\label{Nesterov-pf_smoothness_and_convexity}
+f(y_t) - f(x_t) \leq -\frac{1}{2 \beta} \|\nabla f(x_t) \|^2
+\end{equation}
+By the ``Fundamental Theorem of Optimization" (see Lecture 2), we have
+for all $u\in\R^n:$
+\begin{align}
+\label{lecture7-nonsmooth}
+\eta\langle \nabla f(x_{t+1}), z_t - u \rangle 
+&= \frac{\eta^2}2\|\nabla f(x_{t+1})\|^2 
++ \frac12\|z_t - u \|^2 - \frac12\|z_{t+1} - u \|^2\,.
+\end{align}
+Substituting the first equation yields
+\begin{equation}
+\eta \langle \nabla f(x_{t+1}, z_t - u \rangle \leq \eta^2 \beta (f(x_{t+1}) -
+f(y_{t+1})) + \frac12\|z_t - u\|^2 - \frac12\|z_{t+1} - u \|^2 \label{Nesterov-pf_eq3}
+\end{equation}
+\medskip
+Working towards a term that we can turn into a telescoping sum, we compute the
+following difference
+\begin{align}
+&\eta \langle \nabla f(x_{t+1}), x_{t+1} - u\rangle - \eta \langle \nabla
+f(x_{t+1}), z_t - u\rangle \nonumber\\
+&= \eta \langle\nabla f(x_{t+1}), x_{t+1} - z_t\rangle \nonumber\\
+&= \frac{1-\tau}{\tau}  \eta \langle\nabla f(x_{t+1}), y_t - x_{t+1}\rangle \nonumber\\
+&\leq \frac{1-\tau}{\tau} \eta (f(y_t) - f(x_{t+1})) \quad\text{ (by convexity)}. \label{Nesterov-pf_eq4}
+\end{align}
+\medskip
+Combining  \eqref{Nesterov-pf_eq3} and \eqref{Nesterov-pf_eq4}, and setting
+$\frac{1-\tau}{\tau} = \eta \beta$ yield for all $u\in\R^n:$
+\begin{equation*}
+\eta\langle\nabla f(x_{t+1}), x_{t+1} - u\rangle \leq \eta^2 \beta
+(f(y_t) - f(y_{t+1})) + \frac12\|z_t - u\|^2 - \frac12\|z_{t+1} - u\|^2.
+\end{equation*}
+Proceeding as in our basic gradient descent analysis, we apply this inequality
+for $u=x^*,$ sum it up from $k=0$ to $T$ and exploit the telescoping effect:
+\begin{align*}
+\eta T (f(\bar{x}) - f(x^*)) 
+&\leq \sum_{k=0}^T \eta \langle\nabla f(x_{t+1}), x_{t+1} - x^*\rangle\\
+&\leq \eta^2 \beta d + R^2,
+\end{align*}
+which can be rewritten as
+\begin{align*}
+f(\bar{x}) - f(x^*) 
+&\leq \frac{\eta\beta d}{T} + \frac{R^2}{\eta T} \\
+&\leq \frac{2\sqrt{\beta d}}{T} R \tag{since $\eta=R/\sqrt{\beta d}$} \\
+&\leq \frac{d}{2} \tag{since $T\ge 4R\sqrt{\beta/D}.$}
+\end{align*}
+\end{proof}
+
+This lemma appears in work by Allen-Zhu and Orecchia~\cite{allen2014linear}, who
+interpret Nesterov's method as a coupling of two ways of analyzing gradient
+descent. One is the the inequality
+in~\eqref{Nesterov-pf_smoothness_and_convexity} that is commonly used in the
+analysis of gradient descent for smooth functions. The other is
+Equation~\ref{lecture7-nonsmooth} commonly used in the convergence analysis for
+non-smooth functions. Both were shown in our Lecture 2.
+
+\begin{theorem}
+\theoremlabel{lecture7-smooth}
+Under the assumptions of \lemmaref{lecture7-main}, by restarting the algorithm
+repeatedly, we can find a point $x$ such that
+\[
+f(x)-f(x^*)\le\epsilon
+\]
+with at most $O(R\sqrt{\beta/\epsilon})$ gradient updates.
+\end{theorem}
+\begin{proof}
+By \lemmaref{lecture7-main}, we can go from error $d$ to $d/2$ with
+$CR\sqrt{\beta/d}$ gradient updates for some constant~$C$. 
+Initializing each run with the output of
+the previous run, we can there for successively reduce the error from an initial
+value~$d$ to $d/2$ to $d/4$ and so on until we reach error~$\epsilon$ after
+$O(\log(d/\epsilon))$ runs of the algorithm. The total number of gradient steps
+we make is
+\[
+CR\sqrt{\beta/d} 
++CR\sqrt{2\beta/d}
++\dots+CR\sqrt{\beta/\epsilon}
+= O\left(R\sqrt{\beta/\epsilon}\right)\,.
+\]
+Note that the last run of the algorithm dominates the total number of steps up to a
+constant factor.
+\end{proof}
+
+\subsection{Strongly convex case}
+
+We can prove a variant of \lemmaref{lecture7-main} that applies when the
+function is also $\alpha$-strongly convex, ultimately leading to a linear
+convergence rate. The idea is just a general trick to convert a convergence rate
+for a smooth function to a convergence rate in domain using the definition of
+strong convexity.
+
+\begin{lemma}
+Under the assumption of \lemmaref{lecture7-main} and the additional assumption
+that the function~$f$ is $\alpha$-strongly convex, we 
+can find a point~$x$ with $T = O\left(\sqrt{\frac{\beta}{\alpha}}\right)$
+gradient updates such that
+\[
+\|\bar x - x^*\|^2 \leq \frac12\|x_0-x^*\|^2\,.
+\]
+\end{lemma}
+\begin{proof}
+Noting that $\|x_0-x^*\|^2\le R^2,$ we can apply \theoremref{lecture7-smooth} with
+error parameter $\epsilon = \frac{\alpha}4 \|x_0-x^*\|^2$ to find a point~$x$ such that
+\[
+f(x)-f(x^*)\le \frac\alpha4\|x_0-x^*\|^2\,,
+\]
+while only making $O\left(\sqrt{\beta/\alpha}\right)$ many steps.
+From the definition of strong convexity it follows that
+\[
+\frac\alpha2 \|x-x^*\|^2 \le f(x)-f(x^*)\,.
+\]
+Combining the two inequalities gives the statement we needed to show.
+\end{proof}
+
+We see from the lemma that for strongly convex function we actually reduce the
+distance to the optimum in domain by a constant factor at each step. We can
+therefore repeatedly apply the lemma to get a linear convergence rate.
+
+Table \ref{tab:nesterov} compares the bounds on error $\epsilon(t)$ as a
+function of the total number of steps when applying Nesterov's method and
+ordinary gradient descent method to different functions. 
+
+\begin{table}[h]
+  \begin{center}
+    \begin{tabular}{ | l | c | c |}
+      \hline
+        & Nesterov's Method 
+        & Ordinary GD Method \\ \hline
+      $\beta$-smooth, convex 
+      & \begin{tabular}{c}
+        $O\left(\beta/t^2\right)$
+        \end{tabular}
+      & \begin{tabular}{c}
+        $O\left(\beta/t\right)$
+        \end{tabular} \\ \hline
+      $\beta$-smooth, $\alpha$-strongly convex 
+      & \begin{tabular}{c}
+        $\exp\left(-\Omega(t\sqrt{\alpha/\beta})\right)$
+        \end{tabular} 
+      & \begin{tabular}{c}
+        $\exp\left(-\Omega(t\alpha/\beta)\right)$
+        \end{tabular} \\ \hline
+    \end{tabular}
+  \end{center}
+  \caption{Bounds on error $\epsilon$ as a function of number of iterations $t$ for different methods.}
+  \label{tab:nesterov}
+\end{table}
+

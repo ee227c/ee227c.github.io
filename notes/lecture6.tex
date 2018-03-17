@@ -98,8 +98,14 @@ It follows that
 \end{align*}
 \end{proof}
 
-\subsection{Accelerated gradient descent}
-In the previous section, we proved an upper bound on the convergence rate. In this section, we would like to improve on this. Consider whether there was any point where we were careless in the proof above? One obvious candidate is that our choice of step size, $\eta_k = \frac{1}{\beta}$, was chosen rather arbitrarily. In fact, by choosing the sequence $\eta_k$ we can select \textit{any} degree-$t$ polynomial of the form:
+\subsection{Connection to polynomial approximation}
+In the previous section, we proved an upper bound on the convergence rate. In
+this section, we would like to improve on this. To see how, think about 
+whether there was any
+point in the argument above where we were careless? One obvious candidate is that
+our choice of step size, $\eta_k = \frac{1}{\beta}$, was chosen rather
+arbitrarily. In fact, by choosing the sequence $\eta_k$ we can select
+\textit{any} degree-$t$ polynomial of the form: 
 \[
 p(A) = \prod_{k=1}^t \left(I - \eta_k A\right).
 \]
@@ -119,10 +125,13 @@ We can see now that we
 want a polynomial $p(a)$ that takes on small values in $[\alpha, \beta],$ while 
 satisfying the additional normalization constraint~$p(0) = 1.$ 
 
-\subsubsection{A naive polynomial solution}
-A naive solution chooses a uniform step size $\eta_t = \frac{2}{\alpha + \beta}$. Note that
+\subsubsection{A simple polynomial solution}
+A simple solution has a uniform step size $\eta_t = \frac{2}{\alpha + \beta}$. 
+Note that
 \[
-\max_{x \in [\alpha, \beta]} \left|1 - \frac{2}{\alpha + \beta} x\right| = \frac{\beta - \alpha}{\alpha + \beta} \leq \frac{\beta}{\alpha} = \kappa,
+\max_{x \in [\alpha, \beta]} \left|1 - \frac{2}{\alpha + \beta} x\right| 
+= \frac{\beta - \alpha}{\alpha + \beta} \leq \frac{\beta-\alpha}{\beta} =
+1-\frac1\kappa,
 \]
 recovering the same convergence rate we proved previously.
 \begin{figure}[h]
@@ -140,9 +149,7 @@ attains in $[\alpha,\beta]$, explaining why convergence is so slow.
 \subsection{Chebyshev polynomials}
 %
 Fortunately, we can do better than this by speeding up gradient descent using
-Chebyshev polynomials. The Chebyshev polynomials are a sequence of orthogonal
-polynomials which are related to de Moivre's formula and which can be defined
-recursively. We will use Chebyshev polynomials of the first kind,
+Chebyshev polynomials. We will use Chebyshev polynomials of the first kind,
 defined by the recurrence relation:
 \begin{align*}
 T_0(a) &= 1,\quad T_1(a) = a \\
@@ -157,7 +164,9 @@ Figure \ref{chebychev_poly} plots the first few Chebyshev polynomials.
 \label{chebychev_poly}
 \end{figure}
 
-Why Chebyshev polynomials? Suitably rescaled, they minimize the absolute value in a desired interval $[\alpha, \beta]$ while satisfying the normalization constraint of having value $1$ at the origin.
+Why Chebyshev polynomials? Suitably rescaled, they minimize the absolute value
+in a desired interval $[\alpha, \beta]$ while satisfying the normalization
+constraint of having value~$1$ at the origin.
 
 Recall that the eigenvalues of the matrix we consider are in the interval $[\alpha, \beta]$. We need to rescale the Chebyshev polynomials so that they're supported on this interval and still attain value $1$ at the origin. This is accomplished by the polynomial
 
@@ -181,7 +190,6 @@ P_k(a) = \frac{T_k\left(\frac{\alpha + \beta - 2a}{\beta - \alpha}\right)}{T_k\l
 We see on figure \ref{rescales_chebyshev} that doubling the degree has a much more dramatic effect on the magnitude of the polynomial in the interval $[\alpha, \beta].$
 
 Let's compare on figure \ref{rescaled_chebyshev_vs_naive_p} this beautiful Chebyshev polynomial side by side with the naive polynomial we saw earlier. The Chebyshev polynomial does much better: at around 0.3 for degree 3 (needed degree 6 with naive polynomial), and below 0.1 for degree 6.
-
 
 
 \subsubsection{Accelerated gradient descent}

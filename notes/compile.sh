@@ -28,7 +28,7 @@ then
     LATEX_OFFSET=`expr $1 - 1`
     echo "lecture$1.tex exists."
     cat header.tex > tmp-lecture.tex
-    echo '\\setcounter{section}{'$LATEX_OFFSET'}' >> tmp-lecture.tex
+    echo '\setcounter{section}{'$LATEX_OFFSET'}' >> tmp-lecture.tex
     cat "lecture$1.tex" >> tmp-lecture.tex
     cat footer.tex >> tmp-lecture.tex
     echo 'Compiling sources.'

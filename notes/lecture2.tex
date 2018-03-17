@@ -13,7 +13,7 @@ corresponding chapter in Bubeck's text~\cite{Bubeck}.
 
 \subsection{Gradient descent}
 
-For a differentiable function~$f,$ the basic gradient method startingf from an
+For a differentiable function~$f,$ the basic gradient method starting from an
 initial point $x_0$ is defined by the iterative description
 \[
 x_{t+1} = x_t - \eta \nabla_t f(x_t)\,\qquad\qquad(t\ge 0)
@@ -21,20 +21,21 @@ x_{t+1} = x_t - \eta \nabla_t f(x_t)\,\qquad\qquad(t\ge 0)
 where $\eta_t$ is the so-called \emph{step size} that may vary with~$t.$
 
 The first assumption that leads to a convergence analysis is that the gradients
-of the function aren't too big over the domain.
+of the function aren't too big over the domain. This turns out to follow from a
+natural Lipschitz continuity assumption.
 
 \begin{definition}[$L$-Lipschitz]
-A differentiable function~$f$ is said to be \emph{$L$-Lipschitz} over the
-domain~$\domain$ if for all~$x\in\domain,$ we have
+A function~$f\colon\domain\to\R$ is \emph{$L$-Lipschitz} if for every
+$x,y\in\domain,$ we have
 \[
-\|\nabla f(x)\| \leq L\,.
+|f(x) - f(y)| \leq L \|x - y\|
 \]
 \end{definition}
 
 \begin{fact}
-If a function~$f$ is $L$-Lipschitz, it implies that the difference between two points in the range is bounded,
+If the function~$f$ is $L$-Lipschitz, differentiable, and convex, then
 \[
-|f(x) - f(y)| \leq L \|x - y\|
+\|\nabla f(x)\| \leq L\,.
 \]
 \end{fact}
 
@@ -44,7 +45,7 @@ How can we ensure that $x_{t+1}\in\domain$?  One natural approach is to
 \begin{definition}[Projection]
 The \emph{projection} of a point~$x$ onto a set $\domain$ is defined as
 \[
-\Pi_{\domain}(x) = \argmin_{y\in\domain} \|x-y\|
+\Pi_{\domain}(x) = \arg\min_{y\in\domain} \|x-y\|
 \]
 \end{definition}
 
@@ -55,24 +56,16 @@ A projection onto the Euclidean ball $B_2$ is just normalization:
 \Pi_{B_2}(x) = \dfrac{x}{\|x\|}
 \]
 \end{example}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=3in]{figures/lecture2-projection}
-\end{center}
-\caption{Projection of $y$ onto set $\mathcal{X}$. (Figure taken from \em{S.~Bubeck.
-Convex Optimization: Algorithms and Complexity}~\cite{Bubeck}) }
-\figurelabel{project}
-\end{figure}
-
+%
 A crucial property of projections is that when $x\in\Omega,$ we have for any $y$
 (possibly outside $\Omega$):
 \[
 \| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2\
 \]
-That is, the projection of $y$ onto a convex set containing $x$ is closer to $x$. See \figureref{project} for a geometric picture.
-
-\begin{lemma}\lemmalabel{pythagorean}
+That is, the projection of $y$ onto a convex set containing $x$ is closer to $x$. 
+%
+\begin{lemma}
+\lemmalabel{pythagorean}
 \[
 \| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2 - \| y - \Pi_{\domain}(y) \|^2
 \]
@@ -90,9 +83,10 @@ x_{t+1} = \Pi_{\domain}(y_{t+1})
 \]
 
 And we are guaranteed that $x_{t+1}\in\domain$. Note that computing the
-projection may be the hardest part of your problem, as you are computing an
-$\argmin$. However, there are convex sets for which we know explicitly how to
-compute the projection (see \exampleref{euclidean-ball}).
+projection may be computationally the hardest part of the problem.
+However, there are convex sets for which we know explicitly how to
+compute the projection (see \exampleref{euclidean-ball}). We will see several
+other non-trivial examples in later lectures.
 
 \subsection{Convergence rate of gradient descent for Lipschitz functions}
 
@@ -100,7 +94,7 @@ compute the projection (see \exampleref{euclidean-ball}).
 \theoremlabel{lipschitz}
 
 Assume that function $f$ is convex, differentiable, and closed with bounded
-gradients. Let $L$ be the Lipchitz constant of $f$ over the convex domain
+gradients. Let $L$ be the Lipschitz constant of $f$ over the convex domain
 $\Omega$. Let $R$ be the upper bound on the distance $\lVert x_1 - x^* \rVert_2$
 from the initial point $x_1$ to the optimal point $x^* = \arg\min_{x \in \Omega} f(x)$.
 Let $t$ be the number of iterations of project gradient descent.
@@ -119,10 +113,9 @@ which is that an inner product can be written as a sum of norms: $u^\trans v =
 This property can be seen from $\lVert u - v \rVert^2 = \lVert u \rVert^2 + \lVert v \lVert^2 - 2 u^\trans v$.
 
 \begin{proof}[Proof of \theoremref{lipschitz}.]
-
 The proof begins by first bounding the difference in function values $f(x_s) -
 f(x^*)$.
-
+%
 \begin{align}
     f(x_s) - f(x^*) &\leq \nabla f(x_s)^\trans (x_s - x^*) \equationlabel{a} \\
     &= \frac{1}{\eta}(x_s - y_{s+1})^\trans(x_s - x^*) \equationlabel{b} \\
@@ -136,11 +129,10 @@ f(x^*)$.
 from the update rule for projected gradient descent. \equationref{c} comes from
 the ``Fundamental Theorem of Optimization.'' \equationref{d} comes from the
 update rule for projected gradient descent. \equationref{e} is because $f$ is
-$L$-Lipchitz. \equationref{f}
+$L$-Lipschitz. \equationref{f}
 comes from \lemmaref{pythagorean}.
 
 Now, sum these differences from $s=1$ to $s=t$:
-
 \begin{align}
    \sum_{s=1}^t f(x_s) - f(x^*) &\leq  \frac{1}{2\eta} \sum_{s=1}^t \left(\lVert x_s - x^* \rVert^2 - \lVert x_{s+1} - x^* \rVert^2 \right) + \frac{\eta L^2 t}{2} \equationlabel{g} \\
    &= \frac{1}{2\eta} \left(\lVert x_1 - x^* \rVert^2 - \lVert x_{t} - x^{*} \rVert^2 \right) + \frac{\eta L^2 t}{2} \equationlabel{h} \\
@@ -153,7 +145,6 @@ Now, sum these differences from $s=1$ to $s=t$:
 \equationref{j} is by the assumption that $\lVert x_1 - x^* \rVert^2 \leq R^2$.
 
 Finally,
-
 \begin{align*}
     f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right)
 &\leq \frac{1}{t} \sum_{s=1}^t f(x_s) - f\left(x^*\right) \tag{by convexity} \\
@@ -180,36 +171,36 @@ $$|f(x) - f(y) - \nabla f(y)^\trans(x-y)| \leq \frac{\beta}{2}\|x-y\|^2$$
 \end{lemma}
 
 \begin{proof}
-First represent $f(x) - f(y)$ as an integral, apply Cauchy-Schwarz and then $\beta$-smoothness:
-
+Express $f(x) - f(y)$ as an integral, then apply Cauchy-Schwarz and 
+$\beta$-smoothness as follows:
 \begin{align*}
-|f(x) - f(y) - \nabla f(y)^\trans(x-y)|\\
+|f(x) - f(y) - \nabla f(y)^\trans(x-y)|
 &=\left|\int\limits_{0}^1 \nabla f(y + t(x-y))^\trans(x-y)dt - \nabla
 f(y)^\trans(x-y)\right|\\
 &\leq  \int\limits_{0}^1 \|\nabla f(y + t(x-y)) - \nabla f(y)\|\cdot \|x-y\|dt\\
 &\leq \int\limits_{0}^1 \beta t\|x-y\|^2dt\\
-&= \frac{\beta}{2}\|x-y\|^2\\
+&= \frac{\beta}{2}\|x-y\|^2\qedhere
 \end{align*}
 \end{proof}
 
 We also need the following lemma.
 
 \begin{lemma} \label{lm2}
-Let $f$ be a $\beta$-smooth function, then for any $x,y \in \R^n$, one has
-$$f(x) - f(y)\leq \nabla f(x)^\trans(x-y) - \frac{1}{2\beta}\|\nabla f(x) - \nabla f(y)\|$$
+Let $f$ be a $\beta$-smooth convex function, then for every $x,y \in \R^n$, we have
+$$f(x) - f(y)\leq \nabla f(x)^\trans(x-y) - 
+\frac{1}{2\beta}\|\nabla f(x) - \nabla f(y)\|^2\,.$$
 \end{lemma}
 
 \begin{proof}
-Let $z = y - \frac{1}{\beta}(\nabla f(y) - \nabla f(x))$.  Then one has
-
-$$f(x) - f(y)$$
-\begin{align}
+Let $z = y - \frac{1}{\beta}(\nabla f(y) - \nabla f(x))$.  Then,
+\begin{align*}
+f(x) - f(y)
     &= f(x) - f(z) + f(z) - f(y) \\
     &\leq \nabla f(x)^\trans(x-z) + \nabla f(y)^\trans(z-y) + \frac{\beta}{2}\|z-y\|^2 \\
     &= \nabla f(x)^\trans(x-y) + (\nabla f(x) - \nabla f(y))^\trans(y-z) + \frac{1}{2\beta}\|\nabla f(x) - \nabla f(y)\|^2 \\
     &= \nabla f(x)^\trans(x-y) - \frac{1}{2\beta} \|\nabla f(x) - \nabla f(y)\|^2
-\end{align}
-
+\end{align*}
+Here, the inequality follows from convexity and smoothness.
 \end{proof}
 
 
@@ -218,7 +209,7 @@ $$x_{t+1} = x_t - \eta \nabla f(x_t)$$
 attains a faster rate of convergence under the smoothness condition.
 
 \begin{theorem}
-Let $f$ be convex and $\beta$-smooth on $\R^n$ then gradient descent with $\eta = \frac{1}{\beta}$ satsifies
+Let $f$ be convex and $\beta$-smooth on $\R^n$ then gradient descent with $\eta = \frac{1}{\beta}$ satisfies
 $$f(x_t) - f(x^*) \leq \frac{2\beta\|x_1 - x^*\|^2}{t-1}$$
 \end{theorem}
 To prove this we will need the following two lemmas.
