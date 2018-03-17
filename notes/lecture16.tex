@@ -2,7 +2,10 @@
  From now onwards, we give up the luxuries afforded by convexity and move to the realm of non-convex functions. In the problems we have seen so far, deriving a closed-form expression for the gradients was fairly straightforward. But, doing so can be a challenging task for general non-convex functions. In this class, we are going to focus our attention on functions that can be expressed as compositions of multiple functions. In what follows, we will introduce \textit{backpropagation} - a popular technique that exploits the composite nature of the functions to compute gradients incrementally. 
 
 \subsection{Warming up}
-A common misconception about backpropagation is - `` it is nothing but the \textit{chain rule}". We will see in subsequent sections why this is not the case.  As a warm-up example, let us look at the following optimization problem with $g: \R^n \rightarrow \R$, $f: \R \rightarrow \R$:
+A common view of backpropagation is that ``\textit{it's just chain rule}''. 
+This view is not particular helpful, however, and we will see that there is more
+to it. As a warm-up example, let us look at the following optimization problem
+with $g: \R^n \rightarrow \R$, $f: \R \rightarrow \R$:
 \begin{align}
 \min_{x} f(g(x)).
 \end{align}
@@ -29,10 +32,15 @@ which implies
 0 &= f'(g(x))g'(x) \nonumber \\
 &= \nabla_x f(g(x)) \nonumber \qquad \text{(by chain rule)} 
 \end{align}
-Hence, the Lagrangian equations gave us an incremental way of computing gradients. As we will see shortly, this holds at great generality. It is important to notice that we \textit{did not} use the \textit{chain rule} in deriving the optimality conditions \eqref{eq:opt}.
+Hence, solving the Lagrangian equations gave us an incremental way of computing
+gradients. As we will see shortly, this holds at great generality. It is
+important to notice that we did \textit{not} use the chain rule when solving the
+equations in~\eqref{eq:opt}. The chain rule only showed up in the proof of
+correctness.
 
 \subsection{General formulation}
-Any composite function can be described in terms of its computation graph. As long as the element functions of the computation graph are differentiable, we can perform the same procedure as above. Before moving ahead, let us introduce some notation: 
+Any composite function can be described in terms of its computation graph. As
+long as the elementary functions of the computation graph are differentiable, we can perform the same procedure as above. Before moving ahead, let us introduce some notation: 
 \begin{itemize}
 \item Directed, acyclic computation graph: $\mathcal{G} = (\cV, \cE)$
 \item Number of vertices: $|V| = n$
@@ -85,7 +93,7 @@ As in the warmup example, we set $\nabla \mathcal{L} = 0$. This can be viewed as
 &= - \sum_i \lambda_i (\nabla_{z_j} [z_i] - \nabla_{z_j} f_i(z_{\alpha(i)})) \nonumber \\
 &= -\lambda_j + \sum_i \lambda_i \nabla_{z_j} f_i(z_{\alpha(i)}) \nonumber \\
 &= -\lambda_j + \sum_{i \in \beta(j)} \lambda_i \frac{\partial f_i(z_{\alpha(i)})}{\partial z_j} \nonumber \\
-\Leftrightarrow \lambda_j =& \sum_{i \in \beta(j)} \lambda_i \frac{\partial f_i(z_{\alpha(i)})}{\partial z_j} \nonumber
+\Leftrightarrow\quad \lambda_j &= \sum_{i \in \beta(j)} \lambda_i \frac{\partial f_i(z_{\alpha(i)})}{\partial z_j} \nonumber
 \end{align}
 \end{itemize}
 \textit{Observation}: This is known as \textit{backward pass or backpropagation} as $\lambda_i's$ are computed using the gradients and values of $\lambda$ at successor nodes in the computation graph. 
