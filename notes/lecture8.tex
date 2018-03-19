@@ -275,9 +275,9 @@ p_0 &= r_0 \tag{ ``search direction''}
 \end{align*}
 For $t \ge 1:$
 \begin{align*}
-\eta_t &= \frac{\|r_t\|}{\langle p_{t-1}, Ap_{t-1}\rangle} \tag{``step size''} \\
+\eta_t &= \frac{\|r_{t-1}\|^2}{\langle p_{t-1}, Ap_{t-1}\rangle} \tag{``step size''} \\
 x_t &= x_{t-1} + \eta_t p_{t-1} \\
-r_t &= r_{t-1} - \eta_t A r_{t-1} \\
+r_t &= r_{t-1} - \eta_t A p_{t-1} \\
 p_t &= r_t + \frac{\|r_t\|^2}{\|r_{t-1}\|^2}p_{t-1}
 \end{align*}
 \end{definition}
