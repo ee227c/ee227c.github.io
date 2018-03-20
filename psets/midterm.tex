@@ -1,0 +1,97 @@
+\documentclass[12pt]{article}
+
+\usepackage{macros}
+
+\title{Midterm for EE227C (Spring 2018):\\
+ Convex Optimization and Approximation }
+\author{Instructor: Moritz Hardt\\
+{\small Email: \tt hardt+ee227c@berkeley.edu}\\ ~\\
+Graduate Instructor: Max Simchowitz\\
+{\small Email: \tt msimchow+ee227c@berkeley.edu}\\ ~\\
+}
+
+\begin{document}
+%\setenumerate[0]{leftmargin=0pt}
+%\setenumerate[1]{leftmargin=50pt}
+\setlist[enumerate,1]{leftmargin=0pt,label=\bf(\Alph*)}
+\setlist[enumerate,2]{leftmargin=0pt,label=\bf(\Alph{enumi}.\arabic*)}
+
+
+
+
+\maketitle
+
+\section*{Instructions:}
+\begin{enumerate}
+	\item The midterm is due on Gradescope at 11:59pm Thursday, March 22nd.
+	\item Collaboration is forbidden. 
+	\item Please ask all questions via \emph{private} messages on Piazza. Do not email me and do not post publicly. 
+	\item I will be maintaining a list of errata on Piazza. Please consult this before asking a question about a typo that's already been addressed.
+	\item The midterm must be LaTeXed. Points will be deducted otherwise. 
+\end{enumerate}
+
+
+
+\section*{Problem 1: Quasi-Pseudo-Mega-Star-Convexity}
+	Let $f: \R^n \to \R$ be a continuously differentiable, but not necessarily convex function. 
+	\begin{definition}[Correlation] A vector $g$ is said to be $(\alpha,\beta,\epsilon)$-correlated with $x^* \in \R^n$ at $x$ if
+	\begin{eqnarray}
+	\langle g, x - x^* \rangle \ge \alpha \|x-x^*\|_2^2 + \beta \|g\|_2^2 - \epsilon
+	\end{eqnarray}
+	\end{definition}
+	\begin{enumerate}
+		\item Show that if $f$ is $2\alpha$-strongly convex, $1/2\beta$-smooth, then there exists a unique $x^* \in \R^n$ such that, for all $x \in \R^n$, $\nabla f(x)$ is $(\alpha,\beta,0)$-correlated with $x^*$. What is $x^*$?
+		\item Suppose that $f$ is possibly non-convex, but has a unique global minimizer $x^*$ such that the gradients $\nabla f(x)$ are $(\alpha,\beta,\epsilon)$-correlated with $x^*$. Fix an $x_0 \in \R^n$, and consider the update rule $x_t \leftarrow x_{t-1} - \eta \nabla f(x_t)$. Prove that, for any $\eta \le 1/2\beta$,
+		\begin{eqnarray}
+		\|x_{t+1} - x^*\|_2^2 \le (1-2\alpha \eta)\|x_{t} - x^*\|_2^2 + 2\eta \epsilon
+		\end{eqnarray}
+		Conclude that 
+		\begin{eqnarray}
+		\|x_{t} - x^*\|_2^2 \le (1-2\alpha \eta)\|x_{0} - x^*\|_2^2 + \epsilon/\alpha
+		\end{eqnarray}
+		\item Consider the function $f(x) = g(x/\|x\|) \cdot \frac{1}{2}\|x\|_2^2$, where $g$ is a differentiable possibly, non-convex function, with such that, for all $x \in \spheren$, $0 < A \le g(x) \le B$ and $\|\nabla g(x)\|_2 \le M$. 
+		\begin{enumerate}
+			\item Suppose $x \ne 0$. Compute $\nabla f(x)$. 
+			\item Prove that for an explicit choice of step-size $\eta$, the algorithm $x_{s} = x_{s-1} - \eta \nabla f(x)$ satisfies the following convergence bound (you may be loose by constants):
+			\begin{eqnarray}
+			\|x_s - x_*\|_2^2 \le \left(1 - \frac{AB}{2(B+M/2)^2})\right)^s \|x_0 - x_*\|_2^2
+			\end{eqnarray}
+			\item Give a counter-example to show that $f$ need not be convex.
+		\end{enumerate} 
+
+	\end{enumerate}
+
+\section*{Problem 2: The $\Prox$ Method} 
+Throughout, we fix functions $f$ and $h$. We suppose that $f$ is $M$ smooth, and that $h$ is convex. Let $F(x) = f(x) + h(x)$. Define
+	\begin{eqnarray}
+	Q_{L}(x,y) &:=& f(y) + \langle x - y, \nabla f(y) \rangle + \frac{L}{2}\|x -y\|_2^2 + h(x)\\
+	p_{L}(y) &:=& \arg\min\{ Q_{L}(x,y): x \in \R^n\}
+	\end{eqnarray}
+\begin{enumerate}
+	\item Show that $p_{\alpha}(y)$ is well defined; i.e., a unique point.
+	\item Show that 
+	\begin{eqnarray}
+	&&p_{L}(y)  = \Prox_{1/L,h}( y- \frac{1}{L} \nabla f(Y))\\
+	 &&\text{ where } \Prox_{\alpha,h}(y) := \arg\min\{h(x) + \frac{1}{2\alpha}\|x-y\|^2_2:  x \in \R^d\}
+	\end{eqnarray}
+	\item Show that if $z$ and $y$ satisfy $z = p_{L}(y)$, then
+	\begin{eqnarray}
+	\nabla f(y) + L(z-y) \in -\partial h(z)
+	\end{eqnarray}
+	\item Suppose that $F(p_L(y)) \le Q(p_L(y),y)$. Show that
+	\begin{eqnarray}
+	F(x) - F(p_L(x)) \ge \frac{L}{2}\|p_L(y) - y\|_2^2 + L\langle y - x, p_L(y) - y \rangle
+	\end{eqnarray}
+	\item Prove that if $f$ is $M \le L$ smooth, then $F(x) \le Q(x,y)$ for all $y$. Conclude that $F(p_{L}(y)) \le Q(p_{L}(y),p_{L}(y)) \le Q(y,p_L(y)) \le F(y)$. 
+	\item State and prove an $O(1/t)$ convergence rate for the iterations $x_{t} \leftarrow p_L(x_{t-1})$, when $M \le L$. You may want to look at the notes I posted on Piazza for inspiration.
+	\item Reasoning by analogy to accelerated gradient descent for smooth functions, modify the update rule in the previous subproblem to obtain an accelerated rate. You do not need to prove the rate, just give the algorithm. 
+	\item When might the update rule $x_{t} \leftarrow p_L(x_{t-1})$ be preferable to gradient descent? 
+\end{enumerate}
+
+
+
+
+
+
+
+\end{document}
