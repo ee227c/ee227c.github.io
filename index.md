@@ -81,8 +81,8 @@ you spot any please send an email or pull request.
 | | | **Part V: Non-convex problems** | | |
 | 17 | 3/13 | Non-convex problems |   |   |
 | 18 | 3/15 | Saddle points |   |   |
-| 19 | 3/20 | Alternating minimization and EM |   |   |
-| 20 | 3/22 | tbd |   |   |
+| 19 | 3/20 | Alternating minimization and expectaction maximization |   |   |
+| 20 | 3/22 | Derivative-free optimization, policy gradient, controls |   |   |
 | -- | 3/27 | No class (Spring break) |   |   |
 | -- | 3/29 | No class (Spring break) |   |   |
 | 21 | 4/3  | Guest lecture by Ludwig Schmidt on non-convex constraints | | |
