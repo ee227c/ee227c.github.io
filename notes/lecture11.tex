@@ -1,5 +1,4 @@
-\section{Lecture 11: Learning, Stability, Regularization
-}
+\section{Lecture 11: Learning, Stability, Regularization}
 
 In this lecture we take a look at machine learning, and empirical risk
 minimization in particular. We define the distribution of our data as $D$ over
@@ -88,7 +87,7 @@ $$\E[\epsilon_{\text{gen}}(A)] = \Delta(A)$$
 \begin{proof}
 Note that
 \begin{align*}
-\E[\epsilon_{\text{gen}}(A)] &= R(A(S)) - R_{S}(A(S))\,, \\
+\E[\epsilon_{\text{gen}}(A)] &= \E\left[R(A(S)) - R_{S}(A(S))\right]\,, \\
 \E\left[R_{S}(A(S))\right]] &=
 \E\left[\frac{1}{m}\sum_{i=1}^{m}\ell(A(S),z_i)\right]\,,\\
 \E [R(A(S))]&=
