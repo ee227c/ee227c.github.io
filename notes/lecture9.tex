@@ -1,3 +1,45 @@
-\section{Lower bounds and trade-offs}
+\section{Lower Bounds and Trade-offs Between Robustness and Acceleration}
 
-\emph{Coming soon}
+In the first part of this lecture, we study whether the convergence rates
+derived in previous lectures are tight. For each of the classes of optimzation
+problems we've considered (smooth, strongly convex, etc), we will prove the
+answer is indeed yes. The highlight of this analysis will show the $O(1/t^2)$
+rate achieved Nesterov's accelerated gradient method is optimal (in a weak
+technical sense) for smooth, convex functions. 
+
+In the second part of this lecture, we go beyond studying the convergence
+rates of different methods and look towards other ways of comparing algorithms.
+We will give evidence showing the improved rates of accelerated gradient methods
+come at a cost in robustness to noise. Indeed, if we restrict ourselves to
+only using approximate gradients, the standard gradient method suffers no
+slowdown, whereas the accelerated gradient method accumulates errors linearly in
+the number of iterations.
+
+\subsection{Lower Bounds}
+Before launching into a discussion of lower bounds, it's helpful to first recap
+the upper bounds obtained thus far. For a convex function $f$, Table~\eqref{}
+summarizes the assumptions and rates proved in the first several lectures. 
+
+% Add in a table
+
+% Define the lower bound model (black-box procedure)
+
+
+% State the constrainted, non-smooth case result
+
+% Prove this result
+
+% State the \beta-smooth convex quadratic 
+% The worst function in the world
+
+% Illustrate with a picture
+
+
+\subsection{Robustness and Acceleration Trade-offs}
+% Intro + beyond worst-case analysis
+
+% Plots showing AGD failing in the precense of noise
+
+% Define an inexact oracle
+
+% Give the result
