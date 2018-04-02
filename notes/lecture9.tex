@@ -9,7 +9,7 @@ technical sense) for smooth, convex functions.
 
 In the second part of this lecture, we go beyond studying the convergence
 rates of different methods and look towards other ways of comparing algorithms.
-We will give evidence showing the improved rates of accelerated gradient methods
+We show the improved rates of accelerated gradient methods
 come at a cost in robustness to noise. Indeed, if we restrict ourselves to
 only using approximate gradients, the standard gradient method suffers basically no
 slowdown, whereas the accelerated gradient method accumulates errors linearly in
@@ -43,24 +43,24 @@ to similar procedures. Formally, define a black-box procedure as follows.
 \begin{definition}[Black-Box Procedure]
 A \textit{black-box procedure} generates a sequence of points $\set{x_t}$
 such that
-\begin{align}
+\begin{align*}
     x_{t+1} \in x_0 + \Span\set{g_1, \dots, g_t},
-\end{align}
+\end{align*}
 and $g_s \in \partial f (x_s)$.
 \end{definition}
 Throughout, we will further assume $x_0 = 0$. As expected, gradient descent is a
 black-box procedure. Indeed, unrolling the iterates, $x_{t+1}$ is given by
-\begin{align}
+\begin{align*}
     x_{t+1} 
     &= x_t - \eta \grad f(x_t) \\
     &= x_{t-1} - \eta \grad f(x_{t-2}) - \eta \grad f(x_{t-1}) \\
     &= x_0 - \sum_{i=0}^t \eta \grad f (x_i).
-\end{align}
+\end{align*}
 
 We now prove lower bounds on the convergence rate for any black-box procedure.
 Our first theorem concerns the constrained, non-smooth case.
-The theorem is originally from \cite{myn1983}, but the presentation in
-\cite{lecturesincvxopt} is more readable. 
+The theorem is originally from \cite{nemirovskii1983problem}, but the presentation in
+\cite{nesterov04} is more readable. 
 ~
 \begin{theorem}[Constrainted, Non-Smooth $f$]\label{theorem:lb-non-smooth}
 Let $t \leq n$, $L, R  > 0$. There exists a convex $L$-Lipschitz function $f$
@@ -84,16 +84,16 @@ error for each coordinate that is identically zero.
 
 \begin{proof}
 Consider the function
-\begin{align}
+\begin{align*}
     f(x) = \gamma \max_{1 \leq i \leq t} x[i] + \frac{\alpha}{2} \|x\|^2,
-\end{align}
+\end{align*}
 for some $\gamma, \alpha \in \R$. In the strongly convex case, $\gamma$ is
 a free parameter, whereas in the Lipschitz case both $\alpha$ and $\gamma$ are
 free parameters. By the subdifferential calculus,
-\begin{align}
+\begin{align*}
     \partial f(x) 
         = \alpha x + \gamma \conv\set{e_i \colon i \in \argmax_{1 \leq j \leq t} x(j)}.
-\end{align}
+\end{align*}
 The function $f$ is evidently $\alpha$-strongly convex. Furthermore, if $\|x\| \leq R$
 and $g \in \partial f(x)$, then $\|g\| \leq \alpha R + \gamma$, so $f$ is
 $(\alpha R + \gamma)$-Lipschitz on $B_2(R)$.
@@ -101,64 +101,64 @@ $(\alpha R + \gamma)$-Lipschitz on $B_2(R)$.
 Suppose the gradient oracle returns $g_i = \alpha x + \gamma e_i$, where
 $i$ is the first coordinate such that $x[i] = \max_{1 \leq j \leq t} x[j]$. 
 An inductive argument then shows
-\begin{align}
+\begin{align*}
     x_s \in \Span\set{e_1, \dots, e_{s-1}}
-\end{align}
+\end{align*}
 Consequently, for $s \leq t$, $f(x_s) \geq 0$. However, consider $y\in \R^n$
 such that
-\begin{align}
+\begin{align*}
     y[i] = 
     \begin{cases}
         -\frac{\gamma}{\alpha t} &\text{if } 1 \leq i \leq t\\
         0 &\text{otherwise}.
     \end{cases}
-\end{align}
+\end{align*}
 Since $0 \in \partial f(y)$, $y$ is an minimizer of $f$ with objective value
-\begin{align}
+\begin{align*}
     f(y)
     = \frac{-\gamma^2}{\alpha t} + \frac{\alpha}{2}\frac{\gamma^2}{\alpha^2 t}
     = -\frac{\gamma^2}{2\alpha t},
-\end{align}
+\end{align*}
 and hence $f(x_s) - f(y) \geq \frac{\gamma^2}{2 \alpha t}$.
 We conclude the proof by appropriately choosing $\alpha$ and $\gamma$. 
 In the convex, Lipschitz case, set 
-\begin{align}
+\begin{align*}
     \alpha = \frac{L}{R} \frac{1}{1 + \sqrt{t}}
     \quad
     \text{and}
     \quad
     \gamma = L \frac{\sqrt{t}}{1 + \sqrt{t}}.
-\end{align}
+\end{align*}
 Then, $f$ is $L$-Lipschitz, 
-\begin{align}
+\begin{align*}
     \norm{y} 
     = \sqrt{t \Paren{\frac{-\gamma}{\alpha t}}^2}
     = \frac{\gamma}{\alpha \sqrt{t}}
     = R
-\end{align}
+\end{align*}
 and hence
-\begin{align}
+\begin{align*}
     f(x_s) - \min_{x \in B_2(R)} f(x)
     = f(x_s) - f(y)
     \geq \frac{\gamma^2}{2\alpha t}
     = \frac{RL}{2(1+\sqrt{t})}.
-\end{align}
+\end{align*}
 In the strongly-convex case, set $\gamma = \frac{L}{2}$ and take
 $R = \frac{L}{2\alpha}$. Then, $f$ is $L$-Lipschitz, 
-\begin{align}
+\begin{align*}
     \norm{y} 
     = \frac{\gamma}{\alpha \sqrt{t}}
     = \frac{L}{2\alpha \sqrt{t}}
     = \frac{R}{\sqrt{t}}
     \leq R,
-\end{align}
+\end{align*}
 and therefore
-\begin{align}
+\begin{align*}
     f(x_s) - \min_{x \in B_2(L/2\alpha)} f(x)
     = f(x_s) - f(y)
     \geq \frac{LR}{4t} 
     = \frac{L^2}{8\alpha t}.
-\end{align}
+\end{align*}
 \end{proof}
 
 Next, we study the smooth, convex case. We show the $O(1/t^2)$ rate achieved by
@@ -174,12 +174,12 @@ quadratic $f$ such that any black-box method satisfies
 \end{theorem}
 Similar to the previous theorem, the proof strategy is to exhibit 
 a pathological convex function. In this case, we choose what Nesterov calls
-``the worst-function in the world'' \cite{ilco2004}.
+``the worst-function in the world'' \cite{nesterov04}.
 
 \begin{proof}
 Without loss of generality, let $n = 2t+1$.
 Let $L \in \R^{n \times n}$ be the tri-diagonal matrix
-\begin{align}
+\begin{align*}
     L =
     \begin{bmatrix}
         2 & -1 & 0 & 0 & \cdots & 0 \\
@@ -188,58 +188,58 @@ Let $L \in \R^{n \times n}$ be the tri-diagonal matrix
         \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
         0 & 0 & 0 & 0 & \cdots -1 & 2  \\
     \end{bmatrix}.
-\end{align}
+\end{align*}
 The matrix $L$ is almost the Laplacian of the cycle
 graph.\footnote{\url{https://en.wikipedia.org/wiki/Laplacian_matrix}}
 Notice
-\begin{align}
+\begin{align*}
     x^\top L x = x[1]^2 + x[n]^2 + \sum_{i=1}^{n-1} (x[i] - x[i+1])^2,
-\end{align}
+\end{align*}
 and, from this expression, it's a simple to check
 $0 \preceq L \preceq 4I$.
 Define the following $\beta$-smooth convex function
-\begin{align}
+\begin{align*}
     f(x) = \frac{\beta}{8} x^\top L x - \frac{\beta}{4}\langle x, e_1 \rangle.
-\end{align}
+\end{align*}
 The optimal solution $x^\star$ satisfies $Lx^\star = e_1$, and solving this 
 system of equations gives
-\begin{align}
+\begin{align*}
     x^\star[i] = 1 - \frac{i}{n+1},
-\end{align}
+\end{align*}
 which has objective value
-\begin{align}
+\begin{align*}
     f(x^\star)
     &=  \frac{\beta}{8} {x^\star}^\top L x^\star - \frac{\beta}{4}\langle
     x^\star, e_1 \rangle \\
     &= -\frac{\beta}{8} \langle x^\star, e_1 \rangle
     = -\frac{\beta}{8} \paren{1 - \frac{1}{n+1}}.
-\end{align}
+\end{align*}
 Similar to the proof of~\eqref{theorem:lb-non-smooth}, we can argue
-\begin{align}
+\begin{align*}
     x_s \in \Span\set{e_1, \dots, e_{s-1}},
-\end{align}
+\end{align*}
 so if $x_0 = 0$, then $x_s[i] = 0$ for $i \geq s$ for any black-box procedure.
 Let $x_s^\star = \argmin_{x \colon i\geq s, x[i] = 0} f(x)$. Notice $x_s^\star$
 is the solution of a smaller $s \times s$ Laplacian system formed by the
 first $s$ rows and columns of $L$, so
-\begin{align}
+\begin{align*}
     x_s^\star[i] = 
     \begin{cases}
         1- \frac{i}{s + 1} &\text{if } i < s \\
         0 &\text{otherwise},
     \end{cases}
-\end{align}
+\end{align*}
 which has objective value $f(x_s^\star) = -\frac{\beta}{8}\paren{1 - \frac{1}{s + 1}}$.
 Therefore, for any $s \leq t$,
-\begin{align}
+\begin{align*}
     f(x_s) - f(x^\star) 
     &\geq f(x_t^\star) - f(x^\star) \\
     &\geq \frac{\beta}{8} \Paren{\frac{1}{t+1} - \frac{1}{n+1}} \\
     &= \frac{\beta}{8} \Paren{\frac{1}{t+1} - \frac{1}{2(t+1)}} \\
     &= \frac{\beta}{8}\frac{1}{2(t+1)}.
-\end{align}
+\end{align*}
 To conclude, we bound the norm of $x^\star$,
-\begin{align}
+\begin{align*}
     \norm{x_0 - x^\star}^2 =
     \norm{x^\star}^2 
     &= \sum_{i=1}^n \paren{1 - \frac{i}{n+1}}^2  \\
@@ -248,21 +248,90 @@ To conclude, we bound the norm of $x^\star$,
     &\leq n - \frac{2}{n+1}\frac{n(n+1)}{2} + \frac{1}{(n+1)^2} \frac{(n+1)^3}{3} \\
     &= \frac{(n+1)}{3} \\
     &= \frac{2(t+1)}{3}.
-\end{align}
+\end{align*}
 Combining the previous two displays, for any $s \leq t$,
-\begin{align}
+\begin{align*}
     f(x_s) - f(x^\star)
     \geq \frac{\beta}{8}\frac{1}{2(t+1)} 
     \geq \frac{3 \beta\norm{x_0 - x^\star}^2}{32(t+1)^2}.
-\end{align}
+\end{align*}
 \end{proof}
 
-
 \subsection{Robustness and Acceleration Trade-offs}
-% Intro + beyond worst-case analysis
+The first part of the course focused almost exclusively on
+convergence rates for optimization algorithms. From this
+perspective, a better algorithm is one with a faster rate of convergence.
+A theory of optimization algorithms that stops with rates of
+convergence is incomplete. There are often other important algorithm design
+goals, e.g. robustness to noise or numerical errors, that are ignored by
+focusing on converges rates, and when these goals are of primary importance, 
+excessive focus on rates can lead practitioners to choose the wrong algorithm.
+This section deals with one such case.
 
-% Plots showing AGD failing in the precense of noise
+In the narrow, technical sense of the previous section, Nesterov's Accelerated Gradient 
+Descent is an ``optimal'' algorithm, equipped with matching upper and lower bounds on 
+it's rate of convergence. A slavish focus on convergence rates suggests one should then
+always use Nesterov's method. Before coronating Nesterov's method, however, it
+is instructive to consider how it performs in the presence of noise.
 
-% Define an inexact oracle
+%%%%%%%%%%%% TODO: Vlad %%%%%%%%%%%%%%%%%%%%%%
+% ADD a code example showing when AGD fails
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Give the result
+The preceeding example is not wickedly pathological in any sense. Instead, it is
+illustrative of a much broader phenomenon. Work by \cite{devolder2014first} shows there is a
+fundamental trade-off between acceleration and robustness to noise, in a sense
+we make precise below.
+
+First, we define the notion of an inexact gradient oracle. Recall for a
+$\beta$-smooth convex function $f$ and any $x, y \in \domain$,
+\begin{align}
+    0 \leq f(x)  - \Paren{f(y) + \langle \grad f(y), x - y \rangle}
+    \leq \frac{\beta}{2} \norm{x-y}^2. \label{eq:exact-oracle}
+\end{align}
+For any $y \in \domain$, an exact first-order oracle then returns a pair
+$(f(y), g(y)) = (f(y), \grad f(y))$ that satisfies~\eqref{eq:exact-oracle}
+exactly for every $x \in \domain$. 
+An inexact oracle, returns a pair so that~\eqref{eq:exact-oracle} holds up to some
+slack $\delta$.
+~
+\begin{definition}[Inexact-Oracle]
+Let $\delta > 0$. For any $y\in \domain$, a $\delta$-inexact oracle returns a pair
+$(f_\delta(y), g_\delta(y))$ such that
+\begin{align*}
+    0 \leq f(x)  - \Paren{f(y) + \langle \grad f(y), x - y \rangle}
+    \leq \frac{\beta}{2} \norm{x-y}^2 + \delta
+\end{align*}
+for every $x \in \domain$.
+\end{definition}
+Consider running gradient descent with a $\delta$-inexact oracle.
+\cite{devolder2014first}
+show, after $t$ steps,
+\begin{align*}
+    f(x_t) - f(x^\star) \leq \frac{\beta R^2}{2t} + \delta.
+\end{align*}
+Comparing this rate with Table~\eqref{table:upper-bounds}, the plain gradient
+method is not affected by the inexact oracle and doesn't accumulate errors. 
+On the other hand, if the accelerated gradient
+method is run with a $\delta$-inexact oracle, then after $t$ steps,
+\begin{align*}
+    f(x_t) - f(x^\star)  \leq \frac{4 \beta R^2}{(t+1)^2} +
+    \frac{1}{3}(t+3)\delta.
+\end{align*}
+In other words, the accelerated gradient method accumulates errors linearly with
+the number of steps! Moreover, this slack is not an artifact of the analysis.
+Any black-box method must accumulate errors if it is accelerated in the exact
+case, as the following theorem makes precise.
+\begin{theorem}[\cite{devolder2014first} Theorem 6]
+Consider a black-box method with convergence rate $O\Paren{\frac{\beta R^2}{t^p}}$
+when using an exact oracle. With a $\delta$-inexact oracle, suppose the
+algorithm achieves a rate
+\begin{align}
+    f(x_t) - f(x^\star) \leq O\Paren{\frac{\beta R^2}{t^p}} + O\Paren{t^q \delta},
+\end{align}
+then $q \geq p-1$.
+\end{theorem}
+In particular, for any accelerated method has $p > 1$, and consequently $q > 1$
+so the method acculumates at least $O(t^{p-1} \delta)$ error with the number of
+iterations. 
+
