@@ -28,7 +28,7 @@ the first several lectures.
 \begin{tabular}{|l|l|l|}
 \hline
 $f$                        & Algorithm                    & Rate                                            \\ \hline
-Convex, Lipschitz          & Gradient Descent             & $RL / \sqrt\{t\}$                               \\ \hline
+Convex, Lipschitz          & Gradient Descent             & $RL / \sqrt{t}$                               \\ \hline
 Strongly Convex, Lipschitz & Gradient Descent             & $L^2 / (\alpha t)$                \\ \hline
 Convex, Smooth             & Accelerated Gradient Descent & $\beta R^2 / t^2$ \\ \hline
 \end{tabular}
@@ -59,7 +59,7 @@ black-box procedure. Indeed, unrolling the iterates, $x_{t+1}$ is given by
 
 We now prove lower bounds on the convergence rate for any black-box procedure.
 Our first theorem concerns the constrained, non-smooth case.
-The theorem is originally from \cite{nemirovskii1983problem}, but the presentation in
+The theorem is originally from \cite{nesterov83}, but the presentation in
 \cite{nesterov04} is more readable. 
 ~
 \begin{theorem}[Constrainted, Non-Smooth $f$]\label{theorem:lb-non-smooth}
@@ -190,7 +190,7 @@ Let $L \in \R^{n \times n}$ be the tri-diagonal matrix
     \end{bmatrix}.
 \end{align*}
 The matrix $L$ is almost the Laplacian of the cycle
-graph.\footnote{\url{https://en.wikipedia.org/wiki/Laplacian_matrix}}
+graph (in fact, it's the Laplacian of the chain graph).\footnote{\url{https://en.wikipedia.org/wiki/Laplacian_matrix}}
 Notice
 \begin{align*}
     x^\top L x = x[1]^2 + x[n]^2 + \sum_{i=1}^{n-1} (x[i] - x[i+1])^2,
@@ -274,9 +274,12 @@ it's rate of convergence. A slavish focus on convergence rates suggests one shou
 always use Nesterov's method. Before coronating Nesterov's method, however, it
 is instructive to consider how it performs in the presence of noise.
 
-%%%%%%%%%%%% TODO: Vlad %%%%%%%%%%%%%%%%%%%%%%
-% ADD a code example showing when AGD fails
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+\begin{center}
+\includegraphics[width=3in]{figures/nag-noise.pdf}
+\end{center}
+\caption{The optimality gap for iterations of gradient descent and Nesterov accelerated gradient descent applied to the worst function in the world with dimension $n=100$. Notice with exact oracle gradients, acceleration helps significantly. However, when adding uniform spherical random noise with radius $\delta=0.1$ to the gradient, stochastic gradient descent remains robust while stochastic accelerated gradient accumulates error. The stochastic results are averaged over $100$ trials.}
+\end{figure}
 
 The preceeding example is not wickedly pathological in any sense. Instead, it is
 illustrative of a much broader phenomenon. Work by \cite{devolder2014first} shows there is a
