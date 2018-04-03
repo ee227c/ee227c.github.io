@@ -2,18 +2,17 @@
 
 In the first part of this lecture, we study whether the convergence rates
 derived in previous lectures are tight. For several classes of optimzation
-problems we've considered (smooth, strongly convex, etc), we will prove the
+problems (smooth, strongly convex, etc), we prove the
 answer is indeed yes. The highlight of this analysis is to show the $O(1/t^2)$
 rate achieved by Nesterov's accelerated gradient method is optimal (in a weak
 technical sense) for smooth, convex functions. 
 
-In the second part of this lecture, we go beyond studying the convergence
-rates of different methods and look towards other ways of comparing algorithms.
-We show the improved rates of accelerated gradient methods
-come at a cost in robustness to noise. Indeed, if we restrict ourselves to
-only using approximate gradients, the standard gradient method suffers basically no
-slowdown, whereas the accelerated gradient method accumulates errors linearly in
-the number of iterations.
+In the second part of this lecture, we go beyond studying convergence rates and
+look towards other ways of comparing algorithms. We show the improved rates of
+accelerated gradient methods come at a cost in robustness to noise. In
+particular, if we restrict ourselves to only using approximate gradients, the
+standard gradient method suffers basically no slowdown, whereas the accelerated
+gradient method accumulates errors linearly in the number of iterations.
 
 \subsection{Lower Bounds}
 Before launching into a discussion of lower bounds, it's helpful to first recap
@@ -57,10 +56,11 @@ black-box procedure. Indeed, unrolling the iterates, $x_{t+1}$ is given by
     &= x_0 - \sum_{i=0}^t \eta \grad f (x_i).
 \end{align*}
 
-We now prove lower bounds on the convergence rate for any black-box procedure.
+We now turn to proving lower bounds on the convergence rate for any 
+black-box procedure.
 Our first theorem concerns the constrained, non-smooth case.
-The theorem is originally from \cite{nesterov83}, but the presentation in
-\cite{nesterov04} is more readable. 
+The theorem is originally from \cite{nesterov83}, but the presentation will
+follow \cite{nesterov04}.
 ~
 \begin{theorem}[Constrainted, Non-Smooth $f$]\label{theorem:lb-non-smooth}
 Let $t \leq n$, $L, R  > 0$. There exists a convex $L$-Lipschitz function $f$
@@ -88,7 +88,7 @@ Consider the function
     f(x) = \gamma \max_{1 \leq i \leq t} x[i] + \frac{\alpha}{2} \|x\|^2,
 \end{align*}
 for some $\gamma, \alpha \in \R$. In the strongly convex case, $\gamma$ is
-a free parameter, whereas in the Lipschitz case both $\alpha$ and $\gamma$ are
+a free parameter, and in the Lipschitz case both $\alpha$ and $\gamma$ are
 free parameters. By the subdifferential calculus,
 \begin{align*}
     \partial f(x) 
@@ -161,7 +161,7 @@ and therefore
 \end{align*}
 \end{proof}
 
-Next, we study the smooth, convex case. We show the $O(1/t^2)$ rate achieved by
+Next, we study the smooth, convex case and show the $O(1/t^2)$ rate achieved by
 accelerated gradient descent is optimal.
 
 \begin{theorem}[Smooth-$f$]\label{theorem:lb-smooth}
@@ -193,13 +193,13 @@ The matrix $L$ is almost the Laplacian of the cycle
 graph (in fact, it's the Laplacian of the chain graph).\footnote{\url{https://en.wikipedia.org/wiki/Laplacian_matrix}}
 Notice
 \begin{align*}
-    x^\top L x = x[1]^2 + x[n]^2 + \sum_{i=1}^{n-1} (x[i] - x[i+1])^2,
+    x^\trans L x = x[1]^2 + x[n]^2 + \sum_{i=1}^{n-1} (x[i] - x[i+1])^2,
 \end{align*}
 and, from this expression, it's a simple to check
 $0 \preceq L \preceq 4I$.
 Define the following $\beta$-smooth convex function
 \begin{align*}
-    f(x) = \frac{\beta}{8} x^\top L x - \frac{\beta}{4}\langle x, e_1 \rangle.
+    f(x) = \frac{\beta}{8} x^\trans L x - \frac{\beta}{4}\langle x, e_1 \rangle.
 \end{align*}
 The optimal solution $x^\star$ satisfies $Lx^\star = e_1$, and solving this 
 system of equations gives
@@ -209,7 +209,7 @@ system of equations gives
 which has objective value
 \begin{align*}
     f(x^\star)
-    &=  \frac{\beta}{8} {x^\star}^\top L x^\star - \frac{\beta}{4}\langle
+    &=  \frac{\beta}{8} {x^\star}^\trans L x^\star - \frac{\beta}{4}\langle
     x^\star, e_1 \rangle \\
     &= -\frac{\beta}{8} \langle x^\star, e_1 \rangle
     = -\frac{\beta}{8} \paren{1 - \frac{1}{n+1}}.
@@ -238,7 +238,7 @@ Therefore, for any $s \leq t$,
     &= \frac{\beta}{8} \Paren{\frac{1}{t+1} - \frac{1}{2(t+1)}} \\
     &= \frac{\beta}{8}\frac{1}{2(t+1)}.
 \end{align*}
-To conclude, we bound the norm of $x^\star$,
+To conclude, we bound the initial distance to the optimum. Recalling $x_0 = 0$,
 \begin{align*}
     \norm{x_0 - x^\star}^2 =
     \norm{x^\star}^2 
@@ -274,19 +274,29 @@ it's rate of convergence. A slavish focus on convergence rates suggests one shou
 always use Nesterov's method. Before coronating Nesterov's method, however, it
 is instructive to consider how it performs in the presence of noise.
 
+Figure~\eqref{fig:nag-noise} shows compares the performance of vanilla gradient
+descent and Nesterov's accelerated gradient descent on the function $f$ used in
+the proof of Theorem~\eqref{thm:lb-smooth}. In the noiseless case, the
+accelerated method obtains the expected speed-up over gradient descent. However,
+if we add a small amount of spherical noise to the gradients, the speed-up not
+only disappears, but gradient descent begins to outperform the accelerated
+method, which begins to diverge after a large number of iterations.
+
 \begin{figure}
 \begin{center}
 \includegraphics[width=3in]{figures/nag-noise.pdf}
 \end{center}
 \caption{The optimality gap for iterations of gradient descent and Nesterov accelerated gradient descent applied to the worst function in the world with dimension $n=100$. Notice with exact oracle gradients, acceleration helps significantly. However, when adding uniform spherical random noise with radius $\delta=0.1$ to the gradient, stochastic gradient descent remains robust while stochastic accelerated gradient accumulates error. The stochastic results are averaged over $100$ trials.}
+\label{fig:nag-noise}
 \end{figure}
 
 The preceeding example is not wickedly pathological in any sense. Instead, it is
-illustrative of a much broader phenomenon. Work by \cite{devolder2014first} shows there is a
-fundamental trade-off between acceleration and robustness to noise, in a sense
-we make precise below.
+illustrative of a much broader phenomenon. Work by Devolder, Glineur and
+Nesterov (DGN) \cite{devolder2014first} shows there is a
+fundamental trade-off between acceleration and robustness, in a sense
+made precise below. 
 
-First, we define the notion of an inexact gradient oracle. Recall for a
+First, define the notion of an inexact gradient oracle. Recall for a
 $\beta$-smooth convex function $f$ and any $x, y \in \domain$,
 \begin{align}
     0 \leq f(x)  - \Paren{f(y) + \langle \grad f(y), x - y \rangle}
@@ -308,8 +318,7 @@ $(f_\delta(y), g_\delta(y))$ such that
 for every $x \in \domain$.
 \end{definition}
 Consider running gradient descent with a $\delta$-inexact oracle.
-\cite{devolder2014first}
-show, after $t$ steps,
+DGN \cite{devolder2014first} show, after $t$ steps,
 \begin{align*}
     f(x_t) - f(x^\star) \leq \frac{\beta R^2}{2t} + \delta.
 \end{align*}
@@ -337,4 +346,3 @@ then $q \geq p-1$.
 In particular, for any accelerated method has $p > 1$, and consequently $q > 1$
 so the method acculumates at least $O(t^{p-1} \delta)$ error with the number of
 iterations. 
-
