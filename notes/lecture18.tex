@@ -1,7 +1,13 @@
 \section{Lecture 18: Saddle points} 
 
+This lecture formalizes and shows the following intuitive statement for nonconvex optimization:
+\begin{center}
+	\textbf{Gradient descent almost never converges to (strict) saddle points.}
+\end{center}
+as presented in \cite{lee2016gradient}. Let's start with some definitions.
+
 \begin{definition}
-$x^*$ is a stationary point if the gradient vanishes at $x^*$ i.e. $\nabla f(x^*) = 0$. 
+We call $x^*$ a stationary point if the gradient vanishes at $x^*$ i.e. $\nabla f(x^*) = 0$. 
 \end{definition}
 
 \begin{definition}
@@ -15,24 +21,13 @@ $\lambda_{\text{min}}(\nabla^2 f(x^*)) < 0$,
 where $\lambda_{\text{min}}$ denotes the smallest eigenvalue.
 \end{definition}
 
-\noindent
-This lecture formalizes and proves the following intuitive statement for nonconvex optimization:
-\begin{center}
-\textbf{Gradient descent almost never converges to strict saddle points.}
-\end{center}
-as presented in \textit{Gradient Descent Converges to Minimizers} by Jason D. Lee, Max Simchowitz, Michael I. Jordan, and Benjamin Recht.
-
-\noindent
-Let's start by viewing each gradient descent update as a operator.  
-For a fixed step size $\eta$, define
+Next we want to view each gradient descent update as a operator.  
+For a fixed step size $\eta$, let
 $$
 g(x) = x-\eta\nabla f(x)
 $$ 
-so the notation for the result of iteration $t$ from our previous discussion of gradient descent carries over as $x_t = g^t(x_0) = g(g(...g(x_0)))$, where $g$ is applied $t$ times on the initial point $x_0$. $g$ is called the gradient map. Note that $x^*$ is stationary iff. it is a fixed point of the gradient map i.e. $g(x^*) = x^*$. Also note that
-$D g(x) = I - \eta\nabla^2 f(x)$ (Jacobian of $g$) , a fact that will bcome important later.
-
-\noindent
-Next we formalize a notion of the set of "attractors`` of $x^*$.
+so the notation for the result of iteration $t$ from our previous discussion of gradient descent carries over as $x_t = g^t(x_0) = g(g(...g(x_0)))$, where $g$ is applied $t$ times on the initial point $x_0$. We call $g$ the gradient map. Note that $x^*$ is stationary iff. it is a fixed point of the gradient map i.e. $g(x^*) = x^*$. Also note that
+$D g(x) = I - \eta\nabla^2 f(x)$ (Jacobian of $g$) , a fact that will bcome important later. Now we formalize a notion of the set of "attractors`` of $x^*$.
 \begin{definition}
 The global stable set of $x^*$, is defined as
 $$
@@ -41,11 +36,8 @@ $$
 In words, this is the set of points that will eventually converge to $x^*$.
 \end{definition}
 
-\noindent
-Now we formally state the main theorem of this lecture:
 \begin{theorem}
-Assume $f\in C^2$ and is $\beta$-smooth. Also assume that the step size $\eta < 1/\beta$. Then for all strict saddle points $x^*$, its set of attractors $W^S(x^*)$ has Lebesgue measure 0. That is,
-$$\mathbb{P}(\lim_t x_t = x^*) = 0$$
+Assume $f\in C^2$ and is $\beta$-smooth. Also assume that the step size $\eta < 1/\beta$. Then for all strict saddle points $x^*$, its set of attractors $W^S(x^*)$ has Lebesgue measure 0.
 \end{theorem}
 
 \begin{remark}
@@ -57,15 +49,13 @@ is also 0. This is just another way to say that gradient descent almost surely c
 \end{remark}
 
 \begin{remark}
-By definition, this also holds true to any probability measure absolutely continuous w.r.t. the Lebesgue measure (e.g. any continuous probability distribution).
+By definition, this also holds true to any probability measure absolutely continuous w.r.t. the Lebesgue measure (e.g. any continuous probability distribution). That is,
+$$\mathbb{P}(\lim_t x_t = x^*) = 0$$
 \end{remark}
 
-\noindent
 However, the theorem above is only an asymptotic statement. Nonasymptotically, even with fairly natural random initialization schemes and non-pathological functions, gradient descent can be significantly slowed down by saddle points. 
-The most recent result is that gradient descent takes exponential time to escape saddle points (even though the theorem above says that they do escape eventually), as presented in the paper
-\textit{Gradient Descent Can Take Exponential Time to Escape Saddle Points} by Simon S. Du, Chi Jin, Jason D. Lee, Michael I. Jordan, Barnabas Poczos and Aarti Singh. We won't cover this result in this lecture.
+The most recent result \cite{du2017gradient} is that gradient descent takes exponential time to escape saddle points (even though the theorem above says that they do escape eventually). We won't prove this result in this lecture.
 
-\noindent
 Before the proof, let's go over two examples that will make the proof more intuitive:
 
 \begin{example}
@@ -73,7 +63,6 @@ $f(x) = \frac{1}{2} x^THx$ where $H$ is an $n$-by-$n$ matrix, symmetric but not 
 For convenience, assume $0$ is not an eigenvalue of $H$.
 So $0$ is the only stationary point and the only strict saddle point for this problem.
 
-\noindent
 We can calculate
 $g(x) = x - \eta Hx = (I-\eta H)x$ and 
 $g^t(x) = (I-\eta H)^tx$. 
@@ -101,7 +90,9 @@ $\nabla^2 f(x,y) =
 0 & 3y^2-1 \\
 \end{bmatrix}
 $.
-So $(0,-1)$ and $(0,1)$ are the local minima, and $(0,0)$ is the only strict saddle point. Similar to in the previous example, 
+So $(0,-1)$ and $(0,1)$ are the local minima, and $(0,0)$ is the only strict saddle point. Similar to in the previous example, $W^S(0)$ is a low-dimensional subspace. 
+
+We conclude this lecture with a proof of the main theorem.
 
 \begin{proof}
 First define the local stable set of $x^*$ as
@@ -111,26 +102,19 @@ W^S_\epsilon(x^*)
 $$
 Intuitively, this describes the subset of $B(x^*;\epsilon)$ that stays in $B(x^*;\epsilon)$ under arbitrarily many gradient maps. This establishes a notion of locality that matters for gradient descent convergence, instead of $B(x^*;\epsilon)$ which has positive measure.
 
-\noindent
-Next we introduce the concept of a diffeomorphism, roughly speaking a differentiable isomorphism. In fact, since differentiability is assumed for $g$, we will focus on the isomorphism.
+Now we state a simplified version of the stable manifold theorem without proof: For a diffeomorphism $g:\R^n\rightarrow\R^n$, if $x^*$ is a fixed point of $g$, then for all $\epsilon$ small enough, $W^S_\epsilon(x^*)$ is a submanifold of dimension equal to the number of eigenvalues of the $Dg(x^*)$ that are $\leq 1$. A diffeomorphism, roughly speaking, is a differentiable isomorphism. In fact, since differentiability is assumed for $g$, we will focus on the isomorphism.
 
-\noindent
-Now we state a simplified version of the stable manifold theorem without proof: For a diffeomorphism $g:\R^n\rightarrow\R^n$, if $x^*$ is a fixed point of $g$, then for all $\epsilon$ small enough, $W^S_\epsilon(x^*)$ is a submanifold of dimension equal to the number of eigenvalues of the $Dg(x^*)$ that are $\leq 1$.
-
-\noindent
 Let $x^*$ be a strict saddle point.
 Once we have proven the fact that $g$ is a diffeomorphism (using the assumption that $\eta<1/\beta$), we can apply the stable manifold theorem since $x^*$ is a fixed point of $g$. 
 Because $\nabla^f (x^*)$ must have an eigenvalue $<0$, $Dg$ must have an eigenvalue $>1$, so 
 the dimesion of $W^S_\epsilon(x^*)$ is less than $n$ and $W^S_\epsilon(x^*)$ has measure 0. 
 
-\noindent
 If $g^t(x)$ converges $x^*$, there must $\exists T$ large enough s.t. $g^T(x)\in W_\epsilon^S(x^*)$. 
 So $W^S(x^*)\subseteq \bigcup_{t\geq 0 }g^{-t}(W_\epsilon^S(x^*))$.
 For each $t$, $g^t$ is in particular an isomorphism (as a composition of isomorphisms), and so it $g^{-t}$.
 Therefore $g^{-t}(W_\epsilon^S(x^*))$ has the same cardinality as 
 $W_\epsilon^S(x^*)$ and has measure 0. Because the union is over a countable set, the union also has measure 0, thus its subset $W^S(x^*)$ ends up with measure 0 and we have the desired result.
 
-\noindent
 Finally we show that $g$ is bijective to establish the isomorphism (since it is assumed to be smooth). It is injective because, assuming $g(x) = g(y)$, by smoothness,
 $$
 \|x-y\| = \|g(x) + \eta\nabla f(x) - g(y) - \eta\nabla f(x) \|
