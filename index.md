@@ -68,8 +68,7 @@ you spot any please send an email or pull request.
 | 6 | 2/1 |  Discovering acceleration with Chebyshev polynomials | [pdf](notes/ee227c-lecture6.pdf)  | [ipynb](code/lecture6.html)  |
 | 7 | 2/6 | Nesterov's accelerated gradient descent  | [pdf](notes/ee227c-lecture7.pdf)  | ---  |
 | 8 | 2/8 | Eigenvalue intermezzo | [pdf](notes/ee227c-lecture8.pdf)  | ---  |
-| 9 | 2/13 | Lower bounds, robustness vs acceleration |
-[pdf](notes/ee227c-lecture9.pdf)  | [py](code/lecture9.py) |
+| 9 | 2/13 | Lower bounds, robustness vs acceleration | [pdf](notes/ee227c-lecture9.pdf)  | [py](code/lecture9.py) |
 | | | **Part III: Stochastic optimization** | | |
 | 10 | 2/15 | Stochastc optimization | [pdf](notes/ee227c-lecture10.pdf)  | ---  |
 | 11 | 2/20 | Learning, regularization, and generalization | [pdf](notes/ee227c-lecture11.pdf)   | ---  |
