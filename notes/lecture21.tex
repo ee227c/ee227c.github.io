@@ -1,10 +1,3 @@
-\documentclass[11pt]{article}
-
-\usepackage{macros}
-
-\input{title}
-
-\begin{document}
 \section{Lecture 21: Non-convex constraints part 1}
 Recall that convex minimization refers to minimizing convex functions over convex constraints. Today we will begin to explore minimizing convex functions with non-convex constraints. It is difficult to analyze the impact of ``non-convexity" in general, since that can refer to anything that is not convex, which is a very broad class of problems. So instead, we will focus on solving least squares with sparsity constraints:
 \begin{align*}
@@ -197,4 +190,3 @@ There is a lot more work on convex relaxations. For sparsity alone people have s
     \item \textbf{Lagrangian LASSO} $\min \|Ax - y\|_2^2 + \lambda \|x\|_1$
 \end{itemize}
 There are also convex relaxations for other constraints. For example $\min rank(X)$ such that $A(X)=Y$ is hard, a simpler problem is to solve the nuclear norm minimization instead: $\min \|X\|_*$ such that $A(X)=Y$. This can be applied to low-rank estimation for images or matrix completion.
-\end{document}
