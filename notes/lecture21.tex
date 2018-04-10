@@ -1,0 +1,192 @@
+\section{Lecture 21: Non-convex constraints part 1}
+Recall that convex minimization refers to minimizing convex functions over convex constraints. Today we will begin to explore minimizing convex functions with non-convex constraints. It is difficult to analyze the impact of ``non-convexity" in general, since that can refer to anything that is not convex, which is a very broad class of problems. So instead, we will focus on solving least squares with sparsity constraints:
+\begin{align*}
+    \min_{\|x\|_0 \leq s} \|Ax-y\|^2_2
+\end{align*}
+for $y \in \mathbb{R}^{n}$, $A \in \mathbb{R}^{n \times d}$, and $x \in \mathbb{R}^{d}$ where $d < n$. We will show that in general even this problem is hard to solve but that for a restricted class of problems there is an efficient convex relaxation.
+
+Least squares with sparsity constraints can be applied to solving compressed sensing and sparse linear regression, which are important in a variety of domains. In compressed sensing, $A$ is a measurement model and $y$ are the measurements of some sparse signal $x$. Compressed sensing is applied to reduce the number of measurements needed for, say, an MRI because by including a sparsity constraint on $x$ we are able to recover the signal $x$ in fewer measurements.
+
+In sparse linear regression, $A$ is the data matrix and $y$ is some outcome variable. The goal of sparse linear regression is to recover a weights $x$ on a sparse set of features that are responsible for the outcome variable. In genetics, $A$ could be the genes of a patient, and $y$ is whether they have a particular disease. Then the goal is to recover a weights $x$ on a sparse set of genes that are predictive of having the disease or not.
+
+When there is no noise in the linear equations, we can simplify the problem to
+\begin{align*}
+    & \min \|x\|_0 \\
+    &  Ax = y
+\end{align*}
+
+\subsection{Hardness}
+Even this simplification is NP-hard, as we will show with a reduction to exact 3-cover, which is NP-complete.
+\begin{definition}
+The \textit{exact cover by 3-sets} problem is given a collection $\{T_i\}$ of 3-element subsets of $[n]$, does there exist an exact cover of $[n]$, a set $z \subseteq [d]$ such that $\cup_{j \in z} T_j = [n]$ and $T_i \cap T_j = \emptyset$ for $j \neq j' \in z$?
+\end{definition}
+
+\begin{definition}
+The support of a vector $x$ is defined as
+\begin{align*}
+\text{supp}(x) = \{i \mid x_i \neq 0 \}.
+\end{align*}
+\end{definition}
+
+\begin{theorem}
+$l_0$-minimization for general $A$ and $y$ is NP-hard.
+\end{theorem}
+\begin{proof}
+Define matrix $A$ as
+\begin{align*}
+    A_{ij} = \begin{cases}
+    1 & \text{if } j \in T_i \\
+    0 & \text{o.w}
+    \end{cases}
+\end{align*}
+
+and $y$ as the all ones vector. Note that from our construction we have $\|Ax\|_0 \leq 3\|x\|_0$, since each column of $A$ has 3 non-zeros. If $x$ satisfies $Ax = y$, we thus have $\|x\|_0 \geq \frac{\|y\|_0}{3} = \frac{n}{3}$. Let us now run $l_0$-minimization on $A, y$ and let $\hat{x}$ be the output. There are two cases
+
+\begin{enumerate}
+    \item If $\|\hat{x}\|_0 = \frac{n}{3}$, then $y = \text{supp}(\hat{x})$ is an exact 3-cover. % define supp
+    \item If $\| \hat{x}\|_0 > \frac{n}{3}$, then no exact 3-sover can exist because it would achieve $\|\hat{x}\|_0 = \frac{n}{3}$ and hence violate optimality of the solution derived through $l_0$ minimization.
+\end{enumerate}
+
+Thus, since we can solve exact 3-cover through $l_0$ minimization, $l_0$ minimization must also be NP-hard.
+\end{proof}
+
+\subsection{Convex relaxation}
+Although $l_0$-minimization is NP-hard in general, we will prove that for a restricted class of $A$, we can relax $l_0$-minimization to $l_1$-minimization. First, define the set of approximately sparse vectors with support $S$ as those whose $l_1$ mass is dominated by $S$. Formally,
+\begin{definition}
+The set of approximately sparse vectors with support $S$ is
+\begin{align*}
+    C(S) = \{ \Delta \in \mathbb{R}^{d} \mid \|\Delta_{\bar{S}}\|_1 \leq \|\Delta_S \|_1 \}
+\end{align*}
+where $\bar{S} = [d] / S$ and $\Delta_s$ is $\Delta$ restricted to $S$,
+\begin{align*}
+    (\Delta_{S})_i = \begin{cases}
+        \Delta_i & \text{if } i \in S \\
+        0 & \text{o.w}
+    \end{cases}
+\end{align*}
+\end{definition}
+Recall that the nullspace of matrix $A$ is the set $\text{null} (A) = \{ \Delta \in \mathbb{R}^{d} \mid A\Delta = 0 \}$. The nullspace is the set of "bad" vectors in our estimation problem. Consider a solution $Ax = y$. If $\Delta \in \text{null(A)}$, then $x + \Delta$ is also a solution since $A(x + \Delta) = Ax + A\Delta = Ax = b$. Thus, we focus on matrices whose nullspace only contains zero on the set of sparse vectors that we care about.
+\begin{definition}
+The matrix $A$ satisfies the restricted nullspace property (RNP) with respect to the support $S$ if $C(S) \cup \text{null}(A) = \{ 0 \}$.
+\end{definition}
+With these definitions in place, we can now state our main theorem.
+\begin{theorem}
+Given $A \in \R^{n \times d}$ and $y \in \R^n$ we consider the solution to the $l_0$-minimization problem $x^* = \argmin_{Ax=y}\|x\|_0$. Assume $x^*$ has support $S$ and let the matrix $A$ satisfy the restricted nullspace property with respect to S. Then given the solutions of the $l_1$-minimization problem $\hat{x} = \argmin_{Ax=y}\|x\|_1$ we have $\hat{x} = x^*$.
+\end{theorem}
+
+\begin{proof}
+We first note that by definition both $x^*$ and $\hat{x}$ satisfy our feasibility constraint $Ax=y$. Letting $\Delta = \hat{x} - x^*$ be the error vector we have $A\Delta = A\hat{x} - Ax^* = 0$, which implies that $\Delta \in null(A)$.
+
+Our goal now is to show that $\Delta \in C(S)$ then we would have $\Delta = 0$ from the restricted nullspace property. First, since $\hat{x}$ is optimal in $l_1$ it follows that $\|\hat{x}\|_1 \le \|x^*\|_1$. We then have
+\begin{align*}
+    \|x_S^*\|_1 &= \|x^*\|_1 \ge \|\hat{x}\|_1\\
+                &= \|x^* + \Delta\|_1\\
+                &= \|x_S^* + \Delta_S\|_1 + \|x_{\overline{S}}^* + \Delta_{\overline{S}}\|_1 &&\text{by splitting the $l_1$ norm,}\\                            
+                &= \|x_S^* + \Delta_S\|_1 + \|\Delta_{\overline{S}}\|_1 &&\text{by the support assumption of $\|x^*\|_1$,}\\
+                &\ge \|x_S^*\|_1 - \|\Delta_S\|_1 + \|\Delta_{\overline{S}}\|_1.
+\end{align*}
+Hence $\|\Delta_S\|_1 \ge \|\Delta_{\overline{S}}\|_1$, which implies $\Delta \in C(S)$.
+\end{proof}
+
+So far, so good. We have shown that the $l_1$-relaxation works for certain matrices. A natural question however is what kinds of matrices satisfy the restricted nullspace property. In order to get a handle on this, we will study yet another nice property of matrices, the so called restricted isometry property (RIP). Later, we will then see that specific matrix ensembles satisfy RIP with high probability.
+\begin{definition}
+A matrix $A$ satisfies the $(s, \delta)$-RIP if for all $s$-sparse vectors $x$ ($\|x\|_0 \le s$), we have
+\[
+(1 - \delta)\|x\|_2^2 \le \|Ax\|_2^2 \le (1 + \delta) \|x\|_2^2.
+\]
+\end{definition}
+The intuition is that $A$ acts like an isometry on sparse vectors (a true isometry would have $\delta = 0$). The RIP is useful since it implies that the difference between two $s$-sparse vectors cannot be mapped to $0$. By looking at the singular values of $A$ we can derive the following lemma.
+\begin{lemma}
+\label{RIPlemma}
+If $A$ has $(s, \delta)$-RIP, then
+\[
+\|A_S^{\trans}A_S - I\|_2 \le \delta
+\]
+for all subsets $S$ of size $s$. Where
+
+\begin{align*}
+    (A_S)_{ij} = \begin{cases}
+    A_{ij} & \text{if } i \in S \\
+    0 & \text{o.w}.
+    \end{cases}
+\end{align*}
+\end{lemma}
+We now show that the RIP implies the restricted nullspace property. 
+\begin{theorem}
+If the matrix $A$ has the $(2s, \delta)$-RIP, then it also has the restricted nullspace property for all subsets $S$ of cardinality $|S| \le s$.
+\end{theorem}
+\begin{proof}
+Let $x \in null(A)$ be arbitrary but not equal to $0$. Then we have to show that $x \not\in C(S)$ for any $S$ with $|S| \le s$. In particular, let $S_0$ be the set indices of the $s$ largest coefficients in $x$. It suffices to show that $\|x_{S_0}\|_1 <  \|x_{\overline{S}_0}\|_1$ since it would then hold for any other subset.
+
+We write
+\[
+\overline{S}_0 = \bigcup\limits_{j = 1}^{\lceil \frac{d}{s} \rceil - 1} S_j
+\]
+where 
+\begin{itemize}
+\item $S_1$ is the subset of indices corresponding to the $s$ largest entries in $\overline{S}_0$
+\item $S_2$ is the subset of indices corresponding to the $s$ largest entries in $\overline{S}_0\setminus S_1$
+\item $S_3$ is the subset of indices corresponding to the $s$ largest entries in $\overline{S}_0\setminus S_1 \setminus S_2$
+\item etc\ldots
+\end{itemize}
+So we have $x = x_{S_0} + \sum\limits_j x_{S_j}$. We have decomposed $x$ into blocks of size $s$. This is sometimes called shelling. From RIP, we have
+\[
+\|x_{S_0}\|_2^2 \le \frac{1}{1 - \delta}\|Ax_{S_0}\|_2^2.
+\]
+Since $x \in null(A)$ by assumption we have
+\begin{align*}
+&A(x_{S_0} + \sum\limits_{j \ge 1} x_{S_j}) = 0\\
+\implies&Ax_{S_0} = -\sum\limits_{j \ge 1} Ax_{S_j}.
+\end{align*}
+Hence
+\begin{align*}
+\|x_{S_0}\|_2^2 &\le \frac{1}{1 - \delta}\|Ax_{S_0}\|_2^2\\
+                &= \frac{1}{1 - \delta}\langle Ax_{S_0}, Ax_{S_0}\rangle\\
+                &= \frac{1}{1 - \delta}\sum\limits_{j \ge 1}\langle Ax_{S_0}, Ax_{S_j}\rangle\\
+                &= \frac{1}{1 - \delta}\sum\limits_{j \ge 1}\langle Ax_{S_0}, -Ax_{S_j}\rangle\\
+                &=  \frac{1}{1 - \delta}\sum\limits_{j \ge 1}(\langle Ax_{S_0}, -Ax_{S_j}\rangle - \langle x_{S_0}, x_{S_j} \rangle) && \text{since $\langle x_{S_0}, x_{S_j} \rangle = 0$}\\                
+                &=  \frac{1}{1 - \delta}\sum\limits_{j \ge 1}\langle x_{S_0}, (I - A^{\trans}A)x_{S_j}\rangle\\                
+                &\le \frac{1}{1 - \delta}\sum\limits_{j \ge 1}\|x_{S_0}\|_2 \delta \|x_{S_j}\|_2 && \text{from Lemma~\ref{RIPlemma}}.
+\end{align*}
+So we have
+\begin{align}
+\|x_{S_0}\|_2 \le \frac{\delta}{1 - \delta}\sum\limits_{j \ge 1}\|x_{S_j}\|_2.\equationlabel{l2norm}
+\end{align}
+By construction, for each $j \ge 1$, we have
+\[
+\|x_{s_j}\|_\infty \le \frac{1}{S}\|X_{S_{j-1}}\|_1
+\]
+and hence
+\[
+\|x_{s_j}\|_2 \le \frac{1}{\sqrt{S}}\|X_{S_{j-1}}\|_1.
+\]
+Plugging into \equationref{l2norm}, we get
+\begin{align*}
+\|x_{S_0}\|_1 &\le \sqrt{S}\|x_{S_0}\|_2\\
+              &\le \frac{\sqrt{S}\delta}{1 - \delta}\sum\limits_{j \ge 1}\|x_{S_j}\|_2\\
+              &\le \frac{\delta}{1 - \delta}\sum\limits_{j \ge 1}\|x_{S_{j-1}}\|_1\\
+              &\le \frac{\delta}{1 - \delta}(\|x_{s_0}\|_1 + \sum\limits_{j \ge 1}\|x_{S_{j-1}}\|_1)
+\end{align*}
+which is equivalent to
+\[
+\|x_{s_0}\|_1 \le \frac{\delta}{1 - \delta}(\|x_{s_0}\|_1 + \|x_{\overline{s}_0}\|_1).
+\]
+Simple algebra gives us $\|x_{s_0}\|_1 \le \|x_{\overline{s}_0}\|_1$ as long as $\delta < \frac{1}{3}$.
+\end{proof}
+Now that we've shown that if $A$ has the RIP then $l_1$-relaxation will work, we look at a few examples of naturally occurring matrices with this property.
+\begin{theorem}
+Let $A \in \R^{n \times d}$ be defined as $a_{ij} \sim \mathcal{N}(0,1)$ iid. Then the matrix $\frac{1}{\sqrt{n}}A$ has $(s, \delta)$-RIP for $n$ at least $\mathcal{O}\left(\frac{1}{\delta^2}s \log{\frac{d}{s}}\right)$.
+\end{theorem}
+The same holds for sub-Gaussians. We have similar results for more structured matrices such as subsampled Fourier matrices.
+\begin{theorem}
+Let $A \in \R^{n \times d}$ be a subsampled Fourier matrix. Then $A$ has $(s, \delta)$-RIP for $n$ at least $\mathcal{O}\left(\frac{1}{\delta^2}s \log^2 s\log d\right)$.
+\end{theorem}
+This result is from \cite{DBLP:journals/corr/HavivR15a}. $\mathcal{O}\left(\frac{1}{\delta^2}s\log d\right)$ is conjectured but open.
+
+There is a lot more work on convex relaxations. For sparsity alone people have studied many variations e.g.
+\begin{itemize}
+    \item \textbf{Basic pursuit denoising (BPDN)} $\min \|x\|_1$ such that $\|Ax - y \|_2 \le \epsilon$
+    \item \textbf{Constrained LASSO} $\min \|Ax - y\|_2^2$ such that $\|x\|_1 \le \lambda$
+    \item \textbf{Lagrangian LASSO} $\min \|Ax - y\|_2^2 + \lambda \|x\|_1$
+\end{itemize}
+There are also convex relaxations for other constraints. For example $\min rank(X)$ such that $A(X)=Y$ is hard, a simpler problem is to solve the nuclear norm minimization instead: $\min \|X\|_*$ such that $A(X)=Y$. This can be applied to low-rank estimation for images or matrix completion.
