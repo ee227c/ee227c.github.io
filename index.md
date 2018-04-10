@@ -85,7 +85,7 @@ you spot any please send an email or pull request.
 | 20 | 3/22 | Derivative-free optimization, policy gradient, controls | --- | [ipynb](code/lecture20.html)   |
 | -- | 3/27 | No class (Spring break) |   |   |
 | -- | 3/29 | No class (Spring break) |   |   |
-| 21 | 4/3  | Guest lecture by Ludwig Schmidt on non-convex constraints | | |
+| 21 | 4/3  | Guest lecture by Ludwig Schmidt on non-convex constraints | [pdf](notes/ee227c-lecture21) | |
 | 22 | 4/5  | Guest lecture by Ludwig Schmidt on non-convex constraints | | |
 | | | **Part VI: Higher-order and interior point methods** | | |
 | 23 | 4/10 | Newton method |   |   |
