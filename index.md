@@ -89,7 +89,7 @@ you spot any please send an email or pull request.
 | 22 | 4/5  | Guest lecture by Ludwig Schmidt on non-convex constraints | | |
 | | | **Part VI: Higher-order and interior point methods** | | |
 | 23 | 4/10 | Newton method |   |   |
-| 24 | 4/12 | Ellipsoid method |   |   |
+| 24 | 4/12 | Second-order methods code | ---  | [ipynb](code/lecture24.html)  |
 | 25 | 4/17 | Interior point methods |   |   |
 | 25 | 4/19 | Interior point methods |   |   |
 | 26 | 4/24 | Sum of squares |   |   |
