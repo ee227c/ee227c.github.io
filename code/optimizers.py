@@ -55,3 +55,35 @@ def conditional_gradient(initial, steps, oracle, num_to_keep=None):
         if num_to_keep:
           xs = xs[-num_to_keep:]
     return xs
+
+
+def gss(f, a, b, tol=1e-5):
+    """Golden section search.
+
+        Source: https://en.wikipedia.org/wiki/Golden-section_search
+
+    Find the minimum of f on [a,b]
+
+    Parameters:
+    -----------
+        f: a strictly unimodal function on [a,b]
+        a: lower interval boundary
+        b: uper interval boundary
+
+    Returns:
+    --------
+        Point in the interval [a, b]
+    """
+    gr = 1.6180339887498949
+    c = b - (b - a) / gr
+    d = a + (b - a) / gr 
+    while abs(c - d) > tol:
+        if f(c) < f(d):
+            b = d
+        else:
+            a = c
+        # we recompute both c and d here to avoid loss of precision 
+        # which may lead to incorrect results or infinite loop
+        c = b - (b - a) / gr
+        d = a + (b - a) / gr
+    return (b + a) / 2
