@@ -16,7 +16,7 @@ When there is no noise in the linear equations, we can simplify the problem to
 \end{align*}
 
 \subsection{Hardness}
-Even this simplification is NP-hard, as we will show with a reduction to exact 3-cover, which is NP-complete.
+Even this simplification is NP-hard, as we will show with a reduction to exact 3-cover, which is NP-complete. Our proof is from \cite{foucart2013mathematical}.
 \begin{definition}
 The \textit{exact cover by 3-sets} problem is given a collection $\{T_i\}$ of 3-element subsets of $[n]$, does there exist an exact cover of $[n]$, a set $z \subseteq [d]$ such that $\cup_{j \in z} T_j = [n]$ and $T_i \cap T_j = \emptyset$ for $j \neq j' \in z$?
 \end{definition}
@@ -35,7 +35,7 @@ $l_0$-minimization for general $A$ and $y$ is NP-hard.
 Define matrix $A$ as
 \begin{align*}
     A_{ij} = \begin{cases}
-    1 & \text{if } j \in T_i \\
+    1 & \text{if } i \in T_j \\
     0 & \text{o.w}
     \end{cases}
 \end{align*}
@@ -100,13 +100,13 @@ The intuition is that $A$ acts like an isometry on sparse vectors (a true isomet
 \label{RIPlemma}
 If $A$ has $(s, \delta)$-RIP, then
 \[
-\|A_S^{\trans}A_S - I\|_2 \le \delta
+\|A_S^{\trans}A_S - I_S\|_2 \le \delta
 \]
 for all subsets $S$ of size $s$. Where
 
 \begin{align*}
     (A_S)_{ij} = \begin{cases}
-    A_{ij} & \text{if } i \in S \\
+    A_{ij} & \text{if } j \in S \\
     0 & \text{o.w}.
     \end{cases}
 \end{align*}
@@ -181,7 +181,7 @@ The same holds for sub-Gaussians. We have similar results for more structured ma
 \begin{theorem}
 Let $A \in \R^{n \times d}$ be a subsampled Fourier matrix. Then $A$ has $(s, \delta)$-RIP for $n$ at least $\mathcal{O}\left(\frac{1}{\delta^2}s \log^2 s\log d\right)$.
 \end{theorem}
-This result is from \cite{DBLP:journals/corr/HavivR15a}. $\mathcal{O}\left(\frac{1}{\delta^2}s\log d\right)$ is conjectured but open.
+This result is from \cite{DBLP:journals/corr/HavivR15a} using work from \cite{doi:10.1002/cpa.20227, Bourgain2014, DBLP:journals/tit/CandesT06}. $\mathcal{O}\left(\frac{1}{\delta^2}s\log d\right)$ is conjectured but open.
 
 There is a lot more work on convex relaxations. For sparsity alone people have studied many variations e.g.
 \begin{itemize}
