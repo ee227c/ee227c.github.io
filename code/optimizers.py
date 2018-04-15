@@ -1,6 +1,9 @@
 """Common optimizers."""
 
 
+import numpy as np
+
+
 def gradient_descent(init, steps, grad, proj=lambda x: x, num_to_keep=None):
     """Projected gradient descent.
     
@@ -87,3 +90,28 @@ def gss(f, a, b, tol=1e-5):
         c = b - (b - a) / gr
         d = a + (b - a) / gr
     return (b + a) / 2
+
+
+def random_search(oracle, init, num_steps, line_search=gss):
+    """Implements random search.
+
+    Parameters:
+    -----------
+        oracle: Function.
+        init: Point in domain of oracle.
+        num_steps: Number of iterations.
+        line_search: Line search method (defaults to golden section.)
+    
+    Returns:
+    --------
+        List of iterates.
+    """
+    
+    iterates = [init]
+    for _ in range(num_steps):
+        d = np.random.normal(0, 100, init.shape)
+        d /= np.linalg.norm(d)
+        x = iterates[-1]
+        eta = line_search(lambda step: oracle(x + step * d), -1, 1)
+        iterates.append(x + eta * d)
+    return iterates 

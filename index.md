@@ -81,8 +81,8 @@ you spot any please send an email or pull request.
 | | | **Part V: Non-convex problems** | | |
 | 17 | 3/13 | Non-convex problems | [pdf](notes/ee227c-lecture17.pdf)  | ---  |
 | 18 | 3/15 | Saddle points | [pdf](notes/ee227c-lecture18.pdf)  |   |
-| 19 | 3/20 | Alternating minimization and expectaction maximization |   |   |
-| 20 | 3/22 | Derivative-free optimization, policy gradient, controls | --- | [ipynb](code/lecture20.html)   |
+| 19 | 3/20 | Alternating minimization and expectaction maximization | ---  | [ipynb](code/lecture19.html) |
+| 20 | 3/22 | Derivative-free optimization, policy gradient, controls | --- | [ipynb](code/lecture20.html) |
 | -- | 3/27 | No class (Spring break) |   |   |
 | -- | 3/29 | No class (Spring break) |   |   |
 | 21 | 4/3  | Guest lecture by Ludwig Schmidt on non-convex constraints | [pdf](notes/ee227c-lecture21.pdf) | |
