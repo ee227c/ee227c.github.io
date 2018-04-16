@@ -86,7 +86,7 @@ you spot any please send an email or pull request.
 | -- | 3/27 | No class (Spring break) |   |   |
 | -- | 3/29 | No class (Spring break) |   |   |
 | 21 | 4/3  | Guest lecture by Ludwig Schmidt on non-convex constraints | [pdf](notes/ee227c-lecture21.pdf) | |
-| 22 | 4/5  | Guest lecture by Ludwig Schmidt on non-convex constraints | | |
+| 22 | 4/5  | Guest lecture by Ludwig Schmidt on non-convex constraints | | [ipynb](code/lecture22.html) |
 | | | **Part VI: Higher-order and interior point methods** | | |
 | 23 | 4/10 | Newton method |   |   |
 | 24 | 4/12 | Second-order methods code | ---  | [ipynb](code/lecture24.html)  |
