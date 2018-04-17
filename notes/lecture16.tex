@@ -136,7 +136,7 @@ We assume for simplicity that the computation graph has $L$ layers and edges exi
 \end{enumerate}
 
 \subsection{Working out an example}
-Suppose we have a batch of data $X \in \cR^{n \times d}$ with labels $y \in \cR^n$. Consider a two-layer neural net given by weights $W_1, W_2 \in \cR^{d \times d}: $
+Suppose we have a batch of data $X \in \R^{n \times d}$ with labels $y \in \R^n$. Consider a two-layer neural net given by weights $W_1, W_2 \in \R^{d \times d}: $
 \begin{align*}
 f(W_1,W_2) = \|\sigma(XW_1)W_2 -y\|^2
 \end{align*}
@@ -147,20 +147,25 @@ To compute gradients, we only need to implement forward/backward pass for the el
 \item Component-wise non-linearity $\sigma$
 \item Matrix multiplication
 \end{itemize}
-Observe that the partial derivatives for the first three operations are easy to compute. Hence, it suffices to focus on matrix multiplication. The two steps of the backpropagation algorithm in this context are:
-\\
-\textit{Forward Pass:}
+Observe that the partial derivatives for the first three operations are easy to compute. Hence, it suffices to focus on matrix multiplication. 
+
+\subsubsection*{Back-propagation for matrix completion}
+The two steps of the backpropagation algorithm in this context are:
+
+\paragraph{Forward Pass:}
+
 \begin{itemize}
-\item Input: $A \in \cR^{m \times n}, B \in \cR^{n \times d}$
-\item Output: $C = AB \in \cR^{m \times d}$
+\item Input: $A \in \R^{m \times n}, B \in \R^{n \times d}$
+\item Output: $C = AB \in \R^{m \times d}$
 \end{itemize}
-\textit{Backward Pass:}
+
+\paragraph{Backward Pass:}
 \begin{itemize}
-\item Input: Partial derivatives $\Lambda \in \cR^{m \times d}$ (also $A,B,C$ from forward pass)
+\item Input: Partial derivatives $\Lambda \in \R^{m \times d}$ (also $A,B,C$ from forward pass)
 \item Output:
  \begin{itemize}
-\item $\Lambda_1 \in \cR^{m \times n}$ (partial derivatives for left input)
-\item $\Lambda_2 \in \cR^{n \times d}$ (partial  derivatives for right input)
+\item $\Lambda_1 \in \R^{m \times n}$ (partial derivatives for left input)
+\item $\Lambda_2 \in \R^{n \times d}$ (partial  derivatives for right input)
 \end{itemize}
 \end{itemize}
 

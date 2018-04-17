@@ -68,7 +68,7 @@ you spot any please send an email or pull request.
 | 6 | 2/1 |  Discovering acceleration with Chebyshev polynomials | [pdf](notes/ee227c-lecture6.pdf)  | [ipynb](code/lecture6.html)  |
 | 7 | 2/6 | Nesterov's accelerated gradient descent  | [pdf](notes/ee227c-lecture7.pdf)  | ---  |
 | 8 | 2/8 | Eigenvalue intermezzo | [pdf](notes/ee227c-lecture8.pdf)  | ---  |
-| 9 | 2/13 | Lower bounds, robustness vs acceleration |   |   |
+| 9 | 2/13 | Lower bounds, robustness vs acceleration | [pdf](notes/ee227c-lecture9.pdf)  | [py](code/lecture9.py) |
 | | | **Part III: Stochastic optimization** | | |
 | 10 | 2/15 | Stochastc optimization | [pdf](notes/ee227c-lecture10.pdf)  | ---  |
 | 11 | 2/20 | Learning, regularization, and generalization | [pdf](notes/ee227c-lecture11.pdf)   | ---  |
@@ -79,17 +79,17 @@ you spot any please send an email or pull request.
 | 15 | 3/6 | Stochastic Dual Coordinate Ascent | [pdf](notes/ee227c-lecture15.pdf)  | ---  |
 | 16 | 3/8 | Backpropagation and adjoints | [pdf](notes/ee227c-lecture16.pdf) | --- |
 | | | **Part V: Non-convex problems** | | |
-| 17 | 3/13 | Non-convex problems |   |   |
-| 18 | 3/15 | Saddle points |   |   |
-| 19 | 3/20 | Alternating minimization and expectaction maximization |   |   |
-| 20 | 3/22 | Derivative-free optimization, policy gradient, controls |   |   |
+| 17 | 3/13 | Non-convex problems | [pdf](notes/ee227c-lecture17.pdf)  | ---  |
+| 18 | 3/15 | Saddle points | [pdf](notes/ee227c-lecture18.pdf)  |   |
+| 19 | 3/20 | Alternating minimization and expectaction maximization | ---  | [ipynb](code/lecture19.html) |
+| 20 | 3/22 | Derivative-free optimization, policy gradient, controls | --- | [ipynb](code/lecture20.html) |
 | -- | 3/27 | No class (Spring break) |   |   |
 | -- | 3/29 | No class (Spring break) |   |   |
-| 21 | 4/3  | Guest lecture by Ludwig Schmidt on non-convex constraints | | |
-| 22 | 4/5  | Guest lecture by Ludwig Schmidt on non-convex constraints | | |
+| 21 | 4/3  | Guest lecture by Ludwig Schmidt on non-convex constraints | [pdf](notes/ee227c-lecture21.pdf) | |
+| 22 | 4/5  | Guest lecture by Ludwig Schmidt on non-convex constraints | | [ipynb](code/lecture22.html) |
 | | | **Part VI: Higher-order and interior point methods** | | |
 | 23 | 4/10 | Newton method |   |   |
-| 24 | 4/12 | Ellipsoid method |   |   |
+| 24 | 4/12 | Second-order methods code | ---  | [ipynb](code/lecture24.html)  |
 | 25 | 4/17 | Interior point methods |   |   |
 | 25 | 4/19 | Interior point methods |   |   |
 | 26 | 4/24 | Sum of squares |   |   |
