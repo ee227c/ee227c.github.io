@@ -42,13 +42,13 @@ Graduate Instructor: Max Simchowitz\\
 	\end{definition}
 	\begin{enumerate}
 		\item Show that if $f$ is $2\alpha$-strongly convex, $\frac{1}{2\beta}$-smooth, then there exists a unique $x^* \in \R^n$ such that, for all $x \in \R^n$, $\nabla f(x)$ is $(\alpha,\beta,0)$-correlated with $x^*$. What is $x^*$?
-		\item Suppose that $f$ is possibly non-convex, but has a unique global minimizer $x^*$ such that the gradients $\nabla f(x)$ are $(\alpha,\beta,\epsilon)$-correlated with $x^*$. Fix an $x_0 \in \R^n$, and consider the update rule $x_t \leftarrow x_{t-1} - \eta \nabla f(x_{t-1})$. Prove that, for any $\eta \le \min\{2\beta,\frac{1}{2\alpha}\}$,
+		\item Suppose that $f$ is possibly non-convex, but has a unique global minimizer $x^*$ such that the gradients $\nabla f(x)$ are $(\alpha,\beta,\epsilon)$-correlated with $x^*$. Fix an $x_0 \in \R^n$, and consider the update rule $x_t \leftarrow x_{t-1} - \eta \nabla f(x_{t-1})$. Prove that, for any $0 \le \eta \le \min\{2\beta,\frac{1}{2\alpha}\}$,
 		\begin{eqnarray}
 		\|x_{t+1} - x^*\|_2^2 \le (1-2\alpha \eta)\|x_{t} - x^*\|_2^2 + 2\eta \epsilon
 		\end{eqnarray}
 		Conclude that 
 		\begin{eqnarray}
-		\|x_{t} - x^*\|_2^2 \le (1-2\alpha \eta)\|x_{0} - x^*\|_2^2 + \epsilon/\alpha
+		\|x_{t} - x^*\|_2^2 \le (1-2\alpha \eta)^t\|x_{0} - x^*\|_2^2 + \epsilon/\alpha
 		\end{eqnarray}
 		\item Consider the function $f(x) = g(x/\|x_2\|) \cdot \frac{1}{2}\|x\|_2^2$, where $g$ is a differentiable possibly, non-convex function, with such that, for all $x \in \spheren$, $0 < A \le g(x) \le B$ and $\|\nabla g(x)\|_2 \le M$. 
 		\begin{enumerate}
