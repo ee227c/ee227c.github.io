@@ -1,0 +1,216 @@
+\documentclass[12pt]{article}
+
+\usepackage{macros}
+
+\title{Problem Set 3 for EE227C (Spring 2018):\\
+ Convex Optimization and Approximation }
+\author{Instructor: Moritz Hardt\\
+{\small Email: \tt hardt+ee227c@berkeley.edu}\\ ~\\
+Graduate Instructor: Max Simchowitz\\
+{\small Email: \tt msimchow+ee227c@berkeley.edu}\\ ~\\
+}
+
+\newtheorem{prop}{Proposition}
+\begin{document}
+\setlist[enumerate,1]{leftmargin=25pt,label=\bf(\Alph*)}
+\setlist[enumerate,2]{label=\bf(\Alph{enumi}.\arabic*)}
+
+
+
+\maketitle
+
+In this homework we will prove the claims necessary for the convergence bound of
+the barrier method we saw in Lecture 25.
+
+\paragraph{Note:} This assignment might seem long, but that's due to lots of
+hints. So, don't be discouraged.
+
+\section*{Background}
+
+We collect some useful background material below. Feel free to consult
+additional resources on this topic.
+
+\paragraph{Barrier function.}
+Recall that we defined the modified objective $f_\epsilon\colon\R^n\to\R$ as
+\[
+f_\epsilon(x) = c^\trans x - \epsilon\sum_{j=1}^m \ln(A_j^\trans x - b_j)\,.
+\]
+Here, $A_j\in\R^n$ denotes the $j$-th row of $A$ in colunm form.
+Let $s_j(x)= A_j^\trans x-b_j$ and define the $m\times m$ diagonal matrix
+$S(x)=\mathrm{diag}(s_1(x),\dots,s_m(x)).$
+
+Denoting by $\vec{1}$ the all ones vector, we have
+\begin{align*}
+\nabla f_\epsilon(x) 
+&= c - \epsilon S(x)^{-1}A^\trans\vec{1}
+= c - \epsilon\sum_j \frac{A_j}{S_j(x)}\\
+\nabla^2 f_\epsilon(x) \,,
+& = \epsilon A^\trans S(x)^{-2} A
+= \epsilon \sum_j \frac{A_jA_j^\trans}{S_j(x)^2}\,,
+\end{align*}
+
+We will assume that the system $Ax\ge b$ is feasible, and that the rows of $A$
+span~$\R^n.$ The latter implies that $f_\epsilon$ is strongly convex. We will denote
+by
+\[
+x_\epsilon^\star=\arg\min_x f_\epsilon(x)\,,
+\]
+the unique minimizer for $f_\epsilon.$ Further, let $x^\star$ denote a minimizer
+of the original constrained problem $\min\{c^\trans x\mid Ax\ge b\}.$
+
+\paragraph{Newton decrement.}
+The central quantity $q(x,\epsilon)$ we needed for the analysis is defined as
+\[
+q(x, \epsilon)^2
+= \nabla f_\epsilon(x)^\trans
+\nabla^2 f_\epsilon(x)^{-1}\nabla f_\epsilon(x)\,.
+\]
+This is sometimes called \emph{Newton decrement}.
+
+For the remainder of this problem set, we fix $\epsilon>0$ and 
+assume that $x$ is a point satisfying
+$Ax>b,$ i.e., it is in the interior of the polytope $\{x\colon Ax\ge b\}.$
+Further we let $\bar x$ denote the outcome of taking a single Newton step
+starting from $x,$
+\[
+\bar x =  x-\nabla^2 f_\epsilon(x)^{-1}\nabla f(x)\,.
+\]
+We can also express $q(x,\epsilon)$ as a ``local norm'' defined by the Hessian
+applied to the Newton step
+$\delta=\nabla^2 f_\epsilon(x)^{-1}\nabla f(x)\,.$
+That is,
+\[
+q(x,\epsilon)=\|\delta\|_{\nabla^2
+f_{\epsilon}(x)}=\sqrt{\delta^\trans \nabla^2f_\epsilon(x)\delta}\,.
+\]
+
+\section{Problem 1}
+
+In class, we stated the following
+proposition.
+
+\begin{prop}
+Assume $Ax > b$ and $q(x,\epsilon)\le1/2.$ 
+Then, $c^\trans x - c^\trans x^\star\le O(\epsilon m).$
+\end{prop}
+
+\begin{enumerate}
+\item
+Prove that 
+\[
+c^\trans x_{\epsilon}^\star - c^\trans x^\star \le \epsilon m\,.
+\]
+This claim does not need the assumptions on~$x.$
+
+Hint: 
+Use the fact that the gradient of $f_\epsilon$ vanishes at $x_\epsilon^\star$ in
+order to get the upper bound $\sum_j
+(s_j(x_\epsilon^\star)-s_j(x^\star))/s_j(x_\epsilon^\star).$
+\item (Optional)
+Prove that 
+\[
+c^\trans x - c^\trans x_{\epsilon}^\star 
+\le O(\epsilon m)\,.
+\]
+\end{enumerate}
+%\begin{enumerate}
+%\item 
+%Show that $c^\trans x - c^\trans x_\epsilon^\star
+%\le \epsilon \sum_j s_j(x)/s_j(x_\epsilon^\star).$
+%\item 
+%Prove that $\sum_j s_j(x)/s_j(x_\epsilon^\star)=m.$
+%
+%Hint: Show that the function $r(x)=c^\trans x_\epsilon^\star -\epsilon\sum_j
+%s_j(x)/s_j(x_\epsilon^\star)$ is constant.
+%\end{enumerate}
+%\end{enumerate}
+
+
+\section*{Problem 2}
+
+In this problem you will show that Newton's method has quadratic convergence
+provided that $q(x,\epsilon)$ is small enough.
+
+\begin{prop}
+\label{prop:two}
+Assume $Ax>b$ and $q(x, \epsilon)\le 1/2.$ Then, the Newton iterate $\bar x$
+satisfies $A\bar x>b$ and $q(\bar x, \epsilon)\le q(x, \epsilon)^2.$
+\end{prop}
+
+\begin{enumerate}
+\item
+Prove that
+\[
+\nabla f_\epsilon(\bar x)
+=
+-\epsilon \sum_{j=1}^m \frac{A_j(A_j^\trans(\bar x - x))^2}{s_j(x)^2s_j(\bar x)}\,.
+\]
+Use the fact that $\bar x$ minimizes the second order approximation of
+$f_\epsilon$ at $x$ and hence $\nabla f_\epsilon(x)+ \nabla^2f_\epsilon(x)(\bar
+x-x)=0.$ Write out what this condition means and use it to derive the expression
+for the gradient at $\bar x.$
+
+\item
+Show that
+\[
+q(x, \epsilon)^2
+= \epsilon\sum_{j=1}^m \frac{(A_j^\trans(\bar x-x))^2}{s_j(x)^2}
+\]
+
+\item
+Find a norm $\|\cdot\|$ for which you can show for every vector $z,$
+\[
+z^\trans \nabla f_\epsilon(\bar x) 
+\le \|z\|\cdot q(x,\epsilon)^2\,.
+\]
+Use the previous steps and Cauchy-Schwarz. 
+
+\item
+Complete the proof by relating $q(\bar x, \epsilon)$
+and $\sup_z 
+\frac{z^\trans \nabla f_\epsilon(\bar x)}{\|z\|}\,.$
+\end{enumerate}
+
+
+\section*{Problem 3}
+
+Your goal is to prove the following proposition.
+
+\begin{prop}
+Assume $Ax>b$ and $q(x, \epsilon)\le1/2.$ Then, for
+$\bar\epsilon=\epsilon/(1+\delta)$ with $\delta=\frac14n^{-1/2},$ we have 
+$q(\bar x, \bar\epsilon)\le 1/2.$
+\end{prop}
+
+\begin{enumerate}
+\item
+Show that
+\[
+\nabla^2 f_{\bar\epsilon}(\bar x)^{-1}\nabla f_{\bar\epsilon}(\bar x)
+= \nabla^2 f_{\epsilon}(\bar x)^{-1}\nabla f_{\epsilon}(\bar x)
++ \delta \nabla^2 f_\epsilon(\bar x)^{-1}c\,.
+\]
+\item
+From the previous step, conclude that
+\[
+q(\bar x,\bar\epsilon)
+\le q(\bar x,\epsilon) + 
+\delta\|\nabla^2 f_\epsilon(\bar x)^{-1}c\|_{\nabla^2 f_\epsilon(\bar x)}
+\]
+\item
+Show that
+\[
+\|\nabla^2 f_\epsilon(\bar x)^{-1}c\|_{\nabla^2 f_\epsilon(\bar x)}
+\le \sqrt{m}\,.
+\]
+Hint: Relate the expression in the left hand side to a projection operator
+applied to the all ones vector.
+\item
+Complete the proof by putting together the previous steps and applying
+Proposition~\ref{prop:two}.
+\end{enumerate}
+
+
+
+
+\end{document}

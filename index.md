@@ -64,7 +64,7 @@ you spot any please send an email or pull request.
 | 3 | 1/23 | Gradient method (strongly convex) | [pdf](notes/ee227c-lecture3.pdf)  | --- |
 | 4 | 1/25 | Some applications of gradient methods | [pdf](notes/ee227c-lecture4.pdf)  | [ipynb](code/lecture4.html)  |
 | 5 | 1/30 | Conditional gradient (Frank-Wolfe algorithm) | [pdf](notes/ee227c-lecture5.pdf)  | [ipynb](code/lecture5.html)  |
-| | | **Part II: Krylov methods** | | |
+| | | **Part II: Krylov methods and acceleration** | | |
 | 6 | 2/1 |  Discovering acceleration with Chebyshev polynomials | [pdf](notes/ee227c-lecture6.pdf)  | [ipynb](code/lecture6.html)  |
 | 7 | 2/6 | Nesterov's accelerated gradient descent  | [pdf](notes/ee227c-lecture7.pdf)  | ---  |
 | 8 | 2/8 | Eigenvalue intermezzo | [pdf](notes/ee227c-lecture8.pdf)  | ---  |
@@ -90,12 +90,12 @@ you spot any please send an email or pull request.
 | | | **Part VI: Higher-order and interior point methods** | | |
 | 23 | 4/10 | Newton method |   |   |
 | 24 | 4/12 | Second-order methods code | ---  | [ipynb](code/lecture24.html)  |
-| 25 | 4/17 | Interior point methods |   |   |
-| 25 | 4/19 | Interior point methods |   |   |
-| 26 | 4/24 | Sum of squares |   |   |
-| 27 | 4/26 | Last lecture |   |   |
-| 28 | 5/1 | Reading, review, recitation |   |   |
-| 29 | 5/3 | Reading, review, recitation |   |   |
+| 25 | 4/17 | Barrier methods |   |   |
+| 26 | 4/19 | Primal-dual interior point methods |   |   |
+| 27 | 4/24 | Sum of squares |   |   |
+| 28 | 4/26 | Last lecture |   |   |
+| 29 | 5/1 | Reading, review, recitation |   |   |
+| 30 | 5/3 | Reading, review, recitation |   |   |
 
 ## Background
 
