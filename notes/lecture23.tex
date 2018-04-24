@@ -23,7 +23,7 @@ $$x_{t+1} = x_t - J_F^{-1}(x_t)F(x_t)$$
 Given $f : \R \rightarrow \R$, Newton's Method applies this update to $F(x) = \nabla f(x) = 0$. It uses the update rule
 $$x_{t+1} = x_t - \nabla^2 f(x_t)^{-1} \nabla f(x_t)$$
 Equivalently to setting the first order Taylor expansion of the gradient to 0, a Newton step minimizes the second order Taylor approximation
-$$f(x) \approx f(x_t) + \nabla f(x_t)^T (x - x_t) + \frac{1}{2} (x - x_t)^T \nabla^2 f(x_t) (x - x_t)$$
+$$f(x) \approx f(x_t) + \nabla f(x_t) ^\trans (x - x_t) + \frac{1}{2} (x - x_t) ^\trans \nabla^2 f(x_t) (x - x_t)$$
 \\
 Now, we will show that Newton's Method converges to a local minimum, given a starting point that is within a neighborhood of that point.
 \begin{theorem}
