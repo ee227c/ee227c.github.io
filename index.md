@@ -63,10 +63,8 @@ you spot any please send an email or pull request.
 | 18 | 3/15 | Saddle points | [pdf](notes/ee227c-lecture18.pdf)  |   |
 | 19 | 3/20 | Alternating minimization and expectaction maximization | ---  | [ipynb](code/lecture19.html) |
 | 20 | 3/22 | Derivative-free optimization, policy gradient, controls | --- | [ipynb](code/lecture20.html) |
-| -- | 3/27 | No class (Spring break) |   |   |
-| -- | 3/29 | No class (Spring break) |   |   |
-| 21 | 4/3  | Guest lecture by Ludwig Schmidt on non-convex constraints | [pdf](notes/ee227c-lecture21.pdf) | |
-| 22 | 4/5  | Guest lecture by Ludwig Schmidt on non-convex constraints | | [ipynb](code/lecture22.html) |
+| 21 | 4/3  | Non-convex constraints I (guest lecture by Ludwig Schmidt) | [pdf](notes/ee227c-lecture21.pdf) | |
+| 22 | 4/5  | Non-convex constraints II (guest lecture by Ludwig Schmidt) | | [ipynb](code/lecture22.html) |
 | | | **Part VI: Higher-order and interior point methods** | | |
 | 23 | 4/10 | Newton method |   |   |
 | 24 | 4/12 | Experimenting with second-order methods | ---  | [ipynb](code/lecture24.html)  |
