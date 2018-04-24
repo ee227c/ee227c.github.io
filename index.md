@@ -92,8 +92,8 @@ you spot any please send an email or pull request.
 | 24 | 4/12 | Second-order methods code | ---  | [ipynb](code/lecture24.html)  |
 | 25 | 4/17 | Barrier methods |   |   |
 | 26 | 4/19 | Primal-dual interior point methods |   |   |
-| 27 | 4/24 | Sum of squares |   |   |
-| 28 | 4/26 | Last lecture |   |   |
+| 27 | 4/24 | Ellipsoid method |   |   |
+| 28 | 4/26 | Submodular functions, Lovasz extension |   |   |
 | 29 | 5/1 | Reading, review, recitation |   |   |
 | 30 | 5/3 | Reading, review, recitation |   |   |
 
