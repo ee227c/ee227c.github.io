@@ -37,16 +37,7 @@ Course notes will be publicly available. Participants will
 collaboratively create and maintain notes over the course of the semester
 using git. See [this
 repository](https://github.com/ee227c/ee227c.github.io/tree/master/notes) for
-source files. Most lectures will have an accompanying Jupyter notebook
-containing plots and illustrative examples.
-
-### [Sign up for scribing here](https://docs.google.com/spreadsheets/d/1OSW_Yznt80k40Zmf6MVRvz3wT-An0XFbNkEEWNbEjNE/edit?usp=sharing)
-
-All three scribes should collaborate to provide a *single* tex file as seen
-[here](https://github.com/ee227c/ee227c.github.io/tree/master/notes).
-Students are required to closely follow [these instructions](https://github.com/ee227c/ee227c.github.io/blob/master/notes/instructions.pdf). 
-
-We suggest that each scribe takes down notes, and then all three meet after class to consolidate. 
+source files. 
 
 ### [All available lecture notes (pdf)](notes/ee227c-notes.pdf)
 
@@ -97,18 +88,24 @@ you spot any please send an email or pull request.
 | 29 | 5/1 | Reading, review, recitation |   |   |
 | 30 | 5/3 | Reading, review, recitation |   |   |
 
+### [Sign up for scribing here](https://docs.google.com/spreadsheets/d/1OSW_Yznt80k40Zmf6MVRvz3wT-An0XFbNkEEWNbEjNE/edit?usp=sharing)
+
+All three scribes should collaborate to provide a *single* tex file as seen
+[here](https://github.com/ee227c/ee227c.github.io/tree/master/notes).
+Students are required to closely follow [these instructions](https://github.com/ee227c/ee227c.github.io/blob/master/notes/instructions.pdf). 
+
+We suggest that each scribe takes down notes, and then all three meet after class to consolidate. 
+
+
 ## Background
 
 The prerequisites are previous coursework in linear algebra, multivariate
-calculus, probability and statistics. 
-Coursework or background in optimization theory as covered in
-EE227BT is highly recommended.  The class will involve some basic programming.
-Students are encouraged to use either [Julia](https://julialang.org) or Python.
-We discourage the use of MATLAB.
+calculus, probability and statistics.  Coursework or background in optimization
+theory as covered in EE227BT is highly recommended.  The class will involve some
+basic programming.  Students are encouraged to use either
+[Julia](https://julialang.org) or Python.  We discourage the use of MATLAB.
 
 ## Material
-
-### Textbooks
 
 * Nonlinear Programming (3rd edition). D. Bertsekas, Athena Scientific.
 * Numerical Optimization. J. Nocedal and S. J. Wright, Springer Series in Operations Research, Springer-Verlag, New York, 2006 (2nd edition).
@@ -117,17 +114,6 @@ Cambridge, 2003. [PDF available here](http://www.stanford.edu/~boyd/cvxbook/)
 * Introductory Lectures on Convex Optimization: A Basic Course. Y. Nesterov. Kluwer, 2004.
 * Convex Optimization: Algorithms and Complexity. S. Bubeck. [PDF available here](https://arxiv.org/abs/1405.4980)
 * Nonlinear Programming D. P. Bertsekas. Athena Scientific, Belmont, Massachusetts. (2nd edition). 1999. 
-*  Participants will furthermore have access to a yet unpublished optimization text
-called *Nonlinear Optimization for Machine Learning: New Shit Has Come to
-Light*.
-
-### Lecture notes
-
 * Efficient Methods in Convex Programming. A. Nemirovski. Lecture Notes as
 [PDF available here](http://www2.isye.gatech.edu/~nemirovs/Lect_EMCO.pdf).
 
-### Blog posts
-
-* [The Zen of Gradient Descent](http://blog.mrtz.org/2013/09/07/the-zen-of-gradient-descent.html) Moritz Hardt
-* [Why Momentum Really Works](https://distill.pub/2017/momentum/) Gabriel Goh.
-* [Robustness versus Acceleration](http://blog.mrtz.org/2014/08/18/robustness-versus-acceleration.html) Moritz Hardt
