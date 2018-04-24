@@ -19,17 +19,6 @@ paying attention to concerns about complexity, robustness, and implementation in
 these domains. We will also see how tools from convex optimization can help
 tackle non-convex optimization problems common in practice.
 
-## Assignments 
-
-Assignments will be posted on
-[Piazza](https://piazza.com/berkeley/spring2018/ee227c/home). If you haven't
-already, [sign up here](https://piazza.com/berkeley/spring2018/ee227c).
-Homeworks will be assigned roughly every two weeks, and 2--3 problems will be selected for grading (we will not tell you which ones in advance). Assignments should be submitted through [GradeScope](https://gradescope.com); the course is listed as EE227C, which you may join with entry code 9P5NDV. *All homeworks should be latexed.* Students will be permitted two unexcused late assignments (up to a week late). Students requesting additional extensions should email Max.
-
-## Grading
-
-Grading policy: 50% homeworks, 10% scribing, 20% midterm exam, 20% final exam. 
-
 
 ## Course notes
 
@@ -95,6 +84,18 @@ All three scribes should collaborate to provide a *single* tex file as seen
 Students are required to closely follow [these instructions](https://github.com/ee227c/ee227c.github.io/blob/master/notes/instructions.pdf). 
 
 We suggest that each scribe takes down notes, and then all three meet after class to consolidate. 
+
+## Assignments 
+
+Assignments will be posted on
+[Piazza](https://piazza.com/berkeley/spring2018/ee227c/home). If you haven't
+already, [sign up here](https://piazza.com/berkeley/spring2018/ee227c).
+Homeworks will be assigned roughly every two weeks, and 2--3 problems will be selected for grading (we will not tell you which ones in advance). Assignments should be submitted through [GradeScope](https://gradescope.com); the course is listed as EE227C, which you may join with entry code 9P5NDV. *All homeworks should be latexed.* Students will be permitted two unexcused late assignments (up to a week late). Students requesting additional extensions should email Max.
+
+## Grading
+
+Grading policy: 50% homeworks, 10% scribing, 20% midterm exam, 20% final exam. 
+
 
 
 ## Background
