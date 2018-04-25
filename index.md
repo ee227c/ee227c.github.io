@@ -66,7 +66,7 @@ you spot any please send an email or pull request.
 | 21 | 4/3  | Non-convex constraints I (guest lecture by Ludwig Schmidt) | [pdf](notes/ee227c-lecture21.pdf) | |
 | 22 | 4/5  | Non-convex constraints II (guest lecture by Ludwig Schmidt) | | [ipynb](code/lecture22.html) |
 | | | **Part VI: Higher-order and interior point methods** | | |
-| 23 | 4/10 | Newton method |   |   |
+| 23 | 4/10 | Newton's method | [pdf](notes/ee227c-lecture23.pdf)  | --- |
 | 24 | 4/12 | Experimenting with second-order methods | ---  | [ipynb](code/lecture24.html)  |
 | 25 | 4/17 | Barrier methods |   |   |
 | 26 | 4/19 | Primal-dual interior point methods |   |   |
