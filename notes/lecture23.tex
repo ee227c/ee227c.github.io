@@ -1,10 +1,8 @@
 \section{Lecture 23: Newton's Method}
 Up until now, we have only considered first order  methods to optimize functions. Now, we will utilize second order information to achieve a faster rate of convergence.
-\\
-\\
+
 As always, our objective is to minimize a function $f : \R^d \rightarrow \R$. The basic idea of Newton's Method is to set the first-order Taylor expansion of the gradient to zero: $F(x) = \nabla f(x) = 0$. This leads to an iterative update step that will (under certain conditions) lead to a significantly faster convergence rate than gradient descent methods.
-\\
-\\
+
 To illustrate the point, consider a single variable function $\varphi:\R \rightarrow \R$. Our goal is to solve the non-linear equation $\varphi(x) = 0$. From Taylor's theorem, we can express the first-order form of $\varphi(x)$ as
 $$\varphi(x) = \varphi(x_0) + \varphi'(x) \cdot (x-x_0) + o(\abs{x-x_0})$$
 given $\delta = x - x_0$ we equivalently have that
@@ -12,19 +10,18 @@ $$\varphi(x_0 + \delta) = \varphi(x_0) + \varphi'(x) \cdot \delta + o(\abs{\delt
 Disregarding the $o(\abs{\delta})$ term, we solve (over $\delta$) the following objective: $$\varphi(x_0) + \varphi'(x_0) \delta = 0$$
 Then, $\delta = -\frac{\varphi(x_0)}{\varphi'(x_0)}$, leading to the iteration 
 $x_{t+1} = x_t - \frac{\varphi(x_t)}{\varphi'(x_t)}$.
-\\
-\\
-We cam similarly make an argument for a multi variable function $F: \R^d \rightarrow \R$. Our goal is to solve $F(x) = 0$. Again, from Taylor's theorem we have that
+
+We can similarly make an argument for a multi variable function $F: \R^d \rightarrow \R$. Our goal is to solve $F(x) = 0$. Again, from Taylor's theorem we have that
 $$F(x + \Delta) = F(x) +  J_F(x) \Delta + o(\| \Delta\|)$$
 where $J_F$ is the Jacobian. This gives us
 $\Delta = -J_F^{-1}(x)F(x)$, and the iteration
 $$x_{t+1} = x_t - J_F^{-1}(x_t)F(x_t)$$
-\\
+
 Given $f : \R \rightarrow \R$, Newton's Method applies this update to $F(x) = \nabla f(x) = 0$. It uses the update rule
 $$x_{t+1} = x_t - \nabla^2 f(x_t)^{-1} \nabla f(x_t)$$
 Equivalently to setting the first order Taylor expansion of the gradient to 0, a Newton step minimizes the second order Taylor approximation
 $$f(x) \approx f(x_t) + \nabla f(x_t) ^\trans (x - x_t) + \frac{1}{2} (x - x_t) ^\trans \nabla^2 f(x_t) (x - x_t)$$
-\\
+
 Now, we will show that Newton's Method converges to a local minimum, given a starting point that is within a neighborhood of that point.
 \begin{theorem}
 Given $f: \R^d \rightarrow \R$ and assuming that
@@ -44,7 +41,7 @@ x_{t+1} - x^* &= x_t - x^* - \nabla^2 f(x_t)^{-1} \nabla f(x_t) \\
 \end{align*}
 This implies that
 $$\|x_{t+1} - x^* \| \leq \underbrace{\| \nabla^2 f(x_t)^{-1} \|}_{\text{Goal: show $\leq \frac{2}{\alpha}$}} \cdot \underbrace{\|\nabla^2 f(x_t)(x_t - x^*) - (\nabla f(x_t) - \nabla f(x^*))\|}_{\text{Goal: show $\leq \frac{1}{2} \| x^t - x^* \|^2$}}$$
-\\
+
 First, let's bound the second term $\|\nabla^2 f(x_t)(x_t - x^*) - (\nabla f(x_t) - \nabla f(x^*))\|$.
 Applying the integral remainder form of Taylor's theorem to $\nabla f(x_t)$ we have that
 $$\nabla f(x_t) - \nabla f(x^*) = \int_{0}^{1} \nabla^2 f(x_t + \gamma (x^* - x_t)) \cdot (x_t - x^*) d\gamma$$
@@ -56,15 +53,14 @@ We therefore have that
 &\leq \left( \int_{0}^{1} \gamma d\gamma \right) \|x_t - x^*\|^2 \tag{$\nabla^2 f(x_t)$ is Lipschitz}\\
 &= \frac{1}{2}\|x_t - x^*\|^2
 \end{align*}
-\\
+
 Now, let's bound the first term $\|\nabla^2 f(x_t)^{-1}\|$. By the Wielandt-Hoffman Theorem,
 \begin{align*}
 \abs{\lambda_{min}(\nabla^2 f(x_t)) - \lambda_{min}(\nabla^2 f(x^*))} &\leq \|\nabla^2 f(x_t) - \nabla^2 f(x^*) \| \\
 &\leq \|x_t - x^*\| \tag{$\nabla^2 f(x_t)$ is Lipschitz}
 \end{align*}
 Thus, for $\|x_t - x^*\| \leq \frac{\alpha}{2}$ and given that $\nabla^2 f(x^*) \succeq \alpha I$, this implies that $\lambda_{min}(\nabla^2 f(x_t)) \geq \frac{\alpha}{2}$. Hence, $\| \nabla^2 f(x_t)^{-1} \| \leq \frac{2}{\alpha}$.
-\\
-\\
+
 Putting the two bounds together, we have that
 $$\|x_{t+1} - x^*\| \leq \frac{2}{\alpha} \cdot \frac{1}{2} \|x_t - x^*\|^2 = \frac{1}{\alpha} \|x_t - x^*\|^2$$
 \end{proof}
@@ -95,10 +91,10 @@ Note the similarity between underdamped, critically damped, and overdamped dynam
 \end{align*}
 $\eta_t$ can be chosed by backtracking line search. Usually though $\eta = 1$ is a good first choice since, if you are in a region of convergence, you are guaranteed quadratic convergence.
 
-\subsection{Quasi--Newton Methods}
-Comparing Gradient Descent and Newton's method side by side:
+\subsection{Quasi-Newton Methods}
+Comparing gradient descent and Newton's method side by side:
 \begin{enumerate}
-    \item Gradient Descent
+    \item gradient descent
     \begin{align*}
         x_{t+1} = x_t - \eta_t \nabla f(x_t)
     \end{align*}
@@ -107,18 +103,18 @@ Comparing Gradient Descent and Newton's method side by side:
         x_{t+1} = x_t - \nabla^2 f(x_t)^{-1} \nabla f(x_t)
     \end{align*}
 \end{enumerate}
-we see that gradient descent approximates $\nabla^2 f(x_t)^{_1}$ as a scaled version of the identity. That is, gradient descent is equivalent to Newton's method when $\nabla^2 f(x_t)^{-1} = \eta_t I$ where $I$ is the identity matrix. Quasi--newton methods take the analogy a step further by approximating the Hessian by some other matrix. The idea in doing so is to avoid an expensive matrix inversion at each step. What we want is an approximation
+We see that gradient descent approximates $\nabla^2 f(x_t)^{-1}$ as a scaled version of the identity. That is, gradient descent is equivalent to Newton's method when $\nabla^2 f(x_t)^{-1} = \eta_t I$ where $I$ is the identity matrix. Quasi--newton methods take the analogy a step further by approximating the Hessian by some other matrix. The idea in doing so is to avoid an expensive matrix inversion at each step. What we want is an approximation
 \begin{align*}
     \hat{f}_{B_t}(x) \approx f(x_t) + \nabla f(x_t)^\trans (x - x_t) + \dfrac{1}{2} (x-x_t)B_t^{-1} (x-x_t)
 \end{align*}
-such that
+such that:
 \begin{enumerate}
     \item $\nabla \hat{f}_{B_t} (x_t) = \nabla f(x_t)$.\\
     It seems reasonable that our approximation should be the same up to first order. 
     \item $\nabla \hat{f}_{B_t} (x_{t-1}) = \nabla f(x_{t-1})$\\
     This condition states that the gradient should still be correct at the previous iterate.
 \end{enumerate}
- If the two last gradients are correct, we can expect our Hessian approximation to be reasonable along the direction $x_t - x_{t-1}$. This is called a \emph{Secant Approximation} which can be written as 
+ If the two last gradients are correct, we can expect our Hessian approximation to be reasonable along the direction $x_t - x_{t-1}$. This is called a \emph{secant approximation} which can be written as 
  \begin{align*}
      \nabla \hat{f}_{B_t} (x_{t+1}) = \nabla f(x_t) - B_t^{-1}(x_{t+1} - x_t)
  \end{align*}
