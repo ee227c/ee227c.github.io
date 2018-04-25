@@ -1,24 +1,35 @@
-\section{Lecture 25: Interior Point Method}
-In last lecture, we have discussed Newton's method. One advantage is its fast local convergence rate. However, there is no guarantee on global convergence for Newton's method. In this lecture, we'll introduce interior point method, which can be considered as an extension of Newton's method to ensure global convergence. First, the idea of interior point method will be introduced for general constrained optimization problems. Then the detailed algorithm and its convergence will be explained for linear programming. 
-\subsection{Barrier Methods}
-We'll first introduce barrier methods which convert the inequality constraints into a function added to objective function of a optimization problem. Consider the following optimization problem: 
-\begin{equation}
-\begin{aligned}
-&\min_x & {f(x)}\\
-&\qquad\text{s.t.} &x&\in{\domain},\\
-& &g_j(x)&\leqslant{0},\ j=1,2,\cdots,r,\\
-\end{aligned}
-\end{equation}
-where $f:\R^n\rightarrow\R$, $g_j:\R^n\rightarrow\R$ are given functions. The function~$f$ is continuous, and $\domain$ is a closed set. For the rest of the lecture, we assume convex $g_j$ and $\domain=\R^n$. And we denote $x^*$ as the optimal solution of the problem.
+\section{Lecture 25: Interior point methods}
+In last lecture, we discussed Newton's method. Although it enjoyes a fast local
+convergence guarantee, global convergence of Newton's method is not guaranteed. 
+In this lecture, we'll introduce interior point methods, which can be thought of
+as an extension of Newton's method to ensure global convergence.  We will first
+introduce the main idea of \emph{barrier methods} at great generality, before we
+specialize our analysis to linear pogramming.
+
+\subsection{Barrier methods}
+Barrier methods replace inequality constraints with a so-called \emph{barrier}
+function that is added to objective function of the optimization problem. 
+Consider the following optimization problem: 
+\begin{align*}
+\min_x  &\quad f(x)\\
+\text{s.t.} &\quad x\in{\domain},\\
+&\quad g_j(x)\leqslant{0}\,,\qquad j=1,2,\cdots,r\,,
+\end{align*}
+where $f:\R^n\rightarrow\R$, $g_j:\R^n\rightarrow\R$ are given functions. 
+The function~$f$ is continuous, and $\domain$ is a closed set. For the rest of the lecture, we assume convex $g_j$ and $\domain=\R^n$. And we denote $x^*$ as the optimal solution of the problem.
 
 \begin{definition}[Interior of the constraint region]
 The interior (relative to $\domain$) of the constraint region is defined as $S=\{x\in\domain:g_j(x)<0,\ j=1,2,\cdots,r\}$. 
 \end{definition}
 
-Assuming nonempty and convex $S$, we define a so-called barrier function $B(x)$ defined on $S$, such that $B(x)$ is continuous and $\lim_{g_j(x)\rightarrow{0_{\_}}}B(x)=\infty$. Two most common examples are logarithmic barrier function and inverse barrier function: 
+Assuming nonempty and convex $S$, we define a so-called barrier function $B(x)$
+defined on $S$, such that $B(x)$ is continuous the function blows up as we
+approach the boundary of the constraint region. More formally,
+$\lim_{g_j(x)\rightarrow{0_{\_}}}B(x)=\infty$. Two most common examples are
+logarithmic barrier function and inverse barrier function: 
 \begin{align}
 \text{Logarithmic:}\qquad B(x) &= -\sum_{j=1}^{r}\ln\{-g_j(x)\}\\
-\text{inverse:}\qquad B(x) &= -\sum_{j=1}^{r}\frac{1}{g_j(x)}.
+\text{Inverse:}\qquad B(x) &= -\sum_{j=1}^{r}\frac{1}{g_j(x)}.
 \end{align}
 Both of them are convex if all $g_j(x)$ are convex. 
 
@@ -29,7 +40,11 @@ Both of them are convex if all $g_j(x)$ are convex.
 \label{fig:barrier}
 \end{figure}
 
-Given $B(x)$, define a new cost function $f_\epsilon(x)=f(x)+\epsilon{B(x)}$, where $\epsilon$ is a positive real number. Then we can eliminate the inequality constraints in the original problem and obtain the following problem: 
+Given a barrier function $B(x)$, define a new cost function
+$f_\epsilon(x)=f(x)+\epsilon{B(x)}$, where $\epsilon$ is a positive real number.
+Then we can eliminate the inequality constraints in the original problem and
+obtain the following problem: 
+%
 \begin{equation}
 \begin{aligned}
 &\min_x & {f_\epsilon(x)}\\
@@ -38,7 +53,15 @@ Given $B(x)$, define a new cost function $f_\epsilon(x)=f(x)+\epsilon{B(x)}$, wh
 \end{equation}
 The form of the barrier term $\epsilon{B(x)}$ is illustrated in Figure \ref{fig:barrier}.
 
-The barrier method is defined by introducing a sequence $\{\epsilon_t\}$ such that $0<\epsilon_{t+1}<\epsilon_t$ for $t=0,1,2,...$ and $\epsilon_t\rightarrow{0}$. Then we find a sequence $\{x_t\}$ such that $x_t\in{\arg \min_{x\in{S}}}f_{\epsilon_t}(x)$. Note that the barrier term $\epsilon_t{B(x)}$ goes to zero for all interior points $x\in{S}$ as $\epsilon_t\rightarrow{0}$, allowing $x_t$ to get increasingly closer to the boundary. Therefore, intuitively, $x_t$ should approach $x^*$ no matter $x^*$ is in the interior or on the boundary of $S$. Its convergence is formalized in the following proposition. 
+The barrier method is defined by introducing a sequence $\{\epsilon_t\}$ such
+that $0<\epsilon_{t+1}<\epsilon_t$ for $t=0,1,2,...$ and
+$\epsilon_t\rightarrow{0}$. Then we find a sequence $\{x_t\}$ such that
+$x_t\in{\arg \min_{x\in{S}}}f_{\epsilon_t}(x)$. Note that the barrier term
+$\epsilon_t{B(x)}$ goes to zero for all interior points $x\in{S}$ as
+$\epsilon_t\rightarrow{0}$, allowing $x_t$ to get increasingly closer to the
+boundary. Therefore, intuitively, $x_t$ should approach $x^*$ no matter $x^*$ is
+in the interior or on the boundary of $S$. Its convergence is formalized in the
+following proposition. 
 
 \begin{proposition}
 Every limit point of a sequence $\{x_t\}$ generated by a barrier method is a global minimum of the original constrained problem. 
@@ -47,9 +70,17 @@ Every limit point of a sequence $\{x_t\}$ generated by a barrier method is a glo
 See Proposition 5.1.1 of \cite{bertsekas2016nonlinear}.
 \end{proof}
 
-As $\domain=\R^n$, Newton's method can be applied with properly selected stepsize to ensure that all iterates lies in $S$. Concretely, an initial interior point can be obtained for some large $\epsilon_0$. Then in each iteration, we can use $x_t$ as an initialization to find $x_{t+1}$ by Newton's method. When $\epsilon_0$ is large, it is easier to find a interior point. And since $x_t$ is close to $x_{t+1}$, it is likely that $x_t$ is in the local convergence region for Newton's method. Therefore, intuitively, global convergence of Newton's method can be enabled by using barrier methods.
+As $\domain=\R^n$, Newton's method can be applied with properly selected
+stepsize to ensure that all iterates lies in $S$. Concretely, an initial
+interior point can be obtained for some large $\epsilon_0$. Then in each
+iteration, we can use $x_t$ as an initialization to find $x_{t+1}$ by Newton's
+method. When $\epsilon_0$ is large, it is easier to find a interior point. And
+since $x_t$ is close to $x_{t+1}$, it is likely that $x_t$ is in the local
+convergence region for Newton's method. Therefore, intuitively, global
+convergence of Newton's method can be enabled by using barrier methods.
 
-\subsection{Linear Programming}
+\subsection{Linear programming}
+
 We'll now adopt the logarithmic barrier method to solve the linear programming (LP) problem defined as follows:
 \begin{equation}
 \label{eq:LP_def}
@@ -74,11 +105,13 @@ The optimal point $x^*_\epsilon$ exists and is unique for any $\epsilon>0$.
 \begin{proof}
 We can easily check that $f_\epsilon(x)$ is convex (as a sum of two convex functions). Therefore, the minimizer $x^*_\epsilon$ must exist and is unique.
 
-\textit{Remark}: For the convexity of $f_\epsilon$, we can also check the second-order derivative, which is positive definite as shown in (\ref{eq:hessian_f_eps}) later.
+To show the convexity of $f_\epsilon$, we can check the second-order derivative,
+which is positive definite as shown in \eqref{eq:hessian_f_eps} later.
 \end{proof}
 
-\subsubsection{Central Path}
-The central path of the LP problem in \ref{eq:LP_def} is depicted by the set of $\left\{x^*_\epsilon|\epsilon>0\right\}$, as shown in Fig.~\ref{fig:central_path}.
+\subsubsection{Central path}
+The central path of the LP problem in \ref{eq:LP_def} is depicted by the set of
+$\left\{x^*_\epsilon|\epsilon>0\right\}$, as shown in \figureref{fig:central_path}.
 \begin{figure}[h!]
 \centering
 \begin{tikzpicture}
@@ -91,7 +124,8 @@ The central path of the LP problem in \ref{eq:LP_def} is depicted by the set of 
 \caption{The central path\label{fig:central_path}}
 \end{figure}
 
-Our goal is to design an algorithm that will approximately follow the central path. Assume that we already get a "good" enough initial point, then at every step, we apply one step of Newton's method. To guarantee that the algorithm converges, we need to answer the following two questions:
+Our goal is to design an algorithm that will approximately follow the central
+path. Assume that we already have a ``good enough'' initial point, then at every step, we apply one step of Newton's method. To guarantee that the algorithm converges, we need to answer the following two questions:
 \begin{itemize}
 \item Under what conditions does the single-step Newton method work?
 \item How should we update $\epsilon$?
@@ -125,9 +159,10 @@ Note that the Newton decrement also relates to the difference between $f_\epsilo
 &=&\dfrac{1}{2}\nabla f^\trans_\epsilon(x)[\nabla^2f_\epsilon(x)]^{-1}\nabla f_\epsilon(x)\triangleq \dfrac{1}{2}q^2(x, \epsilon).
 \end{eqnarray}
 
-We'll then use Newton decrement to find out the conditions for convergence guarantee of the algorithm. 
+We'll then use Newton decrement to find out the conditions for convergence
+guarantee of the algorithm. 
 
-\subsubsection{Algorithm with Convergence Guarantee}
+\subsubsection{An update rule and its convergence guarantee}
 We'll now come up with an update rule that can guarantee convergence if some initial conditions are satisfied. To develop the update rule, we first introduce the following propositions. 
 \begin{proposition}\label{prop1}
 Assume $Ax > b$ and $q(x, \epsilon)<1$, then we have
