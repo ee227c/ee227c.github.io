@@ -68,7 +68,7 @@ you spot any please send an email or pull request.
 | | | **Part VI: Higher-order and interior point methods** | | |
 | 23 | 4/10 | Newton's method | [pdf](notes/ee227c-lecture23.pdf)  | --- |
 | 24 | 4/12 | Experimenting with second-order methods | ---  | [ipynb](code/lecture24.html)  |
-| 25 | 4/17 | Barrier methods | [pdf](notes/ee227c-lecture25.pdf)  |   |
+| 25 | 4/17 | Enter interior point methods | [pdf](notes/ee227c-lecture25.pdf) | ---  |
 | 26 | 4/19 | Primal-dual interior point methods |   |   |
 | 27 | 4/24 | Ellipsoid method |   |   |
 | 28 | 4/26 | Submodular functions, Lovasz extension |   |   |
