@@ -160,7 +160,7 @@ q(\bar{x}, \bar{\epsilon})\leq \frac{1}{2}
 \end{proposition}
 These propositions suggest the following update rule,
 \begin{align}
-x_{t+1} & = x_t - \nabla^\trans f_{\epsilon_t}(x)^{-1}\nabla f_{\epsilon_t}(x_t) \\
+x_{t+1} & = x_t - \nabla^2 f_{\epsilon_t}(x)^{-1}\nabla f_{\epsilon_t}(x_t) \\
 \epsilon_t & = \left(1-\frac{1}{6\sqrt{n}}\right)\epsilon
 \end{align}
 \begin{theorem}
