@@ -148,15 +148,15 @@ Recall that Newton's method finds the solution by making the first-order conditi
 
 Define the Newton decrement as
 \begin{equation}
-q^2(x, \epsilon) = \nabla f^\trans_\epsilon(x)[\nabla^2f_\epsilon(x)]^{-1}\nabla f_\epsilon(x)\label{eq:newton_decrement}
+q^2(x, \epsilon) = \nabla f_\epsilon(x)^\trans[\nabla^2f_\epsilon(x)]^{-1}\nabla f_\epsilon(x)\label{eq:newton_decrement}
 \end{equation}
 or $q(x, \epsilon) = \left\|[\nabla^2f_\epsilon(x)]^{-1/2}\nabla f_\epsilon(x)\right\|_2$. 
 
 Note that the Newton decrement also relates to the difference between $f_\epsilon(x)$ and the minimum of its second-order approximation:
 \begin{eqnarray}
 &&f_\epsilon(x)-\min_{\bar{x}}\left(f_\epsilon(x)+\nabla f_\epsilon(x)^\trans(\bar{x}-x)+(\bar{x}-x)^\trans\nabla^2 f_\epsilon(x)(\bar{x}-x)\right)\nonumber\\
-&=&f_\epsilon(x)-\left(f_\epsilon(x)-\dfrac{1}{2}\nabla f^\trans_\epsilon(x)[\nabla^2f_\epsilon(x)]^{-1}\nabla f_\epsilon(x)\right)\nonumber\\
-&=&\dfrac{1}{2}\nabla f^\trans_\epsilon(x)[\nabla^2f_\epsilon(x)]^{-1}\nabla f_\epsilon(x)\triangleq \dfrac{1}{2}q^2(x, \epsilon).
+&=&f_\epsilon(x)-\left(f_\epsilon(x)-\dfrac{1}{2}\nabla f_\epsilon(x)^\trans[\nabla^2f_\epsilon(x)]^{-1}\nabla f_\epsilon(x)\right)\nonumber\\
+&=&\dfrac{1}{2}\nabla f_\epsilon(x)^\trans[\nabla^2f_\epsilon(x)]^{-1}\nabla f_\epsilon(x)\triangleq \dfrac{1}{2}q^2(x, \epsilon).
 \end{eqnarray}
 
 We'll then use Newton decrement to find out the conditions for convergence
