@@ -60,7 +60,7 @@ you spot any please send an email or pull request.
 | 16 | 3/8 | Backpropagation and adjoints | [pdf](notes/ee227c-lecture16.pdf) | --- |
 | | | **Part V: Non-convex problems** | | |
 | 17 | 3/13 | Non-convex problems | [pdf](notes/ee227c-lecture17.pdf)  | ---  |
-| 18 | 3/15 | Saddle points | [pdf](notes/ee227c-lecture18.pdf)  |   |
+| 18 | 3/15 | Saddle points | [pdf](notes/ee227c-lecture18.pdf)  | --- |
 | 19 | 3/20 | Alternating minimization and expectaction maximization | ---  | [ipynb](code/lecture19.html) |
 | 20 | 3/22 | Derivative-free optimization, policy gradient, controls | --- | [ipynb](code/lecture20.html) |
 | 21 | 4/3  | Non-convex constraints I (guest lecture by Ludwig Schmidt) | [pdf](notes/ee227c-lecture21.pdf) | |
@@ -69,9 +69,9 @@ you spot any please send an email or pull request.
 | 23 | 4/10 | Newton's method | [pdf](notes/ee227c-lecture23.pdf)  | --- |
 | 24 | 4/12 | Experimenting with second-order methods | ---  | [ipynb](code/lecture24.html)  |
 | 25 | 4/17 | Enter interior point methods | [pdf](notes/ee227c-lecture25.pdf) | ---  |
-| 26 | 4/19 | Primal-dual interior point methods |   |   |
-| 27 | 4/24 | Ellipsoid method |   |   |
-| 28 | 4/26 | Submodular functions, Lovasz extension |   |   |
+| 26 | 4/19 | Primal-dual interior point methods |   | --- |
+| 27 | 4/24 | Ellipsoid method |   | --- |
+| 28 | 4/26 | Submodular functions, Lovasz extension |   | --- |
 | 29 | 5/1 | Reading, review, recitation |   |   |
 | 30 | 5/3 | Reading, review, recitation |   |   |
 
