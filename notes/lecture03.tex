@@ -89,14 +89,14 @@ number of the matrix defining the quadratic.
 %
 The following table summarizes the results from the previous lecture and the
 results to be obtained in this lecture.  In both, the value~$\epsilon$ is the
-difference between $f$ at some value $x'$ computed from the outputs of gradient
-descent and $f$ calculated at an optimizer $x^*$.
+difference between~$f$ at some value~$x'$ computed from the outputs of gradient
+descent and~$f$ calculated at an optimizer~$x^*$.
 
 \begin{table}[h]
     \centering
     \begin{tabular}{|r|c|c|}
         \hline
-         & Convex & Strongly Convex\\
+         & Convex & Strongly convex\\
         \hline
          Lipschitz & $\epsilon \leq O(1/\sqrt{t})$
          & $\epsilon \leq O(1/t)$ \\
@@ -116,6 +116,9 @@ linear in terms of the bit precision, this rate of convergence is termed
 \emph{linear}.  We now move to prove these rates.
 
 \subsection{Convergence rate strongly convex functions}
+
+For no good reason we begin with a convergence bound for strongly convex
+Lipschitz functions, in which we obtain a $O(1/t)$ rate of convergence.
 
 \begin{theorem}\theoremlabel{convergence_strongconvexity} 
 Assume $f\colon\domain\to\R$ is \emph{$\alpha$-strongly convex} and

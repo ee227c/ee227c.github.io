@@ -14,11 +14,11 @@ corresponding chapter in Bubeck's text~\cite{Bubeck}.
 \subsection{Gradient descent}
 
 For a differentiable function~$f,$ the basic gradient method starting from an
-initial point $x_0$ is defined by the iterative description
+initial point~$x_1$ is defined by the iterative update rule
 \[
-x_{t+1} = x_t - \eta \nabla_t f(x_t)\,\qquad\qquad(t\ge 0)
+x_{t+1} = x_t - \eta_t \nabla f(x_t)\,,\qquad\qquad t=1,2,\dots
 \]
-where $\eta_t$ is the so-called \emph{step size} that may vary with~$t.$
+where the scalar $\eta_t$ is the so-called \emph{step size} that may vary with~$t.$
 
 The first assumption that leads to a convergence analysis is that the gradients
 of the function aren't too big over the domain. This turns out to follow from a
@@ -39,13 +39,17 @@ If the function~$f$ is $L$-Lipschitz, differentiable, and convex, then
 \]
 \end{fact}
 
-How can we ensure that $x_{t+1}\in\domain$?  One natural approach is to
-``project'' each iterate back onto the domain~$\domain.$
+\subsubsection{Modifying gradient descent with projections}
+
+In cases where the constraint set~$\Omega$ is not all of~$\R^n,$ how can we
+ensure that $x_{t+1}\in\domain$?  One natural approach is to ``project'' each
+iterate back onto the domain~$\domain.$ As it turns out, this won't really make
+our analysis more difficult and so we include from the get-go.
 
 \begin{definition}[Projection]
 The \emph{projection} of a point~$x$ onto a set $\domain$ is defined as
 \[
-\Pi_{\domain}(x) = \arg\min_{y\in\domain} \|x-y\|
+\Pi_{\domain}(x) = \arg\min_{y\in\domain} \|x-y\|_2\,.
 \]
 \end{definition}
 
@@ -62,17 +66,17 @@ A crucial property of projections is that when $x\in\Omega,$ we have for any $y$
 \[
 \| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2\
 \]
-That is, the projection of $y$ onto a convex set containing $x$ is closer to $x$. 
+That is, the projection of $y$ onto a convex set containing $x$ is closer to
+$x$. In fact, a stronger claim is true that follows from the
+Pythagorean theorem.
 %
 \begin{lemma}
 \lemmalabel{pythagorean}
 \[
 \| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2 - \| y - \Pi_{\domain}(y) \|^2
 \]
-Which follows from the Pythagorean theorem. Note that this lemma implies the above property.
 \end{lemma}
 
-\subsubsection{Modifying gradient descent with projections}
 
 So now we can modify our original procedure to use two steps.
 \[
@@ -90,12 +94,13 @@ other non-trivial examples in later lectures.
 
 \subsection{Convergence rate of gradient descent for Lipschitz functions}
 
-\begin{theorem}[Projected Gradient Descent for $L$-Lipschitz Functions]
-\theoremlabel{lipschitz}
+We can now prove our first convergence rate for gradient descent.
 
+\begin{theorem}
+\theoremlabel{lipschitz}
 Assume that function $f$ is convex, differentiable, and closed with bounded
-gradients. Let $L$ be the Lipschitz constant of $f$ over the convex domain
-$\Omega$. Let $R$ be the upper bound on the distance $\lVert x_1 - x^* \rVert_2$
+gradients. Let~$L$ be the Lipschitz constant of $f$ over the convex domain~$\Omega$. 
+Let~$R$ be the upper bound on the distance $\lVert x_1 - x^* \rVert_2$
 from the initial point $x_1$ to the optimal point $x^* = \arg\min_{x \in \Omega} f(x)$.
 Let $t$ be the number of iterations of project gradient descent.
 If the learning rate $\eta$ is set to $\eta=\frac{R}{L\sqrt(t)}$,
