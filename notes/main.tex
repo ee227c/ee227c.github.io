@@ -19,22 +19,40 @@
 
 \part{Gradient methods}
 \label{part:basic}
+
+Taylor's approximation tells us that
+\[
+f(x+\delta)\approx f(x) + \delta f'(x) + \frac 12 \delta^2 f''(x)\,.
+\]
+This approximation directly reveals that if we move from $x$ to $x+\delta$ where
+$\delta=-\eta \cdot f'(x)$ for sufficiently small $\eta>0,$ we generally expect
+to decrease the function value by about $\eta f'(x)^2.$ 
+
+We will generalize this simple idea to functions of many variables with the help
+of multivariate versions of Taylor's theorem. The simple greedy way of
+decreasing the function value is known as \emph{gradient descent}. Gradient
+descent converges to points at which the first derivatives vanish. For the broad
+class of \emph{convex} functions such points turn out to be globally minimal.
+
 \input{lecture01}
 \input{lecture02}
 \input{lecture03}
 \input{lecture04}
 \input{lecture05}
+
 \part{Accelerated gradient methods}
 \label{part:accelerated}
 \input{lecture06}
 \input{lecture07}
 \input{lecture08}
 \input{lecture09}
+
 \part{Stochastic optimization}
 \label{part:stochastic}
 \input{lecture10}
 \input{lecture11}
 \input{lecture12}
+
 \part{Dual methods}
 \label{part:dual}
 \input{lecture13}
