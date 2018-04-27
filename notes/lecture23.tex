@@ -1,4 +1,4 @@
-\section{Lecture 23: Newton's method}
+\section{Newton's method}
 Up until now, we have only considered first order  methods to optimize functions. Now, we will utilize second order information to achieve a faster rate of convergence.
 
 As always, our objective is to minimize a function $f\colon \R^n \rightarrow \R$. The basic idea of Newton's Method is to set the first-order Taylor expansion of the gradient to zero: $F(x) = \nabla f(x) = 0$. This leads to an iterative update step that will (under certain conditions) lead to a significantly faster convergence rate than gradient descent methods.

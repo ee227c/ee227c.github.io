@@ -1,5 +1,4 @@
-%!TEX root = max_main.tex
-\section{Lecture 12: Coordinate Descent}
+\section{Coordinate descent}
 There are many classes of functions for which it is very cheap 
 to compute directional derivatives along the standard basis vectors
 $e_i, i \in [n]$.
@@ -88,7 +87,7 @@ Examples of functions with block decompositions and group sparsity include:
 }
 \end{figure}
 
-\subsection{Coordinate Descent}
+\subsection{Coordinate descent}
   Denote $\partial_i f= \frac{\partial f}{x_i}$.
   For each round $t = 1,2,\dots$, the coordinate descent algorithm
   chooses an index $i_t \in [n]$, and computes
@@ -121,7 +120,7 @@ Examples of functions with block decompositions and group sparsity include:
 	\E[f(\frac{1}{T}\sum_{t=1}^T x_t)] - \min_{x \in \Omega}f(x) \le 2LR\sqrt{n/T}
 	\end{eqnarray}
 	\end{proposition}
-	\subsection{Importance Sampling}
+	\subsection{Importance sampling}
 	In the above, we decided on using the uniform distribution to sample a
   coordinate. But suppose we have more fine-grained information. In particular, what if we knew that we could bound $\sup_{x \in \Omega} \|\nabla f(x)_i\|_2 \le L_i$? An alternative might be to sample in a way to take $L_i$ into account. This motivates the ``importance sampled'' estimator of $\nabla f(x)$, given by
 	\begin{eqnarray}
@@ -140,7 +139,7 @@ Examples of functions with block decompositions and group sparsity include:
     \le 2R\sqrt{1/T}\cdot \sqrt{\sum_{i=1}^n L_i^2/p_i^2}
 	\end{eqnarray}
 	In many cases, if the values of $L_i$ are heterogenous, we can optimize the values of $p_i$. 
-	\subsection{Importance Sampling For Smooth Coordinate Descent}
+	\subsection{Importance sampling for smooth coordinate descent}
 	In this section, we consider coordinate descent with a \emph{biased}
   estimator of the gradient. Suppose that we have, for $x \in \R^n$
   and $\alpha \in \R$, the inequality
@@ -256,13 +255,13 @@ Examples of functions with block decompositions and group sparsity include:
 
 	\end{proof}
 
-	\subsection{Random Coordinate vs.\ Stochastic Gradient Descent}
+	\subsection{Random coordinate vs.~stochastic gradient descent}
 	What's surprising is that $\mathrm{RCD}(\gamma)$ is a descent method, despite being random. This is not true of normal SGD. 
 	But when does $\mathrm{RCD}(\gamma)$ actually do better? If $\gamma = 1$, the savings are proportional to the ratio of $\sum_{i=1} \beta_i / \beta \cdot (T_{coord}/T_{grad})$. When $f$ is twice differentiable, this is the ratio of 
 	\begin{eqnarray}
 	\frac{\tr(\max_{x} \nabla^2 f(x))}{\|\max_{x} \nabla^2 f(x)\|_{\op}} (T_{coord}/T_{grad})
 	\end{eqnarray}
-	\subsection{Other Extensions to Coordinate Descent}
+	\subsection{Other extensions to coordinate descent}
 	\begin{enumerate}
 		\item Non-Stochastic, Cyclic SGD
 		\item Sampling with Replacement

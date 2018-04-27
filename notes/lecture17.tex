@@ -1,4 +1,4 @@
-\section{Lecture 17: Non-Convex Problems}
+\section{Non-convex problems}
 \sectionlabel{convexity}
 
 This lecture provides the important information on how non-convex problems differ from convex problems. The major issue in non-convex problems is that it can be difficult to find the global minimum because algorithms can easily get stuck in the possibly numerous local minima and saddle points.
@@ -77,11 +77,11 @@ Inequality \ref{eqn:2} follows for sufficiently small $\|d\|$.\\
 Therefore, $x^*$ must be a strict local minimum.
 \end{proof}
 
-\subsection{Stationary Points and Gradient Descent}
+\subsection{Stationary points}
 
 For non-convex problems we must accept that gradient descent cannot always find the global minimum, but can it at least find a nearby local minimum? It turns out that for many problems we care about it can usually, but not always!
 
-\begin{definition}[Stationary Point]
+\begin{definition}[Stationary point]
 We say a point $x \in \R^n$ is a stationary point of $f\colon \R^n \to \R$ if $\nabla f(x) = 0$.
 \end{definition}
 
@@ -163,7 +163,7 @@ This is a contradiction because $0 < \sigma < 1$. Therefore, the limit point $\b
 Therefore, if we can use the Armijo rule to determine step sizes that guarantee that gradient descent will converge to a stationary point.
 \end{proof}
 
-\subsection{Saddle Points}
+\subsection{Saddle points}
 
 Now that we have found that gradient descent will converge to a stationary point, how concerned should we be that the stationary point is not a local minimum?
 
