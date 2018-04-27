@@ -1,9 +1,9 @@
-\section{Lecture 23: Newton's Method}
+\section{Lecture 23: Newton's method}
 Up until now, we have only considered first order  methods to optimize functions. Now, we will utilize second order information to achieve a faster rate of convergence.
 
-As always, our objective is to minimize a function $f : \R^d \rightarrow \R$. The basic idea of Newton's Method is to set the first-order Taylor expansion of the gradient to zero: $F(x) = \nabla f(x) = 0$. This leads to an iterative update step that will (under certain conditions) lead to a significantly faster convergence rate than gradient descent methods.
+As always, our objective is to minimize a function $f\colon \R^n \rightarrow \R$. The basic idea of Newton's Method is to set the first-order Taylor expansion of the gradient to zero: $F(x) = \nabla f(x) = 0$. This leads to an iterative update step that will (under certain conditions) lead to a significantly faster convergence rate than gradient descent methods.
 
-To illustrate the point, consider a single variable function $\varphi:\R \rightarrow \R$. Our goal is to solve the non-linear equation $\varphi(x) = 0$. From Taylor's theorem, we can express the first-order form of $\varphi(x)$ as
+To illustrate the point, consider a single variable function $\varphi\colon\R \rightarrow \R$. Our goal is to solve the non-linear equation $\varphi(x) = 0$. From Taylor's theorem, we can express the first-order form of $\varphi(x)$ as
 $$\varphi(x) = \varphi(x_0) + \varphi'(x) \cdot (x-x_0) + o(\abs{x-x_0})$$
 given $\delta = x - x_0$ we equivalently have that
 $$\varphi(x_0 + \delta) = \varphi(x_0) + \varphi'(x) \cdot \delta + o(\abs{\delta})$$
@@ -17,14 +17,15 @@ where $J_F$ is the Jacobian. This gives us
 $\Delta = -J_F^{-1}(x)F(x)$, and the iteration
 $$x_{t+1} = x_t - J_F^{-1}(x_t)F(x_t)$$
 
-Given $f : \R \rightarrow \R$, Newton's Method applies this update to $F(x) = \nabla f(x) = 0$. It uses the update rule
+Given $f\colon \R \rightarrow \R$, Newton's method applies this update to $F(x) = \nabla f(x) = 0$. It uses the update rule
 $$x_{t+1} = x_t - \nabla^2 f(x_t)^{-1} \nabla f(x_t)$$
-Equivalently to setting the first order Taylor expansion of the gradient to 0, a Newton step minimizes the second order Taylor approximation
+A Newton step minimizes the second order Taylor approximation
 $$f(x) \approx f(x_t) + \nabla f(x_t) ^\trans (x - x_t) + \frac{1}{2} (x - x_t) ^\trans \nabla^2 f(x_t) (x - x_t)$$
 
-Now, we will show that Newton's Method converges to a local minimum, given a starting point that is within a neighborhood of that point.
+Now, we will show that Newton's method converges to a local minimum, 
+given a starting point that is within a neighborhood of that point.
 \begin{theorem}
-Given $f: \R^d \rightarrow \R$ and assuming that
+Given $f: \R^n \rightarrow \R$ and assuming that
 \begin{enumerate}
 \item $f$ is twice continuously differentiable
 \item $\nabla^2 f(x)$ is Lipschitz: $\| \nabla^2 f(x) - \nabla^2 f(x') \| \leq \|x-x'\|$
@@ -40,9 +41,17 @@ x_{t+1} - x^* &= x_t - x^* - \nabla^2 f(x_t)^{-1} \nabla f(x_t) \\
 &= \nabla^2 f(x_t)^{-1} [\nabla^2 f(x_t)(x_t - x^*) - (\nabla f(x_t) - \nabla f(x^*))]
 \end{align*}
 This implies that
-$$\|x_{t+1} - x^* \| \leq \underbrace{\| \nabla^2 f(x_t)^{-1} \|}_{\text{Goal: show $\leq \frac{2}{\alpha}$}} \cdot \underbrace{\|\nabla^2 f(x_t)(x_t - x^*) - (\nabla f(x_t) - \nabla f(x^*))\|}_{\text{Goal: show $\leq \frac{1}{2} \| x^t - x^* \|^2$}}$$
-
-First, let's bound the second term $\|\nabla^2 f(x_t)(x_t - x^*) - (\nabla f(x_t) - \nabla f(x^*))\|$.
+\[
+\|x_{t+1} - x^* \| \leq 
+\|\nabla^2 f(x_t)^{-1} \| \cdot 
+\|\nabla^2 f(x_t)(x_t - x^*) - (\nabla f(x_t) - \nabla f(x^*))\|
+\]
+%
+\begin{claim}
+$\|\nabla^2 f(x_t)(x_t - x^*) - (\nabla f(x_t) - \nabla f(x^*))\|
+\le \frac{1}{2} \| x^t - x^* \|^2$
+\end{claim}
+\begin{proof}
 Applying the integral remainder form of Taylor's theorem to $\nabla f(x_t)$ we have that
 $$\nabla f(x_t) - \nabla f(x^*) = \int_{0}^{1} \nabla^2 f(x_t + \gamma (x^* - x_t)) \cdot (x_t - x^*) d\gamma$$
 We therefore have that
@@ -53,32 +62,45 @@ We therefore have that
 &\leq \left( \int_{0}^{1} \gamma d\gamma \right) \|x_t - x^*\|^2 \tag{$\nabla^2 f(x_t)$ is Lipschitz}\\
 &= \frac{1}{2}\|x_t - x^*\|^2
 \end{align*}
+\end{proof}
 
-Now, let's bound the first term $\|\nabla^2 f(x_t)^{-1}\|$. By the Wielandt-Hoffman Theorem,
+\begin{claim}
+$\|\nabla^2 f(x_t)^{-1}\| \leq \frac{2}{\alpha} $ 
+\end{claim}
+\begin{proof}
+By the Wielandt-Hoffman Theorem,
 \begin{align*}
 \abs{\lambda_{min}(\nabla^2 f(x_t)) - \lambda_{min}(\nabla^2 f(x^*))} &\leq \|\nabla^2 f(x_t) - \nabla^2 f(x^*) \| \\
 &\leq \|x_t - x^*\| \tag{$\nabla^2 f(x_t)$ is Lipschitz}
 \end{align*}
 Thus, for $\|x_t - x^*\| \leq \frac{\alpha}{2}$ and given that $\nabla^2 f(x^*) \succeq \alpha I$, this implies that $\lambda_{min}(\nabla^2 f(x_t)) \geq \frac{\alpha}{2}$. Hence, $\| \nabla^2 f(x_t)^{-1} \| \leq \frac{2}{\alpha}$.
-
-Putting the two bounds together, we have that
+\end{proof}
+Putting the two claims together, we have that
 $$\|x_{t+1} - x^*\| \leq \frac{2}{\alpha} \cdot \frac{1}{2} \|x_t - x^*\|^2 = \frac{1}{\alpha} \|x_t - x^*\|^2$$
 \end{proof}
 Note that we did not need convexity in the proof. Given that we are within a neighborhood of the local minimum $x^*$, then we can achieve $\epsilon$ error in just $O(\log \log \frac{1}{\epsilon})$ iterations. (this is called \emph{quadratic convergence}.)
 
-\subsection{Damped Update}
-In general, Newton's method can be quite unpredictable. \\ \\
-\underline{Example:}  Consider $f(x) = \sqrt{x^2 +1}$ -- this looks like a smoothed version of $|x|$.Clearly $x^* = 0$. Calculating the necessary parameters as in newtons method we find
+\subsection{Damped update}
+In general, Newton's method can be quite unpredictable.
+For example, consider the function 
+\[
+f(x) = \sqrt{x^2 +1}\,
+\] 
+essentially a smoothed version of the absolute value $|x|$.
+Clearly, the function is minimized at $x^* = 0$. 
+Calculating the necessary derivatives for Newton's method, we find
 \begin{align*}
-    f^\prime (x) &= \dfrac{x}{\sqrt{x^2 + 1}} \\
-    f^{\prime \prime} (x) &= (1+x^2)^{-3/2}
+    f^\prime (x) &= \dfrac{x}{\sqrt{x^2 + 1}}\, \\
+    f^{\prime \prime} (x) &= (1+x^2)^{-3/2}\,.
 \end{align*}
-Note that $f(x)$ is strongly convex since its second derivative strictly positive and $1$--smooth ($| f^\prime (x) | < 1$. We have that the newton step for minimizing $f(x)$ is
+Note that $f(x)$ is strongly convex since its second derivative strictly positive 
+and $1$-smooth ($|f^\prime (x)| < 1$). 
+The Newton step for minimizing $f(x)$ is
 \begin{align*}
-    x_{t+1} &= x_t - \dfrac{f^\prime (x_t)}{f^{\prime \prime}(x)} \\
-    &= -x_t^3
+    x_{t+1} = x_t - \dfrac{f^\prime (x_t)}{f^{\prime \prime}(x)} = -x_t^3\,.
 \end{align*}
-The behavior of this algorithm depends on the magnitude of $x_t$. In particular we have the following three regimes
+The behavior of this algorithm depends on the magnitude of $x_t$. 
+In particular, we have the following three regimes
 \[ \begin{cases} 
       |x_t| < 1 & \text{Algorithm converges \textit{cubically}}\\
       |x_t| = 1 & \text{Algorithm oscillates between $-1$ and $1$} \\
@@ -91,19 +113,21 @@ Note the similarity between underdamped, critically damped, and overdamped dynam
 \end{align*}
 $\eta_t$ can be chosed by backtracking line search. Usually though $\eta = 1$ is a good first choice since, if you are in a region of convergence, you are guaranteed quadratic convergence.
 
-\subsection{Quasi-Newton Methods}
-Comparing gradient descent and Newton's method side by side:
-\begin{enumerate}
-    \item gradient descent
+\subsection{Quasi-Newton methods}
+Let's compare gradient descent and Newton's method side by side.
     \begin{align*}
-        x_{t+1} = x_t - \eta_t \nabla f(x_t)
+        x_{t+1} &= x_t - \eta_t \nabla f(x_t) \tag{Gradient descent}\\
+        x_{t+1} &= x_t - \nabla^2 f(x_t)^{-1} \nabla f(x_t) \tag{Newton's method}
     \end{align*}
-    \item Newton's Method
-    \begin{align*}
-        x_{t+1} = x_t - \nabla^2 f(x_t)^{-1} \nabla f(x_t)
-    \end{align*}
-\end{enumerate}
-We see that gradient descent approximates $\nabla^2 f(x_t)^{-1}$ as a scaled version of the identity. That is, gradient descent is equivalent to Newton's method when $\nabla^2 f(x_t)^{-1} = \eta_t I$ where $I$ is the identity matrix. Quasi--newton methods take the analogy a step further by approximating the Hessian by some other matrix. The idea in doing so is to avoid an expensive matrix inversion at each step. What we want is an approximation
+We can think of gradient descent as a Newton update in which we approximate
+$\nabla^2 f(x_t)^{-1}$ by a scaled version of the identity. 
+That is, gradient descent is equivalent to Newton's method when $\nabla^2
+f(x_t)^{-1} = \eta_t I$ where $I$ is the identity matrix. 
+
+Quasi-Newton methods take 
+the analogy a step further by approximating the Hessian by some other matrix.
+The idea in doing so is to avoid an expensive matrix inversion at each step.
+What we want is an approximation
 \begin{align*}
     \hat{f}_{B_t}(x) \approx f(x_t) + \nabla f(x_t)^\trans (x - x_t) + \dfrac{1}{2} (x-x_t)B_t^{-1} (x-x_t)
 \end{align*}
