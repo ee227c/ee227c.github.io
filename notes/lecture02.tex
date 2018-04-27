@@ -149,21 +149,26 @@ Finally,
     f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right)
 &\leq \frac{1}{t} \sum_{s=1}^t f(x_s) - f\left(x^*\right) \tag{by convexity} \\
 &\leq \frac{R^2}{2\eta t} + \frac{\eta L^2}{2} \tag{by \equationref{j}}\\
-&\leq \frac{RL}{\sqrt{t}} \tag{for $\eta=R/L\sqrt{t}.$}
+&=\frac{RL}{\sqrt{t}} \tag{for $\eta=R/L\sqrt{t}.$}
 \end{align*}
 
 \end{proof}
 
 \subsection{Convergence rate for smooth functions}
 
-The next property we'll encounter is called \emph{smoothness} and it often leads
-to stronger convergence guarantees.
+The next property we'll encounter is called \emph{smoothness}.  The main point
+about smoothness is that it allows us to control the second-order term in the
+Taylor approximation. This often leads to stronger convergence guarantees at the
+expense of a relatively strong assumption.
 
-\begin{definition}[$\beta$-smoothness]
+\begin{definition}[Smoothness]
 A continuously differentiable function f is $\beta$ smooth if the gradient $\nabla f$ is $\beta$-Lipschitz, i.e
 $$\|\nabla f(x) - \nabla f(y)\| \leq \beta\|x-y\|$$
 \end{definition}
 
+We will need a couple of technical lemmas before we can analyze gradient descent
+for smooth functions. It's safe to skip the proof of these technical lemmas on a
+first read.
 
 \begin{lemma}\label{l1}
 Let $f$ be a $\beta$-smooth function on $\R^n$.  Then for any $x,y \in \R^n$, one has

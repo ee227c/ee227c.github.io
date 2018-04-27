@@ -1,11 +1,14 @@
 \section{Strong convexity}
 \sectionlabel{strongconvexity}
 
-This lecture introduces the notion of $\alpha$-strong convexity and combines it
-with $\beta$-smoothness to develop the concept of condition number.  Adding an
-assumption of, respectively, strong convexity or conditioning improves the rates
-of error decay for gradient descent proved in the previous lecture from
-$O(1/\sqrt{t})$ to $O(1/t)$ and $O(1/t)$ to $O(\mathrm{e}^{-t})$.
+This lecture introduces the notion of strong convexity and combines it
+with smoothness to develop the concept of condition number. While smoothness
+gave as an upper bound on the second-order term in Taylor's approximation,
+strong convexity will give us a lower bound. Taking together, these two
+assumptions are quite powerful as they lead to a much faster convergence rate of
+the form $\exp(-\Omega(t)).$ In words, gradient descent on smooth and strongly
+convex functions decreases the error multiplicatively by some factor strictly
+less than~$1$ in each iteration.
 
 The technical part follows the corresponding chapter in Bubeck's
 text~\cite{Bubeck}.
@@ -49,7 +52,7 @@ Noting the asymmetry between our linear lower bound (from convexity) and our
 quadratic upper bound (from smoothness) we introduce a new, more restricted
 function class by upgrading our lower bound to second order.
 
-\begin{definition}[$\alpha$-Strong Convexity]
+\begin{definition}[Strong convexity]
 A function $f\colon\domain\to\R$
 is \emph{$\alpha$-strongly convex}
 if, for all $x,y\in\domain$,
@@ -65,12 +68,13 @@ As with smoothness, we will often shorten ``$\alpha$-strongly convex'' to
 ``squeezed between two parabolas''.  If $\beta$-smoothness is a good thing, then
 $\alpha$-convexity guarantees we don't have too much of a good thing.
 
-A twice differentiable function
-is $\alpha$-strongly convex if $\nabla^2f(x) \succeq \alpha I$.
+A twice differentiable function is $\alpha$-strongly convex if $\nabla^2f(x)
+\succeq \alpha I$.
 
-Once again, note that $\alpha$ changes under affine transformations.
-Conveniently enough, for $\alpha$-strongly convex, $\beta$-smooth functions, we
-can define a basis-independent quantity called the \emph{condition number}.
+Once again, note that the parameter $\alpha$ changes under affine
+transformations.  Conveniently enough, for $\alpha$-strongly convex,
+$\beta$-smooth functions, we can define a basis-independent quantity called the
+\emph{condition number}.
 
 \begin{definition}[Condition Number]
 An $\alpha$-strongly convex, $\beta$-smooth function $f$
