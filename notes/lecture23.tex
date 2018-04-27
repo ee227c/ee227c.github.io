@@ -107,11 +107,11 @@ In particular, we have the following three regimes
       |x_t| > 1 & \text{Algorithm diverges} 
    \end{cases}
 \]
-Note the similarity between underdamped, critically damped, and overdamped dynamical systems. This example shows that even for strongly convex functions with Lipschitz gradients that Newton's method is only guaranteed to converge locally. To avoid divergence, a popular technique is to use a \textit{damped} step--size:
+This example shows that even for strongly convex functions with Lipschitz gradients that Newton's method is only guaranteed to converge locally. To avoid divergence, a popular technique is to use a \textit{damped} step--size:
 \begin{align*}
     x_{t+1} = x_t - \eta_t \nabla^2 f(x_t)^{-1} \nabla f(x_t)
 \end{align*}
-$\eta_t$ can be chosed by backtracking line search. Usually though $\eta = 1$ is a good first choice since, if you are in a region of convergence, you are guaranteed quadratic convergence.
+$\eta_t$ can be chosen by backtracking line search. Usually though $\eta = 1$ is a good first choice since, if you are in a region of convergence, you are guaranteed quadratic convergence.
 
 \subsection{Quasi-Newton methods}
 Let's compare gradient descent and Newton's method side by side.

@@ -64,7 +64,7 @@ Note that $\nabla f(x^*) = 0$ alone does not imply $x^*$ is a local minimum. Eve
 \end{proposition}
 
 \begin{proof}[Proof of \propositionref{sufficient condition for strict local min}.]
-Fix $d \in \R^n$. Note that $d^\trans \nabla^2 f(x^*) d \ge \lambda_{\text{min}} \|d\|^2$, where $\lambda_\text{min}$ is the smallest eigen value of $\nabla^2 f(x^*)$.
+Fix $d \in \R^n$. Note that $d^\trans \nabla^2 f(x^*) d \ge \lambda_{\text{min}} \|d\|^2$, where $\lambda_\text{min}$ is the smallest eigenvalue of $\nabla^2 f(x^*)$.
 \begin{align}
     f(x^* + d) - f(x^*) &= \nabla f(x^*)^\trans d + \frac{1}{2}d^\trans \nabla^2 f(x^*)d + O(\|d\|^2) \label{eqn:1}\\
     &\ge \frac{\lambda_{\text{min}}}{2} \|d\|^2 + O(\|d\|^2) \nonumber\\

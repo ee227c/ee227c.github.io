@@ -1,7 +1,7 @@
 \section{Lower bounds and trade-offs with robustness}
 
 In the first part of this lecture, we study whether the convergence rates
-derived in previous lectures are tight. For several classes of optimzation
+derived in previous lectures are tight. For several classes of optimization
 problems (smooth, strongly convex, etc), we prove the
 answer is indeed yes. The highlight of this analysis is to show the $O(1/t^2)$
 rate achieved by Nesterov's accelerated gradient method is optimal (in a weak
@@ -26,10 +26,10 @@ the first several lectures.
 \label{table:upper-bounds}
 \begin{tabular}{|l|l|l|}
 \hline
-$f$                        & Algorithm                    & Rate                                            \\ \hline
-Convex, Lipschitz          & Gradient Descent             & $RL / \sqrt{t}$                               \\ \hline
-Strongly Convex, Lipschitz & Gradient Descent             & $L^2 / (\alpha t)$                \\ \hline
-Convex, Smooth             & Accelerated Gradient Descent & $\beta R^2 / t^2$ \\ \hline
+Function class                        & Algorithm                    & Rate                                            \\ \hline
+Convex, Lipschitz          & Gradient descent             & $RL / \sqrt{t}$                               \\ \hline
+Strongly convex, Lipschitz & Gradient descent             & $L^2 / (\alpha t)$                \\ \hline
+Convex, smooth             & Accelerated gradient descent & $\beta R^2 / t^2$ \\ \hline
 \end{tabular}
 \end{table}  
 
@@ -178,7 +178,7 @@ a pathological convex function. In this case, we choose what Nesterov calls
 
 \begin{proof}
 Without loss of generality, let $n = 2t+1$.
-Let $L \in \R^{n \times n}$ be the tri-diagonal matrix
+Let $L \in \R^{n \times n}$ be the tridiagonal matrix
 \begin{align*}
     L =
     \begin{bmatrix}
@@ -290,7 +290,7 @@ method, which begins to diverge after a large number of iterations.
 \label{fig:nag-noise}
 \end{figure}
 
-The preceeding example is not wickedly pathological in any sense. Instead, it is
+The preceding example is not wickedly pathological in any sense. Instead, it is
 illustrative of a much broader phenomenon. Work by Devolder, Glineur and
 Nesterov (DGN) \cite{devolder2014first} shows there is a
 fundamental trade-off between acceleration and robustness, in a sense
@@ -344,5 +344,5 @@ algorithm achieves a rate
 then $q \geq p-1$.
 \end{theorem}
 In particular, for any accelerated method has $p > 1$, and consequently $q > 1$
-so the method acculumates at least $O(t^{p-1} \delta)$ error with the number of
+so the method accumulates at least $O(t^{p-1} \delta)$ error with the number of
 iterations. 

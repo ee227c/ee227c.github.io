@@ -1,5 +1,5 @@
 \section{Backpropagation and adjoints}
- From now onwards, we give up the luxuries afforded by convexity and move to the realm of non-convex functions. In the problems we have seen so far, deriving a closed-form expression for the gradients was fairly straightforward. But, doing so can be a challenging task for general non-convex functions. In this class, we are going to focus our attention on functions that can be expressed as compositions of multiple functions. In what follows, we will introduce \textit{backpropagation} - a popular technique that exploits the composite nature of the functions to compute gradients incrementally. 
+ From now onward, we give up the luxuries afforded by convexity and move to the realm of non-convex functions. In the problems we have seen so far, deriving a closed-form expression for the gradients was fairly straightforward. But, doing so can be a challenging task for general non-convex functions. In this class, we are going to focus our attention on functions that can be expressed as compositions of multiple functions. In what follows, we will introduce \textit{backpropagation} - a popular technique that exploits the composite nature of the functions to compute gradients incrementally. 
 
 \subsection{Warming up}
 A common view of backpropagation is that ``\textit{it's just chain rule}''. 
@@ -71,7 +71,7 @@ with the following Lagrangian,
 \begin{equation}
 \mathcal{L}(x, z, \lambda) = z_n - \sum_{i} \lambda_i (z_i - f_i(z_{\alpha(i)})).
 \end{equation}
-As in the warmup example, we set $\nabla \mathcal{L} = 0$. This can be viewed as an algorithm comprising two separate steps:
+As in the warm-up example, we set $\nabla \mathcal{L} = 0$. This can be viewed as an algorithm comprising two separate steps:
 \subsubsection*{Backpropagation algorithm}
 \begin{itemize}
 \item \textit{Step 1}: Set $\nabla_{\lambda} \mathcal{L} = 0$, i.e.,

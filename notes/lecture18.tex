@@ -38,7 +38,7 @@ $$
 g(x) = x-\eta\nabla f(x)
 $$ 
 so the notation for the result of iteration $t$ from our previous discussion of gradient descent carries over as $x_t = g^t(x_0) = g(g(...g(x_0)))$, where $g$ is applied $t$ times on the initial point $x_0$. We call $g$ the gradient map. Note that $x^*$ is stationary iff. it is a fixed point of the gradient map i.e. $g(x^*) = x^*$. Also note that
-$D g(x) = I - \eta\nabla^2 f(x)$ (Jacobian of $g$) , a fact that will bcome important later. Now we formalize a notion of the set of "attractors`` of $x^*$.
+$D g(x) = I - \eta\nabla^2 f(x)$ (Jacobian of $g$) , a fact that will become important later. Now we formalize a notion of the set of "attractors`` of $x^*$.
 \begin{definition}
 The global stable set of $x^*$, is defined as
 $$
@@ -70,7 +70,7 @@ By definition, this also holds true to any probability measure absolutely contin
 $$\mathbb{P}(\lim_t x_t = x^*) = 0$$
 \end{remark}
 
-However, the theorem above is only an asymptotic statement. Nonasymptotically, even with fairly natural random initialization schemes and non-pathological functions, gradient descent can be significantly slowed down by saddle points. 
+However, the theorem above is only an asymptotic statement. Non-asymptotically, even with fairly natural random initialization schemes and non-pathological functions, gradient descent can be significantly slowed down by saddle points. 
 The most recent result \cite{du2017gradient} is that gradient descent takes exponential time to escape saddle points (even though the theorem above says that they do escape eventually). We won't prove this result in this lecture.
 
 \subsection{The case of quadratics}
@@ -131,7 +131,7 @@ Now we state a simplified version of the stable manifold theorem without proof: 
 Let $x^*$ be a strict saddle point.
 Once we have proven the fact that $g$ is a diffeomorphism (using the assumption that $\eta<1/\beta$), we can apply the stable manifold theorem since $x^*$ is a fixed point of $g$. 
 Because $\nabla^f (x^*)$ must have an eigenvalue $<0$, $Dg$ must have an eigenvalue $>1$, so 
-the dimesion of $W^S_\epsilon(x^*)$ is less than $n$ and $W^S_\epsilon(x^*)$ has measure 0. 
+the dimension of $W^S_\epsilon(x^*)$ is less than $n$ and $W^S_\epsilon(x^*)$ has measure 0. 
 
 If $g^t(x)$ converges $x^*$, there must $\exists T$ large enough s.t. $g^T(x)\in W_\epsilon^S(x^*)$. 
 So $W^S(x^*)\subseteq \bigcup_{t\geq 0 }g^{-t}(W_\epsilon^S(x^*))$.
@@ -148,7 +148,7 @@ Because $\eta\beta < 1$, we must have $\|x-y\|=0$.
 To prove that $g$ is surjective, we construct an inverse function
 $$h(y) = \argmin_x \frac{1}{2}\|x-y\|^2 - \eta f(x)$$
 a.k.a. the proximal update. For $\eta < 1/\beta$, $h$ is strongly convex, and by the KKT condition,
-$y = h(y) - \nabla f(h(y)) = g(h(y))$. This conpletes the proof.
+$y = h(y) - \nabla f(h(y)) = g(h(y))$. This completes the proof.
 \end{proof}
 
 \end{example}

@@ -21,7 +21,7 @@ More generally, many objectives and regularizes exhibit ``group sparsity''; that
 \begin{eqnarray}
 R(x) =  \sum_{j=1}^m R_{j}(x_{S_j})
 \end{eqnarray}
-where each $S_j, j \in [m]$ is a subsect of $[n]$, and similarly for $f(x)$.
+where each $S_j, j \in [m]$ is a subset of $[n]$, and similarly for $f(x)$.
 %
 Examples of functions with block decompositions and group sparsity include:
 \begin{enumerate} 
@@ -138,7 +138,7 @@ Examples of functions with block decompositions and group sparsity include:
 	  \E[f(\frac{1}{T}\sum_{t=1}^T x_t)] - \min_{x \in \Omega}f(x)
     \le 2R\sqrt{1/T}\cdot \sqrt{\sum_{i=1}^n L_i^2/p_i^2}
 	\end{eqnarray}
-	In many cases, if the values of $L_i$ are heterogenous, we can optimize the values of $p_i$. 
+	In many cases, if the values of $L_i$ are heterogeneous, we can optimize the values of $p_i$. 
 	\subsection{Importance sampling for smooth coordinate descent}
 	In this section, we consider coordinate descent with a \emph{biased}
   estimator of the gradient. Suppose that we have, for $x \in \R^n$
@@ -147,7 +147,9 @@ Examples of functions with block decompositions and group sparsity include:
     |\partial_{x_i} f(x) - \partial_{x_i} f(x + \alpha e_i)|
     \le \beta_{i}|\alpha|
 	\end{eqnarray}
-	where $\beta_i$ are possibly heterogenous. Note that if that $f$ is twice-continuously differentiable, the above condition is equivalent to $\nabla^2_{ii}f(x) \le \beta_i$, or $\mathrm{Diag}(\nabla^2 f(x)) \preceq \mathrm{diag}(\boldsymbol{\beta})$.  Define the distribution $p^\gamma$ via
+	where $\beta_i$ are possibly heterogeneous. Note that if that $f$ is
+twice-continuously differentiable, the above condition is equivalent to
+$\nabla^2_{ii}f(x) \le \beta_i$, or $\mathrm{diag}(\nabla^2 f(x)) \preceq \mathrm{diag}(\boldsymbol{\beta})$.  Define the distribution $p^\gamma$ via
 	\begin{eqnarray}
 	p^{\gamma}_i = \frac{\beta_i^{\gamma}}{\sum_{j=1}^n \beta_j^{\gamma}}
 	\end{eqnarray}
