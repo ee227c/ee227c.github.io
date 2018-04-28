@@ -23,7 +23,22 @@ Note that we need step size $\eta_t \in [0,1]$ to guarantee $x_{t+1} \in \domain
 
 So, rather than taking a gradient step and projecting onto the constraint set.
 We optimize a liner function (defined by the gradient) inside the constraint
-set.
+set as summarized in \figureref{conditional-gradient}.
+
+\begin{figure}[h]
+\begin{center}
+\begin{boxedminipage}{0.85\textwidth}
+Starting from $x_0\in\Omega,$ repeat:
+\begin{align*}
+\bar{x_t} &= \arg\min_{x\in \domain} \nabla f(x_t) ^\trans x \tag{linear optimization}\\
+x_{t+1} &= x_t + \eta_t(\bar{x_t}-x_t) \tag{update step}\\
+\end{align*}
+\end{boxedminipage}
+\end{center}
+\caption{Conditional gradient}
+\figurelabel{conditional-gradient}
+\end{figure}
+
 
 \subsection{Conditional gradient convergence analysis}
 
@@ -54,16 +69,20 @@ Thus,
 \begin{equation}\equationlabel{convergenceInequal}
 f(x_{t+1})-f(x^*) \leq (1-\eta_t)(f(x_t)-f(x^*)) + \frac{\eta_t^2\beta D ^2}{2}
 \end{equation}
-We use induction in order to prove $f(x_t)-f(x^*) \leq \frac{2\beta D^2}{t+2}$  based on \equationref{convergenceInequal} above.\\
-First step: Base Case $t=0$ \\
-Since $ f(x_{t+1})-f(x^*) \leq (1-\eta_t)(f(x_t)-f(x^*)) + \frac{\eta_t^2\beta D ^2}{2}$, when t=0, $\eta_t =\frac{2}{0+2}=1, then $
-\begin{align*} f(x_1)-f(x^*) &\leq (1-\eta_t)(f(x_t)-f(x^*)) + \frac{\beta}{2}\| x_1-x^* \|^2 \\
+We use induction in order to prove $f(x_t)-f(x^*) \leq \frac{2\beta D^2}{t+2}$  based on \equationref{convergenceInequal} above.
+
+\paragraph{Base case $t=0$.}
+Since $ f(x_{t+1})-f(x^*) \leq (1-\eta_t)(f(x_t)-f(x^*)) + \frac{\eta_t^2\beta D ^2}{2}$, 
+when $t=0,$ we have $\eta_t =\frac{2}{0+2}=1.$ Hence, 
+\begin{align*} 
+f(x_1)-f(x^*) &\leq (1-\eta_t)(f(x_t)-f(x^*)) + \frac{\beta}{2}\| x_1-x^* \|^2 \\
 &= (1-1)(f(x_t)-f(x^*)) + \frac{\beta}{2}\| x_1-x^* \|^2 \\
 &\leq \frac{\beta D^2}{2}\\
 &\leq \frac{2\beta D^2}{3}
 \end{align*}
 Thus, the induction hypothesis holds for our base case.
 
+\paragraph{Inductive step.}
 Proceeding by induction,
 we assume that $f(x_t)-f(x^*) \leq \frac{2\beta D^2}{t+2}$ holds for all
 integers up to $t$ and we show the claim for $t+1.$
@@ -106,12 +125,12 @@ Due to the rotational invariance of the Frobenius norm, the solution is obtained
 
 Suppose we have a partially observable matrix $Y$, of which the missing entries are filled with 0 and we would like to find its completion form projected on a nuclear norm ball. Formally we have the objective function
 \[
-\min_{X\in B_*}\frac{1}{2}\|Y-P_O(X)|_F^2
+\min_{X\in B_*}\frac{1}{2}\|Y-P_O(X)\|_F^2
 \]
 where $P_O$ is a linear projection onto a subset of coordinates of $X$ specified by $O$. In this example $P_O(X)$ will generate a matrix with corresponding observable entries as in $Y$ while other entries being 0. We can have $P_O(X) = X \odot O$ where $O$ is a matrix with binary entries.
-Calculate the gradient of this function we will have
+Calculating the gradient of this function, we have
 \[
-\nabla f(X) = Y-X \odot O
+\nabla f(X) = Y-X \odot O\,.
 \]
 We can use projected gradient descent to solve this problem but it is more efficient to use Frank-Wolfe algorithm. We need to solve the linear optimization oracle
 \[
@@ -147,8 +166,11 @@ the dual norm of a nuclear norm is operator norm,
 
 Either way, we see that to run Frank-Wolfe over the nuclear norm ball we only
 need a way to compute the top left and singular vectors of a matrix. One way of
-doing this is using the classical power method:
+doing this is using the classical power method described in \figureref{power-method}.
 
+\begin{figure}[h]
+\begin{center}
+\begin{boxedminipage}{0.85\textwidth}
 \begin{itemize}
 \item Pick a random unit vector $x_1$ and let $y_1 = A^\trans x/\|A^\trans x\|.$
 \item From $k=1$ to $k=T-1:$
@@ -159,3 +181,12 @@ doing this is using the classical power method:
 \item Return $x_T$ and $y_T$ 
 as approximate top left and right singular vectors.
 \end{itemize}
+\end{boxedminipage}
+\end{center}
+\caption{Power method}
+\figurelabel{power-method}
+\end{figure}
+
+
+
+
