@@ -182,6 +182,7 @@ Finally,
 \end{proof}
 
 \subsection{Smooth functions}
+\sectionlabel{smoothness}
 
 The next property we'll encounter is called \emph{smoothness}.  The main point
 about smoothness is that it allows us to control the second-order term in the
@@ -204,7 +205,7 @@ first read.
 \lemmalabel{smoothness-1}
 Let $f$ be a $\beta$-smooth function on $\R^n$.  Then, for every $x,y \in \R^n$, 
 \[
-\left|f(x) - f(y) - \nabla f(y)^\trans(x-y)\right| \leq \frac{\beta}{2}\|x-y\|^2\,.
+\left|f(y) - f(x) - \nabla f(x)^\trans(y-x)\right| \leq \frac{\beta}{2}\|y-x\|^2\,.
 \]
 \end{lemma}
 
@@ -212,14 +213,21 @@ Let $f$ be a $\beta$-smooth function on $\R^n$.  Then, for every $x,y \in \R^n$,
 Express $f(x) - f(y)$ as an integral, then apply Cauchy-Schwarz and 
 $\beta$-smoothness as follows:
 \begin{align*}
-|f(x) - f(y) - \nabla f(y)^\trans(x-y)|
-&=\left|\int\limits_{0}^1 \nabla f(y + t(x-y))^\trans(x-y)dt - \nabla
-f(y)^\trans(x-y)\right|\\
-&\leq  \int\limits_{0}^1 \|\nabla f(y + t(x-y)) - \nabla f(y)\|\cdot \|x-y\|dt\\
-&\leq \int\limits_{0}^1 \beta t\|x-y\|^2dt\\
-&= \frac{\beta}{2}\|x-y\|^2\qedhere
+|f(y) - f(x) - \nabla f(x)^\trans(y-x)|
+&=\left|\int\limits_{0}^1 \nabla f(x + t(y-x))^\trans(y-x)dt - \nabla
+f(x)^\trans(y-x)\right|\\
+&\leq  \int\limits_{0}^1 \|\nabla f(x + t(y-x)) - \nabla f(x)\|\cdot \|y-x\|dt\\
+&\leq \int\limits_{0}^1 \beta t\|y-x\|^2dt\\
+&= \frac{\beta}{2}\|y-x\|^2\qedhere
 \end{align*}
 \end{proof}
+The significance of this lemma is that we can choose $y=x-\frac1\beta\nabla f(x)$ and
+get that 
+\[
+f(y)-f(x)\le -\frac{1}{2\beta}\|\nabla f(x)\|^2\,.
+\]
+This means that the gradient update decreases the function value by an amount
+proportional to the squared norm of the gradient.
 
 We also need the following lemma.
 
@@ -254,7 +262,7 @@ $$f(x_t) - f(x^*) \leq \frac{2\beta\|x_1 - x^*\|^2}{t-1}$$
 To prove this we will need the following two lemmas.
 
 \begin{proof}
-By the update rule and lemma \lemmaref{smoothness-1} we have
+By the update rule and \lemmaref{smoothness-1} we have
 $$f(x_{s+1}) - f(x_s) \leq -\frac{1}{2\beta}\|\nabla f(x_s)\|^2 $$
 In particular, denoting $\delta_s = f(x_s) - f(x^*)$ this shows
 $$\delta_{s+1} \leq \delta_s - \frac{1}{2\beta}\|\nabla f(x_s)\|^2 $$

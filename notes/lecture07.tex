@@ -46,23 +46,22 @@ more delicate step size schedule that complicates the analysis.
 Suppose $f\colon\R^n\to\R$ is a convex, $\beta$-smooth function that attains its
 minimum at a point~$x^*\in\R^n.$
 Assume that the initial point satisfies $\|x_0-x^*\|\le R$ and $f(x_0)-f(x^*)\le
-d.$ Put $\eta = \frac{R}{\sqrt{d\beta}}$, and 
-$\tau$ s.t. $\frac{1-\tau}{\tau} = \eta \beta$.
-
-Then after $T = 4R\sqrt{\frac{\beta}{d}}$ steps, 
-we have 
+d.$ Put $\eta = \frac{R}{\sqrt{d\beta}}$, and choose
+$\tau$ such that $\frac{1-\tau}{\tau} = \eta \beta$.
+%
+Then after $T = 4R\sqrt{\beta/d}$ steps, 
+the average iterate $\bar{x} = \frac{1}{T} \sum_{k=0}^{T-1} x_t$ satisfies
 \[
-f(\bar{x})- f(x^*) \leq \frac{d}{2},
+f(\bar{x})- f(x^*) \le d/2\,.
 \]
-where $\bar{x} = \frac{1}{T} \sum_{k=0}^{T-1} x_t$.
 \end{lemma}
 
 \begin{proof}
-In Lecture~2, we showed the following properties for smooth and convex
-functions:
+When introducing smoothness in \sectionref{smoothness}, we saw 
+\lemmaref{smoothness-1} that implies
 \begin{equation}
 \label{Nesterov-pf_smoothness_and_convexity}
-f(y_t) - f(x_t) \leq -\frac{1}{2 \beta} \|\nabla f(x_t) \|^2
+f(y_t) - f(x_t) \leq -\frac{1}{2 \beta} \|\nabla f(x_t) \|^2\,.
 \end{equation}
 By the ``Fundamental Theorem of Optimization" (see Lecture 2), we have
 for all $u\in\R^n:$
@@ -95,19 +94,20 @@ $\frac{1-\tau}{\tau} = \eta \beta$ yield for all $u\in\R^n:$
 (f(y_t) - f(y_{t+1})) + \frac12\|z_t - u\|^2 - \frac12\|z_{t+1} - u\|^2.
 \end{equation*}
 Proceeding as in our basic gradient descent analysis, we apply this inequality
-for $u=x^*,$ sum it up from $k=0$ to $T$ and exploit the telescoping effect:
+for $u=x^*,$ sum it up from $k=0$ to $T$ and exploit the telescoping sum.
 \begin{align*}
 \eta T (f(\bar{x}) - f(x^*)) 
-&\leq \sum_{k=0}^T \eta \langle\nabla f(x_{t+1}), x_{t+1} - x^*\rangle\\
-&\leq \eta^2 \beta d + R^2,
+\leq \sum_{k=0}^T \eta \langle\nabla f(x_{t+1}), x_{t+1} - x^*\rangle
+\leq \eta^2 \beta d + R^2,
 \end{align*}
-which can be rewritten as
+By rearranging,
 \begin{align*}
 f(\bar{x}) - f(x^*) 
-&\leq \frac{\eta\beta d}{T} + \frac{R^2}{\eta T} \\
-&\leq \frac{2\sqrt{\beta d}}{T} R \tag{since $\eta=R/\sqrt{\beta d}$} \\
-&\leq \frac{d}{2} \tag{since $T\ge 4R\sqrt{\beta/D}.$}
+\leq \frac{\eta\beta d}{T} + \frac{R^2}{\eta T}
+= \frac{2\sqrt{\beta d}}{T} R 
+\leq \frac{d}{2}\,,
 \end{align*}
+since $\eta=R/\sqrt{\beta d}$ and $T\ge 4R\sqrt{\beta/D}.$
 \end{proof}
 
 This lemma appears in work by Allen-Zhu and Orecchia~\cite{allen2014linear}, who
