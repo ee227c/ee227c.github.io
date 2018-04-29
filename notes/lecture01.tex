@@ -211,26 +211,50 @@ a global lower bound and so the function~$f$ is convex by
 \subsection{Convex optimization}
 Much of this course will be about different ways of minimizing a convex function~$f\colon\domain\to\R$ over a convex domain~$\domain:$ 
 \[
-\min_{x\in \Omega} f(x)
+\min_{x\in\domain}\quad f(x)
 \]
 Convex optimization is not necessarily easy! 
 For starters, convex sets do not necessarily enjoy compact descriptions. When solving computational problems involving convex sets, we need to worry about how to represent the convex set we're dealing with. Rather than asking for an explicit description of the set, we can instead require a computational abstraction that highlights essential operations that we can carry out. The Separation Theorem motivates an important computational abstraction called \emph{separation oracle}.
 
 \begin{definition}
-A \emph{separation oracle} for a convex set~$K$ is a device, which given any point $x\not\in K$ returns a hyperplane separating $x$ from $K.$
+A \emph{separation oracle} for a convex set~$K$ is a device, which given any
+point $x\not\in K$ returns a hyperplane separating $x$ from $K.$
 \end{definition}
 
-Another computational abstraction is a \emph{first-order oracle} that given a point $x\in\domain$ returns the gradient $\nabla f(x).$ Similarly, a \emph{second-order oracle} returns $\nabla^2 f(x).$ A function value oracle or \emph{zeroth-order oracle} only returns $f(x).$
-First-order methods are algorithms that make do with a first-order oracle.
+Another computational abstraction is a \emph{first-order oracle} that given a
+point $x\in\domain$ returns the gradient $\nabla f(x).$ Similarly, a
+\emph{second-order oracle} returns $\nabla^2 f(x).$ A function value oracle or
+\emph{zeroth-order oracle} only returns $f(x).$ First-order methods are
+algorithms that make do with a first-order oracle.  Analogously, we can define
+zeroth-order method, and second-order method.
 
 \subsubsection{What is efficient?}
-Classical complexity theory typically quantifies the resource consumption (primarily running time or memory) of an algorithm in terms of the bit complexity of the input. 
-This approach can be cumbersome in convex optimization and most textbooks shy away from it. 
-Instead, it's customary in optimization to quantify the cost of the algorithm in terms of how often it accesses one of the oracles we mentioned.
+Classical complexity theory typically quantifies the resource consumption
+(primarily running time or memory) of an algorithm in terms of the bit
+complexity of the input. We say things like ``we can multiply two $n$-bit
+numbers in time $O(n^2)$ using long multiplication method.''
 
-The definition of ``efficient'' is not completely cut and dry in optimization. 
-Typically, our goal is to show that an algorithm finds a solution~$x$ with $f(x) = \min_{x\in\domain}f(x) + \epsilon$ for some additive error $\epsilon>0.$ 
-The cost of the algorithm will depend on the target error. 
-Highly practical algorithms often have a polynomial dependence on $\epsilon,$ such as $O(1/\epsilon)$ or even $O(1/\epsilon^2).$ Other algorithms achieve $O(\log(1/\epsilon))$ steps in theory, but are prohibitive in their actual computational cost. Technically, if we think of the parameter~$\epsilon$ as being part of the input, it takes only $O(\log(1/\epsilon))$ bits to describe the error parameter. Therefore, an algorithm that depends more than logarithmically on $1/\epsilon$ may not be polynomial time algorithm in its input size.
+This computational approach can be cumbersome in convex optimization and most
+textbooks shy away from it. Instead, it's customary in optimization to quantify
+the cost of the algorithm in terms of more abstract resources, like, how often
+it accesses one of the oracles we mentioned. Counting oracle can give us a rough
+sense of how well we expect a method to work.
+
+The definition of ``efficient'' is not completely cut and dry in optimization.
+Typically, our goal is to show that an algorithm finds a solution~$x$ with 
+\[
+f(x) \le \min_{x\in\domain}f(x) + \epsilon
+\]
+for some additive error $\epsilon>0.$ 
+The
+cost of the algorithm will depend on the target error.  Highly practical
+algorithms often have a polynomial dependence on $\epsilon,$ such as
+$O(1/\epsilon)$ or even $O(1/\epsilon^2).$ Other algorithms achieve
+$O(\log(1/\epsilon))$ steps in theory, but are prohibitive in their actual
+computational cost. Technically, if we think of the parameter~$\epsilon$ as
+being part of the input, it takes only $O(\log(1/\epsilon))$ bits to describe
+the error parameter. Therefore, an algorithm that depends more than
+logarithmically on $1/\epsilon$ may not be polynomial time algorithm in its
+input size.
 
 In this course, we will make an attempt to highlight both the theoretical performance and practical appeal of an algorithm. Moreover, we will discuss other performance criteria such as robustness to noise. How well an algorithm performs is rarely decided by a single criterion, and usually depends on the application at hand.

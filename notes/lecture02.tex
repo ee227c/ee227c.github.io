@@ -5,10 +5,14 @@ In this lecture we encounter the fundamentally important \emph{gradient method}
 and a few ways to analyze its convergence behavior.
 The goal here is to solve a problem of the form
 \[
-\min_{x\in\domain} f(x)\,
+\min_{x\in\domain}\quad f(x)\,.
 \]
-where we'll make some additional assumptions on the
-function~$f\colon\domain\to\R.$ The technical exposition closely follows the
+To solve this problem, we will need to make some assumptions on both the 
+\emph{objective function}~$f\colon\domain\to\R$ and the constraint
+set~$\domain.$ In case~$\domain=\R^n,$ we speak of an \emph{unconstrained}
+optimization problem.
+
+The proofs closely follow the
 corresponding chapter in Bubeck's text~\cite{Bubeck}.
 
 \subsection{Gradient descent}
