@@ -46,8 +46,8 @@ you spot any please send an email or pull request.
 | 5 | 1/30 | Conditional gradient (Frank-Wolfe algorithm) | [pdf](notes/ee227c-lecture05.pdf)  | [ipynb](code/lecture5.html)  |
 | | | **Part II: Krylov methods and acceleration** | | |
 | 6 | 2/1 |  Discovering acceleration with Chebyshev polynomials | [pdf](notes/ee227c-lecture06.pdf)  | [ipynb](code/lecture6.html)  |
-| 7 | 2/6 | Nesterov's accelerated gradient descent  | [pdf](notes/ee227c-lecture07.pdf)  | ---  |
-| 8 | 2/8 | Eigenvalue intermezzo | [pdf](notes/ee227c-lecture08.pdf)  | ---  |
+| 7 | 2/8 | Eigenvalue intermezzo | [pdf](notes/ee227c-lecture08.pdf)  | ---  |
+| 8 | 2/6 | Nesterov's accelerated gradient descent  | [pdf](notes/ee227c-lecture07.pdf)  | ---  |
 | 9 | 2/13 | Lower bounds, robustness vs acceleration | [pdf](notes/ee227c-lecture09.pdf)  | [py](code/lecture9.py) |
 | | | **Part III: Stochastic optimization** | | |
 | 10 | 2/15 | Stochastc optimization | [pdf](notes/ee227c-lecture10.pdf)  | ---  |

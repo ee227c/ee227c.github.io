@@ -1,212 +1,344 @@
-\section{Nesterov’s accelerated gradient descent}
+\section{Krylov subspaces, eigenvalues, and conjugate gradient}
+\sectionlabel{TBD}
 
-Previously, we saw how we can accelerate gradient descent for minimizing
-quadratics~$f(x)=x^\trans A x+b^\trans x,$ where $A$ is a positive definite
-matrix. In particular, we achieved a quadratic improvement in the dependence
-on the condition number of the matrix~$A$ than what standard gradient descent
-achieved. The resulting update rule had the form
-\[
-x_{t+1} = x_t -\eta_t\nabla f(x_t) + \mu(x_t-x_{t-1})\,,
-\]
-where we interpreted the last term as a form of ``momentum''. In this simple
-form, the update rule is sometimes called Polyak's \emph{heavy ball method}.
-
-To get the same accelerated convergence rate for general smooth convex functions
-that we saw for quadratics, we will have to work a bit harder and look into
-Nesterov's celebrated \emph{accelerated gradient method}~\cite{Nesterov83,
-Nesterov04}
-
-Specifically, we will see that Nesterov's method achieves a convergence rate
-of~$\cO \left(\frac{\beta}{t^2}\right)$ for $\beta$-smooth functions. For smooth
-functions which are also $\alpha$-strongly convex, we will achieve a rate of
-$\exp\left( -\Omega\left(\sqrt{\frac{\beta}{\alpha}} t\right)\right)$. 
-
-The update rule is a bit more complicated than the plain momentum rule 
-and proceeds as follows:
-\begin{align*}
-x_0 &= y_0 = z_0, \\
-x_{t+1} &= \tau z_t + (1 - \tau) y_t \tag{$t\ge 0$}\\
-y_t &= x_t - \frac{1}{\beta} \nabla f(x_t) \tag{$t\ge 1$}\\
-z_t &= z_{t-1} - \eta\nabla f(x_t)\tag{$t\ge 1$}
-\end{align*}
-Here, the parameter~$\beta$ is the smoothness constant of the function we're
-minimizing. The step size $\eta$ and the parameter~$\tau$ will be chosen below
-so as to give us a convergence guarantee.
-
-\subsection{Convergence analysis}
-
-We first show that for a simple setting of the step sizes, the algorithm reduces
-its initial error from some value~$d$ to $\frac{d}{2}.$ We will then repeatedly
-restart the algorithm to continue reducing the error. This is a slight departure
-from Nesterov's method which does not need restarting, albeit requiring a much
-more delicate step size schedule that complicates the analysis.
-
-\begin{lemma}
-\lemmalabel{lecture7-main}
-Suppose $f\colon\R^n\to\R$ is a convex, $\beta$-smooth function that attains its
-minimum at a point~$x^*\in\R^n.$
-Assume that the initial point satisfies $\|x_0-x^*\|\le R$ and $f(x_0)-f(x^*)\le
-d.$ Put $\eta = \frac{R}{\sqrt{d\beta}}$, and choose
-$\tau$ such that $\frac{1-\tau}{\tau} = \eta \beta$.
+In this lecture, we'll develop a unified view of solving linear equations~$Ax=b$
+and eigenvalue problems~$Ax=\lambda x.$ In particular, we will justify the
+following picture.
 %
-Then after $T = 4R\sqrt{\beta/d}$ steps, 
-the average iterate $\bar{x} = \frac{1}{T} \sum_{k=0}^{T-1} x_t$ satisfies
-\[
-f(\bar{x})- f(x^*) \le d/2\,.
-\]
-\end{lemma}
+\begin{center}
+\begin{tabular}{ | c |c| c | } 
+\hline
+ & $Ax=b$ & $Ax=\lambda x$ \\ 
+\hline
+Basic & Gradient descent & Power method \\ 
+\hline
+Accelerated & Chebyshev iteration & Chebyshev iteration \\
+\hline
+Accelerated and step size free & Conjugate gradient & Lanczos \\
+\hline
+\end{tabular}
+\end{center}
 
+What we saw last time was the basic gradient descent method and Chebyshev
+iteration for solving quadratics. Chebyshev iteration requires step sizes to be
+carefully chosen. In this section, we will see how we can get a ``step-size
+free'' accelerated method, known as \emph{conjugate gradient}.
+
+What ties this all together is the notion of a Krylov subspace and its
+corresponding connection to low-degree polynomials.
+
+Our exposition follows the excellent Chapter VI
+in~Trefethen-Bau~\cite{trefethen97}.
+
+\subsection{Krylov subspaces}
+%
+The methods we discuss all have the property that they generate a sequence of
+points iteratively that is contained in a subspace called the \emph{Krylov
+subspace}.
+%
+\begin{definition}[Krylov subspace]
+For a matrix $A \in \R^{n x n}$ and a vector $b \in \R^n$, 
+the \emph{Krylov sequence} of order $t$ is $b, Ab, A^2b, ...., A^tb$. 
+We define the \emph{Krylov subspace} as
+\[
+K_t(A,b)=\mathrm{span}(\{b, Ab, A^2b, \ldots, A^t\}) \subseteq \R^n\,.
+\]
+\end{definition}
+
+Krylov subspace naturally connect to polynomial approximation problems.
+To see this, recall that a degree~$t$ matrix polynomial is an expression of the form
+$p(A)=\sum_{i=1}^t \alpha_i A^i.$ 
+
+\begin{fact}[Polynomial connection]
+The Krylov subspace satisfies
+\[
+K_t(A,b) = \left\{ p(A)b : \text{deg}(p) \leq t \right\}\,.
+\]
+\end{fact}
 \begin{proof}
-When introducing smoothness in \sectionref{smoothness}, we saw 
-\lemmaref{smoothness-1} that implies
-\begin{equation}
-\label{Nesterov-pf_smoothness_and_convexity}
-f(y_t) - f(x_t) \leq -\frac{1}{2 \beta} \|\nabla f(x_t) \|^2\,.
-\end{equation}
-By the ``Fundamental Theorem of Optimization" (see Lecture 2), we have
-for all $u\in\R^n:$
-\begin{align}
-\label{lecture7-nonsmooth}
-\eta\langle \nabla f(x_{t+1}), z_t - u \rangle 
-&= \frac{\eta^2}2\|\nabla f(x_{t+1})\|^2 
-+ \frac12\|z_t - u \|^2 - \frac12\|z_{t+1} - u \|^2\,.
-\end{align}
-Substituting the first equation yields
-\begin{equation}
-\eta \langle \nabla f(x_{t+1}, z_t - u \rangle \leq \eta^2 \beta (f(x_{t+1}) -
-f(y_{t+1})) + \frac12\|z_t - u\|^2 - \frac12\|z_{t+1} - u \|^2 \label{Nesterov-pf_eq3}
-\end{equation}
-\medskip
-Working towards a term that we can turn into a telescoping sum, we compute the
-following difference
-\begin{align}
-&\eta \langle \nabla f(x_{t+1}), x_{t+1} - u\rangle - \eta \langle \nabla
-f(x_{t+1}), z_t - u\rangle \nonumber\\
-&= \eta \langle\nabla f(x_{t+1}), x_{t+1} - z_t\rangle \nonumber\\
-&= \frac{1-\tau}{\tau}  \eta \langle\nabla f(x_{t+1}), y_t - x_{t+1}\rangle \nonumber\\
-&\leq \frac{1-\tau}{\tau} \eta (f(y_t) - f(x_{t+1})) \quad\text{ (by convexity)}. \label{Nesterov-pf_eq4}
-\end{align}
-\medskip
-Combining  \eqref{Nesterov-pf_eq3} and \eqref{Nesterov-pf_eq4}, and setting
-$\frac{1-\tau}{\tau} = \eta \beta$ yield for all $u\in\R^n:$
-\begin{equation*}
-\eta\langle\nabla f(x_{t+1}), x_{t+1} - u\rangle \leq \eta^2 \beta
-(f(y_t) - f(y_{t+1})) + \frac12\|z_t - u\|^2 - \frac12\|z_{t+1} - u\|^2.
-\end{equation*}
-Proceeding as in our basic gradient descent analysis, we apply this inequality
-for $u=x^*,$ sum it up from $k=0$ to $T$ and exploit the telescoping sum.
+Note that
 \begin{align*}
-\eta T (f(\bar{x}) - f(x^*)) 
-\leq \sum_{k=0}^T \eta \langle\nabla f(x_{t+1}), x_{t+1} - x^*\rangle
-\leq \eta^2 \beta d + R^2,
+v \in K_t(A,b) &\Longleftrightarrow \exists \alpha_i: \ v= \alpha_0 b + \alpha_1 Ab + \cdots \alpha_t A^tb
 \end{align*}
-By rearranging,
-\begin{align*}
-f(\bar{x}) - f(x^*) 
-\leq \frac{\eta\beta d}{T} + \frac{R^2}{\eta T}
-= \frac{2\sqrt{\beta d}}{T} R 
-\leq \frac{d}{2}\,,
-\end{align*}
-since $\eta=R/\sqrt{\beta d}$ and $T\ge 4R\sqrt{\beta/D}.$
 \end{proof}
 
-This lemma appears in work by Allen-Zhu and Orecchia~\cite{allen2014linear}, who
-interpret Nesterov's method as a coupling of two ways of analyzing gradient
-descent. One is the the inequality
-in~\eqref{Nesterov-pf_smoothness_and_convexity} that is commonly used in the
-analysis of gradient descent for smooth functions. The other is
-Equation~\ref{lecture7-nonsmooth} commonly used in the convergence analysis for
-non-smooth functions. Both were shown in our Lecture 2.
 
-\begin{theorem}
-\theoremlabel{lecture7-smooth}
-Under the assumptions of \lemmaref{lecture7-main}, by restarting the algorithm
-repeatedly, we can find a point $x$ such that
+From here on, suppose we have a symmetric matrix $A \in \R^{n \times n}$ that
+has orthonormal eigenvectors $u_1 \ldots u_n$ and ordered eigenvalues $\lambda_1
+\geq \lambda_2 \ldots \geq \lambda_n$. Recall, this means
+\begin{align*}
+    \langle u_i,u_j\rangle &= 0,\quad\text{for } i \neq j\\
+    \langle u_i, u_i\rangle &= 1 
+\end{align*}
+Using that $A=\sum_i \lambda_i u_i u_i^\trans,$ it follows
 \[
-f(x)-f(x^*)\le\epsilon
+p(A)u_i = p(\lambda_i)u_i\,.
 \]
-with at most $O(R\sqrt{\beta/\epsilon})$ gradient updates.
-\end{theorem}
-\begin{proof}
-By \lemmaref{lecture7-main}, we can go from error $d$ to $d/2$ with
-$CR\sqrt{\beta/d}$ gradient updates for some constant~$C$. 
-Initializing each run with the output of
-the previous run, we can there for successively reduce the error from an initial
-value~$d$ to $d/2$ to $d/4$ and so on until we reach error~$\epsilon$ after
-$O(\log(d/\epsilon))$ runs of the algorithm. The total number of gradient steps
-we make is
+%
+Now suppose we write $b$ in the eigenbasis of $A$ as 
 \[
-CR\sqrt{\beta/d} 
-+CR\sqrt{2\beta/d}
-+\dots+CR\sqrt{\beta/\epsilon}
-= O\left(R\sqrt{\beta/\epsilon}\right)\,.
+b=\alpha_1 u_1 + ... + \alpha_n u_n
+\] 
+with $\alpha_i = \langle u_i,b\rangle$. It follows that
+\begin{align*}
+p(A)b &= \alpha_1 p(\lambda_1)u_1 + \alpha_2 p(\lambda_2) u_2 + \ldots +
+\alpha_n p(\lambda_n) u_n\,.
+\end{align*}
+ 
+\subsection{Finding eigenvectors}
+Given these ideas, one natural approach to finding eigenvectors is to find a
+polynomial~$p$ such that
+\[
+p(A)b \approx \alpha_1 u_1\,.
 \]
-Note that the last run of the algorithm dominates the total number of steps up to a
-constant factor.
-\end{proof}
+Ideally, we would have $p(\lambda_1) = 1$ and $ p(\lambda_i) = 0$ for $i > 1$,
+but this is in general impossible unless we make he degree of our polynomial as
+high as the number of distinct eigenvalues of~$A.$ Keep in mind that the degree
+ultimately determines the number of steps that our iterative algorithm makes.
+We'd therefore like to keep it as small as possible.
 
-\subsection{Strongly convex case}
+That's why we'll settle for an approximate solution that has $p(\lambda_1) = 1$
+and makes $\max_{i > 1} p(\lambda_i)$ as small as possible. This will give us a close
+approximation to the top eigenvalue. In practice, we don't know the
+value~$\lambda_1$ ahead of time. What we therefore really care about is the
+ratio $p(\lambda_1)/p(\lambda_2)$ so that no matter what~$\lambda_1,$ the second
+eigenvalue will get mapped to a much smaller value by~$p.$ 
 
-We can prove a variant of \lemmaref{lecture7-main} that applies when the
-function is also $\alpha$-strongly convex, ultimately leading to a linear
-convergence rate. The idea is just a general trick to convert a convergence rate
-for a smooth function to a convergence rate in domain using the definition of
-strong convexity.
+We consider the following simple polynomial~$p(\lambda)=\lambda^t$ that 
+satisfies
+\begin{align*}
+    p(\lambda_2)/p(\lambda_1) &= \left(\frac{\lambda_2}{\lambda_1}\right)^t
+\end{align*}
+In the case where $\lambda_1=(1+\epsilon)\lambda_2$ we need $t=O(1/\epsilon)$ 
+to make the ratio small.
+
+The next lemma turns a small ratio into an approximation result for the
+top eigenvector. To state the lemma, we recall that $\tan \angle (a,b)$ is the
+tangent of the angle between $a$ and $b.$
 
 \begin{lemma}
-Under the assumption of \lemmaref{lecture7-main} and the additional assumption
-that the function~$f$ is $\alpha$-strongly convex, we 
-can find a point~$x$ with $T = O\left(\sqrt{\frac{\beta}{\alpha}}\right)$
-gradient updates such that
+$\tan \angle(p(A)b, u_1) \leq \max_{j>1} \frac{|p(\lambda_j)|}{|p(\lambda_1)|}
+\tan \angle (b, u_1)$
+\end{lemma}
+
+\begin{proof}
+We define $\theta = \angle (u_1,b)$. By this, we get
+\begin{align*}
+    \sin ^2 \theta &=  \sum_{j >1} \alpha_j^2 \\
+    \cos ^2 \theta &= |\alpha_1|^2 \\
+    \tan^2 \theta &= \sum_{j > 1} \frac{|\alpha_j^2|}{|\alpha_1|^2}
+\end{align*}
+Now we can write:
+\begin{align*}
+    \tan^2 \angle (p(A)b, u_1) = \sum_{j>1}
+\frac{|p(\lambda_j)\alpha_j|^2}{|p(\lambda_1)\alpha_1|^2} \leq
+\underset{j>1}{\text{max}} \frac{|p(\lambda_j)|^2}{|p(\lambda_1)|^2} \sum_{j>1} \frac{\alpha_j |^2}{|\alpha_1| ^2}
+\end{align*}
+We note that this last sum $ \sum_{j > 1} \frac{\alpha_j |^2}{|\alpha_1| ^2}= \tan \theta$ and we obtain our desired result.
+\end{proof}
+Applying the lemma to $p(\lambda) = \lambda^t$ and $\lambda_1 =
+(1+\epsilon) \lambda_2$, we get  
 \[
-\|\bar x - x^*\|^2 \leq \frac12\|x_0-x^*\|^2\,.
+\tan \angle(p(A)b, u_1) \leq
+(1+\epsilon)^{-t} \tan \angle(u_1, b)\,.
 \]
+If there is a big gap between
+$\lambda_1$ and $\lambda_2$ this converges quickly but it can be slow if
+$\lambda_1 \approx \lambda_2$. It worth noting that if we choose $b\in\R^n$ to be a
+random direction, then
+\[
+\E\left[\tan\angle(u_1,b)\right]=O\left(\sqrt{n}\right)\,.
+\]
+Going one step further we can also see that the expression $p(A)b=A^tb$ can of
+course be built iteratively by repeatedly multiplying by~$A.$ For reasons of
+numerical stability it makes sense to normalize after each matrix-vector
+multiplication. This preserved the direction of the iterate and therefore does
+not change our convergence analysis. The resulting algorithms is the well known
+power method, defined recursively as follows:
+%
+\begin{align*}
+x_0 &= \frac{b}{\|b\|} \\
+x_t &= \frac{A x_{t-1}}{\|Ax_{t-1}\|}
+\end{align*}
+%
+This method goes back more than hundred years to a paper by M\"untz in 1913, but
+continues to find new applications today.
+%
+\subsection{Applying Chebyshev polynomials}
+
+As we would expect from the development for quadratics, we can use Chebyshev
+polynomials to get a better solution the polynomial approximation problem that
+we posed above. The idea is exactly the same with the small difference that we
+normalize our Chebyshev polynomial slightly differently.  This time around, we
+want to ensure that $p(\lambda_1) = 1$ so that we are picking out the first
+eigenvalue with the correct scaling. 
+
+%\begin{tikzpicture}[scale = 0.8]
+%  %\begin{axis}[doma
+%  in= 2:8,xlabel=$\lambda$,label style={font=\large},tick label style={font=\large}, ylabel style={yshift=-.1cm}, xmin=0, xmax=13, ymin=-1, ymax=1.5, xtick={}, ytick={-1, 0,1},trig format plots=rad,grid=both,grid style={dashed,gray}]
+%        \begin{axis}[%
+%                width=10cm,
+%                height=4cm,
+%                scale only axis,
+%                xmin=0, xmax=7,
+%                xtick={0.5, 1, 1.5,2, 2.5,3, 3.5,4, 4.5, 5, 5.5, 5.75, 6,6.5},
+%                xticklabels={$\lambda_n$,,,,,,,,,,,$\lambda_1$},
+%                xmajorgrids,
+%                ymin=-1, ymax=1.2,
+%                ymajorgrids,
+%                title={$p(0) = 1$},
+%                axis lines*=left,
+%                line width=1.0pt,
+%                mark size=2.0pt,
+%                legend style={at={(1.03,1)},anchor=north west,draw=black,fill=white,align=left}];
+%                \addplot[domain = 0.5:5.75, black, very thick,samples=200] {.5*(cos(3*deg(x) ))};
+%                \addplot[domain = 0:2] coordinates {(0,1)(0.5,0)};
+%                \addplot[domain = 6.17:8.3] coordinates {(5.75,0)(6.45,1)};
+%                \addplot[red] coordinates{(0.5,1)(0.5,-1)};
+%                \addplot[red] coordinates{(5.75,1)(5.75,-1)};
+%              
+%               
+%\end{axis}
+%\end{tikzpicture}
+%\begin{tikzpicture}[scale = 0.8]
+%        \begin{axis}[%
+%                width=10cm,
+%                height=4cm,
+%                scale only axis,
+%                xmin=0, xmax=7,
+%                xtick={0.5, 1, 1.5,2, 2.5,3, 3.5,4, 4.5, 5, 5.5, 6,6.5,7},
+%                xticklabels={$\lambda_n$,,,,,,,,,,,,$\lambda_1$},
+%                xmajorgrids,
+%                ymin=-1, ymax=1.2,
+%                ymajorgrids,
+%                title={$p(\lambda_1) = 1$},
+%                axis lines*=left,
+%                line width=1.0pt,
+%                mark size=2.0pt,
+%                legend style={at={(1.03,1)},anchor=north west,draw=black,fill=white,align=left}];
+%                \addplot[domain = 0.5:5.75, black, very thick,samples=200] {.5*(cos(3*deg(x) ))};
+%                \addplot[domain = 0:2] coordinates {(0,1)(0.5,0)};
+%                \addplot[domain = 6.17:8.3] coordinates {(5.75,0)(6.45,1)};
+%                \addplot[red] coordinates{(0.5,1)(0.5,-1)};
+%                \addplot[red] coordinates{(6.5,1)(6.5,-1)};
+%              
+%               
+%\end{axis}
+%\end{tikzpicture}
+
+\begin{lemma}
+A suitably rescaled degree $t$ Chebyshev polynomial achieves 
+\begin{equation*}
+\min_{p(\lambda_1)=1} \max_{\lambda \in [\lambda_2, \lambda_n]} p(\lambda) \leq
+\frac{2}{(1+\max\{\sqrt{\epsilon},\epsilon\})^t}
+\end{equation*}
+where $\epsilon = \frac{\lambda_1}{\lambda_2} - 1$ quantifies the gap between the first
+and second eigenvalue.
+\end{lemma}
+
+Note that the bound is much better than the previous one when~$\epsilon$ is
+small. In the case of quadratics, the relevant ``$\epsilon$-value'' was the inverse
+condition number. For eigenvalues, this turns into the gap between the first and
+second eigenvalue.
+
+\begin{center}
+\begin{tabular}{ | c |c| c | } 
+\hline
+ & $Ax=b$ & $Ax=\lambda x$ \\ 
+\hline
+$\epsilon$ & $\frac{1}{\kappa} = \frac{\alpha}{\beta}$ & $\frac{\lambda_1}{\lambda_2} -1$ \\ 
+\hline
+\end{tabular}
+\end{center}
+
+As we saw before, Chebyshev polynomials satisfy a recurrence relation that can
+be used to derive an iterative method achieving the bound above. The main
+shortcoming of this method is that it needs information about the location of
+the first and second eigenvalue. Instead of describing this algorithm, we move
+on to an algorithm that works without any such information.
+
+\subsection{Conjugate gradient method}
+At this point, we switch back to linear equations~$Ax=b$ for a symmetric
+positive definite matrix~$A\in\R^{n\times n}.$ The method we'll see is called
+\emph{conjugate gradient} and is an important algorithm for solving linear
+equations. Its eigenvalue analog is the Lanczos method. While the ideas behind
+these methods are similar, the case of linear equations is a bit more intuitive.
+%
+\begin{definition}[Conjugate gradient method]
+We want to solve $Ax = b,$ with  $A\succ 0$ symmetric. The conjugate gradient
+method maintains a sequence of three points:
+\begin{align*}
+x_0 &= 0 \tag{ ``candidate solution''} \\
+r_0 &= b \tag{ ``residual''} \\
+p_0 &= r_0 \tag{ ``search direction''}
+\end{align*}
+For $t \ge 1:$
+\begin{align*}
+\eta_t &= \frac{\|r_{t-1}\|^2}{\langle p_{t-1}, Ap_{t-1}\rangle} \tag{``step size''} \\
+x_t &= x_{t-1} + \eta_t p_{t-1} \\
+r_t &= r_{t-1} - \eta_t A p_{t-1} \\
+p_t &= r_t + \frac{\|r_t\|^2}{\|r_{t-1}\|^2}p_{t-1}
+\end{align*}
+\end{definition}
+
+\begin{lemma}
+\lemmalabel{lecture8-conjugategradient}
+The following three equations must always be true for the conjugate gradient
+method algorithm:
+\begin{itemize}
+\item $\mathrm{span}(\{r_0, ...r_{t-1}\}) = K_t(A,b)$
+\item For $j<t$ we have $\langle r_t, r_j\rangle = 0$ and in particular
+$r_t \perp K_t(A,b).$
+\item The search directions are conjugate $p_i^{\trans} A p_j = 0$ for $i\ne j.$
+\end{itemize}
 \end{lemma}
 \begin{proof}
-Noting that $\|x_0-x^*\|^2\le R^2,$ we can apply \theoremref{lecture7-smooth} with
-error parameter $\epsilon = \frac{\alpha}4 \|x_0-x^*\|^2$ to find a point~$x$ such that
-\[
-f(x)-f(x^*)\le \frac\alpha4\|x_0-x^*\|^2\,,
-\]
-while only making $O\left(\sqrt{\beta/\alpha}\right)$ many steps.
-From the definition of strong convexity it follows that
-\[
-\frac\alpha2 \|x-x^*\|^2 \le f(x)-f(x^*)\,.
-\]
-Combining the two inequalities gives the statement we needed to show.
+Proof by induction (see Trefethen and Bau). Show that the conditions are true
+initially and stay true when the update rule is applied.  
 \end{proof}
 
-We see from the lemma that for strongly convex function we actually reduce the
-distance to the optimum in domain by a constant factor at each step. We can
-therefore repeatedly apply the lemma to get a linear convergence rate.
+\begin{lemma}
+Let $\|u\|_A = \sqrt{u^\trans A u}$ and $\langle u,v\rangle_A = u^\trans A v$ and 
+$e_t = x^* - x_t$. Then $e_t$ minimizes $\|x^* - x\|_A$ over all vectors $x \in K_{t-1}$.
+\end{lemma}
 
-Table \ref{tab:nesterov} compares the bounds on error $\epsilon(t)$ as a
-function of the total number of steps when applying Nesterov's method and
-ordinary gradient descent method to different functions. 
+\begin{proof}
+We know that $x_t \in K_t$. Let $x \in K_t$ and define $x = x_t - \delta$. 
+Then, $e = x^* - x = e_t + \delta.$
+We compute the error in the $A$ norm:
+\begin{align*}
+\|x^* - x\|_A^2 
+&= (e_t + \delta)^{\trans} A(e_t + \delta) \\
+&= e_t^{\trans}Ae_t + \delta^{\trans}A\delta + 2e_t^{\trans} A \delta\,
+\end{align*}
+By definition~$e_t^{\trans}A = r_t$.
+Note that $\delta \in K_t.$ 
+By \lemmaref{lecture8-conjugategradient}, we have that $r_t \perp K_t(A,b).$
+Therefore, $2e_t^{\trans} A \delta = 0$ and hence, 
+\begin{align*}
+\|e\|_A^2
+= \|x^* - x\|_A^2 
+= e_t^{\trans}Ae_t + \delta^{\trans}A\delta
+\ge \|e_t\|_A\,.
+\end{align*}
+In the last step we used that $A\succ0.$
+\end{proof}
 
-\begin{table}[h]
-  \begin{center}
-    \begin{tabular}{ | l | c | c |}
-      \hline
-        & Nesterov's Method 
-        & Ordinary GD Method \\ \hline
-      $\beta$-smooth, convex 
-      & \begin{tabular}{c}
-        $O\left(\beta/t^2\right)$
-        \end{tabular}
-      & \begin{tabular}{c}
-        $O\left(\beta/t\right)$
-        \end{tabular} \\ \hline
-      $\beta$-smooth, $\alpha$-strongly convex 
-      & \begin{tabular}{c}
-        $\exp\left(-\Omega(t\sqrt{\alpha/\beta})\right)$
-        \end{tabular} 
-      & \begin{tabular}{c}
-        $\exp\left(-\Omega(t\alpha/\beta)\right)$
-        \end{tabular} \\ \hline
-    \end{tabular}
-  \end{center}
-  \caption{Bounds on error $\epsilon$ as a function of number of iterations $t$ for different methods.}
-  \label{tab:nesterov}
-\end{table}
+What the lemma shows, in essence, is that conjugate gradient solves the
+polynomial approximation problem:
+\[
+\min_{p\colon\deg(p)\le t, p(0)=1} \|p(A)e_0\|_A\,.
+\]
+Moreover, it's not hard to show that
+\[
+\min_{p\colon\deg(p)\le t, p(0)=1} 
+\frac{\|p(A)e_0\|_A}{\|e_0\|_A}
+\le 
+\min_{p\colon\deg(p)\le t, p(0)=1} 
+\max_{\lambda\in\Lambda(A)}\left| p(\lambda)\right|\,.
+\]
+In other words, the error achieved by conjugate gradient is no worse that the
+error of the polynomial approximation on the RHS, which was solved by the
+Chebyshev approximation. From here it follows that conjugate gradient must
+converge at least as fast in $\|\cdot\|_A$-norm than Chebyshev iteration.
 
