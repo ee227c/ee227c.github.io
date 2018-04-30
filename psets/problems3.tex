@@ -33,7 +33,7 @@ additional resources on this topic.
 \paragraph{Barrier function.}
 Recall that we defined the modified objective $f_\epsilon\colon\R^n\to\R$ as
 \[
-f_\epsilon(x) = c^\trans x - \epsilon\sum_{j=1}^m \ln(A_j^\trans x - b_j)\,.
+f_\epsilon(x) = \frac{1}{\epsilon} c^\trans x - \sum_{j=1}^m \ln(A_j^\trans x - b_j)\,.
 \]
 Here, $A_j\in\R^n$ denotes the $j$-th row of $A$ in colunm form.
 Let $s_j(x)= A_j^\trans x-b_j$ and define the $m\times m$ diagonal matrix
@@ -42,11 +42,11 @@ $S(x)=\mathrm{diag}(s_1(x),\dots,s_m(x)).$
 Denoting by $\vec{1}$ the all ones vector, we have
 \begin{align*}
 \nabla f_\epsilon(x) 
-&= c - \epsilon S(x)^{-1}A^\trans\vec{1}
-= c - \epsilon\sum_j \frac{A_j}{S_j(x)}\\
+&= \frac{c}{\epsilon} - S(x)^{-1}A^\trans\vec{1}
+= \frac{c}{\epsilon} - \sum_j \frac{A_j}{S_j(x)}\\
 \nabla^2 f_\epsilon(x) \,,
-& = \epsilon A^\trans S(x)^{-2} A
-= \epsilon \sum_j \frac{A_jA_j^\trans}{S_j(x)^2}\,,
+& =  A^\trans S(x)^{-2} A
+=  \sum_j \frac{A_jA_j^\trans}{S_j(x)^2}\,,
 \end{align*}
 
 We will assume that the system $Ax\ge b$ is feasible, and that the rows of $A$
@@ -133,8 +133,8 @@ provided that $q(x,\epsilon)$ is small enough.
 
 \begin{prop}
 \label{prop:two}
-Assume $Ax>b$ and $q(x, \epsilon)\le 1/2.$ Then, the Newton iterate $\bar x$
-satisfies $A\bar x>b$ and $q(\bar x, \epsilon)\le q(x, \epsilon)^2.$
+Assume $Ax>b$ and $q(x, \epsilon)^2 < 1/2.$ Then, the Newton iterate $\bar x$
+satisfies $A\bar x > b$ and $q(\bar x, \epsilon)^2< q(x,\epsilon)$.
 \end{prop}
 
 \begin{enumerate}
@@ -201,7 +201,7 @@ q(\bar x,\bar\epsilon)
 Show that
 \[
 \|\nabla^2 f_\epsilon(\bar x)^{-1}c\|_{\nabla^2 f_\epsilon(\bar x)}
-\le \sqrt{m}\,.
+\le \sqrt{m} + O(1)\,.
 \]
 Hint: Relate the expression in the left hand side to a projection operator
 applied to the all ones vector.
