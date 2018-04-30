@@ -1,4 +1,4 @@
-\section{Lecture 15: Fenchel Duality and Algorithms}
+\section{Fenchel duality and algorithms}
 
 In this section, we introduce the Fenchel conjugate. First, recall that for a real-valued convex function of a single variable $f(x)$, we call $f^*(p) := \sup_x px - f(x)$ its Legendre transform. This is illustrated in figure \ref{fig:leg-conj}.
 
@@ -103,7 +103,7 @@ We can recover Fenchel duality from Lagrangian duality, which we have already st
 
 
 
-\subsection{Deriving the Dual problem for Empirical Risk Minimization}
+\subsection{Deriving the dual problem for empirical risk minimization}
 In empirical risk minimization, we often want to minimize a function of the following form:
 \begin{equation}
     P(w) = \sum_{i=1}^m \phi_i(\iprod{w,x_i}) + R(w)
@@ -145,7 +145,7 @@ We end with a fact that relates the smoothness of $\phi_i$ to the strong convexi
 If $\phi_i$ is $\frac{1}{\gamma}$-smooth, then $\phi^*_i$ is $\gamma$-strongly convex.
 \end{fact}
 
-\subsection{Stochastic Dual Coordinate Ascent (SDCA)}
+\subsection{Stochastic dual coordinate ascent (SDCA)}
 
 In this section we discuss a particular algorithm for empirical risk minimization which makes use of Fenchel duality. Its main idea is picking an index $i\in[m]$ at random, and then solving the dual problem at coordinate $i$, while keeping the other coordinates fixed.
 

@@ -1,0 +1,294 @@
+\section{Gradient method}
+\sectionlabel{gradient-descent}
+
+In this lecture we encounter the fundamentally important \emph{gradient method}
+and a few ways to analyze its convergence behavior.
+The goal here is to solve a problem of the form
+\[
+\min_{x\in\domain}\quad f(x)\,.
+\]
+To solve this problem, we will need to make some assumptions on both the 
+\emph{objective function}~$f\colon\domain\to\R$ and the constraint
+set~$\domain.$ In case~$\domain=\R^n,$ we speak of an \emph{unconstrained}
+optimization problem.
+
+The proofs closely follow the
+corresponding chapter in Bubeck's text~\cite{Bubeck}.
+
+\subsection{Gradient descent}
+
+For a differentiable function~$f,$ the basic gradient method starting from an
+initial point~$x_1$ is defined by the iterative update rule
+\[
+x_{t+1} = x_t - \eta_t \nabla f(x_t)\,,\qquad\qquad t=1,2,\dots
+\]
+where the scalar $\eta_t$ is the so-called \emph{step size}, sometimes called
+\emph{learning rate}, that may vary with~$t.$ There are numerous ways of
+choosing step sizes that have a significant effect on the performance of
+gradient descent. What we will see in this lecture are several choices of step
+sizes that ensure the convergence of gradient descent by virtue of a theorem.
+These step sizes are not necessarily ideal for practical applications.
+
+\subsubsection{Projections}
+
+In cases where the constraint set~$\Omega$ is not all of~$\R^n,$ the gradient
+update can take us outside the domain~$\Omega.$ How can we
+ensure that $x_{t+1}\in\domain$?  One natural approach is to ``project'' each
+iterate back onto the domain~$\domain.$ As it turns out, this won't really make
+our analysis more difficult and so we include from the get-go.
+
+\begin{definition}[Projection]
+The \emph{projection} of a point~$x$ onto a set $\domain$ is defined as
+\[
+\Pi_{\domain}(x) = \arg\min_{y\in\domain} \|x-y\|_2\,.
+\]
+\end{definition}
+
+\begin{example}
+\examplelabel{euclidean-ball}
+A projection onto the Euclidean ball $B_2$ is just normalization:
+\[
+\Pi_{B_2}(x) = \dfrac{x}{\|x\|}
+\]
+\end{example}
+%
+A crucial property of projections is that when $x\in\Omega,$ we have for any $y$
+(possibly outside $\Omega$):
+\[
+\| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2\
+\]
+That is, the projection of $y$ onto a convex set containing $x$ is closer to
+$x$. In fact, a stronger claim is true that follows from the
+Pythagorean theorem.
+%
+\begin{lemma}
+\lemmalabel{pythagorean}
+\[
+\| \Pi_{\domain}(y) - x \|^2 \leq \| y - x \|^2 - \| y - \Pi_{\domain}(y) \|^2
+\]
+\end{lemma}
+
+So, now we can modify our original procedure as displayed in
+\figureref{projected-gradient-descent}.
+\begin{figure}[h]
+\begin{center}
+\begin{boxedminipage}{0.85\textwidth}
+Starting from $x_1\in\Omega,$ repeat:
+\begin{align*}
+y_{t+1} &= x_t - \eta \nabla f(x_t) \tag{gradient step} \\
+x_{t+1} &= \Pi_{\domain}(y_{t+1}) \tag{projection}
+\end{align*}
+\end{boxedminipage}
+\end{center}
+\caption{Projected gradient descent}
+\figurelabel{projected-gradient-descent}
+\end{figure}
+
+And we are guaranteed that $x_{t+1}\in\domain$. Note that computing the
+projection may be computationally the hardest part of the problem.
+However, there are convex sets for which we know explicitly how to
+compute the projection (see \exampleref{euclidean-ball}). We will see several
+other non-trivial examples in later lectures.
+
+\subsection{Lipschitz functions}
+
+The first assumption that leads to a convergence analysis is that the gradients
+of the objective function aren't too big over the domain. This turns out to
+follow from a natural Lipschitz continuity assumption.
+
+\begin{definition}[$L$-Lipschitz]
+A function~$f\colon\domain\to\R$ is \emph{$L$-Lipschitz} if for every
+$x,y\in\domain,$ we have
+\[
+|f(x) - f(y)| \leq L \|x - y\|
+\]
+\end{definition}
+
+\begin{fact}
+If the function~$f$ is $L$-Lipschitz, differentiable, and convex, then
+\[
+\|\nabla f(x)\| \leq L\,.
+\]
+\end{fact}
+
+We can now prove our first convergence rate for gradient descent.
+
+\begin{theorem}
+\theoremlabel{lipschitz}
+Assume that function $f$ is convex, differentiable, 
+and $L$-Lipschitz over the convex domain~$\Omega$. 
+Let~$R$ be the upper bound on the distance $\lVert x_1 - x^* \rVert_2$
+from the initial point $x_1$ to an optimal point $x^* \in\arg\min_{x \in \Omega} f(x)$.
+Let $x_1,\dots,x_t$ be the sequence of iterates computed by~$t$ steps of
+projected gradient descent with constant 
+step size
+$\eta=\frac{R}{L\sqrt{t}}.$
+Then, 
+\[
+f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right) 
+\leq \frac{RL}{\sqrt{t}}\,.
+\]
+\end{theorem}
+
+This means that the difference between the functional value of the average
+point during the optimization process from the optimal value is bounded above
+by a constant proportional to $\frac{1}{\sqrt{t}}$.
+
+Before proving the theorem, recall the ``Fundamental Theorem of Optimization'',
+which is that an inner product can be written as a sum of norms: 
+\begin{equation}
+\equationlabel{fundamental-theorem}
+u^\trans v = \frac{1}{2}(\lVert u \rVert^2 + \lVert v \lVert^2 - \lVert u - v \rVert^2)
+\end{equation}
+This property follows from the more familiar identity $\lVert u - v \rVert^2 = \lVert u \rVert^2 + \lVert v \lVert^2 - 2 u^\trans v$.
+
+\begin{proof}[Proof of \theoremref{lipschitz}.]
+The proof begins by first bounding the difference in function values $f(x_s) -
+f(x^*)$.
+%
+\begin{align}
+    f(x_s) - f(x^*) &\leq \nabla f(x_s)^\trans (x_s - x^*)
+\tag{by convexity}\\
+    &= \frac{1}{\eta}(x_s - y_{s+1})^\trans(x_s - x^*) \tag{by the update rule} \\
+    &= \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 + \lVert x_s - y_{s+1}
+\rVert^2 - \lVert y_{s+1} - x^* \rVert^2 \right) \tag{by
+\equationref{fundamental-theorem}} \\
+    &= \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 - \lVert y_{s+1} - x^*
+\rVert^2 \right) + \frac{\eta}{2} \lVert \nabla f(x_s) \rVert^2 \tag{by the
+update rule} \\
+    &\leq \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 - \lVert y_{s+1} - x^*
+\rVert^2 \right) + \frac{\eta L^2}{2} \tag{Lipschitz condition} \\
+    &\leq \frac{1}{2\eta} \left(\lVert x_s - x^* \rVert^2 - \lVert x_{s+1} - x^*
+\rVert^2 \right) + \frac{\eta L^2}{2} \tag{\lemmaref{pythagorean}}
+\end{align}
+
+Now, sum these differences from $s=1$ to $s=t$:
+\begin{align}
+   \sum_{s=1}^t f(x_s) - f(x^*) &\leq  \frac{1}{2\eta} \sum_{s=1}^t \left(\lVert
+x_s - x^* \rVert^2 - \lVert x_{s+1} - x^* \rVert^2 \right) + \frac{\eta L^2
+t}{2} \notag \\
+   &= \frac{1}{2\eta} \left(\lVert x_1 - x^* \rVert^2 - \lVert x_{t} - x^{*}
+\rVert^2 \right) + \frac{\eta L^2 t}{2} \tag{telescoping sum} \\
+   &\leq \frac{1}{2\eta} \lVert x_1 - x^* \rVert^2 + \frac{\eta L^2 t}{2} 
+\tag{since $\|x_t-x^*\|\ge0$} \\
+   &\leq \frac{R^2}{2\eta} + \frac{\eta L^2 t}{2} 
+\tag{since $\|x_1-x^*\|\le R$}
+\end{align}
+
+Finally,
+\begin{align*}
+    f\left(\frac{1}{t}\sum_{s=1}^t x_s\right) - f\left(x^*\right)
+&\leq \frac{1}{t} \sum_{s=1}^t f(x_s) - f\left(x^*\right) \tag{by convexity} \\
+&\leq \frac{R^2}{2\eta t} + \frac{\eta L^2}{2} \tag{inequality above}\\
+&=\frac{RL}{\sqrt{t}} \tag{for $\eta=R/L\sqrt{t}.$}
+\end{align*}
+
+\end{proof}
+
+\subsection{Smooth functions}
+\sectionlabel{smoothness}
+
+The next property we'll encounter is called \emph{smoothness}.  The main point
+about smoothness is that it allows us to control the second-order term in the
+Taylor approximation. This often leads to stronger convergence guarantees at the
+expense of a relatively strong assumption.
+
+\begin{definition}[Smoothness]
+A continuously differentiable function f is $\beta$ smooth if the gradient
+gradient map $\nabla f\colon\R^n\to\R^n$ is $\beta$-Lipschitz, i.e,
+\[
+\|\nabla f(x) - \nabla f(y)\| \leq \beta\|x-y\|\,.
+\]
+\end{definition}
+
+We will need a couple of technical lemmas before we can analyze gradient descent
+for smooth functions. It's safe to skip the proof of these technical lemmas on a
+first read.
+
+\begin{lemma}
+\lemmalabel{smoothness-1}
+Let $f$ be a $\beta$-smooth function on $\R^n$.  Then, for every $x,y \in \R^n$, 
+\[
+\left|f(y) - f(x) - \nabla f(x)^\trans(y-x)\right| \leq \frac{\beta}{2}\|y-x\|^2\,.
+\]
+\end{lemma}
+
+\begin{proof}
+Express $f(x) - f(y)$ as an integral, then apply Cauchy-Schwarz and 
+$\beta$-smoothness as follows:
+\begin{align*}
+|f(y) - f(x) - \nabla f(x)^\trans(y-x)|
+&=\left|\int\limits_{0}^1 \nabla f(x + t(y-x))^\trans(y-x)dt - \nabla
+f(x)^\trans(y-x)\right|\\
+&\leq  \int\limits_{0}^1 \|\nabla f(x + t(y-x)) - \nabla f(x)\|\cdot \|y-x\|dt\\
+&\leq \int\limits_{0}^1 \beta t\|y-x\|^2dt\\
+&= \frac{\beta}{2}\|y-x\|^2\qedhere
+\end{align*}
+\end{proof}
+The significance of this lemma is that we can choose $y=x-\frac1\beta\nabla f(x)$ and
+get that 
+\[
+f(y)-f(x)\le -\frac{1}{2\beta}\|\nabla f(x)\|^2\,.
+\]
+This means that the gradient update decreases the function value by an amount
+proportional to the squared norm of the gradient.
+
+We also need the following lemma.
+
+\begin{lemma} 
+\lemmalabel{smoothness-2}
+Let $f$ be a $\beta$-smooth convex function, then for every $x,y \in \R^n$, we have
+$$f(x) - f(y)\leq \nabla f(x)^\trans(x-y) - 
+\frac{1}{2\beta}\|\nabla f(x) - \nabla f(y)\|^2\,.$$
+\end{lemma}
+
+\begin{proof}
+Let $z = y - \frac{1}{\beta}(\nabla f(y) - \nabla f(x))$.  Then,
+\begin{align*}
+f(x) - f(y)
+    &= f(x) - f(z) + f(z) - f(y) \\
+    &\leq \nabla f(x)^\trans(x-z) + \nabla f(y)^\trans(z-y) + \frac{\beta}{2}\|z-y\|^2 \\
+    &= \nabla f(x)^\trans(x-y) + (\nabla f(x) - \nabla f(y))^\trans(y-z) + \frac{1}{2\beta}\|\nabla f(x) - \nabla f(y)\|^2 \\
+    &= \nabla f(x)^\trans(x-y) - \frac{1}{2\beta} \|\nabla f(x) - \nabla f(y)\|^2
+\end{align*}
+Here, the inequality follows from convexity and smoothness.
+\end{proof}
+
+
+We will show that gradient descent with the update rule
+$$x_{t+1} = x_t - \eta \nabla f(x_t)$$
+attains a faster rate of convergence under the smoothness condition.
+
+\begin{theorem}
+Let $f$ be convex and $\beta$-smooth on $\R^n$ then gradient descent with $\eta = \frac{1}{\beta}$ satisfies
+$$f(x_t) - f(x^*) \leq \frac{2\beta\|x_1 - x^*\|^2}{t-1}$$
+\end{theorem}
+To prove this we will need the following two lemmas.
+
+\begin{proof}
+By the update rule and \lemmaref{smoothness-1} we have
+$$f(x_{s+1}) - f(x_s) \leq -\frac{1}{2\beta}\|\nabla f(x_s)\|^2 $$
+In particular, denoting $\delta_s = f(x_s) - f(x^*)$ this shows
+$$\delta_{s+1} \leq \delta_s - \frac{1}{2\beta}\|\nabla f(x_s)\|^2 $$
+One also has by convexity
+$$\delta_s \leq \nabla f(x)s)^\trans(x_s - x^*) \leq \|x_s - x^*\| \cdot \|\nabla f(x_s)\|$$
+We will prove that $\|x_s - x^*\|$ is decreasing with $s$, which with the two above displays will imply
+$$\delta_{s+1}\leq \delta_s - \frac{1}{2\beta\|x_1 - x^*\|^2}\delta_s^2$$
+We solve the recurrence as follows.  Let $w = \frac{1}{2\beta\|x_1 - x^*\|^2}$, then
+$$w\delta_s^2 + \delta_{s+1} \leq \delta_s \iff w\frac{\delta_s}{\delta_{s+1}} + \frac
+{1}{\delta_s} \leq \frac{1}{\delta_{s+1}} \implies \frac{1}{\delta_{s+1}} - \frac{1}{\delta_s} \geq w \implies \frac{1}{\delta_t} \geq w(t-1)$$
+To finish the proof it remains to show that $\|x_s - x^*\|$ is decreasing with $s$.  
+Using \lemmaref{smoothness-2}, we get
+\[
+(\nabla f(x) - \nabla f(y))^\trans(x - y) \geq \frac{1}{\beta} \|\nabla f(x)
+- \nabla f(y)\|^2\,.
+\]
+We use this and the fact that $\nabla f(x^*) = 0,$ to show
+\begin{align*}
+    \|x_{s+1} - x^*\|^2 &= \|x_s - \frac{1}{\beta}\nabla f(x_s) - x^*\|^2 \\
+    &= \|x_s - x^*\|^2 - \frac{2}{\beta}\nabla f(x_s)^\trans(x_s - x^*) + \frac{1}{\beta^2}\|\nabla f(x_s)\|^2 \\
+    &\leq \|x_s - x^*\|^2 - \frac{1}{\beta^2} \|\nabla f(x_s)\|^2 \\
+    &\leq \|x_s - x^*\|^2\,.
+\end{align*}
+\end{proof}
+

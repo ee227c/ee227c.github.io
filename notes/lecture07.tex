@@ -1,5 +1,4 @@
-
-\section{Lecture 8: Conjugate gradients and Krylov subspaces}
+\section{Krylov subspaces, eigenvalues, and conjugate gradient}
 \sectionlabel{TBD}
 
 In this lecture, we'll develop a unified view of solving linear equations~$Ax=b$
@@ -34,7 +33,7 @@ in~Trefethen-Bau~\cite{trefethen97}.
 \subsection{Krylov subspaces}
 %
 The methods we discuss all have the property that they generate a sequence of
-points iteratively that is contained in a subspace called the \emph{Kyrlov
+points iteratively that is contained in a subspace called the \emph{Krylov
 subspace}.
 %
 \begin{definition}[Krylov subspace]
@@ -93,7 +92,7 @@ polynomial~$p$ such that
 p(A)b \approx \alpha_1 u_1\,.
 \]
 Ideally, we would have $p(\lambda_1) = 1$ and $ p(\lambda_i) = 0$ for $i > 1$,
-but this is in general impossible unless we maket he degree of our polynomial as
+but this is in general impossible unless we make he degree of our polynomial as
 high as the number of distinct eigenvalues of~$A.$ Keep in mind that the degree
 ultimately determines the number of steps that our iterative algorithm makes.
 We'd therefore like to keep it as small as possible.
@@ -312,7 +311,7 @@ We compute the error in the $A$ norm:
 &= (e_t + \delta)^{\trans} A(e_t + \delta) \\
 &= e_t^{\trans}Ae_t + \delta^{\trans}A\delta + 2e_t^{\trans} A \delta\,
 \end{align*}
-Bby definition~$e_t^{\trans}A = r_t$.
+By definition~$e_t^{\trans}A = r_t$.
 Note that $\delta \in K_t.$ 
 By \lemmaref{lecture8-conjugategradient}, we have that $r_t \perp K_t(A,b).$
 Therefore, $2e_t^{\trans} A \delta = 0$ and hence, 

@@ -1,4 +1,4 @@
-\section{Lecture 6: Discovering acceleration}
+\section{Discovering acceleration}
 
 In this lecture, we seek to find methods that converge faster than those
 discussed in previous lectures. To derive this accelerated method, we start by
@@ -49,28 +49,40 @@ Let $A$ be a real matrix. Its \textit{condition number} (with respect to the Euc
 the ratio of its largest and smallest eigenvalues.
 \end{definition}
 
-So in particular, we have that $\kappa(A) \leq \frac{\beta}{\alpha}$; henceforth, we will assume that $\alpha, \beta$ correspond to the minimal and maximal eigenvalues of $A$ so that $\kappa(A) = \frac{\beta}{\alpha}$. It follows that gradient descent with a constant step size $\frac{1}{\beta}$ converges at:
+So in particular, we have that $\kappa(A) \leq \frac{\beta}{\alpha}$;
+henceforth, we will assume that $\alpha, \beta$ correspond to the minimal and
+maximal eigenvalues of $A$ so that $\kappa(A) = \frac{\beta}{\alpha}$. It
+follows from \theoremref{convergence_smooth_and_strongconvexity} 
+that gradient descent with a constant step size $\frac{1}{\beta}$
+converges as
 \begin{equation*}
-\left||x_{t+1} - x^*\right\|^2 \leq \exp{\left(-t \frac{1}{\kappa}\right)}\|x_1 - x^*\|^2.
+\left\|x_{t+1} - x^*\right\|^2 
+\leq \exp{\left(-t \frac{1}{\kappa}\right)}\|x_1 - x^*\|^2\,.
 \end{equation*}
-In many cases, $f$ is ill-conditioned and $\kappa$ can easily take values in the hundreds or thousands. In this case, case convergence could be very slow: note that at $t > \kappa$, the error may have been reduced by only a factor of $3\times$. Can we do better than this?
+In many cases, the function $f$ is ill-conditioned and $\kappa$ can easily take
+large values. In this case, case convergence could be
+very slow as we will need $t > \kappa$ before the error gets small.
+Can we do better than this?
 
-In the case of a quadratic, we can of course use the analytic solution $x^* = A^{-1}b$. However, it will prove instructive to consider applying gradient descent to quadratic functions, and derive the convergence bound that we previously proved for any strongly convex smooth functions. This exercise will show us where we are losing performance, and suggest a method that can attain better guarantees.
-
-\subsubsection{Convergence analysis}
+To answer this question, it will be instructive to analyze gradient descent
+specifically for quadratic functions, and derive the convergence bound that we
+previously proved for any strongly convex smooth functions. This exercise will
+show us where we are losing performance, and suggest a method that can attain
+better guarantees.
 
 \begin{theorem}
 Assume $f\colon\R^n\to\R$ is a quadratic where the quadratic coefficient matrix has a condition number $\kappa$. Let $x^{*}$ be an optimizer of $f$, and let $x_{t}$ be the updated point at step $t$ using gradient descent with a constant step size $\frac{1}{\beta}$, i.e. using the update rule $x_{t+1} = x_t - \frac{1}{\beta}\nabla f(x_t)$. Then:
 \begin{equation*}
-\|x_{t+1} - x^*\|^2 \leq \exp\left(-t \frac{1}{\kappa}\right)\|x_1 - x^*\|^2.
+\|x_{t+1} - x^*\|^2 \leq \exp\left(-\frac{t}{\kappa}\right)\|x_1 - x^*\|^2.
 \end{equation*}
 \end{theorem}
 \begin{proof}
-Write:
+Consider the quadratic function
 \[
-f(x) = \frac{1}{2}x^T A x - b^T x + c,
+f(x) = \frac{1}{2}x^T A x - b^T x + c\,,
 \]
-where $A \in S^n$, $b \in \R^n$ and $c \in \R$. A gradient descent update with step size $\eta_t$ takes the form:
+where $A$ is a symmetric $n\times n$ matrix, $b \in \R^n$ and $c \in \R$. 
+A gradient descent update with step size $\eta_t$ takes the form:
 \[
 x_{t+1} = x_t - \eta_t \nabla f(x_t) = x_t - \eta_t \left(Ax_t - b\right)
 \]
@@ -89,12 +101,12 @@ A)\right\|_2 \left\|x_1 - x^*\right\|_2
 
 Set $\eta_k = \frac{1}{\beta}$ for all $k$. Note that $\frac{\alpha}{\beta}I \preceq \frac{1}{\beta}A \preceq I$, so:
 \begin{equation*}
-\max_{A \in \R^{n\times n}} \left\|I - \frac{1}{\beta} A\right \|_2 = 1 - \frac{\alpha}{\beta} = 1 - \frac{1}{\kappa}.
+\left\|I - \frac{1}{\beta} A\right \|_2 = 1 - \frac{\alpha}{\beta} = 1 - \frac{1}{\kappa}.
 \end{equation*}
 It follows that
 \begin{align*}
 \left\|x_{t+1} - x^*\right\|_2 &\leq \left(1 - \frac{1}{\kappa}\right)^t \left\|x_1 - x^*\right\|_2 
-\leq \exp \left(-\frac{t}{\kappa}\right) \left\|x_1 - x^*\right\|_2.
+\leq \exp \left(-\frac{t}{\kappa}\right) \left\|x_1 - x^*\right\|_2\,.\qedhere
 \end{align*}
 \end{proof}
 

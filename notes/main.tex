@@ -1,4 +1,4 @@
-\documentclass[11pt]{article}
+\documentclass[12pt]{article}
 
 \usepackage{macros}
 
@@ -17,33 +17,80 @@
 
 \pagebreak
 
+\input{contributors}
+
+\pagebreak
 \part{Gradient methods}
-\input{lecture1}
-\input{lecture2}
-\input{lecture3}
-\input{lecture4}
-\input{lecture5}
-\part{Krylov methods}
-\input{lecture6}
-\input{lecture7}
-\input{lecture8}
-\input{lecture9}
+\label{part:basic}
+
+Taylor's approximation tells us that
+\[
+f(x+\delta)\approx f(x) + \delta f'(x) + \frac 12 \delta^2 f''(x)\,.
+\]
+This approximation directly reveals that if we move from $x$ to $x+\delta$ where
+$\delta=-\eta \cdot f'(x)$ for sufficiently small $\eta>0,$ we generally expect
+to decrease the function value by about $\eta f'(x)^2.$ 
+
+We will generalize this simple idea to functions of many variables with the help
+of multivariate versions of Taylor's theorem. The simple greedy way of
+decreasing the function value is known as \emph{gradient descent}. Gradient
+descent converges to points at which the first derivatives vanish. For the broad
+class of \emph{convex} functions such points turn out to be globally minimal.
+
+\input{lecture01}
+\input{lecture02}
+\input{lecture03}
+\input{lecture04}
+\input{lecture05}
+
+\pagebreak
+\part{Accelerated gradient methods}
+\label{part:accelerated}
+
+We will now develop a set of techniques that allows us to obtain faster rates of
+convergence than those of the basic gradient method. In the case of quadratics,
+the ideas are simple, natural, and lead to practically important algorithms. The
+theme of \emph{acceleration} extends to arbitrary smooth and convex functions,
+even if the resulting method is not necessarily superior in practice.  Ending on
+a note of caution, we will see how acceleration trades off with
+\emph{robustness}. Accelerated gradient methods inherently lack the robustness
+to noise that the basic gradient method enjoys.
+
+\input{lecture06}
+\input{lecture07}
+\input{lecture08}
+\input{lecture09}
+
+\pagebreak
 \part{Stochastic optimization}
+\label{part:stochastic}
 \input{lecture10}
 \input{lecture11}
 \input{lecture12}
+
+\pagebreak
 \part{Dual methods}
+\label{part:dual}
 \input{lecture13}
 \input{lecture14}
 \input{lecture15}
 \input{lecture16}
+
+\pagebreak
 \part{Non-convex problems}
+\label{part:nonconvex}
 \input{lecture17}
 \input{lecture18}
 \input{lecture19}
 \input{lecture20}
 \input{lecture21}
-\input{contributors}
+
+\pagebreak
+\part{Higher-order and interior point methods}
+\label{part:higher}
+\input{lecture23}
+\input{lecture24}
+\input{lecture25}
 
 \bibliographystyle{alpha}
 \bibliography{notes}
