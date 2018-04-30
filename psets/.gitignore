@@ -22,9 +22,14 @@ final_draft.pdf
 midterm_solution.tex
 midterm_solution.pdf
 
+final_solution.tex
+final_solution.pdf
+
 max_teaching.tex
 max_teaching.pdf
 
+final_folder.zip
+final_folder/
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
