@@ -42,7 +42,7 @@ $S(x)=\mathrm{diag}(s_1(x),\dots,s_m(x)).$
 Denoting by $\vec{1}$ the all ones vector, we have
 \begin{align*}
 \nabla f_\epsilon(x) 
-&= \frac{c}{\epsilon} - S(x)^{-1}A^\trans\vec{1}
+&= \frac{c}{\epsilon} - A^\trans S(x)^{-1}\vec{1}
 = \frac{c}{\epsilon} - \sum_j \frac{A_j}{S_j(x)}\\
 \nabla^2 f_\epsilon(x) \,,
 & =  A^\trans S(x)^{-2} A
@@ -73,7 +73,7 @@ $Ax>b,$ i.e., it is in the interior of the polytope $\{x\colon Ax\ge b\}.$
 Further we let $\bar x$ denote the outcome of taking a single Newton step
 starting from $x,$
 \[
-\bar x =  x-\nabla^2 f_\epsilon(x)^{-1}\nabla f(x)\,.
+\bar x =  x-\nabla^2 f_\epsilon(x)^{-1}\nabla f_\epsilon(x)\,.
 \]
 We can also express $q(x,\epsilon)$ as a ``local norm'' defined by the Hessian
 applied to the Newton step
@@ -143,7 +143,7 @@ Prove that
 \[
 \nabla f_\epsilon(\bar x)
 =
--\epsilon \sum_{j=1}^m \frac{A_j(A_j^\trans(\bar x - x))^2}{s_j(x)^2s_j(\bar x)}\,.
+- \sum_{j=1}^m \frac{A_j(A_j^\trans(\bar x - x))^2}{s_j(x)^2s_j(\bar x)}\,.
 \]
 Use the fact that $\bar x$ minimizes the second order approximation of
 $f_\epsilon$ at $x$ and hence $\nabla f_\epsilon(x)+ \nabla^2f_\epsilon(x)(\bar
@@ -154,7 +154,7 @@ for the gradient at $\bar x.$
 Show that
 \[
 q(x, \epsilon)^2
-= \epsilon\sum_{j=1}^m \frac{(A_j^\trans(\bar x-x))^2}{s_j(x)^2}
+= \sum_{j=1}^m \frac{(A_j^\trans(\bar x-x))^2}{s_j(x)^2}
 \]
 
 \item
@@ -178,7 +178,7 @@ Your goal is to prove the following proposition.
 
 \begin{prop}
 Assume $Ax>b$ and $q(x, \epsilon)\le1/2.$ Then, for
-$\bar\epsilon=\epsilon/(1+\delta)$ with $\delta=\frac14m^{-1/2},$ we have 
+$\bar\epsilon=\epsilon/(1+\delta)$ with $\delta=\frac15m^{-1/2},$ we have 
 $q(\bar x, \bar\epsilon)\le 1/2.$
 \end{prop}
 
@@ -188,14 +188,14 @@ Show that
 \[
 \nabla^2 f_{\bar\epsilon}(\bar x)^{-1}\nabla f_{\bar\epsilon}(\bar x)
 = \nabla^2 f_{\epsilon}(\bar x)^{-1}\nabla f_{\epsilon}(\bar x)
-+ \delta \nabla^2 f_\epsilon(\bar x)^{-1}c\,.
++ \delta \nabla^2 f_\epsilon(\bar x)^{-1}c/\epsilon\,.
 \]
 \item
 From the previous step, conclude that
 \[
 q(\bar x,\bar\epsilon)
 \le q(\bar x,\epsilon) + 
-\delta\|\nabla^2 f_\epsilon(\bar x)^{-1}c\|_{\nabla^2 f_\epsilon(\bar x)}
+\delta\|\nabla^2 f_\epsilon(\bar x)^{-1}c/\epsilon\|_{\nabla^2 f_\epsilon(\bar x)}
 \]
 \item
 Show that
