@@ -208,43 +208,56 @@ The mirror descent update rule is:
 where $g_t \in \partial f(x_t).$ 
 In the first homework, we proved the following results.
 \begin{theorem}
-    let $\|\cdot\|$ be arbitrary norm and suppose that $\phi$ is $\alpha$-strongly convex      \textbf{w.r.t.} $\|\cdot\|$ on $\domain$. Suppose that $f_t$ is $L$-lipschitz \textbf{w.r.t.} $\|\cdot\|$, we have:
+    Let $\|\cdot\|$ be an arbitrary norm and suppose that $\phi$ is
+$\alpha$-strongly convex      w.r.t.~$\|\cdot\|$ on $\domain$. Suppose that
+$f_t$ is $L$-lipschitz w.r.t.~$\|\cdot\|$. Then, we have
     \begin{equation*}
-        \frac{1}{T}\sum^T_{t=1} f_t(x_t) \leq \frac{ \mathcal{D}_\phi(x^*,x_0)}{T \eta}+ \eta \frac{L^2}{2\alpha}
+        \frac{1}{T}\sum^T_{t=1} f_t(x_t) \leq \frac{
+\mathcal{D}_\phi(x^*,x_0)}{T \eta}+ \eta \frac{L^2}{2\alpha}\,.
     \end{equation*}
 \end{theorem}
 
-
-Multiplicative weights are an instance of the Mirror Descent where $\Phi(w)=
+Multiplicative weights are an instance of the mirror descent where $\phi(w)=
 \sum_{i=1}^m w_i \log(w_i)$ is the negative entropy function.
 We have that
 \[
-\nabla\Phi(w) =  1 + \log(w),
+\nabla\phi(w) =  1 + \log(w),
 \]
 where the logarithm is elementwise.
-The update rule in Mirror Descent becomes:
+The update rule for mirror descent is 
 \begin{align*}
-    \nabla\Phi(v_{t+1}) &=\nabla\Phi(w_{t}) - \eta_tf_t \\
-    \implies v_{t+1} &= w_te^{-\eta_t f_t}
+    \nabla\phi(v_{t+1}) &=\nabla\phi(w_{t}) - \eta_tf_t\,,
 \end{align*}
+which implies that
+\[
+v_{t+1} = w_te^{-\eta_t f_t}
+\]
+and thus recovers the multiplicative weights update.
 
-Now comes the projection step. The Bregman divergence is, for all $(x,y)\in\domain^2$:
+Now comes the projection step. 
+The Bregman divergence corresponding to $\phi$ is 
 \begin{align*}
-    D_{\Phi}(x,y) &= \Phi(x)-\Phi(y) - \nabla\Phi(y)^T(x-y)\,.
+    D_{\phi}(x,y) &= \phi(x)-\phi(y) - \nabla\phi(y)^T(x-y)\\
+&= \sum_i x_i\log(x_i/y_i) - \sum_i x_i + \sum_i y_i\,,
 \end{align*}
-If we write out this expression and simplify, we recover the well-known
-\emph{relative entropy}. The projection
+which we recognize as the relative entropy or Kullback-Leibler divergence over
+the probability simplex.
+We thus choose the domain $\domain$ to be the probability simplex
+$\domain=\{w\in\R^n\mid \sum_i w_i = 1, w_i \ge 0\}.$ 
+%
+The projection
 \begin{align*}
-    \Pi_{\domain}^{\Phi}(y) = \argmin_{x\in\domain}D_{\Phi}(x,y)
+    \Pi_{\domain}^{\phi}(y) = \argmin_{x\in\domain}D_{\phi}(x,y)
 \end{align*}
-turns out to just correspond to the normalization step in the update rule.
+turns out to just correspond to the normalization step in the update rule of the
+multiplicative weights algorithm.
 
 \paragraph{Concrete rate of convergence.}
 To get a concrete rate of convergence from the preceding theorem,
 we still need to determine what value of the strong convexity
 constant~$\alpha$ we get in our setting. Here, we choose the norm to be the
 $\ell_\infty$-norm. It follows from Pinsker's inequality
-that $\Phi$ is $1/2$-strongly convex with respect to the $\ell_\infty$-norm.
+that $\phi$ is $1/2$-strongly convex with respect to the $\ell_\infty$-norm.
 Moreover, in the $\ell_\infty$-norm all gradients are bounded by~$1,$ since the
 loss ranges in~$[1,1].$ Finally, the relative entropy between the initial
 uniform distribution any any other distribution is at most $\log(n).$ Putting
