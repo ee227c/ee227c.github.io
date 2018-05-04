@@ -17,7 +17,7 @@ gradient method accumulates errors linearly in the number of iterations.
 \subsection{Lower bounds}
 Before launching into a discussion of lower bounds, it's helpful to first recap
 the upper bounds obtained thus far. For a convex function $f$,
-Table~\eqref{table:upper-bounds} summarizes the assumptions and rates proved in
+Table~\ref{table:upper-bounds} summarizes the assumptions and rates proved in
 the first several lectures. 
 ~
 \begin{table}[]
@@ -33,7 +33,7 @@ Convex, smooth             & Accelerated gradient descent & $\beta R^2 / t^2$ \\
 \end{tabular}
 \end{table}  
 
-Each of the rates in Table~\eqref{table:upper-bounds} is obtained using some variant of the
+Each of the rates in Table~\ref{table:upper-bounds} is obtained using some variant of the
 gradient method. These algorithms can be thought of as a procedure that
 maps a history of points and subgradients $(x_1, g_1, \dots, x_t, g_t)$ to a 
 new point $x_{t+1}$. To prove lower bounds, we restrict the class of algorithms 
@@ -62,7 +62,8 @@ Our first theorem concerns the constrained, non-smooth case.
 The theorem is originally from \cite{nesterov83}, but the presentation will
 follow \cite{nesterov04}.
 ~
-\begin{theorem}[Constrainted, Non-Smooth $f$]\label{theorem:lb-non-smooth}
+\begin{theorem}[Constrainted, Non-Smooth $f$]
+\theoremlabel{lb-non-smooth}
 Let $t \leq n$, $L, R  > 0$. There exists a convex $L$-Lipschitz function $f$
 such that any black-box procedure satisfies
 \begin{align}
@@ -164,7 +165,8 @@ and therefore
 Next, we study the smooth, convex case and show the $O(1/t^2)$ rate achieved by
 accelerated gradient descent is optimal.
 
-\begin{theorem}[Smooth-$f$]\label{theorem:lb-smooth}
+\begin{theorem}[Smooth-$f$]
+\theoremlabel{lb-smooth}
 Let $t \leq \frac{n-1}{2}$, $\beta > 0$. There exists a $\beta$-smooth convex
 quadratic $f$ such that any black-box method satisfies
 \begin{align}
@@ -214,7 +216,7 @@ which has objective value
     &= -\frac{\beta}{8} \langle x^\star, e_1 \rangle
     = -\frac{\beta}{8} \paren{1 - \frac{1}{n+1}}.
 \end{align*}
-Similar to the proof of~\eqref{theorem:lb-non-smooth}, we can argue
+Similar to the proof of \theoremref{lb-non-smooth}, we can argue
 \begin{align*}
     x_s \in \Span\set{e_1, \dots, e_{s-1}},
 \end{align*}
@@ -274,25 +276,25 @@ it's rate of convergence. A slavish focus on convergence rates suggests one shou
 always use Nesterov's method. Before coronating Nesterov's method, however, it
 is instructive to consider how it performs in the presence of noise.
 
-Figure~\eqref{fig:nag-noise} shows compares the performance of vanilla gradient
+\figureref{nag-noise} compares the performance of vanilla gradient
 descent and Nesterov's accelerated gradient descent on the function $f$ used in
-the proof of Theorem~\eqref{thm:lb-smooth}. In the noiseless case, the
+the proof of \theoremref{lb-smooth}. In the noiseless case, the
 accelerated method obtains the expected speed-up over gradient descent. However,
 if we add a small amount of spherical noise to the gradients, the speed-up not
 only disappears, but gradient descent begins to outperform the accelerated
 method, which begins to diverge after a large number of iterations.
 
-\begin{figure}
+\begin{figure}[ht]
 \begin{center}
-\includegraphics[width=3in]{figures/nag-noise.pdf}
+\includegraphics[width=0.6\textwidth]{figures/nag-noise.pdf}
 \end{center}
 \caption{The optimality gap for iterations of gradient descent and Nesterov accelerated gradient descent applied to the worst function in the world with dimension $n=100$. Notice with exact oracle gradients, acceleration helps significantly. However, when adding uniform spherical random noise with radius $\delta=0.1$ to the gradient, stochastic gradient descent remains robust while stochastic accelerated gradient accumulates error. The stochastic results are averaged over $100$ trials.}
-\label{fig:nag-noise}
+\figurelabel{nag-noise}
 \end{figure}
 
 The preceding example is not wickedly pathological in any sense. Instead, it is
 illustrative of a much broader phenomenon. Work by Devolder, Glineur and
-Nesterov (DGN) \cite{devolder2014first} shows there is a
+Nesterov~\cite{devolder2014first} shows there is a
 fundamental trade-off between acceleration and robustness, in a sense
 made precise below. 
 
@@ -308,21 +310,21 @@ exactly for every $x \in \domain$.
 An inexact oracle, returns a pair so that~\eqref{eq:exact-oracle} holds up to some
 slack $\delta$.
 ~
-\begin{definition}[Inexact-Oracle]
+\begin{definition}[Inexact oracle]
 Let $\delta > 0$. For any $y\in \domain$, a $\delta$-inexact oracle returns a pair
 $(f_\delta(y), g_\delta(y))$ such that
+for every $x \in \domain,$
 \begin{align*}
     0 \leq f(x)  - \Paren{f(y) + \langle \grad f(y), x - y \rangle}
-    \leq \frac{\beta}{2} \norm{x-y}^2 + \delta
+    \leq \frac{\beta}{2} \norm{x-y}^2 + \delta\,.
 \end{align*}
-for every $x \in \domain$.
 \end{definition}
 Consider running gradient descent with a $\delta$-inexact oracle.
-DGN \cite{devolder2014first} show, after $t$ steps,
+Devolder et al.~\cite{devolder2014first} show, after $t$ steps,
 \begin{align*}
     f(x_t) - f(x^\star) \leq \frac{\beta R^2}{2t} + \delta.
 \end{align*}
-Comparing this rate with Table~\eqref{table:upper-bounds}, the plain gradient
+Comparing this rate with Table~\ref{table:upper-bounds}, the plain gradient
 method is not affected by the inexact oracle and doesn't accumulate errors. 
 On the other hand, if the accelerated gradient
 method is run with a $\delta$-inexact oracle, then after $t$ steps,
@@ -334,7 +336,7 @@ In other words, the accelerated gradient method accumulates errors linearly with
 the number of steps! Moreover, this slack is not an artifact of the analysis.
 Any black-box method must accumulate errors if it is accelerated in the exact
 case, as the following theorem makes precise.
-\begin{theorem}[\cite{devolder2014first} Theorem 6]
+\begin{theorem}[Theorem 6 in \cite{devolder2014first}]
 Consider a black-box method with convergence rate $O\Paren{\frac{\beta R^2}{t^p}}$
 when using an exact oracle. With a $\delta$-inexact oracle, suppose the
 algorithm achieves a rate
