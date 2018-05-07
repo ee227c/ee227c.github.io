@@ -1,7 +1,10 @@
-\section{Primal-Dual IPM}
-Previously, we discussed Barrier Methods and the so-called short-step method for solving constrained LPs, and proved that convergence is guaranteed (albeit slow). Herein, we study a primal-dual interior-point method (the so-called "long-step"  path following algorithm), which similarly seeks to approximate points on the central path. Unlike the short-step method, the long-step method considers iterates of Primal-Dual variables and seeks a more aggressive step size so long as it lies within a neighborhood of the central path.
-
-
+\section{Primal-dual interior point methods}
+Previously, we discussed barrier methods and the so-called short-step method for
+solving constrained LPs, and proved that convergence is guaranteed (albeit
+slow). Herein, we study a primal-dual interior-point method (the so-called
+"long-step"  path following algorithm), which similarly seeks to approximate
+points on the central path. Unlike the short-step method, the long-step method
+considers iterates of primal-dual variables and seeks a more aggressive step size so long as it lies within a neighborhood of the central path.
 
 \subsection{Deriving the dual problem}
 
