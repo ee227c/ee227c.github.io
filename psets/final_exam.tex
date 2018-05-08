@@ -1,0 +1,185 @@
+\documentclass[12pt]{article}
+
+\usepackage{macros}
+
+\title{Final Exam for EE227C (Spring 2018):\\
+ Convex Optimization and Approximation }
+\author{Instructor: Moritz Hardt\\
+{\small Email: \tt hardt+ee227c@berkeley.edu}\\ ~\\
+Graduate Instructor: Max Simchowitz\\
+{\small Email: \tt msimchow+ee227c@berkeley.edu}\\ ~\\
+}
+
+\begin{document}
+%\setenumerate[0]{leftmargin=0pt}
+%\setenumerate[1]{leftmargin=50pt}
+\setlist[enumerate,1]{leftmargin=0pt,label=\bf(\Alph*)}
+\setlist[enumerate,2]{leftmargin=0pt,label=\bf(\Alph{enumi}.\arabic*)}
+
+
+\maketitle
+
+\section*{Rules}
+\begin{itemize}
+	\item The final is due on Gradescope at 8:00pm Friday, May 10th.
+	\item Collaboration is forbidden. 
+	\item Please ask all questions via \emph{private} messages on Piazza. Do not email me and do not post publicly (even if you think ``nothing will be given away'').
+	\item I will be maintaining a list of errata on Piazza. Please consult this before asking a question about a typo that's already been addressed.
+	\item The final must be LaTeXed. Points will be deducted otherwise. Remember to write $\langle x, y \rangle$ instead of $<x,y>$; the latter is ugly, a pain to follow when grading, and will result in loss of points.
+	\item You may use anything in the course notes or one of the course texts as given. In particular, you can cite theorems and equations from course notes and materials, but please point me to the lecture number and the statement you are citing. You may also use any standard references on calculus, analysis or linear algebra. You may not Google anything or use the web (except perhaps to find a standard textbook to download)
+	\item Optional problems are not for credit, but may give you good Karma.
+	\item Lastly, please do not be daunted by the length of the exam. Most of the space is taken up by background, definitions, and a couple optional problems. 
+\end{itemize}
+\newpage
+\section*{Problem 1: Making Heads and Tails of Matrices}
+	Let $\cA: \R^{n \times n} \to \R^d$ be a linear map, and consider the problem of minimizing
+	\begin{eqnarray*}
+	&\min_{X \in \R^{n \times n}}\Psi(X)\quad~\text{s.t.}\quad \rank(X) \le r~\\
+	&\text{ where }~\Psi(X) := \frac{1}{2}\|\cA(X)- b\|_{2}^2~. 
+	\end{eqnarray*}
+	where $b \in \R^d$. We assume that there exists an $X^* \in \R^{n \times n}$ with $\rank(X^*) \le r$ satisfying $\cA(X^*) = b$.
+
+	You might the following quick review helpful. Given $X,Y \in \R^{n \times n}$, recall that the matix inner product and Frobenius can be expressed as
+	\begin{eqnarray}
+	\langle X, Y \rangle = \sum_{ij} X_{ij}Y_{ij} \text{ and } \|X\|_F^2 = \langle X,X\rangle~.
+	\end{eqnarray}
+	
+
+
+	\begin{enumerate}
+		\item We say that $\cA$ satisfies the $(k,\delta_k)$-RIP if, for all matrix $X$ with rank at most $k$, $(1-\delta_k) \|\cA(X)\|_2^2 \le \|X\|_{\mathrm{F}}^2 \le (1+\delta_k)\|\cA(X)\|_2^2$. 
+		%
+		Show that if $\cA$ satisfies the $(2r,\delta_{2r})$-RIP  for any $\delta_{2r} \in (0,1)$, then $X^*$ is the unique matrix with $\rank(X) \le r$ satisfying $\Psi(X) = 0$.
+
+
+		\item Show that if $d < nr$, $\cA$ cannot satisfy the $(r,\delta)$-RIP property for any $\delta \in (0,1)$. 
+		\item Let $\svd_r(X)$ denote the rank-r singular value truncation of a matrix. That is, if $X = U\Sigma V^{\top}$, $\svd_r(X) = U\Sigma_r V^{\top}$, where $\Sigma_r$ is obtained by setting all but the $r$-largest entries of $\Sigma$ to zero.
+
+		The operation $\mathrm{svd}_r(X)$ is then the Euclidean projection (in $\|\cdot\|_F$) onto a non-convex set. What is this set (you don't need to prove anything), and why is this set non-convex? 
+
+		\item As with any linear operator, we can define the tranpose of $\cA$, denoted $\cA^\top : \R^d \to \R^{n \times n}$. This is the unique linear operator such that, for all $v \in \R^d$ and $X \in \R^{n \times n}$
+		\begin{eqnarray}
+		\langle \cA^\top(v), X \rangle = \langle v, \cA(X) \rangle~.
+		\end{eqnarray}
+		Equivalently, if we view $X$ as an $n \times n$ vector and $\cA$ as $d \times (n \times n)$ matrix, then $\cA^{\top}$ is just the matrix transpose of $\cA$ (\emph{hint: use the inner product definition of $\cA^\top$ to answer all subsequent questions. DO NOT try to write things out as matrices}).
+
+		We now consider the following algorithm:
+		\begin{algorithm}
+		\SetAlgoLined
+		\textbf{Input:} Parameters $\eta \in (0,1/2)$, $X_0 \leftarrow 0$.
+		\For{$t = 0,1,2,\dots$}{
+		$Y_{t+1} \leftarrow X_t - \eta \cA^\top(\cA(X_t) - b)$\;
+		$X_{t+1} \leftarrow \mathrm{svd}_r(Y_{t+1})$\;
+		}
+		\caption{PGD}\label{algPGD}
+		\end{algorithm}
+
+
+		Suppose that $\cA$ satisfies the $(2r,\delta_{2r})$-RIP, and set $\eta = \frac{1}{1+\delta_{2r}}$. Moreover, define the function:
+		\begin{eqnarray}
+		F(A,B) := \langle \cA^T(\cA(B) - b), A - B \rangle + \frac{1+\delta_{2r}}{2}\| A- B\|_{\mathrm{F}}^2
+		\end{eqnarray}
+		\begin{enumerate}
+			\item Prove that $\Psi(X_{t+1}) - \Psi(X_t) \le F(X_{t+1},X_t)$
+			\item Prove that $F(X_{t+1},X_t) \le F(X_*,X_t)$ (\emph{Hint: try writing $F(A,X_t)$ as another function $G(A,Y_{t+1})$})
+			\item Conclude that $\Psi(X_{t+1}) \le \frac{\delta_{2r}}{1-\delta_{2r}}\|\cA(X_t - X_*)\|_{2}^2$~ (note this is the Euclidean norm on $\R^d$). (There is no typo, there is no extra factor of $2$ in this inequality)
+		\end{enumerate}
+
+		\item Prove the following theorem:
+		\begin{theorem*} Let $\cA$ be $(2r,\delta_{2r})$-RIP for $\delta_{2r} \le 1/3$, and let $X^*$ denote the unique rank $r$ minimizer of $\Psi(X)$. Then, the iterates of Algorithm~\ref{algPGD} satisfy:
+		\begin{eqnarray}
+		\|X_t - X_*\|_F^2 \le \frac{1}{1-\delta_{2r}} \cdot \left(\frac{2\delta_{2r}}{1-\delta_{2r}}\right)^{t} \|b\|^2
+		\end{eqnarray}
+		\end{theorem*}
+	\end{enumerate}
+
+\newpage
+\section*{Problem 2: Non-Convex Black Box Optimization}
+A function $f:[0,1]$ is said to be semi-strictly unimodal if there exists an interval $[a,b] \in [0,1]$ such that $f(a) = f(b) = f(x)$ for all $x \in [a,b]$, and $f$ is strictly decreasing on $[0,a]$ and strictly increasing on $[b,1]$. 
+\begin{enumerate}
+	\item Show every non-constant convex function is semi-strictly unimodal.
+	\item Given an example of a non-convex function which is semi-strictly unimodal.
+	\item Consider your favorite black-box convex optimization algorithm for convex functions $f:[0,1] \to \R$ (e.g. Golden Section Search from class, or ternary search). 
+	%
+	Show if $f$ is only semi-strictly unimodal (but not necessarily convex), the algorithm still finds an $x$ such that there exists an $x^* \in \arg\min_{x \in [0,1]} f(x)$ with $|x-x^*| \le \epsilon$ $\mathcal{O}(\log(1/\epsilon))$ function queries. 
+	%
+	\emph{No need to go through the analysis of the entire algorithm, just pinpoint the step in the analysis that uses convexity and generalize it to semi-strictly unimodal functions.}
+	\item A function $f:[0,1]$ is said to be non-strictly unimodal if there exists an interval $[a,b] \in [0,1]$ such that $f(a) = f(b) = f(x)$ for all $x \in [a,b]$, and $f$ is strictly non-increasing on $[0,a]$ and non-decreasing on $[b,1]$. 
+	%
+	Show that \emph{no black box algorithm} can be guaranteed to find find a point $x$ within $\epsilon$ of an optimum $x^*$ of a non-strictly unimodal algorithm, even if $f$ is guaranteed to be continuous. 
+	\item Suppose $f: [0,1]$ is non-strictly unimodal and $L$ Lipschitz. Show that any black box algorithm which find an $x$ such that $|x-x^*| \le \epsilon$ requires $\mathcal{O}(L/\epsilon)$ function evaluations. Give a simple algorithm which attains this lower bound.
+	\item Generalize the previous question to $d$ dimensions. 
+\end{enumerate}
+
+\newpage
+\section*{Problem 3: Optimization without Gradients} 
+	Note: Parts A.1 and A.2 are optional, and Part C does not ask you to show anything. Given a set $\cS \subset \R^d$ and $\alpha \in \R$, we let $\alpha \cS := \{\alpha x: x \in \cS\}$. For $\cS_1,\cS_2 \subset \R^d$, we let $\cS_1 + \cS_2 := \{x_1 + x_2: x_1 \in \cS_1, x_2 \in \cS_2\}$. 
+	\begin{enumerate}
+		\item Let $f$ be a continuously differentiable convex function. Let $\balln := \{x \in \R^n: \|x\|_2 \le 1\}$ and $\spheren := \{x \in \R^n: \|x\|_2 = 1\}$. We let $u \sim \balln$ and $u \sim \spheren$ denote the uniform measures on $\balln$ and $\spheren$, respectively. Define for $\delta > 0$, the $\delta$-smoothings
+		\begin{eqnarray}
+		\widehat{f}_{\delta}(x) := \Exp_{u \sim \balln}[f(x + \delta u)]
+		\end{eqnarray}
+		We will prove that
+		\begin{eqnarray}
+		\nabla \widehat{f}_{\delta}(x) = \frac{\delta}{n} \cdot \Exp_{u \sim \spheren} f(x+ \delta u)u
+		\end{eqnarray}
+		following these three steps
+		\begin{enumerate}
+			\item (Optional ) Prove, using Stoke's theorem from calculus, that
+			\begin{eqnarray}
+			\nabla \widehat{f}_{\delta}(x) = \frac{\delta}{\vol(\balln)}\int_{u \in \spheren}(x + \delta u)\cdot d\vec{u}
+			\end{eqnarray}
+			Feel free to use your favorite calculus resources.
+			\item (Optional)  that there exists a dimension-dependent constant $C(n)$ (which you do not need to specify yet) such that, for any continuously differentiable $f$ and $\delta > 0$,
+			\begin{eqnarray}\label{derivative_formula}
+			\nabla \widehat{f}_{\delta}(x) = \delta \cdot C(n) \Exp_{u \sim \spheren}[f(x+ \delta u)u]
+			\end{eqnarray}
+			\item  Using~\eqref{derivative_formula}, prove that $C(n) = 1/n$ by choosing a particular function $f$, and computing the values of $\nabla \widehat{f}_{\delta}(x)$ and $\Exp_{u \sim \spheren}[f(x+ \delta u)u]$ for that $f$ (note that any $f$ will do).
+		\end{enumerate}
+		\item Let $\cK \subset \R^n$ be a convex set, and suppose that $\balln \subset \cK$. 
+		\begin{enumerate}
+			\item Prove that for $\delta \in (0,1)$, the following set $\cK_{\delta} := (1-\delta)\cK$ is convex and, for all $x \in \cK_{\delta}$, $x + \delta \balln \in \cK$. 
+			\item Let $F(x) = \Pi_{\cK}(x)$ denote the Euclidean projection on $\cK$. Show how to use $F(x)$ as a black box to compute projections onto $\cK_{\delta}$.
+		\end{enumerate}
+		\item You may use the following theorem (nothing to prove)
+		\begin{theorem}\label{thm:online} Let $\phi_1,\dots,\phi_T$ denote a sequence of convex functions on a domain $\cX$ and consider the iterates $x_0 \in \cX$ and $x_{t+1} = \Pi_{\cX} (x_t - \eta g_{t})$, where 
+		\begin{itemize}
+			\item $\Pi_{\cX}$ denotes the Euclidean projection onto $\cX$.
+			\item $\Exp[ g_{t} | x_1,\dots,x_t,g_1,\dots,g_{t-1}] = \nabla \phi_t(x_t)$
+			\item $\Exp[ \|g_{t}\|^2 | x_1,\dots,x_t,g_1,\dots,g_{t-1}] \le G^2$. 
+			\item $\max_{x_1,x_2 \in \cX}\|x_1 - x_2\|_2 \le D$. 
+		\end{itemize}
+		Then there exists a universal constant $C$ such that
+		\begin{eqnarray}
+			\Exp[\sum_{t=1}^T \phi_t(x_t) - \min_{x \in \cX}\sum_{t=1}^T \phi_t(x)] \le C(\eta G^2 T + \frac{D^2}{\eta})
+		\end{eqnarray}
+		\end{theorem}
+		\item Let $f_{1},\dots,f_{T}$ be a sequence of convex, $G$-Lipschitz, continuously differentiable functions, with $\delta$-smoothings $\widehat{(f_t)}_{\delta}(x_t)$. Let
+		\begin{eqnarray}
+		D = \max_{x,x' \in \cK} \|x - x'\|_2
+		\end{eqnarray}
+		You may assume that for each $t$, there exists some $z_t \in \cK$ such that $f_t(z_t) = 0$ (the algorithm does not know this $z_t$, this is for the analysis).
+		\begin{enumerate}
+			\item Show that, for every $\eta > 0 , \delta > 0$, there exists an algorithm which satisfies the following:
+			\begin{itemize}
+			\item Computes one function evaluation $f_t(\widetilde{x}_t)$ at each round $t$, and one call to a projection oracle $F(x) = \Pi_{\cK}(x)$
+			\item For each $t$, $\widetilde{x}_t \in \cK$ and $\widetilde{x}_t$ depends only on $(f_1,\dots,f_{t-1})$, $(x_1,\dots,x_{t-1})$. 
+			\item For each $t$, there exists an $x_t$ such that $\|x_t - \widetilde{x}_t\|_2 \le \delta$ and $x_1,\dots,x_T$ satisfy 
+			\begin{eqnarray}
+		\Exp[\sum_{t=1}^T \widehat{(f_t)}_{\delta}(x_t) - \min_{x \in K_{\delta}} \sum_{t=1}^T \widehat{(f_t)}_{\delta}(x)] \le C\left(\eta T \cdot \frac{n^2}{\delta^2} \cdot D^2 G^2 + \frac{D^2}{\eta}\right)
+		\end{eqnarray}
+		\end{itemize} 
+		\item Noting that $D \ge 1$, prove the bounds
+		\begin{eqnarray}
+		\Exp[\sum_{t=1}^T f_{t}(x_t) - \min_{x \in \cK} \sum_{t=1}^T f_t(x)] \le C\left(\eta T \cdot \frac{n^2}{\delta^2} \cdot D^2 G^2 + \frac{D^2}{\eta}\right) + 3 \delta DGT
+		\end{eqnarray}
+		and 
+		\begin{eqnarray}
+		\Exp[\sum_{t=1}^T f_{t}(\widetilde{x}_t) - \min_{x \in \cK} \sum_{t=1}^T f_t(x)] \le C\left(\eta T \cdot \frac{n^2}{\delta^2} \cdot D^2 G^2 + \frac{D^2}{\eta}\right) + 4 \delta DGT
+		\end{eqnarray}
+		\item Optimize both bounds above in terms of $\delta$ and $\eta$ (you may be loose up to constant factors that do not depend on $n, D,G, T$). At what rate do the bounds grow in $T$? If $f_1 = f_2 = \dots = f_T$, what rate of convergence do you get for the averages $\frac{1}{T}\sum_{t=1}^Tx_t$ and $\frac{1}{T}\sum_{t=1}^T\widetilde{x}_t$.
+		\item Compare and contrast the methods to the randomized direction descent algorithm we saw on homework 2. Account for the advantages of each algorithm in its appropriate setting. 
+		\end{enumerate}
+	\end{enumerate}
+
+\end{document}
