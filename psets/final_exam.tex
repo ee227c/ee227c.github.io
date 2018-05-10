@@ -21,7 +21,7 @@ Graduate Instructor: Max Simchowitz\\
 
 \section*{Rules}
 \begin{itemize}
-	\item The final is due on Gradescope at 8:00pm Friday, May 10th.
+	\item The final is due on Gradescope at 8:00pm Friday, May 11th.
 	\item Collaboration is forbidden. 
 	\item Please ask all questions via \emph{private} messages on Piazza. Do not email me and do not post publicly (even if you think ``nothing will be given away'').
 	\item I will be maintaining a list of errata on Piazza. Please consult this before asking a question about a typo that's already been addressed.
@@ -45,9 +45,8 @@ Graduate Instructor: Max Simchowitz\\
 	\end{eqnarray}
 	
 
-
 	\begin{enumerate}
-		\item We say that $\cA$ satisfies the $(k,\delta_k)$-RIP if, for all matrix $X$ with rank at most $k$, $(1-\delta_k) \|\cA(X)\|_2^2 \le \|X\|_{\mathrm{F}}^2 \le (1+\delta_k)\|\cA(X)\|_2^2$. 
+		\item We say that $\cA$ satisfies the $(k,\delta_k)$-RIP if, for all matrix $X$ with rank at most $k$, $(1-\delta_k) \|X\|_{\mathrm{F}}^2 \le\|\cA(X)\|_2^2 \le (1+\delta_k)\|X\|_{\mathrm{F}}^2$. 
 		%
 		Show that if $\cA$ satisfies the $(2r,\delta_{2r})$-RIP  for any $\delta_{2r} \in (0,1)$, then $X^*$ is the unique matrix with $\rank(X) \le r$ satisfying $\Psi(X) = 0$.
 
@@ -95,19 +94,19 @@ Graduate Instructor: Max Simchowitz\\
 
 \newpage
 \section*{Problem 2: Non-Convex Black Box Optimization}
-A function $f:[0,1]$ is said to be semi-strictly unimodal if there exists an interval $[a,b] \in [0,1]$ such that $f(a) = f(b) = f(x)$ for all $x \in [a,b]$, and $f$ is strictly decreasing on $[0,a]$ and strictly increasing on $[b,1]$. 
+A function $f:[0,1] \to \R$ is said to be semi-strictly unimodal if there exists an interval $[a,b] \in [0,1]$ such that $f(a) = f(b) = f(x)$ for all $x \in [a,b]$, and $f$ is strictly decreasing on $[0,a]$ and strictly increasing on $[b,1]$. We will consider the \emph{zeroth-order} black box model, where the the algorithm is allowed to query the function value $f(x_1),\dots,f(x_T)$ at iterates $x_1,\dots,x_T$. Here, $x_{t+1}$ is allowed to depend on $(x_s,f(x_s))_{s=1}^t$. 
 \begin{enumerate}
 	\item Show every non-constant convex function is semi-strictly unimodal.
 	\item Given an example of a non-convex function which is semi-strictly unimodal.
 	\item Consider your favorite black-box convex optimization algorithm for convex functions $f:[0,1] \to \R$ (e.g. Golden Section Search from class, or ternary search). 
 	%
-	Show if $f$ is only semi-strictly unimodal (but not necessarily convex), the algorithm still finds an $x$ such that there exists an $x^* \in \arg\min_{x \in [0,1]} f(x)$ with $|x-x^*| \le \epsilon$ $\mathcal{O}(\log(1/\epsilon))$ function queries. 
+	Show if $f$ is only semi-strictly unimodal (but not necessarily convex), the algorithm still finds an $x$ such that there exists an $x^* \in \arg\min_{x \in [0,1]} f(x)$ with $|x-x^*| \le \epsilon$ in $\mathcal{O}(\log(1/\epsilon))$ function queries. 
 	%
 	\emph{No need to go through the analysis of the entire algorithm, just pinpoint the step in the analysis that uses convexity and generalize it to semi-strictly unimodal functions.}
-	\item A function $f:[0,1]$ is said to be non-strictly unimodal if there exists an interval $[a,b] \in [0,1]$ such that $f(a) = f(b) = f(x)$ for all $x \in [a,b]$, and $f$ is strictly non-increasing on $[0,a]$ and non-decreasing on $[b,1]$. 
+	\item A function $f:[0,1] \to \R$ is said to be non-strictly unimodal if there exists an interval $[a,b] \in [0,1]$ such that $f(a) = f(b) = f(x)$ for all $x \in [a,b]$, and $f$ is non-increasing on $[0,a]$ and non-decreasing on $[b,1]$. 
 	%
-	Show that \emph{no black box algorithm} can be guaranteed to find find a point $x$ within $\epsilon$ of an optimum $x^*$ of a non-strictly unimodal algorithm, even if $f$ is guaranteed to be continuous. 
-	\item Suppose $f: [0,1]$ is non-strictly unimodal and $L$ Lipschitz. Show that any black box algorithm which find an $x$ such that $|x-x^*| \le \epsilon$ requires $\mathcal{O}(L/\epsilon)$ function evaluations. Give a simple algorithm which attains this lower bound.
+	Show that \emph{no zeroth orther black box algorithm} can be guaranteed to find find a point $x$ within $\epsilon$ of an optimum $x^*$ of a non-strictly unimodal algorithm, even if $f$ is guaranteed to be continuous. 
+	\item Suppose $f: [0,1]$ is non-strictly unimodal and $L$ Lipschitz. Show that any black box algorithm which find an $x$ such that $|f(x)-f(x^*)| \le \epsilon$ requires $\mathcal{O}(L/\epsilon)$ function evaluations. Give a simple algorithm which attains this lower bound.
 	\item Generalize the previous question to $d$ dimensions. 
 \end{enumerate}
 
@@ -121,24 +120,24 @@ A function $f:[0,1]$ is said to be semi-strictly unimodal if there exists an int
 		\end{eqnarray}
 		We will prove that
 		\begin{eqnarray}
-		\nabla \widehat{f}_{\delta}(x) = \frac{\delta}{n} \cdot \Exp_{u \sim \spheren} f(x+ \delta u)u
+		\nabla \widehat{f}_{\delta}(x) = \frac{n}{\delta} \cdot \Exp_{u \sim \spheren} f(x+ \delta u)u
 		\end{eqnarray}
 		following these three steps
 		\begin{enumerate}
 			\item (Optional ) Prove, using Stoke's theorem from calculus, that
 			\begin{eqnarray}
-			\nabla \widehat{f}_{\delta}(x) = \frac{\delta}{\vol(\balln)}\int_{u \in \spheren}(x + \delta u)\cdot d\vec{u}
+			\frac{\delta}{\vol(\balln)} \cdot \nabla \widehat{f}_{\delta}(x) = \int_{u \in \spheren}f(x + \delta u)\cdot d\vec{u}
 			\end{eqnarray}
 			Feel free to use your favorite calculus resources.
 			\item (Optional)  that there exists a dimension-dependent constant $C(n)$ (which you do not need to specify yet) such that, for any continuously differentiable $f$ and $\delta > 0$,
 			\begin{eqnarray}\label{derivative_formula}
-			\nabla \widehat{f}_{\delta}(x) = \delta \cdot C(n) \Exp_{u \sim \spheren}[f(x+ \delta u)u]
+			\delta \cdot C(n)  \cdot \nabla \widehat{f}_{\delta}(x) = \Exp_{u \sim \spheren}[f(x+ \delta u)u]
 			\end{eqnarray}
 			\item  Using~\eqref{derivative_formula}, prove that $C(n) = 1/n$ by choosing a particular function $f$, and computing the values of $\nabla \widehat{f}_{\delta}(x)$ and $\Exp_{u \sim \spheren}[f(x+ \delta u)u]$ for that $f$ (note that any $f$ will do).
 		\end{enumerate}
 		\item Let $\cK \subset \R^n$ be a convex set, and suppose that $\balln \subset \cK$. 
 		\begin{enumerate}
-			\item Prove that for $\delta \in (0,1)$, the following set $\cK_{\delta} := (1-\delta)\cK$ is convex and, for all $x \in \cK_{\delta}$, $x + \delta \balln \in \cK$. 
+			\item Prove that for $\delta \in (0,1)$, the following set $\cK_{\delta} := (1-\delta)\cK$ is convex and, for all $x \in \cK_{\delta}$, $x + \delta \balln \subset \cK$. 
 			\item Let $F(x) = \Pi_{\cK}(x)$ denote the Euclidean projection on $\cK$. Show how to use $F(x)$ as a black box to compute projections onto $\cK_{\delta}$.
 		\end{enumerate}
 		\item You may use the following theorem (nothing to prove)
@@ -160,7 +159,7 @@ A function $f:[0,1]$ is said to be semi-strictly unimodal if there exists an int
 		\end{eqnarray}
 		You may assume that for each $t$, there exists some $z_t \in \cK$ such that $f_t(z_t) = 0$ (the algorithm does not know this $z_t$, this is for the analysis).
 		\begin{enumerate}
-			\item Show that, for every $\eta > 0 , \delta > 0$, there exists an algorithm which satisfies the following:
+			\item Show that, for every $\eta > 0 , \delta \in (0,1)$, there exists an algorithm which satisfies the following:
 			\begin{itemize}
 			\item Computes one function evaluation $f_t(\widetilde{x}_t)$ at each round $t$, and one call to a projection oracle $F(x) = \Pi_{\cK}(x)$
 			\item For each $t$, $\widetilde{x}_t \in \cK$ and $\widetilde{x}_t$ depends only on $(f_1,\dots,f_{t-1})$, $(x_1,\dots,x_{t-1})$. 
