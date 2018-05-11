@@ -65,7 +65,7 @@ Graduate Instructor: Max Simchowitz\\
 		We now consider the following algorithm:
 		\begin{algorithm}
 		\SetAlgoLined
-		\textbf{Input:} Parameters $\eta \in (0,1/2)$, $X_0 \leftarrow 0$.
+		\textbf{Input:} Parameters $\eta$, $X_0 \leftarrow 0$.
 		\For{$t = 0,1,2,\dots$}{
 		$Y_{t+1} \leftarrow X_t - \eta \cA^\top(\cA(X_t) - b)$\;
 		$X_{t+1} \leftarrow \mathrm{svd}_r(Y_{t+1})$\;
@@ -98,16 +98,21 @@ A function $f:[0,1] \to \R$ is said to be semi-strictly unimodal if there exists
 \begin{enumerate}
 	\item Show every non-constant convex function is semi-strictly unimodal.
 	\item Given an example of a non-convex function which is semi-strictly unimodal.
-	\item Consider your favorite black-box convex optimization algorithm for convex functions $f:[0,1] \to \R$ (e.g. Golden Section Search from class, or ternary search). 
-	%
-	Show if $f$ is only semi-strictly unimodal (but not necessarily convex), the algorithm still finds an $x$ such that there exists an $x^* \in \arg\min_{x \in [0,1]} f(x)$ with $|x-x^*| \le \epsilon$ in $\mathcal{O}(\log(1/\epsilon))$ function queries. 
+	\item Consider the following algorithm:
+	\begin{itemize}
+		\item At each round $t$, you have an interval $I_t = [a_t,b_t]$. $I_1 = [0,1]$
+		\item Define $l_t = (2/3)a_t + (1/3)b_t$ and $m_t = (1/3)a_t + (2/3)b_t$
+		\item  If $f(l_t) \le f(m_t)$, set $I_{t+1} = [a_t,m_t]$. Otherwise, $I_{t+1} = [l_t,b_t]$
+		\end{itemize}
+
+	Show if $f$ is only semi-strictly unimodal (but not necessarily convex), then the above algorithm can be used to find an $x$ such that there exists an $x^* \in \arg\min_{x \in [0,1]} f(x)$ with $|x-x^*| \le \epsilon$ in $\mathcal{O}(\log(1/\epsilon))$ function queries. 
 	%
 	\emph{No need to go through the analysis of the entire algorithm, just pinpoint the step in the analysis that uses convexity and generalize it to semi-strictly unimodal functions.}
 	\item A function $f:[0,1] \to \R$ is said to be non-strictly unimodal if there exists an interval $[a,b] \in [0,1]$ such that $f(a) = f(b) = f(x)$ for all $x \in [a,b]$, and $f$ is non-increasing on $[0,a]$ and non-decreasing on $[b,1]$. 
 	%
 	Show that \emph{no zeroth orther black box algorithm} can be guaranteed to find find a point $x$ within $\epsilon$ of an optimum $x^*$ of a non-strictly unimodal algorithm, even if $f$ is guaranteed to be continuous. 
 	\item Suppose $f: [0,1]$ is non-strictly unimodal and $L$ Lipschitz. Show that any black box algorithm which find an $x$ such that $|f(x)-f(x^*)| \le \epsilon$ requires $\mathcal{O}(L/\epsilon)$ function evaluations. Give a simple algorithm which attains this lower bound.
-	\item Generalize the previous question to $d$ dimensions. 
+	\item Generalize the previous question (2.E) to $d$ dimensions. In $d$ dimension, unimodality is ill defined, so just given the appropriate optimal sample complexity (upper and lower bounds) for finding an $x$ such that $|f(x)-f(x^*)| \le \epsilon$ for an arbitrary (i.e. non convex) $L$-Lipschitz function in $d$-dimensions. 
 \end{enumerate}
 
 \newpage
@@ -162,7 +167,7 @@ A function $f:[0,1] \to \R$ is said to be semi-strictly unimodal if there exists
 			\item Show that, for every $\eta > 0 , \delta \in (0,1)$, there exists an algorithm which satisfies the following:
 			\begin{itemize}
 			\item Computes one function evaluation $f_t(\widetilde{x}_t)$ at each round $t$, and one call to a projection oracle $F(x) = \Pi_{\cK}(x)$
-			\item For each $t$, $\widetilde{x}_t \in \cK$ and $\widetilde{x}_t$ depends only on $(f_1,\dots,f_{t-1})$, $(x_1,\dots,x_{t-1})$. 
+			\item For each $t$, $\widetilde{x}_t \in \cK$ and $\widetilde{x}_t$ depends only on $(f_s(\widetilde{x}_s), \widetilde{x}_s )$ for $1 \le s < t$.
 			\item For each $t$, there exists an $x_t$ such that $\|x_t - \widetilde{x}_t\|_2 \le \delta$ and $x_1,\dots,x_T$ satisfy 
 			\begin{eqnarray}
 		\Exp[\sum_{t=1}^T \widehat{(f_t)}_{\delta}(x_t) - \min_{x \in K_{\delta}} \sum_{t=1}^T \widehat{(f_t)}_{\delta}(x)] \le C\left(\eta T \cdot \frac{n^2}{\delta^2} \cdot D^2 G^2 + \frac{D^2}{\eta}\right)
