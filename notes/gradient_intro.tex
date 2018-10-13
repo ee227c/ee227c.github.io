@@ -1,0 +1,29 @@
+%!TEX root = main.tex
+
+\emph{Gradient descent} is one of the most broadly applied techniques for minimizing functions, both convex and nonconvex alike. 
+%
+At its core, it is a form of \emph{local search}, greedily optimizating a function in a small region over many successive iterations. 
+%
+If $f: \R \to \R$ is twice-continuously differentiable, then Taylor's theorem tells us that that
+\begin{align*}
+f(x+\delta)\approx f(x) + \delta f'(x) + \frac{1}{2} \delta^2 f''(x)\,.
+\end{align*}
+This approximation directly reveals that if we move from $x$ to $x+\delta$ where
+$\delta=-\eta \cdot f'(x)$ for sufficiently small $\eta>0,$ we generally expect
+to decrease the function value by about $\eta f'(x)^2.$ The simple greedy way of
+decreasing the function value is known as \emph{gradient descent}, and it generalizes to idea to functions of many variables with the help
+of multivariate versions of Taylor's theorem.  
+
+Gradient
+descent converges to points at which the first derivatives vanish. For the broad
+class of \emph{convex} functions, such points turn out to be globally minimal. 
+%
+Moreover, gradient descent can be ammended for convex functions which are not even differentiable. 
+%
+Later on, we will see that gradient descent can be shown to converge to locally (and, on occasion, globally!) minimal points as well.
+
+In this part of the text, we begin in~\sectionref{convexity} by introducing the preliminaries about convex functions which make them so ammenable to gradient descent. 
+%
+Crucially, we also introduce the notion of the subgradient, generalizes the gradient to possibly non-convex function. 
+%
+In~\sectionref{gradient-descent}, we formally introduce (sub-)gradient descent, and prove explicit convergence rates when gradient descent is applied to convex functions. ~\sectionref{strongconvexity} introduces a stronger assumption know as \emph{strong convexity}, which allows (sub-)gradient descent to enjoy even faster rates. \maxnote{finish}
