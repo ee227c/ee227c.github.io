@@ -131,7 +131,9 @@ Put $\eta = \gamma^m s$ where $m$ is the smallest non-negative integer such that
 \[
     f(x) - f(x + \gamma^m s d) \ge - \sigma \gamma^m s \nabla f(x)^\trans d
 \]
-Think of $s$ as an initial learning rate. If $s$ causes sufficient decrease then stop, otherwise keep multiplying by $\gamma$ until you do. Typical choices for parameters are 
+Think of $s$ as an initial learning rate. If $s$ causes sufficient decrease then
+stop, otherwise keep multiplying by $\gamma$ until it does. 
+Typical choices for parameters are 
 \[
     \gamma = \frac{1}{2},\quad \sigma = \frac{1}{100},\quad s = 1\,.
 \]
