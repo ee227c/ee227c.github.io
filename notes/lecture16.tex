@@ -1,6 +1,8 @@
 \section{Backpropagation and adjoints}
  From now onward, we give up the luxuries afforded by convexity and move to the realm of non-convex functions. In the problems we have seen so far, deriving a closed-form expression for the gradients was fairly straightforward. But, doing so can be a challenging task for general non-convex functions. In this class, we are going to focus our attention on functions that can be expressed as compositions of multiple functions. In what follows, we will introduce \textit{backpropagation} - a popular technique that exploits the composite nature of the functions to compute gradients incrementally. 
 
+ The following exposition draws upon \href{https://timvieira.github.io/blog/post/2017/08/18/backprop-is-not-just-the-chain-rule/}{the following notes} by \href{https://timvieira.github.io/}{Tim Viera}. Tim's notes also provide excellent demonstration code for the interested reader. 
+
 \subsection{Warming up}
 A common view of backpropagation is that ``\textit{it's just chain rule}''. 
 This view is not particular helpful, however, and we will see that there is more
