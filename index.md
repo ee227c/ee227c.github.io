@@ -28,6 +28,8 @@ using git. See [this
 repository](https://github.com/ee227c/ee227c.github.io/tree/master/notes) for
 source files. 
 
+<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />All course materials are licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>. Feel free to use, share, and adapt for your own non-commercial purposes.
+
 ### [All available lecture notes (pdf)](notes/ee227c-notes.pdf)
 
 See individual lectures below. These notes likely contain several mistakes. If
