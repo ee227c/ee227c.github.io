@@ -1,0 +1,176 @@
+%\documentclass[12pt]{article}
+%
+%\usepackage{macros}
+%
+%\input{title}
+%
+%\begin{document}
+%	
+%	\maketitle
+%	
+\section{Submodular functions and Lov\'{a}sz extension}
+
+\begin{definition}[Submodular functions]
+	Let $N = \{1, \dots, n\}$, and $2^N$ denote the power set of $N$.
+	Then a function $f : 2^N \rightarrow \mathbb{R}$ is \emph{submodular} if:
+	\begin{align*}
+	f(A \cup \{ j \} ) - f(A) \geq f(B \cup \{ j \}) - f(B)
+	\end{align*}
+	for all $A \subseteq B \subseteq N$ and for all $j \in N$.
+	
+	This is equivalent to:
+	\begin{align*}
+	f(A \cap B) + f(A \cup B) \leq f(A) + f(B)
+	\end{align*}
+	for all $\forall A, B \subseteq N$.
+	
+\end{definition}
+
+Some examples of submodular functions:
+\begin{itemize}
+	\item Let $A$ be a subset of nodes of a bipartite graph. Then $f(A) = | \text{neighborhood}(A) |$ is submodular.
+	
+	\item Let $X = \{ X_1, \dots X_n \}$ be a set of random variables, and $A \subseteq X$. Then $f(A) = H(A)$, where $H$ denotes entropy, is submodular.
+	
+	\item Let $E, V$ be the edges and nodes of a graph, and $A \subseteq V$. Then the size of the graph cut, $f(A) = \big| \{ (u, v) \in E : u \in A, v \in V \setminus A \} \big| $, is submodular.
+\end{itemize}
+
+There is an equivalence between submodular and boolean functions: a submodular function $f: 2^N \rightarrow \mathbb{R}$ can be expressed as a boolean function $f: \{0, 1\}^n \rightarrow \mathbb{R}$.
+
+\begin{definition}[Lov\'{a}sz extension]
+Let $f(x)$ be a submodular function. Then its Lov\'{a}sz extension, $\hat f(z): [0, 1]^n \rightarrow \mathbb{R}$ is given by:
+\begin{align*}
+\hat f(z) = \mathbb{E}_{\lambda \sim \text{U}(0, 1)} \bigg[ f(\{i : z_i \geq \lambda \}) \bigg]
+\end{align*}
+where $\text{U}(0, 1)$ denotes the uniform distribution on $[0, 1]$.
+\end{definition}
+
+Some observations about $\hat f(z)$:
+\begin{itemize}
+	\item For any $x \in \{0, 1\}^n$, $\hat f(x) = f(x)$. That is, $f$ and $\hat f$ agree on the domain of $f$.
+	
+	\item For any $z \in [0, 1]^n$, there exists an $x \in \{0, 1\}^n$, such that $f(x) \leq \hat f(z)$. Also, $\min_{x \in \{0, 1\}^n} f(x) = \min_{z \in [0,1]^n} \hat f(z)$.
+	 
+\end{itemize}
+
+
+\begin{theorem}[Submodularity and convexity]
+\theoremlabel{submod_cvx}
+Consider a function $f(x) : 2^N \rightarrow \mathbb{R}$ and its Lov\'{a}sz extension $\hat f(z) : 2^N \rightarrow \mathbb{R}$. Then $f(x)$ is submodular iff $\hat f(z)$ is convex.
+
+\end{theorem}
+Proof. We only show the forward direction ($f$ is submodular $\Rightarrow$ $\hat f$ is convex), the reverse direction is left as an exercise.
+
+Without loss of generality, assume $z$ is order: $z_1 \geq z_2 \geq \dots \geq z_n$.
+
+Also, let $S_i = \{1, 2, \dots, i\}$. We also take $f(\emptyset) = 0$.
+
+Then:
+\begin{align*}
+\hat f(z) 
+&= \sum_{i=1}^{n-1} P(z_{i+1} \leq \lambda \leq z_i) \cdot f(S_i) + z_n \cdot f(S_n) \\
+&= \sum_{i=1}^{n-1} (z_{i+1} - z_i) \cdot f(S_i) + z_n \cdot f(S_n) \\
+\end{align*}
+
+Now, consider the following lemma:
+\begin{lemma}
+\lemmalabel{lovaszLP}
+The Lov\'{a}sz extension $\hat f(z)$ of submodular $f(x)$ can be expressed an LP:
+\begin{align*}
+\hat f(z) = \max_x x^T z : x(S) \leq f(S), x(N) = f(N), \forall S \subseteq N
+\end{align*}
+\end{lemma}
+where $x(S) = \sum_{i \in S} x_i$.  Let $F$ denote the feasible region.
+
+Given \lemmaref{lovaszLP}, the rest of the proof follows easily:
+\begin{align*}
+\hat f(\lambda z + (1 - \lambda) z') 
+&= \max_{x \in F} x^T (\lambda z + (1-\lambda)z') \\
+&\leq \lambda \max_{x \in F} x^T z + (1 - \lambda) \max_{x  \in F} x^T z' \\
+&= \lambda \hat f(z) + (1 - \lambda) \hat f(z')
+\end{align*}
+
+
+
+Now we just have to prove \lemmaref{lovaszLP}.
+
+Consider the dual problem to the above LP:
+\begin{align*}
+\min_y & \sum_{S \subseteq N} y_S \cdot f(S) : \sum_{S \subseteq N} y_S e_S = z, y_S \geq 0 \\
+& \text{where } (e_S)_i  = \begin{cases} i & \text{ if $i \in S$ } \\ 0 & \text{ else} \end{cases}
+\end{align*}
+
+Our goal is to find a primal-dual feasible solution $x^*, y^*$ that satisfies:
+\begin{align*}
+\hat f(z) = c^T x^* = \sum_{S \subseteq N} y_S^* \cdot f(S)
+\end{align*}
+
+Consider the following $x^*, y^*$:
+\begin{align*}
+x_i^* &= f(S_i) - f(S_{i-1}) \\
+y_S^* &= \begin{cases}
+z_i - z_{i+1} & \text{if } S = S_i \\
+z_n & \text{if } S = N \\
+0 & \text{else}
+\end{cases}
+\end{align*}
+
+First, we show that $x^*$ is primal feasible.
+
+ For the constraint $x(N) = f(N)$, we see that:
+\begin{align*}
+x^*(N) = \sum_{i=1}^{n} x_i^*
+&= \sum_{i=1}^{n} f(S_i) - f(S_{i-1}) \\
+&= f(N) - f(\emptyset) = f(N)
+\end{align*}
+
+For the other constraint, $x(S) \leq f(S)$, we proceed by induction on $|S|$ (the size of $S$).
+
+As a base case, we take $S = \emptyset$.
+
+Suppose that the constraint is satisfied for all sets of size $i - 1$.
+
+Then consider an arbitrary $S$, whose largest element is $i$:
+\begin{align*}
+f(S) + f(S_{i-1})
+&\geq f(S \cup S_{i-1}) + f(S \cup S_{i-1}) \\
+&= f(S_i) + f(S \setminus \{i\}) \\
+&\geq f(S_i) + x^*(S \setminus \{i\}) \\
+\Rightarrow f(S) 
+&\geq f(S_i) - f(S_{i-1}) + x^*(S \setminus \{i\}) \\
+&= x_i^* + x^*(S \setminus \{i\}) \\
+&= x^*(S)
+\end{align*}
+where we used fact that $f$ is submodular and that $i$ is the largest element in $S$.
+
+It follows that $x^*(S) \leq f(S)$, for all $S \subseteq N$, and thus $x^*$ is primal feasible.
+
+Next, we show that $y^*$ is dual feasible.
+\begin{align*}
+\sum_{S \subseteq N} y_S^* \cdot f(S)  
+&= \sum_{j = 1}^{n-1} (z_j - z_{j+1}) e_{S_j} + z_n e_n \\
+\bigg( \sum_{S \subseteq N} y_S^* \cdot f(S)  \bigg)_i
+&= \bigg( \sum_{j = 1}^{n-1} (z_j - z_{j+1}) e_{S_j} + z_n e_n \bigg)_i & \text{ (consider it elementwise) } \\
+&= \sum_{j = i}^{n} (z_j - z_{j+1}) + z_n \\
+&= z_i
+\end{align*}
+Since this equality holds elementwise for each $i$, we see that  $\sum_{S \subseteq N} y_S^* \cdot f(S)  = z$.
+
+We also observe that $y_S^* \geq 0$ due to the nonincreasing ordering of $z_1, \dots, z_n$.
+
+Thus, it follows that $y_S^*$ is dual feasible.
+
+Finally, we show that $x^*, y^*$  are optimal, achieving a dualty gap of zero:
+\begin{align*}
+z^T x^*
+&= \sum_{i=1}^{n} z_i \big( f(S_i) - f(S_{i-1}) \big) \\
+&= \sum_{i=1}^{n} (z_i - z_{i+1}) f(S_i) + z_n f(S_n) \\
+&= \hat f(z) \\
+\hat f(z) 
+&= \sum_{i=1}^{n} (z_i - z_{i+1}) f(S_i) + z_n f(S_n) \\
+&= \sum_{S \subseteq N} y_S^* f(S)
+\end{align*}
+
+This concludes the proof of \lemmaref{lovaszLP}, and that of \theoremref{submod_cvx}.
+
+%  \end{document}
